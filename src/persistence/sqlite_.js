@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
-const location = process.env.SQLITE_DB_LOCATION || '/data/sources.db';
+const location = process.env.SQLITE_DB_LOCATION || '/data/todo.db';
 
 let db, dbAll, dbRun;
 
@@ -18,7 +18,7 @@ function init() {
                 console.log(`Using sqlite database at ${location}`);
 
             db.run(
-                'CREATE TABLE IF NOT EXISTS sources (id varchar(36), name varchar(255), url varchar(255), date varchar(255))',
+                'CREATE TABLE IF NOT EXISTS todo_items (id varchar(36), name varchar(255), completed boolean)',
                 (err, result) => {
                     if (err) return rej(err);
                     acc();
@@ -102,37 +102,6 @@ async function removeItem(id) {
     });
 }
 
-/* 
-ADDED BY ANDERS-ERIK
-*/
-
-async function storeSource(item) {
-    return new Promise((acc, rej) => {
-        db.run(
-            'INSERT INTO sources (id, name, url, date) VALUES (?, ?, ?, ?)',
-            [item.id, item.name, item.url, item.date ],
-            err => {
-                if (err) return rej(err);
-                acc();
-            },
-        );
-    });
-}
-
-async function getSources() {
-    return new Promise((acc, rej) => {
-        db.all('SELECT * FROM sources', (err, rows) => {
-            if (err) return rej(err);
-            acc(
-                rows.map(item =>
-                    Object.assign({}, item, {
-                        completed: item.completed === 1,
-                    }),
-                ),
-            );
-        });
-    });
-}
 
 module.exports = {
     init,
@@ -142,6 +111,4 @@ module.exports = {
     storeItem,
     updateItem,
     removeItem,
-    storeSource,
-    getSources
 };
