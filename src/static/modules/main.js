@@ -1,7 +1,11 @@
 
-import { sourceListItem as sourceListItem } from './sourceListItem.js';
 
-let sli = new sourceListItem('source-list-container');
+import { SourcesApp } from './SourcesApp.js';
 
 
-console.log(sourceListItem.test1());
+let sourcesApp = new SourcesApp('root');
+
+
+//console.log(sourceListItem.test1());
+
+

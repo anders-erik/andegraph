@@ -5,7 +5,7 @@ export class sourceListItem{
 
     constructor(id) {
         this.sourceListContainer = document.getElementById(id);
-        this.sourceListContainer.style.backgroundColor = 'yellow';
+        this.sourceListContainer.style.backgroundColor = 'blue';
     }
 
     static test1() {
