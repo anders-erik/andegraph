@@ -1,15 +1,23 @@
 
-export class sourceListItem{
+export class SourceListItem {
     
-    sourceListContainer;
+    element;
+    class = 'source-list-item';
 
-    constructor(id) {
-        this.sourceListContainer = document.getElementById(id);
-        this.sourceListContainer.style.backgroundColor = 'blue';
+    constructor() {
+        this.element = document.createElement('div');
+        this.element.class = this.class;
+
+
+        this.setElementCSS();
     }
 
-    static test1() {
-        return 'test1';
+    setElementCSS(){
+        this.element.style.backgroundColor = 'orange';
+        this.element.textContent = 'sli';
+        this.element.style.margin = '10px';
     }
+
+    
 }
 

@@ -4,5 +4,10 @@
       "name": "Markdown Syntax Webpage",
       "url": "https://www.markdownguide.org/basic-syntax/",
       "date": "2023-07-28"
+    },
+    {
+      "sqlite3": "INSERT INTO sources VALUES (RANDOM(), 'Markdown Syntax Webpage', 'https://www.markdownguide.org/basic-syntax/', '2023-07-28');"
     }
+
   ]
+

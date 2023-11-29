@@ -1,24 +1,35 @@
-import { sourceListItem as sourceListItem } from './SourceListItem.js';
-import { SourceListContainer as SourceListContainer } from './SourceListContainer.js';
+//import { sourceListItem as sourceListItem } from './SourceListItem.js';
+import { SourceListContainer } from './SourceListContainer.js';
 
 
-export class SourcesApp{
+export class SourcesApp {
     
-    sourceAppContainer;
+    element;
     sourceListContainer;
+    //sourceViewerContainer;
+    //shardListContainer;
+
 
     constructor(rootId) {
-        this.sourceAppContainer = document.getElementById(rootId);
-        this.setCSS();
+        this.element = document.getElementById(rootId);
+        this.setelementCSS();
 
-        sourceListContainer = new sourceListContainer('source-list-container');
+        
+        this.addSourceListContainer();
 
     }
 
-    setCSS(){
-        this.sourceAppContainer.style.display = 'flex';
-        this.sourceAppContainer.style.flexDirection = 'row';
-        this.sourceAppContainer.style.backgroundColor = 'red';
+    addSourceListContainer() {
+        this.sourceListContainer = new SourceListContainer('source-list-container');
+        this.element.appendChild(this.sourceListContainer.element);
+    }
+
+
+
+    setelementCSS(){
+        this.element.style.display = 'flex';
+        this.element.style.flexDirection = 'row';
+        this.element.style.backgroundColor = 'red';
     }
 }
 
