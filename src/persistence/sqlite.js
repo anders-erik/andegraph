@@ -134,6 +134,21 @@ async function getSources() {
     });
 }
 
+async function getSource(id) {
+    return new Promise((acc, rej) => {
+        db.all('SELECT * FROM sources WHERE id=?', [id], (err, rows) => {
+            if (err) return rej(err);
+            acc(
+                rows.map(item =>
+                    Object.assign({}, item, {
+                        completed: item.completed === 1,
+                    }),
+                ),
+            );
+        });
+    });
+}
+
 module.exports = {
     init,
     teardown,
@@ -143,5 +158,6 @@ module.exports = {
     updateItem,
     removeItem,
     storeSource,
-    getSources
+    getSources,
+    getSource
 };

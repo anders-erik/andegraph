@@ -8,6 +8,7 @@ const deleteItem = require('./routes/deleteItem');
 
 const addSource = require('./routes/addSource');
 const getSources = require('./routes/getSources');
+const getSource = require('./routes/getSource');
 
 
 app.use(express.json());
@@ -18,8 +19,13 @@ app.post('/items', addItem);
 app.put('/items/:id', updateItem);
 app.delete('/items/:id', deleteItem);
 
+
 app.post('/source', addSource);
+//app.put('/source', updateSource);
+app.get('/source', getSource);
+
 app.get('/sources', getSources);
+
 
 
 db.init().then(() => {

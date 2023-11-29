@@ -1,4 +1,5 @@
 import { SourceListItem } from './SourceListItem.js';
+import { MakeGetRequest } from './fetchAPI.js';
 
 export class SourceList{
     
@@ -13,7 +14,9 @@ export class SourceList{
         this.setElementCSS();
 
 		
-		this.addSourceListItems(3);
+		//this.addSourceListItems_(3);
+
+		this.fetchAndUpdateSources();
     }
 
     setElementCSS(){
@@ -22,15 +25,57 @@ export class SourceList{
 		this.element.style.margin = '10px';
     }
 
-	addSourceListItems(listItemsCount){
+	/*
+	addSourceListItems_(listItemsCount){
 
 		for (let i = 0; i<listItemsCount; i++){
-			this.addSourceListItem();
+			this.addSourceListItem_();
 		}
+
+		
 	}
 
-	addSourceListItem(){
+	addSourceListItem_(){
 		let newItem = new SourceListItem();
+		this.element.appendChild(newItem.element);
+		this.sourceListItems.push(newItem);
+	}
+*/
+
+	
+
+
+	async fetchAndUpdateSources(){
+        //console.log('fetching');
+
+		this.element.innerHTML = '';
+
+        const url = '/sources';
+        const fetchedSources = await MakeGetRequest(url);
+        //console.log('Fetch Response:', response);
+
+		//console.log('about to return');
+		//return response;
+		this.populateList(fetchedSources);
+    }
+
+	populateList(fetchedSources) {
+		//console.log('populating');
+		//console.log(fetchedSources);
+		this.addSourceListItems(fetchedSources);
+	}
+
+	addSourceListItems(fetchedSources){
+		fetchedSources.forEach(source => {
+			this.addSourceListItem(source);
+		});
+		
+	}
+
+	addSourceListItem(source){
+		let newItem = new SourceListItem(source);
+		
+		newItem.element.textContent = source.id;
 		this.element.appendChild(newItem.element);
 		this.sourceListItems.push(newItem);
 	}
