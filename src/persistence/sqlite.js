@@ -105,12 +105,25 @@ async function removeItem(id) {
 /* 
 ADDED BY ANDERS-ERIK
 */
-
+/* 
 async function storeSource(item) {
     return new Promise((acc, rej) => {
         db.run(
             'INSERT INTO sources (id, name, url, date) VALUES (?, ?, ?, ?)',
             [item.id, item.name, item.url, item.date ],
+            err => {
+                if (err) return rej(err);
+                acc();
+            },
+        );
+    });
+}
+ */
+
+async function storeSource() {
+    return new Promise((acc, rej) => {
+        db.run(
+            'INSERT INTO sources VALUES (RANDOM(), "", "", "")',
             err => {
                 if (err) return rej(err);
                 acc();
