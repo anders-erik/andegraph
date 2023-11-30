@@ -5,6 +5,7 @@ function randomNumber() {
   }
 
 module.exports = async (req, res) => {
+    /*
     const item = {
         id: randomNumber(),
         name: req.body.name,
@@ -14,6 +15,10 @@ module.exports = async (req, res) => {
 
     await db.storeSource(item);
     res.send(item);
+    */
+   let newId = randomNumber();
+    await db.storeSource();
+    res.send({});
 };
 
 
