@@ -1,4 +1,5 @@
 import { populateSourceList, loadSourceViewerHeader, addNewSource } from "./DOMEvents.js";
+import { createSourceViewerHeaderFieldId } from "./Elements.js";
 
 function addSourceListHeader() {
 	let sourceListHeader = document.createElement('div');
@@ -55,11 +56,32 @@ function addSourceViewerHeader() {
 	sourceViewerHeader.id = 'source-viewer-header';
 	sourceViewerHeader.textContent = 'header';
 	sourceViewerHeader.style.backgroundColor = 'orange';
-	sourceViewerHeader.style.width = '40%';
+	sourceViewerHeader.style.margin = '10px'
 	sourceViewerHeader.style.height = '100px';
 	sourceViewerHeader.style.whiteSpace = 'preWrap';
+	sourceViewerHeader.style.display = 'flex';
+	sourceViewerHeader.style.flexDirection = 'column';
+	sourceViewerHeader.style.justifyContent = 'spaceEvenly';
+
+	sourceViewerHeader.appendChild(createSourceViewerHeaderFieldId());
+
 
 	document.getElementById('source-viewer-container').appendChild(sourceViewerHeader);
+
+}
+
+function addSourceViewerMedia() {
+	let sourceViewerMedia = document.createElement('div');
+	sourceViewerMedia.id = 'source-viewer-header';
+	sourceViewerMedia.textContent = 'media';
+	sourceViewerMedia.style.backgroundColor = 'aliceblue';
+	sourceViewerMedia.style.margin = '10px'
+	sourceViewerMedia.style.height = '100px';
+	sourceViewerMedia.style.whiteSpace = 'preWrap';
+	sourceViewerMedia.style.flexGrow = '1';
+
+
+	document.getElementById('source-viewer-container').appendChild(sourceViewerMedia);
 
 }
 
@@ -68,5 +90,6 @@ export {
 	addSourceListHeader,
 	addSourceList,
 	addSourceListItem,
-	addSourceViewerHeader
+	addSourceViewerHeader,
+	addSourceViewerMedia
 }

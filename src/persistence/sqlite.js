@@ -18,7 +18,7 @@ function init() {
                 console.log(`Using sqlite database at ${location}`);
 
             db.run(
-                'CREATE TABLE IF NOT EXISTS sources (id varchar(36), name varchar(255), url varchar(255), date varchar(255))',
+                'CREATE TABLE IF NOT EXISTS sources (id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), url varchar(255), date varchar(255))',
                 (err, result) => {
                     if (err) return rej(err);
                     acc();
@@ -123,7 +123,7 @@ async function storeSource(item) {
 async function storeSource() {
     return new Promise((acc, rej) => {
         db.run(
-            'INSERT INTO sources VALUES (RANDOM(), "", "", "")',
+            'INSERT INTO sources DEFAULT VALUES',
             err => {
                 if (err) return rej(err);
                 acc();
@@ -131,6 +131,7 @@ async function storeSource() {
         );
     });
 }
+
 
 async function getSources() {
     return new Promise((acc, rej) => {

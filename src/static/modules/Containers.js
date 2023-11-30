@@ -1,4 +1,4 @@
-import { addSourceList, addSourceListHeader, addSourceListItem, addSourceViewerHeader } from './Cards.js';
+import { addSourceList, addSourceListHeader, addSourceListItem, addSourceViewerHeader, addSourceViewerMedia } from './Cards.js';
 
 //temporary for population on page load
 import { populateSourceList } from './DOMEvents.js';
@@ -38,7 +38,10 @@ function addSourceViewerContainer() {
 	document.getElementById('root').appendChild(sourceViewerContainer);
 
 	addSourceViewerHeader();
+	addSourceViewerMedia();
 }
+
+
 
 export {
 	addSourceListContainer,
