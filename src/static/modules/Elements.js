@@ -1,11 +1,12 @@
 
-function createSourceViewerHeaderFieldId(){
+function createSourceViewerHeaderField(id, ){
 	let container = document.createElement('div');
-	container.style.backgroundColor = 'blue';
-	container.style.width = '100%';
+	container.style.backgroundColor = 'lightblue';
+	container.style.width = '45%';
 	container.style.display = 'flex';
 	container.style.flexDirection = 'row';
 	container.style.justifyContent = 'center';
+
 
 	let labelElement = document.createElement('label');
 	labelElement.textContent = 'placeholder';
@@ -25,6 +26,6 @@ function createSourceViewerHeaderFieldId(){
 
 
 export {
-	createSourceViewerHeaderFieldId
+	createSourceViewerHeaderField
 }
 

@@ -1,12 +1,14 @@
 import { populateSourceList, loadSourceViewerHeader, addNewSource } from "./DOMEvents.js";
-import { createSourceViewerHeaderFieldId } from "./Elements.js";
+import { createSourceViewerHeaderField } from "./Elements.js";
 
 function addSourceListHeader() {
 	let sourceListHeader = document.createElement('div');
 	sourceListHeader.id = 'source-list-header';
-	sourceListHeader.style.backgroundColor = 'purple';
-	sourceListHeader.textContent = 'slh \n FETCH SOURCES';
-	sourceListHeader.style.margin = '10px';
+	sourceListHeader.classList.add("sub-panel");
+	
+	//sourceListHeader.style.backgroundColor = 'purple';
+	sourceListHeader.textContent = 'source-list-container';
+	//sourceListHeader.style.margin = '10px';
 	sourceListHeader.style.display = 'flex';
 	sourceListHeader.style.flexDirection = 'column';
 
@@ -30,9 +32,12 @@ function addSourceListHeader() {
 function addSourceList() {
 	let sourceList = document.createElement('div');
 	sourceList.id = 'source-list';
-	sourceList.style.backgroundColor = 'aqua';
-	sourceList.textContent = 'sl';
-	sourceList.style.margin = '10px';
+	sourceList.classList.add("sub-panel");
+
+	//sourceList.style.backgroundColor = 'aqua';
+	//sourceList.textContent = 'sl';
+	//sourceList.style.margin = '10px';
+	sourceList.style.flexGrow = '1';
 
 	document.getElementById('source-list-container').appendChild(sourceList);
 
@@ -63,7 +68,7 @@ function addSourceViewerHeader() {
 	sourceViewerHeader.style.flexDirection = 'column';
 	sourceViewerHeader.style.justifyContent = 'spaceEvenly';
 
-	sourceViewerHeader.appendChild(createSourceViewerHeaderFieldId());
+	sourceViewerHeader.appendChild(createSourceViewerHeaderField('source-viewer-id-label'));
 
 
 	document.getElementById('source-viewer-container').appendChild(sourceViewerHeader);

@@ -8,9 +8,26 @@ body {
 #root {
 	width: 100%;
 	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	background-color: black;
 }
 
 
-#source-list-container {
-	background-color: green;
+
+
+.primary-panel {
+	background-color: beige;
+	margin: 1px;
+	
+}
+
+.sub-panel {
+	border: solid black 1px;
+	border-radius: 10px;
+	background-color: rgb(220, 255, 243);
+	margin: 10px;
+	
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }

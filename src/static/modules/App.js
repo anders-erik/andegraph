@@ -3,9 +3,7 @@ import { addSourceListContainer, addSourceViewerContainer } from './Containers.j
 function App(){
 
 	let root = document.getElementById('root');
-	root.style.display = 'flex';
-	root.style.flexDirection = 'row';
-	root.style.backgroundColor = 'red';
+	
 	
 
 	addSourceListContainer();
