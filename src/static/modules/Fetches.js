@@ -21,6 +21,28 @@ async function newSource() {
 	}
 }
 
+async function updateSource(sourceObject) {
+	try {
+		const response = await fetch('source', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: sourceObject,
+		});
+
+		if (response.ok) {
+			const responseData = await response.json();
+			console.log('PUT request successful:', responseData);
+			return responseData;
+		} else {
+			throw new Error('PUT request failed:', response.status);
+		}
+	} catch (error) {
+		console.error('Error making PUT request:', error);
+	}
+}
+
 async function fetchAllSources() {
 	try {
 		const response = await fetch('/sources', {
@@ -64,11 +86,36 @@ async function getSource(id) {
 	}
 }
 
+async function deleteSource(id) {
+	try {
+		const response = await fetch('source/' + id, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		/*
+		if (response.ok) {
+			const responseData = await response.json();
+			console.log('DELETE request successful:', responseData);
+			return responseData;
+		} else {
+			throw new Error('DELETE request failed:', response.status);
+		}
+		*/
+	} catch (error) {
+		console.error('Error making DELETE request:', error);
+	}
+}
+
 
 export {
 	newSource,
 	fetchAllSources,
-	getSource
+	getSource,
+	updateSource,
+	deleteSource
 }
 
 

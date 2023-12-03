@@ -123,7 +123,7 @@ async function storeSource(item) {
 async function storeSource() {
     return new Promise((acc, rej) => {
         db.run(
-            'INSERT INTO sources DEFAULT VALUES',
+            "INSERT INTO sources (date) values(DATE('now'))",
             err => {
                 if (err) return rej(err);
                 acc();
@@ -132,6 +132,19 @@ async function storeSource() {
     });
 }
 
+async function updateSource(item) {
+    return new Promise((acc, rej) => {
+        db.run(
+            'UPDATE sources SET id=?, name=?, url=?, date=? WHERE sources.id=?',
+            [item.id, item.name, item.url, item.date, item.id],
+            err => {
+                if (err) return rej(err);
+                acc();
+            },
+        );
+        return 'query ok :)';
+    });
+}
 
 async function getSources() {
     return new Promise((acc, rej) => {
@@ -163,6 +176,21 @@ async function getSource(id) {
     });
 }
 
+async function deleteSource(id) {
+    return new Promise((acc, rej) => {
+        db.all('DELETE FROM sources WHERE id=?', [id], (err, rows) => {
+            if (err) return rej(err);
+            acc(
+                rows.map(item =>
+                    Object.assign({}, item, {
+                        completed: item.completed === 1,
+                    }),
+                ),
+            );
+        });
+    });
+}
+
 module.exports = {
     init,
     teardown,
@@ -173,5 +201,7 @@ module.exports = {
     removeItem,
     storeSource,
     getSources,
-    getSource
+    getSource,
+    updateSource,
+    deleteSource
 };

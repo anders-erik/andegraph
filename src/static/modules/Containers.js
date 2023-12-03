@@ -12,7 +12,7 @@ function addSourceListContainer(){
 
 	sourceListContainer.textContent = 'slcc';
 	//sourceListContainer.style.backgroundColor = 'yellow';
-	sourceListContainer.style.width = '20%'; 
+	sourceListContainer.style.width = '10%'; 
 	sourceListContainer.style.display = 'flex';
 	sourceListContainer.style.flexDirection = 'column';
 	sourceListContainer.style.justifyContent = 'start';
@@ -23,6 +23,8 @@ function addSourceListContainer(){
 	addSourceList();
 
 	populateSourceList();
+
+
 	//addSourceListItem();
 	//addSourceListItem();
 }
@@ -34,7 +36,7 @@ function addSourceViewerContainer() {
 
 	sourceViewerContainer.textContent = 'svc';
 	//sourceViewerContainer.style.backgroundColor = 'green';
-	sourceViewerContainer.style.width = '40%';
+	sourceViewerContainer.style.width = '20%';
 	sourceViewerContainer.style.display = 'flex';
 	sourceViewerContainer.style.flexDirection = 'column';
 	sourceViewerContainer.style.justifyContent = 'start';
