@@ -7,8 +7,10 @@ const updateItem = require('./routes/updateItem');
 const deleteItem = require('./routes/deleteItem');
 
 const addSource = require('./routes/addSource');
+const putSource = require('./routes/putSource');
 const getSources = require('./routes/getSources');
 const getSource = require('./routes/getSource');
+const deleteSource = require('./routes/deleteSource');
 
 
 app.use(express.json());
@@ -21,10 +23,10 @@ app.delete('/items/:id', deleteItem);
 
 
 app.post('/source', addSource);
-//app.put('/source', updateSource);
+app.put('/source', putSource);
 app.get('/source', getSource);
-
 app.get('/sources', getSources);
+app.delete('/source/:id', deleteSource);
 
 
 

@@ -1,6 +1,7 @@
-import { populateSourceList, loadSourceViewerHeader, addNewSource } from "./DOMEvents.js";
-import { createSourceViewerHeaderField } from "./Elements.js";
+import { /* populateSourceList, loadSourceViewerHeader, addNewSource, */ fetchSourcesClicked, addSourceClicked, sourceCardClicked, sourceviewFieldFocusout, deleteSourceClicked } from "./DOMEvents.js";
+import { /* createSourceViewerHeaderField, */ createInputElement, createButtonElement, createReadElement  } from "./Elements.js";
 
+/* 
 function addSourceListHeader() {
 	let sourceListHeader = document.createElement('div');
 	sourceListHeader.id = 'source-list-header';
@@ -54,6 +55,8 @@ function addSourceListItem(sourceId) {
 
 	document.getElementById('source-list').appendChild(sourceListItem);
 
+
+
 }
 
 function addSourceViewerHeader() {
@@ -89,12 +92,143 @@ function addSourceViewerMedia() {
 	document.getElementById('source-viewer-container').appendChild(sourceViewerMedia);
 
 }
+ */
+
+
+
+/*  
+
+NEW BELOW 2023-12-03
+
+*/
+
+
+ /*
+	SOURCEFIND PANEL
+ */
+
+function createSourcefindSearchcard(){
+	let sourcefindSearchcard = document.createElement('div');
+	sourcefindSearchcard.id = 'sourcefind-searchcard';
+	sourcefindSearchcard.classList.add('card', 'sourcefind-searchcard');
+	//sourcefindSearchcard.textContent = 'cardcard';
+
+	let sourcefindSearchbar = createInputElement('sourcefind-searchbar', 'Source Search', 'type to search for source');
+	sourcefindSearchbar.style.gridColumn = '1 / span 4'
+	sourcefindSearchcard.appendChild(sourcefindSearchbar);
+
+	let sourcefindFetch = createButtonElement('sourcefind-fetch');
+	sourcefindFetch.addEventListener('click', fetchSourcesClicked);
+	sourcefindSearchcard.appendChild(sourcefindFetch);
+
+	let sourcefindAdd = createButtonElement('sourcefind-add');
+	sourcefindAdd.addEventListener('click', addSourceClicked);
+	sourcefindSearchcard.appendChild(sourcefindAdd);
+
+	let sourcefindDelete = createButtonElement('sourcefind-delete');
+	sourcefindDelete.addEventListener('click', deleteSourceClicked);
+	sourcefindSearchcard.appendChild(sourcefindDelete);
+	
+
+	return sourcefindSearchcard;
+}
+
+function createSourcefindListcard(){
+	let sourcefindList = document.createElement('div');
+	sourcefindList.id = 'sourcefind-listcard';
+	sourcefindList.classList.add('card');
+	//sourcefindList.textContent = 'sourcefind-listcard';
+	
+
+	return sourcefindList;
+}
+
+
+function createSourcefindSourcecard(fetchedSource){
+	let sourcefindListcard = document.getElementById('sourcefind-listcard');
+
+	let sourcefindSourcecard = document.createElement('div');
+	sourcefindSourcecard.id = 'sourcefind-sourcecard-' + fetchedSource.id;
+	sourcefindSourcecard.classList.add('sourcefind-sourcecard');
+	sourcefindSourcecard.addEventListener('click', sourceCardClicked);
+	
+
+	//sourcefindSourcecard.textContent = 'sourcefind-sourcecard-' + fetchedSource.id;
+	
+	let sourcefindName = createReadElement('sourcefind-name-' + fetchedSource.id, 'source name:', fetchedSource.name);
+	sourcefindName.classList.add('sourcefind-name', 'sourcefind-readelement');
+	sourcefindSourcecard.appendChild(sourcefindName);
+
+	let sourcefindId = createReadElement('sourcefind-id-' + fetchedSource.id, 'source id:', fetchedSource.id);
+	sourcefindId.classList.add('sourcefind-id', 'sourcefind-readelement');
+	sourcefindSourcecard.appendChild(sourcefindId);
+
+	let sourcefindDate = createReadElement('sourcefind-date-' + fetchedSource.id, 'source date:', fetchedSource.date);
+	sourcefindDate.classList.add('sourcefind-date', 'sourcefind-readelement');
+	sourcefindSourcecard.appendChild(sourcefindDate);
+
+
+	sourcefindListcard.appendChild(sourcefindSourcecard);
+
+	return sourcefindSourcecard;
+}
+
+
+
+
+
+ /*
+	SOURCEVIEW PANEL
+ */
+
+	function createSourceviewPropertiescard(){
+		// outer and inner div to enable collapsing by user
+		let sourceviewPropertiescardOuter = document.createElement('div');
+		sourceviewPropertiescardOuter.id = 'sourceview-propertiescard-outer';
+		sourceviewPropertiescardOuter.classList.add('card');
+		//sourceviewPropertiescardOuter.textContent = 'sourceview-propertiescard-outer';
+
+		let sourceviewPropertiescardInner = document.createElement('div');
+		sourceviewPropertiescardInner.id = 'sourceview-propertiescard-inner';
+		sourceviewPropertiescardInner.classList.add('card');
+		//sourceviewPropertiescardInner.textContent = 'sourceview-propertiescard-inner';
+	
+		sourceviewPropertiescardOuter.appendChild(sourceviewPropertiescardInner);
+
+		let sourceviewName = createInputElement('sourceview-name', 'source name:', '');
+		sourceviewName.classList.add('sourceview-element');
+		sourceviewName.addEventListener('focusout', sourceviewFieldFocusout);
+		sourceviewPropertiescardInner.appendChild(sourceviewName);
+
+		let sourceviewUrl = createInputElement('sourceview-url', 'source url:', '');
+		sourceviewUrl.classList.add('sourceview-element');
+		sourceviewUrl.addEventListener('focusout', sourceviewFieldFocusout);
+		sourceviewPropertiescardInner.appendChild(sourceviewUrl);
+
+		let sourceviewId = createReadElement('sourceview-id', 'source id:', '');
+		sourceviewId.classList.add('sourceview-element');
+		sourceviewPropertiescardInner.appendChild(sourceviewId);
+
+		let sourceviewDate = createReadElement('sourceview-date', 'date created:', '');
+		sourceviewDate.classList.add('sourceview-element');
+		sourceviewPropertiescardInner.appendChild(sourceviewDate);
+		
+
+		return sourceviewPropertiescardOuter;
+	}
+
+
 
 
 export {
-	addSourceListHeader,
-	addSourceList,
-	addSourceListItem,
-	addSourceViewerHeader,
-	addSourceViewerMedia
+	// addSourceListHeader,
+	// addSourceList,
+	// addSourceListItem,
+	// addSourceViewerHeader,
+	// addSourceViewerMedia,
+
+	createSourcefindSearchcard,
+	createSourcefindListcard,
+	createSourcefindSourcecard,
+	createSourceviewPropertiescard
 }

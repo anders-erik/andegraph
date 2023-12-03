@@ -25,7 +25,57 @@ function createSourceViewerHeaderField(id, ){
 }
 
 
+function createReadElement(id, title, labeltext){
+	let readElement = document.createElement('div');
+	readElement.classList.add('read-element');
+	readElement.id = id;
+
+	let readElementTitle = document.createElement('div');
+	readElement.appendChild(readElementTitle);
+	readElementTitle.textContent = title;
+
+	let readElementLabel = document.createElement('label');
+	readElementLabel.id = id + '-field';
+	readElement.appendChild(readElementLabel);
+	readElementLabel.textContent = labeltext;
+
+	return readElement;
+}
+
+function createInputElement(id, title, placeholder){
+	let inputElement = document.createElement('div');
+	inputElement.classList.add('input-element');
+	inputElement.id = id;
+
+	let inputElementTitle = document.createElement('div');
+	inputElement.appendChild(inputElementTitle);
+	inputElementTitle.textContent = title;
+
+	let inputElementinput = document.createElement('input');
+	inputElementinput.id = id + '-field';
+	inputElementinput.placeholder = placeholder;
+	inputElement.appendChild(inputElementinput);
+	
+
+	return inputElement;
+
+}
+
+function createButtonElement(text){
+	let buttonElement = document.createElement('div');
+	buttonElement.classList.add('button-element');
+
+	buttonElement.textContent = text;
+
+	return buttonElement;
+}
+
+
+
 export {
-	createSourceViewerHeaderField
+	createSourceViewerHeaderField,
+	createReadElement,
+	createInputElement,
+	createButtonElement
 }
 
