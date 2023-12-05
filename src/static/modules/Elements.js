@@ -1,3 +1,4 @@
+/* 
 
 function createSourceViewerHeaderField(id, ){
 	let container = document.createElement('div');
@@ -61,7 +62,11 @@ function createInputElement(id, title, placeholder){
 
 }
 
-function createButtonElement(text){
+ */
+
+
+
+function getSosButton(text){
 	let buttonElement = document.createElement('div');
 	buttonElement.classList.add('button-element');
 
@@ -71,11 +76,65 @@ function createButtonElement(text){
 }
 
 
+function getSosInput(id, title, placeholder){
+	let sosInput = document.createElement('div');
+	sosInput.classList.add('sos-input');
+	sosInput.id = id;
+
+	let inputElementTitle = document.createElement('label');
+	inputElementTitle.id = id + '-label';
+	inputElementTitle.classList.add('sos-input-label');
+	inputElementTitle.textContent = title;
+	sosInput.appendChild(inputElementTitle);
+
+	let inputElementinput = document.createElement('input');
+	inputElementinput.classList.add('sos-input-input');
+	inputElementinput.id = id + '-field';
+	inputElementinput.placeholder = placeholder;
+	sosInput.appendChild(inputElementinput);
+	
+
+	return sosInput;
+}
+
+function getSosDisabledInput(id, title, placeholder){
+	let sosDisabledInput = document.createElement('div');
+	sosDisabledInput.classList.add('sos-input');
+	sosDisabledInput.id = id;
+
+	let inputElementTitle = document.createElement('label');
+	inputElementTitle.classList.add('sos-input-label');
+	inputElementTitle.textContent = title;
+	sosDisabledInput.appendChild(inputElementTitle);
+
+	let inputElementinput = document.createElement('input');
+	inputElementinput.classList.add('sos-dis-input-input');
+	inputElementinput.id = id + '-field';
+	inputElementinput.placeholder = placeholder;
+	inputElementinput.disabled = 'true';
+	sosDisabledInput.appendChild(inputElementinput);
+	
+
+	return sosDisabledInput;
+}
+
+function getSosLabel(id, labeltext){
+	let sosLabel = document.createElement('label');
+	sosLabel.id = id;
+	sosLabel.classList.add('sos-label');
+	sosLabel.textContent = labeltext;
+
+	return sosLabel;
+}
+
 
 export {
-	createSourceViewerHeaderField,
-	createReadElement,
-	createInputElement,
-	createButtonElement
+	// createSourceViewerHeaderField,
+	// createReadElement,
+	// createInputElement,
+	getSosButton,
+	getSosLabel,
+	getSosInput,
+	getSosDisabledInput
 }
 

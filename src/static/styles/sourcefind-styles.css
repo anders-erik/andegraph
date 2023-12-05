@@ -12,10 +12,23 @@
 
 #sourcefind-listcard {
 	flex-grow: 1;
+	overflow-y: scroll;
 }
 
-
-
+#sourcefind-searchbar {
+	border-radius: 10px;
+	border: solid black 2px;
+}
+#sourcefind-searchbar-field {
+	border-radius: 10px;
+	background-color: var(--light-1);
+	color: var(--dark-2);
+}
+#sourcefind-searchbar-label {
+	background-color: var(--dark-2);
+	color: var(--light-1);
+	width: 7em;
+}
 
 
 
@@ -25,6 +38,7 @@
 .sourcefind-sourcecard {
 	background-color: burlywood;	
 	margin: 5px;
+	margin-bottom: 10px;
 	padding: 5px;
 
 	display: grid;
@@ -33,10 +47,14 @@
 	grid-template-rows: 1fr 1fr ;
 }
 
-.sourcefind-readelement {
-	background-color: darkorchid;
+.sourcefind-label {
+	/* background-color: darkorchid; */
 	border: solid black 1px;
 	pointer-events: none;
+
+	background-color: beige;
+	text-decoration: line-through;
+	padding-left: 10px;
 }
 
 .sourcefind-name {

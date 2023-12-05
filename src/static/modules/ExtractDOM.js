@@ -5,8 +5,8 @@ function extractCurrentSourceObject(){
 
 	currentSource.name = document.getElementById('sourceview-name-field').value;
 	currentSource.url = document.getElementById('sourceview-url-field').value;
-	currentSource.id = document.getElementById('sourceview-id-field').textContent;
-	currentSource.date = document.getElementById('sourceview-date-field').textContent;
+	currentSource.id = document.getElementById('sourceview-id-field').value;
+	currentSource.date = document.getElementById('sourceview-date-field').value;
 	
 	
 	//console.log('extracting source: ' + currentSource.id);
@@ -14,7 +14,7 @@ function extractCurrentSourceObject(){
 }
 
 function extractCurrentSourceId(){
-	return document.getElementById('sourceview-id-field').textContent;
+	return document.getElementById('sourceview-id-field').value;
 }
 
 export {

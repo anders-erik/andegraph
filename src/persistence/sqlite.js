@@ -3,6 +3,7 @@ const fs = require('fs');
 const location = process.env.SQLITE_DB_LOCATION || '/data/sources.db';
 
 let db, dbAll, dbRun;
+let asdf = 'asdas';
 
 function init() {
     const dirName = require('path').dirname(location);
@@ -11,19 +12,59 @@ function init() {
     }
 
     return new Promise((acc, rej) => {
+        console.log(asdf);
         db = new sqlite3.Database(location, err => {
             if (err) return rej(err);
 
             if (process.env.NODE_ENV !== 'test')
                 console.log(`Using sqlite database at ${location}`);
 
+            //console.log('Database Init: ');
+            console.log(dirName);
+
+            // Foreign Key not applying??
+            // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
+            // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatible with sqlite 2.x
+            // PRAGMA FOREIGN_keys = on;
+            // 
+            // I will for now, NOT be applying the constraints
             db.run(
-                'CREATE TABLE IF NOT EXISTS sources (id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(255), url varchar(255), date varchar(255))',
+                `CREATE TABLE IF NOT EXISTS sources (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    name varchar(255), 
+                    url varchar(255), 
+                    date varchar(255)
+                );`,
                 (err, result) => {
                     if (err) return rej(err);
-                    acc();
                 },
             );
+            db.run( 
+                `CREATE TABLE IF NOT EXISTS shards (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    name varchar(255), 
+                    type varchar(255), 
+                    content varchar(255), 
+                    sourceId INTEGER,
+                    
+                );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
+                (err, result) => {
+                    if (err) return rej(err);
+                },
+            ); 
+            db.run(
+                `CREATE TABLE IF NOT EXISTS sourceReviewDates (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    date varchar(255), 
+                    sourceId INTEGER,
+                    
+                );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
+                (err, result) => {
+                    if (err) return rej(err);
+                },
+            );
+            // this is needed. Otherwise program exits!!
+            acc();
         });
     });
 }

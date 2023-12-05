@@ -1,7 +1,13 @@
-import { fetchAllSources, getSource, newSource, updateSource, deleteSource } from "./Fetches.js";
-import { /* addSourceListItem, */ createSourcefindSourcecard } from './Cards.js';
-import { loadSource,removeSourcefindCard, clearSourceviewPropertiescard } from "./UpdateDOM.js";
-import { extractCurrentSourceObject, extractCurrentSourceId } from './ExtractDOM.js';
+//import { fetchAllSources, getSource, newSource, updateSource, deleteSource } from "./Fetches.js";
+//import { /* addSourceListItem, */ createSourcefindSourcecard } from './Cards.js';
+//import { loadSource,removeSourcefindCard, clearSourceviewPropertiescard } from "./UpdateDOM.js";
+//import { extractCurrentSourceObject, extractCurrentSourceId } from './ExtractDOM.js';
+
+import * as Fetches from './Fetches.js';
+import * as Cards from './Cards.js';
+import * as UpdateDOM from './UpdateDOM.js';
+import * as ExtractDOM from './ExtractDOM.js';
+//import { updateItem } from '../../persistence/sqlite.js';
 
 /*
 async function populateSourceList() {
@@ -50,22 +56,22 @@ let fetchSourcesClicked = async function(e){
 	let sourcefindSearchcard = document.getElementById('sourcefind-searchcard');
 
 	let sourcefindListcard = document.getElementById('sourcefind-listcard');
-	sourcefindListcard.innerHTML = 'sourcefind-listcard';
+	sourcefindListcard.innerHTML = '';
 	//sourcefindListcard.innerHTML = '';
 
-	let allFetchedSources = await fetchAllSources();
+	let allFetchedSources = await Fetches.fetchAllSources();
 	//console.log(allFetchedSources);
 	
 	allFetchedSources.forEach(fetchedSource => {
 		//console.log(fetchedSource);
-		sourcefindListcard.appendChild(createSourcefindSourcecard(fetchedSource));
+		sourcefindListcard.appendChild(Cards.createSourcefindSourcecard(fetchedSource));
 	});
 }
 
 
 let addSourceClicked = async function(e){
 	console.log('create new source');
-	newSource();
+	Fetches.newSource();
 	fetchSourcesClicked();
 }
 
@@ -75,13 +81,13 @@ let deleteSourceClicked = async function(e){
 	//fetchSourcesClicked();
 	if (confirm("Really delete?!") == true) {
 		
-		console.log('deleting source: ' + extractCurrentSourceId());
+		console.log('deleting source: ' + ExtractDOM.extractCurrentSourceId());
 
-	deleteSource(extractCurrentSourceId());
+		Fetches.deleteSource(ExtractDOM.extractCurrentSourceId());
 
-	removeSourcefindCard(extractCurrentSourceId());
+		UpdateDOM.removeSourcefindCard(ExtractDOM.extractCurrentSourceId());
 
-	clearSourceviewPropertiescard();
+		UpdateDOM.clearSourceviewPropertiescard();
 	} 
 	else {
 		console.log('nothing deleted')
@@ -95,10 +101,37 @@ let sourceCardClicked = async function(e){
 	let sourceId = clickedElementId.match(/\d+$/g)
 	console.log('source clicked: ' + sourceId );
 
-	let fetchedSource = await getSource(sourceId);
+	let fetchedSource = await Fetches.getSource(sourceId);
 	console.log(fetchedSource);
 
-	loadSource(fetchedSource);
+	UpdateDOM.loadSource(fetchedSource);
+
+	UpdateDOM.unhighlightAllSourceCards();
+	UpdateDOM.highlightSourceCard(clickedElementId);
+}
+
+
+async function uploadSourceFilePressed(e){
+	console.log("File selected: ", e.target.files[0]);
+	Fetches.uploadSourceFile(ExtractDOM.extractCurrentSourceId(), e.target.files[0]);
+}
+
+async function loadSourceFilePressed(e){
+	console.log("File load pressed");
+	let fetchedBlob = await Fetches.loadSourceFile(ExtractDOM.extractCurrentSourceId());
+	let fileUrl = URL.createObjectURL(fetchedBlob);
+
+	console.log('fetched blob:');
+	console.log(fetchedBlob);
+	let viewcard = document.getElementById('sourceview-viewcard');
+	
+	try {
+		viewcard.style.backgroundImage = 'url(' + fileUrl  + ')';	 
+		console.log('images set');
+	} catch (error) {
+		console.log('images failed to set');
+	}
+	
 }
 
 let sourceviewFieldFocusout = async function(e){
@@ -116,13 +149,18 @@ let sourceviewFieldFocusout = async function(e){
 	let objectString = JSON.stringify(object);
  	*/
 
-	let currentSourceObject = extractCurrentSourceObject();
+	let currentSourceObject = ExtractDOM.extractCurrentSourceObject();
 	
 	//console.log(JSON.stringify(currentSourceObject));
 	//console.log(objectString);
 
-	updateSource(JSON.stringify(currentSourceObject));
+	Fetches.updateSource(JSON.stringify(currentSourceObject));
+
+	UpdateDOM.updateSourcefindCard(currentSourceObject.id);
+
 }
+
+
 
 
 export {
@@ -134,6 +172,9 @@ export {
 	addSourceClicked,
 	deleteSourceClicked,
 	sourceCardClicked,
+	uploadSourceFilePressed,
+	loadSourceFilePressed,
 	sourceviewFieldFocusout
+	
 }
 

@@ -1,5 +1,6 @@
 
 
+
 async function newSource() {
 	try {
 		const response = await fetch('source', {
@@ -20,6 +21,36 @@ async function newSource() {
 		console.error('Error making POST request:', error);
 	}
 }
+
+async function loadSourceFile(id){
+	console.log('loading file for source ' + id);
+	try {
+		const response = await fetch('/download', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (response.ok) {
+			
+			return response.blob();
+		} else {
+			throw new Error('GET request failed:', response.status);
+		}
+	} catch (error) {
+		console.error('Error making GET request:', error);
+	}
+
+
+}
+
+async function uploadSourceFile(id, file){
+	console.log('uplading');
+	console.log(id + '  ' + file);
+
+}
+
 
 async function updateSource(sourceObject) {
 	try {
@@ -112,6 +143,8 @@ async function deleteSource(id) {
 
 export {
 	newSource,
+	loadSourceFile,
+	uploadSourceFile,
 	fetchAllSources,
 	getSource,
 	updateSource,

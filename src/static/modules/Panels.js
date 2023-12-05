@@ -1,4 +1,4 @@
-import { createSourcefindSearchcard, createSourcefindListcard, createSourceviewPropertiescard } from "./Cards.js";
+import { createSourcefindSearchcard, createSourcefindListcard, createSourceviewPropertiescard, getSourceviewViewcard } from "./Cards.js";
 
 function createSourcefindPanel(){
 
@@ -22,6 +22,8 @@ function createSourceviewPanel(){
 	sourceviewPanel.classList.add('panel');
 
 	sourceviewPanel.appendChild(createSourceviewPropertiescard());
+
+	sourceviewPanel.appendChild(getSourceviewViewcard());
 
 	return sourceviewPanel;
 }

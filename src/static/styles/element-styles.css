@@ -1,13 +1,44 @@
 
 .input-element {
 	background-color: rgb(7, 77, 115);
-	
+	display: flex;
+	flex-direction: row;
 	
 }
 .read-element {
 	background-color: chartreuse;
+	display: flex;
+	flex-direction: row;
+}
+
+/* 
+.sos-label {
 	
 }
+ */
+.sos-input {
+	background-color: rgb(7, 77, 115);
+	display: flex;
+	flex-direction: row;
+}
+.sos-input-label {
+	background-color: rgb(143, 206, 194);
+	width: 5em;
+	
+	white-space: nowrap;
+}
+.sos-input-input {
+	background-color: rgb(6, 28, 43);
+	color: aliceblue;
+	flex-grow: 1;
+}
+.sos-dis-input-input {
+	background-color: rgb(6, 28, 43);
+	color: aliceblue;
+	flex-grow: 1;
+	
+}
+
 
 .button-element {
 	background-color: rgb(194, 51, 87);

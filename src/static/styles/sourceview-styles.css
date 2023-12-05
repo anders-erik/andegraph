@@ -12,7 +12,7 @@
 	background-color: blanchedalmond;
 	display: grid;
 	gap: 10px;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns:  1fr 1fr 1fr ;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 	
 }
@@ -42,7 +42,28 @@
 	grid-row: 4 / span 1;
 }
 
+#sourceview-button-card {
+	grid-column: 2 / span 1;
+	grid-row: 3 / span 2;
+	background-color: blueviolet;
 
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+	grid-template-rows: 1fr;
+}
+#sourceview-load {
+	background-color: aqua;
+	cursor: pointer;
+}
+#sourceview-upload {
+	background-color: aqua;
+	display: none;
+}
+#sourceview-upload-label {
+	background-color: rgb(93, 106, 106);
+	border: 1px solid rgb(92, 13, 13);
+    cursor: pointer;
+}
 
 
 
