@@ -44,7 +44,7 @@
 
 #sourceview-button-card {
 	grid-column: 2 / span 1;
-	grid-row: 3 / span 2;
+	grid-row: 4 / span 1;
 	background-color: blueviolet;
 
 	display: grid;

@@ -11,8 +11,10 @@ const addSource = require('./routes/addSource');
 const putSource = require('./routes/putSource');
 const getSources = require('./routes/getSources');
 const getSource = require('./routes/getSource');
+const getSourcefile = require('./routes/getSourcefile');
 const deleteSource = require('./routes/deleteSource');
 
+const backupData = require('./routes/backupData');
 
 
 const devtest_db = require('./sqlite_devtests/sqlite_devtests');
@@ -39,13 +41,16 @@ app.use(express.static(__dirname + '/static'));
 app.post('/source', addSource);
 app.put('/source', putSource);
 app.get('/source', getSource);
+app.get('/sourcefile/:id', getSourcefile);
 app.get('/sources', getSources);
 app.delete('/source/:id', deleteSource);
 
-app.get('/download', function(req, res){
-    const file = `/data/sources/test.jpg`;
-    res.download(file); // Set disposition and send it.
-  });
+app.post('/backup', backupData);
+
+// app.get('/sourcefile/:id', function(req, res){
+//     const file = `/data/sources/${req.params.id}.bmp`;
+//     res.download(file); // Set disposition and send it.
+//   });
 
 
 db.init().then(() => {

@@ -118,19 +118,17 @@ async function uploadSourceFilePressed(e){
 
 async function loadSourceFilePressed(e){
 	console.log("File load pressed");
-	let fetchedBlob = await Fetches.loadSourceFile(ExtractDOM.extractCurrentSourceId());
-	let fileUrl = URL.createObjectURL(fetchedBlob);
 
+	let fetchedBlob = await Fetches.loadSourceFile(ExtractDOM.extractCurrentSourceId());
 	console.log('fetched blob:');
 	console.log(fetchedBlob);
+
+	let fileUrl = URL.createObjectURL(fetchedBlob);
+	console.log('file Url:');
+	console.log(fileUrl);
+
 	let viewcard = document.getElementById('sourceview-viewcard');
-	
-	try {
-		viewcard.style.backgroundImage = 'url(' + fileUrl  + ')';	 
-		console.log('images set');
-	} catch (error) {
-		console.log('images failed to set');
-	}
+	viewcard.style.backgroundImage = 'url(' + fileUrl  + ')';	
 	
 }
 

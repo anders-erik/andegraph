@@ -33,7 +33,8 @@ function init() {
                     id INTEGER PRIMARY KEY AUTOINCREMENT, 
                     name varchar(255), 
                     url varchar(255), 
-                    date varchar(255)
+                    date varchar(255),
+                    fileEnding varchar(255)
                 );`,
                 (err, result) => {
                     if (err) return rej(err);
@@ -45,7 +46,7 @@ function init() {
                     name varchar(255), 
                     type varchar(255), 
                     content varchar(255), 
-                    sourceId INTEGER,
+                    sourceId INTEGER
                     
                 );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
                 (err, result) => {
@@ -56,7 +57,7 @@ function init() {
                 `CREATE TABLE IF NOT EXISTS sourceReviewDates (
                     id INTEGER PRIMARY KEY AUTOINCREMENT, 
                     date varchar(255), 
-                    sourceId INTEGER,
+                    sourceId INTEGER
                     
                 );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
                 (err, result) => {
@@ -232,6 +233,16 @@ async function deleteSource(id) {
     });
 }
 
+async function backupDatabase() {
+    return new Promise((acc, rej) => {
+        let unixTime = Math.floor(Date.now() / 1000);
+        db.all('.backup /data/sql-backup/sources-asdf.db', (err, rows) => {
+            if (err) return rej(err);
+            acc();
+        });
+    });
+}
+
 module.exports = {
     init,
     teardown,
@@ -244,5 +255,6 @@ module.exports = {
     getSources,
     getSource,
     updateSource,
-    deleteSource
+    deleteSource,
+    backupDatabase
 };

@@ -25,7 +25,7 @@ async function newSource() {
 async function loadSourceFile(id){
 	console.log('loading file for source ' + id);
 	try {
-		const response = await fetch('/download', {
+		const response = await fetch('/sourcefile/' + id, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

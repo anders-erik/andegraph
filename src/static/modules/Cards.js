@@ -247,12 +247,15 @@ function getSourceviewButtonCard(){
 	buttonCard.appendChild(sourceviewLoad);
 
 
+	// Set costum label for file selector
+	// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
 	let sourceviewUpload = document.createElement('input');
 	sourceviewUpload.id = 'sourceview-upload';
 	sourceviewUpload.type = 'file';
 	sourceviewUpload.addEventListener('change', uploadSourceFilePressed);
 	let sourceviewUploadLabel = document.createElement('label');
 	sourceviewUploadLabel.id = 'sourceview-upload-label';
+	// https://stackoverflow.com/questions/15750290/setting-the-html-label-for-attribute-in-javascript
 	sourceviewUploadLabel.htmlFor = 'sourceview-upload';
 	sourceviewUploadLabel.textContent = 'upload';
 	
