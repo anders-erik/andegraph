@@ -197,35 +197,39 @@ function createSourceviewPropertiescard() {
 
 	sourceviewPropertiescardOuter.appendChild(sourceviewPropertiescardInner);
 
-	let sourceviewName = Elements.getSosInput('sourceview-title', 'sourcename:', '');
+	let sourceviewName = Elements.getSosInput('sourceview-title', 'Title', '');
 	sourceviewName.classList.add('sourceview-element');
 	sourceviewName.addEventListener('focusout', sourceviewFieldFocusout);
 	sourceviewPropertiescardInner.appendChild(sourceviewName);
 
-	let sourceviewUrl = Elements.getSosInput('sourceview-url', 'source url:', '');
+	let sourceviewUrl = Elements.getSosInput('sourceview-url', 'URL', '');
 	sourceviewUrl.classList.add('sourceview-element');
 	sourceviewUrl.addEventListener('focusout', sourceviewFieldFocusout);
 	sourceviewPropertiescardInner.appendChild(sourceviewUrl);
 
-	let sourceviewId = Elements.getSosDisabledInput('sourceview-id', 'source id:', '');
+	let sourceviewId = Elements.getSosDisabledInput('sourceview-id', 'ID', '');
 	sourceviewId.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewId);
 
-	let sourceviewDate = Elements.getSosDisabledInput('sourceview-datecreated', 'date created:', '');
+	let sourceviewDate = Elements.getSosDisabledInput('sourceview-datecreated', 'Date Created:', '');
 	sourceviewDate.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewDate);
 
-	let sourceviewHasFile = Elements.getSosDisabledInput('sourceview-hasfile', 'has file:', '');
+	let sourceviewHasFile = Elements.getSosDisabledInput('sourceview-hasfile', 'Has File:', '');
 	sourceviewHasFile.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewHasFile);
 
-	let sourceviewFileType = Elements.getSosDisabledInput('sourceview-filetype', 'file type:', '');
+	let sourceviewFileType = Elements.getSosDisabledInput('sourceview-filetype', 'File Type:', '');
 	sourceviewFileType.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewFileType);
 
 	let sourceviewFileEnding = Elements.getSosDisabledInput('sourceview-fileending', 'File Ending:', '');
 	sourceviewFileEnding.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewFileEnding);
+
+	let sourceviewReviewDates = Elements.getDateViewer('sourceview-reviewdates');
+	sourceviewReviewDates.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewReviewDates);
 
 	let sourceviewButtonCard = getSourceviewButtonCard();
 	sourceviewButtonCard.id = 'sourceview-button-card';

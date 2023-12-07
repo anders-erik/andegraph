@@ -127,6 +127,13 @@ function getSosLabel(id, labeltext){
 	return sosLabel;
 }
 
+function getDateViewer(id){
+	let dateViewer = document.createElement('div');
+	dateViewer.id = id;
+
+	return dateViewer;
+}
+
 
 export {
 	// createSourceViewerHeaderField,
@@ -135,6 +142,7 @@ export {
 	getSosButton,
 	getSosLabel,
 	getSosInput,
-	getSosDisabledInput
+	getSosDisabledInput,
+	getDateViewer
 }
 

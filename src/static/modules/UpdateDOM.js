@@ -28,6 +28,18 @@ function loadSource(fetchedSource) {
 	let sourceviewFileEnding = document.getElementById('sourceview-fileending-field');
 	sourceviewFileEnding.value = fetchedSource.fileEnding;
 
+	// review dates
+	let sourceviewReviewDates = document.getElementById('sourceview-reviewdates');
+
+	fetchedSource.sourceReviewDates.forEach(reviewDate => {
+		//console.log(reviewDate.date);
+		let reviewDateLabel = document.createElement('label');
+		reviewDateLabel.classList.add('sourceview-reviewdate-labels');
+		reviewDateLabel.textContent = reviewDate.date;
+		sourceviewReviewDates.appendChild(reviewDateLabel);
+	});
+
+
 	// For now we simply guarantee no lingering source files
 	document.getElementById('sourceview-viewcard').innerHTML = '';
 }

@@ -12,23 +12,23 @@
 	background-color: blanchedalmond;
 	display: grid;
 	gap: 10px;
-	grid-template-columns:  1fr 1fr 1fr ;
-	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-	
+	grid-template-columns:  1fr 1fr 1fr 1fr;
+	grid-template-rows: 3.5vh 3.5vh 3.5vh 3.5vh 3.5vh;
+	position: relative;
 }
 
 .sourceview-element {
 	background-color: darkorchid;
-	border: solid black 1px;
+	
 }
 
 #sourceview-title {
-	grid-column: 1 / span 3;
+	grid-column: 1 / span 4;
 	grid-row: 1 / span 1;
 }
 
 #sourceview-url {
-	grid-column: 1 / span 2;
+	grid-column: 1 / span 3;
 	grid-row: 2 / span 1;
 }
 
@@ -53,6 +53,21 @@
 	grid-column: 2 / span 1;
 	grid-row: 5 / span 1;
 }
+#sourceview-reviewdates {
+	grid-column: 4 / span 1;
+	grid-row: 2 / span 4;
+	background-color: cadetblue;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	padding: 5px;
+	overflow-y: scroll;
+}
+.sourceview-reviewdate-labels {
+	background-color: burlywood;
+	margin: 3px;
+}
 
 #sourceview-button-card {
 	grid-column: 1 / span 1;
@@ -76,6 +91,7 @@
 	border: 1px solid rgb(92, 13, 13);
     cursor: pointer;
 }
+
 
 
 
