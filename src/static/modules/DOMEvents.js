@@ -9,42 +9,7 @@ import * as UpdateDOM from './UpdateDOM.js';
 import * as ExtractDOM from './ExtractDOM.js';
 //import { updateItem } from '../../persistence/sqlite.js';
 
-/*
-async function populateSourceList() {
-	try {
-		let fetchedSources = await fetchAllSources();
-		let sourceList = document.getElementById('source-list');
-		sourceList.innerHTML = '';
-		fetchedSources.forEach(source => {
-			addSourceListItem(source.id);
-		});
 
-	} catch (error) {
-		console.trace();
-	}
-
-
-}
-
-async function addNewSource(){
-	console.log('adding new source');
-	newSource();
-	populateSourceList();
-}
-
-async function loadSourceViewerHeader(e){
-	
-	
-	let fetchedSource = await getSource(e.target.textContent);
-	
-	let sourceViewerHeader = document.getElementById('source-viewer-header');
-	
-	sourceViewerHeader.textContent = '';
-	sourceViewerHeader.textContent = fetchedSource.id;
-	sourceViewerHeader.textContent = fetchedSource.id + ' ' + fetchedSource.name;
-
-}
-*/
 
 
 
@@ -71,8 +36,12 @@ let fetchSourcesClicked = async function(e){
 
 let addSourceClicked = async function(e){
 	console.log('create new source');
-	Fetches.newSource();
+	let newSourceResponse = await Fetches.newSource();
+	console.log("asdf:::");
+	console.log(newSourceResponse);
 	fetchSourcesClicked();
+
+	
 }
 
 let deleteSourceClicked = async function(e){
@@ -117,18 +86,37 @@ async function uploadSourceFilePressed(e){
 }
 
 async function loadSourceFilePressed(e){
-	console.log("File load pressed");
+	//console.log("File load pressed");
+	let currentSourceId = ExtractDOM.extractCurrentSourceId();
 
-	let fetchedBlob = await Fetches.loadSourceFile(ExtractDOM.extractCurrentSourceId());
-	console.log('fetched blob:');
-	console.log(fetchedBlob);
+	//console.log(typeof(+document.getElementById('sourceview-hasfile-field').value));
 
-	let fileUrl = URL.createObjectURL(fetchedBlob);
-	console.log('file Url:');
-	console.log(fileUrl);
+	if(currentSourceId == ''){
+		console.log('no source selected')
+	}
+	else if (+document.getElementById('sourceview-hasfile-field').value != 1) { //sourceview-hasfile-field
+		// check if source has a file to load. If not we don't do anything
+		console.log('There is no file associated with this source.')
+	}
+	else{
+		let fetchedBlob = await Fetches.loadSourceFile(ExtractDOM.extractCurrentSourceId());
+		// console.log('fetched blob:');
+		// console.log(fetchedBlob);
+		// console.log('Size : ' + fetchedBlob.slice(1, 100).text().then((obj) => {console.log(obj)}));
+		// console.log();
+	
+		let fileUrl = URL.createObjectURL(fetchedBlob);
+		// console.log('file Url:');
+		// console.log(fileUrl);
+	
+		//let viewcard = document.getElementById('sourceview-viewcard');
 
-	let viewcard = document.getElementById('sourceview-viewcard');
-	viewcard.style.backgroundImage = 'url(' + fileUrl  + ')';	
+//sourceview-filetype-field
+
+		//viewcard.style.backgroundImage = 'url(' + fileUrl  + ')';	
+		UpdateDOM.displayNewSourceFile(ExtractDOM.extractCurrentSourceFileType(), fileUrl);
+	}
+
 	
 }
 

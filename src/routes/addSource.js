@@ -1,24 +1,17 @@
 const db = require('../persistence/sqlite');
 
-function randomNumber() {
-    return Math.floor(Math.random() * 100000) + 1;
-  }
 
 module.exports = async (req, res) => {
-    /*
-    const item = {
-        id: randomNumber(),
-        name: req.body.name,
-        url: req.body.url,
-        date: req.body.date
-    };
-
-    await db.storeSource(item);
-    res.send(item);
-    */
-   let newId = randomNumber();
+    
     await db.storeSource();
-    res.send({});
+
+
+    // get id of new source
+    let queryReturn = await db.queryString('SELECT MAX(id) FROM sources');
+    console.log('New Source id: ' + Object.values(queryReturn[0])[0]);
+    //console.log(Object.values(queryReturn[0])[0]);
+
+    res.send({'id': Object.values(queryReturn[0])[0] });
 };
 
 

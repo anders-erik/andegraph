@@ -62,6 +62,10 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+/* .panel:focus-within {
+	border: solid black 1px;
+} */
+
 
 .seperation-panel {
 	background-color: goldenrod;
@@ -74,7 +78,6 @@ body {
 	margin: 10px;
 	padding: 10px;
 }
-
 
 
 

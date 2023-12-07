@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
-const location = process.env.SQLITE_DB_LOCATION || '/data/sources.db';
+const location = process.env.SQLITE_DB_LOCATION || '/data/live/sources.db';
 
 let db, dbAll, dbRun;
 let asdf = 'asdas';
@@ -24,17 +24,25 @@ function init() {
 
             // Foreign Key not applying??
             // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
-            // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatible with sqlite 2.x
+            // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
             // PRAGMA FOREIGN_keys = on;
             // 
             // I will for now, NOT be applying the constraints
+
+            // CHANGED PLANS. I GUESS THIS WORKS??
+            // https://github.com/TryGhost/node-sqlite3/issues/896
+            db.get("PRAGMA foreign_keys = ON");
+
             db.run(
                 `CREATE TABLE IF NOT EXISTS sources (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    name varchar(255), 
-                    url varchar(255), 
-                    date varchar(255),
-                    fileEnding varchar(255)
+                    "id"	INTEGER,
+                    "title"	varchar(255),
+                    "url"	varchar(255),
+                    "dateCreated"	varchar(16),
+                    "hasFile"	INTEGER,
+                    "fileType"	varchar(8),
+                    "fileEnding"	varchar(8),
+                    PRIMARY KEY("id" AUTOINCREMENT)
                 );`,
                 (err, result) => {
                     if (err) return rej(err);
@@ -42,12 +50,13 @@ function init() {
             );
             db.run( 
                 `CREATE TABLE IF NOT EXISTS shards (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    name varchar(255), 
-                    type varchar(255), 
-                    content varchar(255), 
-                    sourceId INTEGER
-                    
+                    "id"	INTEGER,
+	                "prompt"	varchar(255),
+	                "fileType"	varchar(8),
+	                "fileEnding"	varchar(8),
+	                "sourceId"	INTEGER NOT NULL,
+	                FOREIGN KEY("sourceId") REFERENCES "sources"("id"),
+	                PRIMARY KEY("id" AUTOINCREMENT)
                 );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
                 (err, result) => {
                     if (err) return rej(err);
@@ -55,10 +64,12 @@ function init() {
             ); 
             db.run(
                 `CREATE TABLE IF NOT EXISTS sourceReviewDates (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    date varchar(255), 
-                    sourceId INTEGER
-                    
+                    "id"	INTEGER,
+	                "date"	varchar(255),
+	                "completed"	INTEGER,
+	                "sourceId"	INTEGER NOT NULL,
+	                FOREIGN KEY("sourceId") REFERENCES "sources"("id"),
+	                PRIMARY KEY("id" AUTOINCREMENT)
                 );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
                 (err, result) => {
                     if (err) return rej(err);
@@ -79,94 +90,46 @@ async function teardown() {
     });
 }
 
-async function getItems() {
-    return new Promise((acc, rej) => {
-        db.all('SELECT * FROM todo_items', (err, rows) => {
-            if (err) return rej(err);
-            acc(
-                rows.map(item =>
-                    Object.assign({}, item, {
-                        completed: item.completed === 1,
-                    }),
-                ),
-            );
-        });
-    });
-}
 
-async function getItem(id) {
-    return new Promise((acc, rej) => {
-        db.all('SELECT * FROM todo_items WHERE id=?', [id], (err, rows) => {
-            if (err) return rej(err);
-            acc(
-                rows.map(item =>
-                    Object.assign({}, item, {
-                        completed: item.completed === 1,
-                    }),
-                )[0],
-            );
-        });
-    });
-}
 
-async function storeItem(item) {
+// async function getItem(id) {
+//     return new Promise((acc, rej) => {
+//         db.all('SELECT * FROM todo_items WHERE id=?', [id], (err, rows) => {
+//             if (err) return rej(err);
+//             acc(
+//                 rows.map(item =>
+//                     Object.assign({}, item, {
+//                         completed: item.completed === 1,
+//                     }),
+//                 )[0],
+//             );
+//         });
+//     });
+// }
+
+
+
+
+async function queryString(string) {
     return new Promise((acc, rej) => {
-        db.run(
-            'INSERT INTO todo_items (id, name, completed) VALUES (?, ?, ?)',
-            [item.id, item.name, item.completed ? 1 : 0],
-            err => {
+        db.all(
+            string,
+            (err, rows) => {
                 if (err) return rej(err);
-                acc();
+                acc(rows);
             },
         );
+        return 'query ok :)';
     });
 }
 
-async function updateItem(id, item) {
-    return new Promise((acc, rej) => {
-        db.run(
-            'UPDATE todo_items SET name=?, completed=? WHERE id = ?',
-            [item.name, item.completed ? 1 : 0, id],
-            err => {
-                if (err) return rej(err);
-                acc();
-            },
-        );
-    });
-} 
 
-async function removeItem(id) {
-    return new Promise((acc, rej) => {
-        db.run('DELETE FROM todo_items WHERE id = ?', [id], err => {
-            if (err) return rej(err);
-            acc();
-        });
-    });
-}
-
-/* 
-ADDED BY ANDERS-ERIK
-*/
-/* 
-async function storeSource(item) {
-    return new Promise((acc, rej) => {
-        db.run(
-            'INSERT INTO sources (id, name, url, date) VALUES (?, ?, ?, ?)',
-            [item.id, item.name, item.url, item.date ],
-            err => {
-                if (err) return rej(err);
-                acc();
-            },
-        );
-    });
-}
- */
 
 async function storeSource() {
     return new Promise((acc, rej) => {
         db.run(
-            "INSERT INTO sources (date) values(DATE('now'))",
-            err => {
+            "INSERT INTO sources (dateCreated, hasFile) values(DATE('now'), 0)",
+            (err, rows)  => {
                 if (err) return rej(err);
                 acc();
             },
@@ -177,8 +140,8 @@ async function storeSource() {
 async function updateSource(item) {
     return new Promise((acc, rej) => {
         db.run(
-            'UPDATE sources SET id=?, name=?, url=?, date=? WHERE sources.id=?',
-            [item.id, item.name, item.url, item.date, item.id],
+            'UPDATE sources SET id=?, title=?, url=?, dateCreated=? WHERE sources.id=?',
+            [item.id, item.title, item.url, item.dateCreated, item.id],
             err => {
                 if (err) return rej(err);
                 acc();
@@ -233,28 +196,29 @@ async function deleteSource(id) {
     });
 }
 
-async function backupDatabase() {
+
+async function newShard() {
     return new Promise((acc, rej) => {
-        let unixTime = Math.floor(Date.now() / 1000);
-        db.all('.backup /data/sql-backup/sources-asdf.db', (err, rows) => {
-            if (err) return rej(err);
-            acc();
-        });
+        db.run(
+            "INSERT INTO shards (sourceId) values(1)",
+            err => {
+                if (err) return rej(err);
+                acc();
+            },
+        );
     });
 }
+
+
 
 module.exports = {
     init,
     teardown,
-    getItems,
-    getItem,
-    storeItem,
-    updateItem,
-    removeItem,
+    queryString,
     storeSource,
     getSources,
     getSource,
     updateSource,
     deleteSource,
-    backupDatabase
+    newShard
 };

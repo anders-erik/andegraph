@@ -4,9 +4,9 @@
 # https://www.reddit.com/r/sqlite/comments/178iq1i/bash_variables_in_sqlite/
 
 timestamp=$(date +%s)
-DataFile="./data/sources.db"
-BackupFile="./data/sql-backup/backup-$timestamp.db"
-touch $BackupFile
+DataFile="../live/sources.db"
+BackupFile="../backups/db/sources-$timestamp.db"
+#touch $BackupFile
 sqlite3 "$DataFile" ".backup $BackupFile"
 
 

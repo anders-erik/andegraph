@@ -1,6 +1,6 @@
 // Never succeded in inporting the module for this script
 
-const sqlite3 = require('../../node_modules/sqlite3/lib/sqlite3.js').verbose();
+const sqlite3 = require('sqlite3').verbose();
 
 // open the database
 let db = new sqlite3.Database('./sources.db', sqlite3.OPEN_READONLY, (err) => {

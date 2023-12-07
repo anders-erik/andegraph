@@ -157,16 +157,16 @@ function createSourcefindSourcecard(fetchedSource){
 	//sourcefindSourcecard.textContent = 'sourcefind-sourcecard-' + fetchedSource.id;
 	
 	//let sourcefindName = createReadElement('sourcefind-name-' + fetchedSource.id, 'source name:', fetchedSource.name);
-	let sourcefindName = Elements.getSosLabel('sourcefind-name-' + fetchedSource.id, fetchedSource.name);
-	sourcefindName.classList.add('sourcefind-name', 'sourcefind-label');
+	let sourcefindName = Elements.getSosLabel('sourcefind-title-' + fetchedSource.id, fetchedSource.title);
+	sourcefindName.classList.add('sourcefind-title', 'sourcefind-label');
 	sourcefindSourcecard.appendChild(sourcefindName);
 
 	let sourcefindId = Elements.getSosLabel('sourcefind-id-' + fetchedSource.id, fetchedSource.id);
 	sourcefindId.classList.add('sourcefind-id', 'sourcefind-label');
 	sourcefindSourcecard.appendChild(sourcefindId);
 
-	let sourcefindDate = Elements.getSosLabel('sourcefind-date-' + fetchedSource.id, fetchedSource.date);
-	sourcefindDate.classList.add('sourcefind-date', 'sourcefind-label');
+	let sourcefindDate = Elements.getSosLabel('sourcefind-datecreated-' + fetchedSource.id, fetchedSource.dateCreated);
+	sourcefindDate.classList.add('sourcefind-datecreated', 'sourcefind-label');
 	sourcefindSourcecard.appendChild(sourcefindDate);
 
 
@@ -197,7 +197,7 @@ function createSourceviewPropertiescard() {
 
 	sourceviewPropertiescardOuter.appendChild(sourceviewPropertiescardInner);
 
-	let sourceviewName = Elements.getSosInput('sourceview-name', 'sourcename:', '');
+	let sourceviewName = Elements.getSosInput('sourceview-title', 'sourcename:', '');
 	sourceviewName.classList.add('sourceview-element');
 	sourceviewName.addEventListener('focusout', sourceviewFieldFocusout);
 	sourceviewPropertiescardInner.appendChild(sourceviewName);
@@ -211,9 +211,21 @@ function createSourceviewPropertiescard() {
 	sourceviewId.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewId);
 
-	let sourceviewDate = Elements.getSosDisabledInput('sourceview-date', 'date created:', '');
+	let sourceviewDate = Elements.getSosDisabledInput('sourceview-datecreated', 'date created:', '');
 	sourceviewDate.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewDate);
+
+	let sourceviewHasFile = Elements.getSosDisabledInput('sourceview-hasfile', 'has file:', '');
+	sourceviewHasFile.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewHasFile);
+
+	let sourceviewFileType = Elements.getSosDisabledInput('sourceview-filetype', 'file type:', '');
+	sourceviewFileType.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewFileType);
+
+	let sourceviewFileEnding = Elements.getSosDisabledInput('sourceview-fileending', 'File Ending:', '');
+	sourceviewFileEnding.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewFileEnding);
 
 	let sourceviewButtonCard = getSourceviewButtonCard();
 	sourceviewButtonCard.id = 'sourceview-button-card';

@@ -2,42 +2,23 @@ const express = require('express');
 const app = express(); 
 const db = require('./persistence/sqlite');
 
-// const getItems = require('./routes/getItems');
-// const addItem = require('./routes/addItem');
-// const updateItem = require('./routes/updateItem');
-// const deleteItem = require('./routes/deleteItem');
+app.use(express.json());
+app.use(express.static(__dirname + '/static'));
 
+
+
+// ROUTES
 const addSource = require('./routes/addSource');
 const putSource = require('./routes/putSource');
 const getSources = require('./routes/getSources');
 const getSource = require('./routes/getSource');
 const getSourcefile = require('./routes/getSourcefile');
 const deleteSource = require('./routes/deleteSource');
-
-const backupData = require('./routes/backupData');
-
-
-const devtest_db = require('./sqlite_devtests/sqlite_devtests');
-devtest_db.init().catch((err) => {
-    console.error(err);
-    process.exit(1);
-});
-//console.log('devtest_dir: ' + devtest_db.location);
-const addTable = require('./sqlite_devtests/addTableRoute');
-app.post('/addTable', addTable);
+const postShard = require('./routes/postShard');
 
 
 
-
-app.use(express.json());
-app.use(express.static(__dirname + '/static'));
-
-// app.get('/items', getItems);
-// app.post('/items', addItem);
-// app.put('/items/:id', updateItem);
-// app.delete('/items/:id', deleteItem);
-
-
+// FUNCTIONS
 app.post('/source', addSource);
 app.put('/source', putSource);
 app.get('/source', getSource);
@@ -45,12 +26,10 @@ app.get('/sourcefile/:id', getSourcefile);
 app.get('/sources', getSources);
 app.delete('/source/:id', deleteSource);
 
-app.post('/backup', backupData);
+app.post('/shard', postShard);
 
-// app.get('/sourcefile/:id', function(req, res){
-//     const file = `/data/sources/${req.params.id}.bmp`;
-//     res.download(file); // Set disposition and send it.
-//   });
+
+
 
 
 db.init().then(() => {
