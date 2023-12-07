@@ -65,6 +65,8 @@ let deleteSourceClicked = async function(e){
 }
 
 
+
+
 let sourceCardClicked = async function(e){
 	let clickedElementId = e.target.id;
 	let sourceId = clickedElementId.match(/\d+$/g)
@@ -80,10 +82,25 @@ let sourceCardClicked = async function(e){
 }
 
 
+
+
+
 async function uploadSourceFilePressed(e){
 	console.log("File selected: ", e.target.files[0]);
+	
 	Fetches.uploadSourceFile(ExtractDOM.extractCurrentSourceId(), e.target.files[0]);
+
+	document.getElementById('sourceview-fileending-field').value = 'ending';
+	document.getElementById('sourceview-filetype-field').value = 'type';
+
+	//UpdateDOM.saveCurrentSource();
+	//UpdateDOM.loadSource();
+
 }
+
+
+
+
 
 async function loadSourceFilePressed(e){
 	//console.log("File load pressed");
@@ -135,14 +152,17 @@ let sourceviewFieldFocusout = async function(e){
 	let objectString = JSON.stringify(object);
  	*/
 
-	let currentSourceObject = ExtractDOM.extractCurrentSourceObject();
+	UpdateDOM.saveCurrentSource();
+
+
+	// let currentSourceObject = ExtractDOM.extractCurrentSourceObject();
 	
-	//console.log(JSON.stringify(currentSourceObject));
-	//console.log(objectString);
+	// //console.log(JSON.stringify(currentSourceObject));
+	// //console.log(objectString);
 
-	Fetches.updateSource(JSON.stringify(currentSourceObject));
+	// Fetches.updateSource(JSON.stringify(currentSourceObject));
 
-	UpdateDOM.updateSourcefindCard(currentSourceObject.id);
+	// UpdateDOM.updateSourcefindCard(currentSourceObject.id);
 
 }
 

@@ -14,17 +14,20 @@ const putSource = require('./routes/putSource');
 const getSources = require('./routes/getSources');
 const getSource = require('./routes/getSource');
 const getSourcefile = require('./routes/getSourcefile');
+const postSourcefile = require('./routes/postSourcefile');
 const deleteSource = require('./routes/deleteSource');
+
 const postShard = require('./routes/postShard');
 
 
 
-// FUNCTIONS
+// HTTP METHODS
 app.post('/source', addSource);
 app.put('/source', putSource);
 app.get('/source', getSource);
-app.get('/sourcefile/:id', getSourcefile);
 app.get('/sources', getSources);
+app.get('/sourcefile/:id', getSourcefile);
+app.post('/sourcefile/:id', express.raw({limit: "10000kb",type: "*/*"}), postSourcefile);
 app.delete('/source/:id', deleteSource);
 
 app.post('/shard', postShard);

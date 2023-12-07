@@ -1,3 +1,6 @@
+// DONT WANT THESE, BUT HAD TO IMPELMENT TO UPDATE SOURCE!
+import * as ExtractDOM from './ExtractDOM.js';
+import * as Fetches from './Fetches.js';
 
 
 function loadSource(fetchedSource) {
@@ -30,7 +33,7 @@ function loadSource(fetchedSource) {
 
 	// review dates
 	let sourceviewReviewDates = document.getElementById('sourceview-reviewdates');
-
+	sourceviewReviewDates.innerHTML = '';
 	fetchedSource.sourceReviewDates.forEach(reviewDate => {
 		//console.log(reviewDate.date);
 		let reviewDateLabel = document.createElement('label');
@@ -94,7 +97,7 @@ function unhighlightAllSourceCards(){
 function displayNewSourceFile(fileType, fileUrl){
 	let fileViewer;
 	switch (fileType) {
-		case 'img':
+		case 'image':
 			fileViewer = document.createElement('img');
 			break;
 
@@ -121,6 +124,20 @@ function displayNewSourceFile(fileType, fileUrl){
 
 }
 
+
+function saveCurrentSource(){
+	let currentSourceObject = ExtractDOM.extractCurrentSourceObject();
+	
+	//console.log(JSON.stringify(currentSourceObject));
+	//console.log(objectString);
+
+	Fetches.updateSource(JSON.stringify(currentSourceObject));
+
+	updateSourcefindCard(currentSourceObject.id);
+}
+
+
+
 export {
 	loadSource,
 	removeSourcefindCard,
@@ -128,5 +145,6 @@ export {
 	clearSourceviewPropertiescard,
 	highlightSourceCard,
 	unhighlightAllSourceCards,
-	displayNewSourceFile
+	displayNewSourceFile,
+	saveCurrentSource
 }

@@ -28,11 +28,15 @@
 	background-color: rgb(143, 206, 194);
 	min-width: 6em;
 	max-width: 6em;
-	text-align: end;
-	font-size: small;
 	
+	font-size: small;
 	white-space: nowrap;
 	overflow-x: hidden;
+
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	padding-right: 5px;
 }
 .sos-input-input {
 	background-color: rgb(6, 28, 43);
