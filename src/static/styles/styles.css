@@ -61,6 +61,7 @@ body {
 	background-color: aliceblue;
 	display: flex;
 	flex-direction: column;
+	min-height: 35em;
 }
 /* .panel:focus-within {
 	border: solid black 1px;
