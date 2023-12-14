@@ -1,6 +1,36 @@
 
 
 
+async function _post(_path, _parameters, _headers, _body) {
+	try {
+		const response = await fetch(
+			/* _path */ '/test' + '?' + new URLSearchParams(_parameters), 
+			{
+				method: 'POST',
+				headers: _headers,
+				body: _body
+			}
+		);
+
+		// Response is 2XX		 (https://developer.mozilla.org/en-US/docs/Web/API/Response/ok)
+		if (response.ok) {
+			const responseData = await response.json();
+			console.log(`${POST} request successful:`, responseData);
+			return responseData;
+		} else {
+			throw new Error(`${POST} request failed:`, response.status);
+		}
+
+	} catch (error) {
+		console.error(`Error making ${POST} request:`, error);
+	}
+}
+
+
+
+
+
+
 async function newSource() {
 	try {
 		const response = await fetch('source', {

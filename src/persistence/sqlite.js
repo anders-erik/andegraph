@@ -49,6 +49,19 @@ function init() {
                 },
             );
             db.run( 
+                `CREATE TABLE IF NOT EXISTS "sourceReviewDates" (
+                    "id"	INTEGER,
+                    "date"	varchar(10),
+                    "completed"	INTEGER,
+                    "sourceId"	INTEGER NOT NULL,
+                    FOREIGN KEY("sourceId") REFERENCES "sources"("id"),
+                    PRIMARY KEY("id" AUTOINCREMENT)
+                );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
+                (err, result) => {
+                    if (err) return rej(err);
+                },
+            ); 
+            db.run( 
                 `CREATE TABLE IF NOT EXISTS shards (
                     "id"	INTEGER,
 	                "prompt"	varchar(255),

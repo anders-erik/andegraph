@@ -1,0 +1,1 @@
+In an object literal like { a: 1, b: 2, __proto__: c }, the value c (which has to be either null or another object) will become the [[Prototype]] of the object represented by the literal, while the other keys like a and b will become the own properties of the object. This syntax reads very naturally, since [[Prototype]] is just an "internal property" of the object.

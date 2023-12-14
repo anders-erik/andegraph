@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
     try {
         // https://stackoverflow.com/questions/39395195/how-to-write-wav-file-from-blob-in-javascript-node
         //console.log(Buffer.from(new Uint8Array( req.body )));
-        await fs.appendFile(`/data/live/sources/${req.params.id}.${fileEnding}`, Buffer.from(new Uint8Array( req.body )), function (err) {
+        await fs.appendFile(`/data/live/sources/${req.params.id}/${req.params.id}.${fileEnding}`, Buffer.from(new Uint8Array( req.body )), function (err) {
             if (err) throw err;
             console.log('File saved!');
           });
