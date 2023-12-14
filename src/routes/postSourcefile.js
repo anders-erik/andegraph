@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     let reqContentType = req.get('Content-Type');
     // req.is();
 
-    // Client need to set file type/fileneding
+    // Client needs to set file type/fileneding
     if(!reqContentType){
         res.status(400);
         res.send({}); 
@@ -43,12 +43,14 @@ module.exports = async (req, res) => {
         
           //fs.writeFileSync('/data/live/source/1234.webp', Buffer.from(new Uint8Array( req.body )));
         //console.log('wrote file');
+        res.send({}); 
     } catch (error) {
         console.log('Writing file failed!')
         console.log(error);
+        res.send({}); 
     }
     
 
     
-    res.send({}); 
+    
 };

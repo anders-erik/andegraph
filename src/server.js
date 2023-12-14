@@ -9,33 +9,42 @@ app.use(express.static(__dirname + '/static'));
 
 
 // ROUTES
-const addSource = require('./routes/addSource');
-const putSource = require('./routes/putSource');
-const getSources = require('./routes/getSources');
+const deleteSource = require('./routes/deleteSource');
 const getSource = require('./routes/getSource');
 const getSourcefile = require('./routes/getSourcefile');
+const addSource = require('./routes/addSource');
 const postSourcefile = require('./routes/postSourcefile');
-const deleteSource = require('./routes/deleteSource');
+const putSource = require('./routes/putSource');
+
+const getSources = require('./routes/getSources');
 
 const postShard = require('./routes/postShard');
 
 
 
 // HTTP METHODS
-app.post('/source', addSource);
-app.put('/source', putSource);
-app.get('/source', getSource);
-app.get('/sources', getSources);
-app.get('/sourcefile/:id', getSourcefile);
-app.post('/sourcefile/:id', express.raw({limit: "10000kb",type: "*/*"}), postSourcefile);
-app.delete('/source/:id', deleteSource);
 
+// SOURCE
+app.delete('/source/:id', deleteSource);
+app.get('/source', getSource);
+app.get('/sourcefile/:id', getSourcefile);
+app.post('/source', addSource);
+app.post('/sourcefile/:id', express.raw({limit: "10000kb",type: "*/*"}), postSourcefile);
+app.put('/source', putSource);
+
+
+// SOURCES
+app.get('/sources', getSources);
+
+
+// SHARD
 app.post('/shard', postShard);
 
 
 
 
 
+// INIT
 db.init().then(() => {
     app.listen(3000, () => console.log('Listening on port 3000'));
 }).catch((err) => {
@@ -44,6 +53,9 @@ db.init().then(() => {
 });
 
 
+
+
+// SHUTDOWN
 const gracefulShutdown = () => {
     db.teardown()
         .catch(() => {})

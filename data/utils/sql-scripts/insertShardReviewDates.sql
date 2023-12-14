@@ -1,0 +1,12 @@
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2023-12-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2023-12-15", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2023-12-17", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2023-12-21", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2023-12-29", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2024-01-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2024-02-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2024-04-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2024-08-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2025-04-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2026-08-14", 0, 10);
+INSERT INTO "shardReviewDates" ("date", "completed", "shardId") VALUES ("2028-04-14", 0, 10);
