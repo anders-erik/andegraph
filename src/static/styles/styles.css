@@ -1,7 +1,8 @@
 @import 'element-styles.css';
-@import 'sourcefind-styles.css';
-@import 'sourceview-styles.css';
-
+/* @import 'sourcefind-styles.css'; */
+@import '../modules/sourcing/sourcefind/Sourcefind.css';
+/* @import 'sourceview-styles.css'; */
+@import '../modules/sourcing/sourceview/Sourceview.css';
 
 :root{
     --light-1:#afeef5;

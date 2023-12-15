@@ -1,5 +1,12 @@
-# TODO:
 
+
+
+
+
+
+# 2023-12-05
+
+### TODO
 ### Database
  - create separate 'live' data, backup data, practice data, and data scripts/docs
  - live and backup data should be included in .gitignore, practice data should have a few example databases
@@ -26,4 +33,29 @@ In short: clean up and add useful script to enable a good dev-experience
 
 
 
+<br>
+<br>
+<br>
+<br>
 
+
+
+# 2023-12-14
+- Added 'shardReviewDate' to DB
+- Created one source (#84) manually in sqlite
+- minor adjustments in table data types
+- Created some queries (/data/utils/sql-scripts )
+
+
+### MAJOR REFACTORING
+- Previously, js-modules had a very flay hierarcy. Modules/files were organized by function. (extractDOM, updateDom, etc.)
+- Now, It is organized by app-part/comomponent. (e.g. sourcing/sourcefind, sourcing/sourceview, etc.)
+- The function for a particular action is contained within the folder of a particular component. (events, update DOM, etc. are providied by component. Update/extract-commends are exposed to the rest of the app for cross-component manipulation) 
+- I tries to improve fetch-structure. I'm still not sure how to implement it the best. But remember to just try making it fetch well. Nothing else!
+- No Additional Features were added today, only refzctoring. 
+	- TODO:
+		- complete review
+		- finally add shards
+		- add the improved file uploading
+		- Finding a robust way of detecting and keeping track of file-types/endings
+		- adding some keyboard shortcuts

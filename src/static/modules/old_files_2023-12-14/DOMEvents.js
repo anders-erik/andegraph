@@ -84,7 +84,7 @@ let sourceCardClicked = async function(e){
 
 
 
-
+//--
 async function uploadSourceFilePressed(e){
 	console.log("File selected: ", e.target.files[0]);
 	
@@ -101,7 +101,7 @@ async function uploadSourceFilePressed(e){
 
 
 
-
+//--
 async function loadSourceFilePressed(e){
 	//console.log("File load pressed");
 	let currentSourceId = ExtractDOM.extractCurrentSourceId();
@@ -137,6 +137,7 @@ async function loadSourceFilePressed(e){
 	
 }
 
+//--
 let sourceviewFieldFocusout = async function(e){
 	/* 
 	console.log('lost focus');
@@ -174,10 +175,13 @@ export {
 	// addNewSource,
 	// loadSourceViewerHeader,
 
+	//--
 	fetchSourcesClicked,
 	addSourceClicked,
 	deleteSourceClicked,
 	sourceCardClicked,
+
+	//--
 	uploadSourceFilePressed,
 	loadSourceFilePressed,
 	sourceviewFieldFocusout

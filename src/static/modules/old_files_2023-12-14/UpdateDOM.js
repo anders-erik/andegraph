@@ -2,7 +2,7 @@
 import * as ExtractDOM from './ExtractDOM.js';
 import * as Fetches from './Fetches.js';
 
-
+//-- propertiescard
 function loadSource(fetchedSource) {
 	console.log('loading source');
 	console.log(fetchedSource);
@@ -64,18 +64,7 @@ function updateSourcefindCard(id){
 	console.log('updated curent Sourcefind card');
 }
 
-function clearSourceviewPropertiescard(){
-	console.log('clear');
-	document.getElementById('sourceview-title-field').value = '';
-	document.getElementById('sourceview-url-field').value = '';
-	document.getElementById('sourceview-id-field').value = '';
-	document.getElementById('sourceview-datecreated-field').value = '';
-	document.getElementById('sourceview-hasfile-field').value = '';
-	document.getElementById('sourceview-filetype-field').value = '';
-	document.getElementById('sourceview-fileending-field').value = '';
 
-	document.getElementById('sourceview-viewcard').innerHTML = '';
-}
 
 function highlightSourceCard(elementId){
 	// https://getcssscan.com/css-box-shadow-examples
@@ -94,6 +83,22 @@ function unhighlightAllSourceCards(){
 	
 }
 
+
+//--
+function clearSourceviewPropertiescard(){
+	console.log('clear');
+	document.getElementById('sourceview-title-field').value = '';
+	document.getElementById('sourceview-url-field').value = '';
+	document.getElementById('sourceview-id-field').value = '';
+	document.getElementById('sourceview-datecreated-field').value = '';
+	document.getElementById('sourceview-hasfile-field').value = '';
+	document.getElementById('sourceview-filetype-field').value = '';
+	document.getElementById('sourceview-fileending-field').value = '';
+
+	document.getElementById('sourceview-viewcard').innerHTML = '';
+}
+
+//--
 function displayNewSourceFile(fileType, fileUrl){
 	let fileViewer;
 	switch (fileType) {
@@ -124,7 +129,7 @@ function displayNewSourceFile(fileType, fileUrl){
 
 }
 
-
+//--
 function saveCurrentSource(){
 	let currentSourceObject = ExtractDOM.extractCurrentSourceObject();
 	
@@ -139,12 +144,17 @@ function saveCurrentSource(){
 
 
 export {
+	//--
 	loadSource,
+
+	
 	removeSourcefindCard,
 	updateSourcefindCard,
-	clearSourceviewPropertiescard,
 	highlightSourceCard,
 	unhighlightAllSourceCards,
+
+	//--
+	clearSourceviewPropertiescard,
 	displayNewSourceFile,
 	saveCurrentSource
 }
