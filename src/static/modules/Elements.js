@@ -131,8 +131,10 @@ function getDateViewer(id){
 	let dateViewer = document.createElement('div');
 	dateViewer.id = id;
 
+
 	return dateViewer;
 }
+
 
 
 export {

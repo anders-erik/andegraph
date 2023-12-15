@@ -1,0 +1,25 @@
+
+
+#sourceview-viewcard {
+	flex-grow: 1;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.sourceview-file {
+	max-height: 100%;
+	max-width: 100%;
+}
+/* #sourceview-file-video {
+	
+} */
+
+
+
+
+
+
+
+
+

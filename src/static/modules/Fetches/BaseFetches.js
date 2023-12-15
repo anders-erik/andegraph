@@ -26,7 +26,30 @@ async function BasePost(_path, _parameters, _headers, _body) {
 	}
 }
 
+async function BasePut(_path, _parameters, _headers, _body) {
+	try {
+		const response = await fetch(
+			_path  + '?' + new URLSearchParams(_parameters), 
+			{
+				method: 'PUT',
+				headers: _headers,
+				body: _body
+			}
+		);
 
+		// Response is 2XX		 (https://developer.mozilla.org/en-US/docs/Web/API/Response/ok)
+		if (response.ok) {
+			const responseData = await response.json();
+			console.log(`${POST} request successful:`, responseData);
+			return responseData;
+		} else {
+			throw new Error(`${POST} request failed:`, response.status);
+		}
+
+	} catch (error) {
+		console.error(`Error making ${POST} request:`, error);
+	}
+}
 
 
 
@@ -197,6 +220,7 @@ async function deleteSource(id) {
 
 export {
 	BasePost,
+	BasePut,
 
 	newSource,
 	loadSourceFile,

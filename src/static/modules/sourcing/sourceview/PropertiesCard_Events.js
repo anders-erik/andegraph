@@ -84,8 +84,14 @@ async function loadSourceFilePressed(e){
 }
 
 
+async function reviewDateClicked(e){
+	console.log(e.target.innerHTML);
+	
+}
+
 export {
 	sourceviewFieldFocusout,
 	uploadSourceFilePressed,
-	loadSourceFilePressed
+	loadSourceFilePressed,
+	reviewDateClicked
 }

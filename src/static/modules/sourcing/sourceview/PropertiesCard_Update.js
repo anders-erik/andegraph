@@ -1,4 +1,5 @@
 import { extractCurrentSourceObject, extractCurrentSourceId, extractCurrentSourceFileType } from './PropertiesCard_Extract.js';
+import { reviewDateClicked } from './PropertiesCard_Events.js';
 import * as Fetches from '../../Fetches/BaseFetches.js';
 import * as Sourcecard from '../sourcefind/Sourcecard.js';
 
@@ -39,7 +40,13 @@ function loadSource(fetchedSource) {
 	fetchedSource.sourceReviewDates.forEach(reviewDate => {
 		//console.log(reviewDate.date);
 		let reviewDateLabel = document.createElement('label');
-		reviewDateLabel.classList.add('sourceview-reviewdate-labels');
+		if(reviewDate.completed){
+			reviewDateLabel.classList.add('sourceview-reviewdate-labels-done');
+
+		}else {
+			reviewDateLabel.classList.add('sourceview-reviewdate-labels');
+		}
+		reviewDateLabel.addEventListener('click', reviewDateClicked);
 		reviewDateLabel.textContent = reviewDate.date;
 		sourceviewReviewDates.appendChild(reviewDateLabel);
 	});
@@ -47,6 +54,11 @@ function loadSource(fetchedSource) {
 
 	// For now we simply guarantee no lingering source files
 	document.getElementById('sourceview-viewcard').innerHTML = '';
+	// Load file for currrent source
+	document.getElementById('sourceview-load').click();
+
+	//let currentSource = extractCurrentSourceObject();
+	//displayNewSourceFile(currentSource.)
 }
 
 
@@ -67,7 +79,9 @@ function clearSourceviewPropertiescard(){
 
 
 function displayNewSourceFile(fileType, fileUrl){
+	
 	let fileViewer;
+	
 	switch (fileType) {
 		case 'image':
 			fileViewer = document.createElement('img');

@@ -1,4 +1,7 @@
 
+@import './PropertiesCard.css';
+@import './ViewCard.css';
+
 #sourceview-panel {
 	width: 35%;
 	
@@ -7,110 +10,6 @@
 
 
 
-
-
-#sourceview-propertiescard-inner {
-	background-color: blanchedalmond;
-	display: grid;
-	gap: 10px;
-	grid-template-columns:  1fr 1fr 1fr 1fr;
-	grid-template-rows: 2em 2em 2em 2em 2em ;
-	position: relative;
-}
-
-.sourceview-element {
-	background-color: darkorchid;
-	
-}
-
-#sourceview-title {
-	grid-column: 1 / span 4;
-	grid-row: 1 / span 1;
-}
-
-#sourceview-url {
-	grid-column: 1 / span 3;
-	grid-row: 2 / span 1;
-}
-
-#sourceview-id {
-	grid-column: 1 / span 1;
-	grid-row: 3 / span 1;
-}
-
-#sourceview-datecreated {
-	grid-column: 1 / span 1;
-	grid-row: 4 / span 1;
-}
-#sourceview-hasfile {
-	grid-column: 2 / span 1;
-	grid-row: 3 / span 1;
-}
-#sourceview-fileending {
-	grid-column: 2 / span 1;
-	grid-row: 4 / span 1;
-}
-#sourceview-filetype {
-	grid-column: 2 / span 1;
-	grid-row: 5 / span 1;
-}
-#sourceview-reviewdates {
-	grid-column: 4 / span 1;
-	grid-row: 2 / span 4;
-	background-color: cadetblue;
-	display: flex;
-	flex-direction: column;
-	justify-content: start;
-	align-items: center;
-	padding: 5px;
-	overflow-y: scroll;
-}
-.sourceview-reviewdate-labels {
-	background-color: burlywood;
-	margin: 3px;
-}
-
-#sourceview-button-card {
-	grid-column: 1 / span 1;
-	grid-row: 5 / span 1;
-	background-color: blueviolet;
-
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
-	grid-template-rows: 1fr;
-}
-#sourceview-load {
-	background-color: aqua;
-	cursor: pointer;
-}
-#sourceview-upload {
-	background-color: aqua;
-	display: none;
-}
-#sourceview-upload-label {
-	background-color: rgb(93, 106, 106);
-	border: 1px solid rgb(92, 13, 13);
-    cursor: pointer;
-}
-
-
-
-
-
-#sourceview-viewcard {
-	flex-grow: 1;
-	overflow: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.sourceview-file {
-	max-height: 100%;
-	max-width: 100%;
-}
-/* #sourceview-file-video {
-	
-} */
 
 
 
