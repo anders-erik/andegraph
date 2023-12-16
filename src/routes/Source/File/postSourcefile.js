@@ -1,4 +1,4 @@
-const db = require('../persistence/sqlite');
+const sqlite = require('../../../persistence/Queries');
 const fs = require('node:fs');
 
 module.exports = async (req, res) => {
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
           });
 
         // if image write was succesful, update file fields in db
-        await db.queryString(`UPDATE sources SET fileType='${fileType}', fileEnding='${fileEnding}', hasFile=1 WHERE id='${req.params.id}'`);
+        await sqlite.queryString(`UPDATE sources SET fileType='${fileType}', fileEnding='${fileEnding}', hasFile=1 WHERE id='${req.params.id}'`);
         
           //fs.writeFileSync('/data/live/source/1234.webp', Buffer.from(new Uint8Array( req.body )));
         //console.log('wrote file');

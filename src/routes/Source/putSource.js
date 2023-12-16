@@ -1,8 +1,10 @@
-const db = require('../persistence/sqlite');
+const sqlite = require('../../persistence/SourceQueries');
 
 
 module.exports = async (req, res) => {
-    
+
+   
+
     const item = {
         id: req.body.id,
         title: req.body.title,
@@ -22,7 +24,7 @@ module.exports = async (req, res) => {
 
 
 
-    let returnedValue = await db.updateSource(item);
+    let returnedValue = await sqlite.updateSource(item);
     //console.log(returnedValue);
     
     res.send(item);

@@ -1,10 +1,10 @@
-const db = require('../persistence/sqlite');
+const sqlite = require('../persistence/ShardQueries');
 
 
 module.exports = async (req, res) => {
     console.log('post shard');
     try {
-        await db.newShard();
+        await sqlite.newShard();
     } catch (error) {
         console.log('error on new shard!');
     }

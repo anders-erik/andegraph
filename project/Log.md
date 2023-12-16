@@ -59,3 +59,32 @@ In short: clean up and add useful script to enable a good dev-experience
 		- add the improved file uploading
 		- Finding a robust way of detecting and keeping track of file-types/endings
 		- adding some keyboard shortcuts
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+### 2023-12-16
+- refactored the whole sqlite-connection
+	- replaced the all-in-one sqlite-file with a 'connection' file/object
+	- the sqlite-functions representing specific db-queries were split into]
+	- routes subscriptions/paths moved into new hierarchy for API
+- TODO
+	- Clean up the sqlite-files naming
+	- Complete the CRUD functionality of the four primary tables
+	- complete REST-access to CRUD functionality
+	- API
+		- /sourcefile --> /source/file
+		- /sources --> /source/search
+		- /# = / + /source/#
+
+
+
+
+
+
