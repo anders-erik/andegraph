@@ -15,7 +15,7 @@ function App(){
 
 	let root = document.getElementById('root');
 	
-
+	
 	//addSourceListContainer();
 	//addSourceViewerContainer();
 
@@ -34,8 +34,11 @@ function App(){
 	//root.appendChild(createShardlistPanel());
 
 	
+	// Fetch and pick first source
+	fetchSourcesClicked().then(() => {
+		document.getElementById('sourcefind-sourcecard-1').click();
 
-	fetchSourcesClicked();
+	})
 }
 
 
