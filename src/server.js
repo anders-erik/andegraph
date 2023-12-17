@@ -6,13 +6,16 @@ const sqlite = require('./persistence/Connection'); // import AND init database
 
 
 
-
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
+
 
 // Make sure this is after we add the json-middleware
 const routes = require('./routes/Routes');
 routes.initRoutes(app, express);
+
+
+
 
 // ROUTES
 
@@ -27,7 +30,7 @@ routes.initRoutes(app, express);
 // SOURCES
 //const getSources = require('./routes/getSources');
 
-const postShard = require('./routes/postShard');
+//const postShard = require('./routes/shard/postShard');
 
 
 
@@ -47,7 +50,7 @@ const postShard = require('./routes/postShard');
 
 
 // SHARD
-app.post('/shard', postShard);
+//app.post('/shard', postShard);
 
 
 

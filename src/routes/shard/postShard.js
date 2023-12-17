@@ -1,4 +1,4 @@
-const sqlite = require('../persistence/ShardQueries');
+const sqlite = require('../../persistence/ShardQueries');
 
 
 module.exports = async (req, res) => {

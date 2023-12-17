@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     for(let i = 0; i < 10; i++){
         let today = new Date(Date.now() + 86_400_000*2**i );
         let todayDateIsoString = today.toISOString().slice(0,10);
-        await sourceReviewDatesQueries.addReviewDate(todayDateIsoString, sourceId);
+        await sourceReviewDatesQueries.insertReviewDate(todayDateIsoString, sourceId);
 
     }
    
