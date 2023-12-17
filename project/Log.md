@@ -101,7 +101,13 @@ In short: clean up and add useful script to enable a good dev-experience
 - implemented /api/source/search
 	- query types: today, date interval, and all
 	- all types take a 'searchstring' for SQL 'LIKE'
+- Implemented /api/source/file
+- Implemented /api/source
+	- post, patch (whichc previously was put), get, and delete
+	- DELETE I had some trouble with. At one poit the folder was delted, but an error interrupted the db-deletion, and I got stuck with an un-deletable source...
+		- I manually added the fouilders back and then DELTE worked..
 - 
+
 
 
 

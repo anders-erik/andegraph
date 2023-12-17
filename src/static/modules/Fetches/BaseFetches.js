@@ -126,9 +126,10 @@ async function uploadSourceFile(id, file){
 
 // MIDDLEWARE IN PLACE
 async function updateSource(sourceObject) {
+	//console.log(sourceObject);
 	try {
 		const response = await fetch('/api/source', {
-			method: 'PUT',
+			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -137,13 +138,13 @@ async function updateSource(sourceObject) {
 
 		if (response.ok) {
 			const responseData = await response.json();
-			console.log('PUT request successful:', responseData);
+			console.log('PATCH request successful:', responseData);
 			return responseData;
 		} else {
-			throw new Error('PUT request failed:', response.status);
+			throw new Error('PATCH request failed:', response.status);
 		}
 	} catch (error) {
-		console.error('Error making PUT request:', error);
+		console.error('Error making PATCH request:', error);
 	}
 }
 
@@ -172,11 +173,10 @@ async function fetchAllSources() {
 // MIDDLEWARE IN PLACE
 async function getSource(id) {
 	try {
-		const response = await fetch('/api/source', {
+		const response = await fetch('/api/source?' + `sourceid=${id}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				'id': id,
 			},
 		});
 

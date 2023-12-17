@@ -4,7 +4,7 @@ console.log('Run routes');
 const deleteSource = require('./Source/deleteSource');
 const getSource = require('./Source/getSource');
 const postSource = require('./Source/postSource');
-const putSource = require('./Source/putSource');
+const patchSource = require('./Source/patchSource');
 const getSourcefile = require('./Source/File/getSourcefile');
 const postSourcefile = require('./Source/File/postSourcefile');
 const getSourceSearch = require('./Source/Search/getSourceSearch');
@@ -28,7 +28,7 @@ function initRoutes(app, express) {
 	app.delete('/api/source/:id', deleteSource);
 	app.get('/api/source', getSource);
 	app.post('/api/source', postSource);
-	app.put('/api/source', putSource);
+	app.patch('/api/source', patchSource);
 	app.get('/api/source/file/:id', getSourcefile);
 	app.post('/api/source/file/:id', express.raw({ limit: "10000kb", type: "*/*" }), postSourcefile);
 	app.get('/api/source/search', getSourceSearch);

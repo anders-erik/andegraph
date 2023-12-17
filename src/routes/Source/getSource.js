@@ -6,12 +6,12 @@ const sourceReviewDatesQueries = require('../../persistence/SourceReviewDatesQue
 module.exports = async (req, res) => {
     //console.log(req.headers.id)
 
-    const items = await sqlite.getSource(req.headers.id);
-    const sourceReviewDates = await sourceReviewDatesQueries.selectReviewDates(req.headers.id);
-    console.log(sourceReviewDates);
+    const items = await sqlite.selectSource(req.query.sourceid);
+    const sourceReviewDates = await sourceReviewDatesQueries.selectReviewDates(req.query.sourceid);
+    //console.log(sourceReviewDates);
     items[0]['sourceReviewDates'] = sourceReviewDates;
 
-    console.log(items);
-
+    //console.log(items);
+    console.log(`GET - source no. ${req.query.sourceid}. Also the associated reviewDates.`);
     res.send(items);
 };
