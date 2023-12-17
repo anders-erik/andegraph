@@ -56,7 +56,7 @@ async function BasePut(_path, _parameters, _headers, _body) {
 // MIDDLEWARE IN PLACE
 async function newSource() {
 	try {
-		const response = await fetch('source', {
+		const response = await fetch('/api/source', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ async function newSource() {
 async function loadSourceFile(id){
 	console.log('loading file for source ' + id);
 	try {
-		const response = await fetch('/sourcefile/' + id, {
+		const response = await fetch('/api/source/file/' + id, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ async function uploadSourceFile(id, file){
 	console.log(id + '  ' + file);
 	console.log(file.type);
 	try {
-		const response = await fetch('/sourcefile/' + id, {
+		const response = await fetch('/api/source/file/' + id, {
 			method: 'POST',
 			headers: {
 				'Content-Type': file.type,
@@ -127,7 +127,7 @@ async function uploadSourceFile(id, file){
 // MIDDLEWARE IN PLACE
 async function updateSource(sourceObject) {
 	try {
-		const response = await fetch('source', {
+		const response = await fetch('/api/source', {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ async function updateSource(sourceObject) {
 // MIDDLEWARE IN PLACE
 async function fetchAllSources() {
 	try {
-		const response = await fetch('/sources', {
+		const response = await fetch('/api/source/search' + '?searchall=1&searchstring=', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ async function fetchAllSources() {
 // MIDDLEWARE IN PLACE
 async function getSource(id) {
 	try {
-		const response = await fetch('source', {
+		const response = await fetch('/api/source', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -196,7 +196,7 @@ async function getSource(id) {
 // MIDDLEWARE IN PLACE
 async function deleteSource(id) {
 	try {
-		const response = await fetch('source/' + id, {
+		const response = await fetch('/api/source/' + id, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',

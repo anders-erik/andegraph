@@ -85,6 +85,24 @@ In short: clean up and add useful script to enable a good dev-experience
 
 
 
+<br>
+<br>
+<br>
+<br>
+
+
+### 2023-12-17
+- moved to sourceshard.com:3000 instead of localhost
+- Moved all requests to '/api/...' from '/...'.
+- Implemented /api/source/reviewdate
+	- post, get, patch, delete
+	- heavily reliant on url queries
+- Insomnia is good, but not great for request chaining. Well I haven't found a way of doing it at least...
+- implemented /api/source/search
+	- query types: today, date interval, and all
+	- all types take a 'searchstring' for SQL 'LIKE'
+- 
+
 
 
 
