@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
 
     
     //console.log(`/data/live/sources/${req.params.id}.${queryReturn[0].fileEnding}`);
-    const file = `/data/live/sources/${req.params.id}/${req.params.id}.${querySource[0].fileEnding}`;
+    const file = `/data/live/sources/${req.params.id}/${req.params.id}_so.${querySource[0].fileEnding}`;
 
     console.log(`Downloaded file for source #${req.params.id}, at path ${file}`);
     res.download(file); 

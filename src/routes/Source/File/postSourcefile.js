@@ -25,13 +25,13 @@ module.exports = async (req, res) => {
     try {
         // https://stackoverflow.com/questions/39395195/how-to-write-wav-file-from-blob-in-javascript-node
         //console.log(Buffer.from(new Uint8Array( req.body )));
-        fs.appendFile(`/data/live/sources/${req.params.id}/${req.params.id}.${fileEnding}`, Buffer.from(new Uint8Array(req.body)), function (err) {
+        fs.appendFile(`/data/live/sources/${req.params.id}/${req.params.id}_so.${fileEnding}`, Buffer.from(new Uint8Array(req.body)), function (err) {
             if (err) throw err;
             console.log(`File for source #${req.params.id} saved successfully at /data/live/sources/${req.params.id}/${req.params.id}.${fileEnding}`);
 
             // if image write was succesful, update file fields in db
             //await sqlite.queryString(`UPDATE sources SET fileType='${fileType}', fileEnding='${fileEnding}', hasFile=1 WHERE id='${req.params.id}'`);
-            sourceQueries.updateSourceFile(req.params.id, fileType, fileEnding).then(() => {
+            sourceQueries.updateSourceFileInfo(req.params.id, fileType, fileEnding).then(() => {
 
                 console.log(`File info for source #${req.params.id} successfully updated in database.`);
                 res.status(200);

@@ -50,7 +50,7 @@ async function selectDatesLikeString(searchstring, limit, fromdate, todate) {
 // NOT WORKING - somehow 'fileType' and 'fileEnding' were both converted to objects. Referencing index '0' solved it...
 // https://stackoverflow.com/questions/67517796/row-is-object-object-when-fetching-a-database-row-in-sqlite3
 // I guess the match-regex i used to extract the infromation returns matches in an array. But the old query automatically extracted the string value...
-async function updateSourceFile(sourceId, fileType, fileEnding) {
+async function updateSourceFileInfo(sourceId, fileType, fileEnding) {
 
     //console.log('POSTPOST' +' '+ sourceId +' '+ fileType +' '+ fileEnding);
     //console.log(typeof(fileType[0]));
@@ -219,7 +219,7 @@ async function deleteSource(id) {
 module.exports = {
     selectAllLikeString,
     selectDatesLikeString,
-    updateSourceFile,
+    updateSourceFileInfo,
     insertEmptySource,
     selectMaxId,
     selectSource,
