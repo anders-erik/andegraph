@@ -53,7 +53,7 @@ async function BasePut(_path, _parameters, _headers, _body) {
 
 
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE -----------
 async function newSource() {
 	try {
 		const response = await fetch('/api/source', {
@@ -75,7 +75,7 @@ async function newSource() {
 	}
 }
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE ----------------
 async function loadSourceFile(id){
 	console.log('loading file for source ' + id);
 	try {
@@ -99,7 +99,7 @@ async function loadSourceFile(id){
 
 }
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE ------
 async function uploadSourceFile(id, file){
 	console.log('uplading');
 	console.log(id + '  ' + file);
@@ -124,7 +124,7 @@ async function uploadSourceFile(id, file){
 	}
 }
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE -------------
 async function updateSource(sourceObject) {
 	//console.log(sourceObject);
 	try {
@@ -148,7 +148,7 @@ async function updateSource(sourceObject) {
 	}
 }
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE ---------------
 async function fetchAllSources() {
 	try {
 		const response = await fetch('/api/source/search' + '?searchall=1&searchstring=', {
@@ -170,7 +170,7 @@ async function fetchAllSources() {
 	}
 }
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE ---------------------
 async function getSource(id) {
 	try {
 		const response = await fetch('/api/source?' + `sourceid=${id}`, {
@@ -193,7 +193,7 @@ async function getSource(id) {
 }
 
 
-// MIDDLEWARE IN PLACE
+// MIDDLEWARE IN PLACE -----------------------------
 async function deleteSource(id) {
 	try {
 		const response = await fetch('/api/source/' + id, {

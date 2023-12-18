@@ -110,5 +110,31 @@ In short: clean up and add useful script to enable a good dev-experience
 
 
 
+<br>
+<br>
+<br>
+<br>
+
+
+### 2023-12-18
+
+- rearrange frontend fetches to match backend routes/api structure
+- added basic logging/toast to frontend
+	- tried adding script and html elements using 'innerHTML'.
+		- worked a lot better than expected!
+		- still wary of starting to implementing it in any live code atm
+- slowly migrating frontend functionality into respective cards, as per refactoring efforts!
+- implemented all sourcereview fetch-functions for the api in client side
+	- [post, patch, get, delete]SourceReviewDate
+	- Fetches/api/source/reviewdate
+- created a separete 'PropertiesCard_reviewdates' object using js and css
+	- /home/andersubu/dev/sources/src/static/modules/sourcing/sourceview/propertiescard/PropertiesCard_reviewdates.[js, css]
+	- this component grew VERY rapidly when added. It has a lot of complexity. 
+		- No wonder I havent been able to implement it before. I needed the comprehensive refactoring first!!
+	- didn't add a 'delete' button. I probably should...
+
+- backend: 
+	- sorted selected sourceReviewDates by 'date ASC' to more easily display dates in the frontend
+	- moved DELETE:/api/source/:id to more sane queries after conflicts with DELETE:/api/source/reviewdate
 
 

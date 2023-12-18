@@ -1,14 +1,24 @@
 import { extractCurrentSourceObject, extractCurrentSourceId, extractCurrentSourceFileType } from './PropertiesCard_Extract.js';
-import { reviewDateClicked } from './PropertiesCard_Events.js';
-import * as Fetches from '../../Fetches/BaseFetches.js';
-import * as Sourcecard from '../sourcefind/Sourcecard.js';
+import { reviewDateClicked, loadReviewDates } from './PropertiesCard_reviewdates.js';
+
+// import * as Fetches from '../../../Fetches/BaseFetches.js';
+// import * as Fetchess from '../../../Fetches/BaseFetches.js';
+// import { patchSource } from '../../../Fetches/api/source/PatchSource.js';
+// import { getSource } from '../../../Fetches/api/source/GetSource.js';
+import * as api from '../../../Fetches/api/api.js';
+
+
+import * as Sourcecard from '../../sourcefind/listcard/sourcecard/Sourcecard.js';
 
 
 
 
-function loadSource(fetchedSource) {
+async function loadSource(sourceId) {
 	console.log('loading source');
-	console.log(fetchedSource);
+	//console.log(fetchedSource);
+
+	let fetchedSource = await api.getSource(sourceId);
+
 	let sourceviewPropertiescardInner = document.getElementById('sourceview-propertiescard-outer');
 	
 	let sourceviewName = document.getElementById('sourceview-title-field');
@@ -35,25 +45,29 @@ function loadSource(fetchedSource) {
 	sourceviewFileEnding.value = fetchedSource.fileEnding;
 
 	// review dates
-	let sourceviewReviewDates = document.getElementById('sourceview-reviewdates');
-	sourceviewReviewDates.innerHTML = '';
-	fetchedSource.sourceReviewDates.forEach(reviewDate => {
-		//console.log(reviewDate.date);
-		let reviewDateLabel = document.createElement('label');
-		if(reviewDate.completed){
-			reviewDateLabel.classList.add('sourceview-reviewdate-labels-done');
+	loadReviewDates(sourceId);
+	//let sourceviewReviewDates = document.getElementById('sourceview-reviewdates');
 
-		}else {
-			reviewDateLabel.classList.add('sourceview-reviewdate-labels');
-		}
-		reviewDateLabel.addEventListener('click', reviewDateClicked);
-		reviewDateLabel.textContent = reviewDate.date;
-		sourceviewReviewDates.appendChild(reviewDateLabel);
-	});
+	// let sourceviewReviewDates = document.getElementById('sourceview-dates-list');
+	// sourceviewReviewDates.innerHTML = '';
+	// fetchedSource.sourceReviewDates.forEach(reviewDate => {
+	// 	//console.log(reviewDate.date);
+	// 	let reviewDateLabel = document.createElement('label');
+	// 	if(reviewDate.completed){
+	// 		reviewDateLabel.classList.add('sourceview-dates-list-labels-done');
+
+	// 	}else {
+	// 		reviewDateLabel.classList.add('sourceview-dates-list-labels');
+	// 	}
+	// 	reviewDateLabel.addEventListener('click', reviewDateClicked);
+	// 	reviewDateLabel.textContent = reviewDate.date;
+	// 	sourceviewReviewDates.appendChild(reviewDateLabel);
+	// });
 
 
-	// For now we simply guarantee no lingering source files
+	// For now we simply want to guarantee no lingering source files
 	document.getElementById('sourceview-viewcard').innerHTML = '';
+
 	// Load file for currrent source
 	document.getElementById('sourceview-load').click();
 
@@ -78,38 +92,6 @@ function clearSourceviewPropertiescard(){
 }
 
 
-function displayNewSourceFile(fileType, fileUrl){
-	
-	let fileViewer;
-	
-	switch (fileType) {
-		case 'image':
-			fileViewer = document.createElement('img');
-			break;
-
-		case 'video':
-			fileViewer = document.createElement('video');
-			fileViewer.id = 'sourceview-file-video';
-			fileViewer.setAttribute("controls", "controls");
-			fileViewer.setAttribute("preload", "auto"); // this enabled they playback to work as expected!
-			//fileViewer.setAttribute('type', 'video/mp4');
-			break;
-	
-		default:
-			break;
-	}
-
-	fileViewer.classList.add('sourceview-file'); 
-	fileViewer.src = fileUrl;
-	//fileViewer.setAttribute('type', 'video/mp4');
-	//fileViewer.style.maxWidth = '100%';
-
-	document.getElementById('sourceview-viewcard').innerHTML = '';
-	//document.getElementById('sourceview-viewcard').overflow = 'hidden';
-	document.getElementById('sourceview-viewcard').appendChild(fileViewer);
-
-}
-
 
 function saveCurrentSource(){
 	let currentSourceObject = extractCurrentSourceObject();
@@ -117,7 +99,8 @@ function saveCurrentSource(){
 	//console.log(JSON.stringify(currentSourceObject));
 	//console.log(objectString);
 
-	Fetches.updateSource(JSON.stringify(currentSourceObject));
+	//Fetches.updateSource(JSON.stringify(currentSourceObject));
+	api.patchSource(JSON.stringify(currentSourceObject));
 
 	Sourcecard.updateSourcefindCard(currentSourceObject.id);
 }
@@ -126,6 +109,5 @@ function saveCurrentSource(){
 export {
 	loadSource,
 	clearSourceviewPropertiescard,
-	displayNewSourceFile,
 	saveCurrentSource
 }

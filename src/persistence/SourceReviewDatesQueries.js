@@ -19,7 +19,7 @@ async function insertReviewDate(date, sourceId){
 
 async function selectReviewDates(sourceId) {
     return new Promise((acc, rej) => {
-        connection.db.all('SELECT * FROM sourceReviewDates WHERE sourceId=?', [sourceId], (err, rows) => {
+        connection.db.all('SELECT * FROM sourceReviewDates WHERE sourceId=? ORDER BY date ASC', [sourceId], (err, rows) => {
             if (err) return rej(err);
             acc(
                 rows.map(item =>

@@ -5,10 +5,11 @@ import * as Sourcefind from './sourcing/sourcefind/Sourcefind.js';
 import * as Sourceview from './sourcing/sourceview/Sourceview.js';
 import * as VerticalSeperator from './VerticalSeperator.js';
 
+import * as log from './log/log.js';
 
 // DEV IMPORT
 //import { fetchSourcesClicked } from './DOMEvents.js';
-import { fetchSourcesClicked } from './sourcing/sourcefind/Searchcard.js';
+import { fetchSourcesClicked } from './sourcing/sourcefind/searchcard/Searchcard.js';
 
 
 function App(){
@@ -39,6 +40,9 @@ function App(){
 		document.getElementById('sourcefind-sourcecard-1').click();
 
 	})
+
+
+	//log.showToast('showtime');
 }
 
 

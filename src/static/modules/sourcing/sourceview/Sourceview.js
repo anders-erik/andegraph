@@ -1,6 +1,6 @@
 
-import * as PropertiesCard from './PropertiesCard.js';
-import * as ViewCard from './Viewcard.js';
+import * as PropertiesCard from './propertiescard/PropertiesCard.js';
+import * as ViewCard from './viewcard/Viewcard.js';
 
 
 function createSourceviewPanel(){

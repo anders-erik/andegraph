@@ -1,9 +1,9 @@
 
-import * as Elements from '../../Elements.js';
-import * as Fetches from '../../Fetches/BaseFetches.js'
+import * as Elements from '../../../../Elements.js';
+//import * as Fetches from '../../../../Fetches/BaseFetches.js'
 //import * as UpdateDOM from '../../UpdateDOM.js';
 
-import * as PropertiesCard from '../sourceview/PropertiesCard.js';
+import * as PropertiesCard from '../../../sourceview/propertiescard/PropertiesCard.js';
 
 
 function createSourcefindSourcecard(fetchedSource){
@@ -42,10 +42,11 @@ let sourceCardClicked = async function(e){
 	let sourceId = clickedElementId.match(/\d+$/g)
 	console.log('source clicked: ' + sourceId );
 
-	let fetchedSource = await Fetches.getSource(sourceId);
-	console.log(fetchedSource);
+	// let fetchedSource = await Fetches.getSource(sourceId);
+	// console.log(fetchedSource);
 
-	PropertiesCard.loadSource(fetchedSource);
+	//PropertiesCard.loadSource(fetchedSource);
+	PropertiesCard.loadSource(sourceId);
 
 	unhighlightAllSourceCards();
 	highlightSourceCard(clickedElementId);

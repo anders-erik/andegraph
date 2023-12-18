@@ -1,14 +1,19 @@
 
 
-import * as Elements from '../../Elements.js';
-import * as Sourcecard from './Sourcecard.js';
-import * as Fetches from '../../Fetches/BaseFetches.js'
+import * as Elements from '../../../Elements.js';
+import * as Sourcecard from '../listcard/sourcecard/Sourcecard.js';
+//import * as Fetches from '../../../Fetches/BaseFetches.js'
+
+import * as api from '../../../Fetches/api/api.js';
+// import { postSource } from '../../../Fetches/api/source/PostSource.js';
+// import { deleteSource } from '../../../Fetches/api/source/DeleteSource.js';
+// import { getSourceSearch } from '../../../Fetches/api/source/search/GetSourceSearch.js';
 
 //import * as UpdateDOM from '../../UpdateDOM.js';
 //import * as UpdateDOM from '../../UpdateDOM.js';
 //import * as Sourcecard from './Sourcecard.js';
 //import * as ExtractDOM from '../../ExtractDOM.js';
-import * as PropertiesCard from '../sourceview/PropertiesCard.js';
+import * as PropertiesCard from '../../sourceview/propertiescard/PropertiesCard.js';
 
 
 function createSourcefindSearchcard(){
@@ -65,7 +70,9 @@ let fetchSourcesClicked = async function(e){
 	sourcefindListcard.innerHTML = '';
 	//sourcefindListcard.innerHTML = '';
 
-	let allFetchedSources = await Fetches.fetchAllSources();
+	//let allFetchedSources = await Fetches.fetchAllSources();
+	let allFetchedSources = await api.getSourceSearch();
+
 	//console.log(allFetchedSources);
 	
 	allFetchedSources.forEach(fetchedSource => {
@@ -76,7 +83,9 @@ let fetchSourcesClicked = async function(e){
 
 let addSourceClicked = async function(e){
 	console.log('create new source');
-	let newSourceResponse = await Fetches.newSource();
+	//let newSourceResponse = await Fetches.newSource();
+	let newSourceResponse = await api.postSource();
+	
 	console.log("asdf:::");
 	console.log(newSourceResponse);
 
@@ -94,7 +103,8 @@ let deleteSourceClicked = async function(e){
 		
 		console.log('deleting source: ' + PropertiesCard.extractCurrentSourceId());
 
-		Fetches.deleteSource(PropertiesCard.extractCurrentSourceId());
+		//Fetches.deleteSource(PropertiesCard.extractCurrentSourceId());
+		api.deleteSource(PropertiesCard.extractCurrentSourceId());
 
 		Sourcecard.removeSourcefindCard(PropertiesCard.extractCurrentSourceId());
 

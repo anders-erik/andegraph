@@ -1,6 +1,6 @@
 
-@import './PropertiesCard.css';
-@import './ViewCard.css';
+@import './propertiescard/PropertiesCard.css';
+@import './viewcard/ViewCard.css';
 
 #sourceview-panel {
 	width: 35%;

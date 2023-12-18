@@ -1,6 +1,6 @@
 
-import * as Searchcard from './Searchcard.js';
-import * as Listcard from './Listcard.js';
+import * as Searchcard from './searchcard/Searchcard.js';
+import * as Listcard from './listcard/Listcard.js';
 
 function createSourcefindPanel(){
 

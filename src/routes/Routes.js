@@ -25,7 +25,7 @@ function initRoutes(app, express) {
 	console.log('Init routes');
 
 
-	app.delete('/api/source/:id', deleteSource);
+	app.delete('/api/source', deleteSource);
 	app.get('/api/source', getSource);
 	app.post('/api/source', postSource);
 	app.patch('/api/source', patchSource);
