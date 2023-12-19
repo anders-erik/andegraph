@@ -47,11 +47,16 @@ REVIEW DATES
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	cursor: pointer;
+	background-color: rgb(59, 210, 195);
 }
 #sourceview-dates-input {
 	grid-column: 1 / span 4;
 	grid-row: 2 / span 1;
 	text-align: center;
+
+	font-size: medium;
 }
 #sourceview-dates-list {
 	grid-column: 1 / span 4;
@@ -63,14 +68,18 @@ REVIEW DATES
 	align-items: center;
 	padding: 5px;
 	overflow-y: scroll;
+
+	background-color: gray;
 }
 .sourceview-dates-list-labels {
 	background-color: burlywood;
 	margin: 3px;
+	cursor: pointer;
 }
 .sourceview-dates-list-labels-done {
 	background-color: rgb(102, 225, 89);
 	margin: 3px;
+	cursor: pointer;
 }
 
 

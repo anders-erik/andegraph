@@ -11,7 +11,7 @@ async function getSource(id) {
 
 		if (response.ok) {
 			const responseData = await response.json();
-			console.log('GET request successful:', responseData[0]);
+			//console.log('GET request successful:', responseData[0]);
 			return responseData[0];
 		} else {
 			throw new Error('GET request failed:', response.status);

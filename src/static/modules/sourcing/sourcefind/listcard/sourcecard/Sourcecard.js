@@ -12,6 +12,7 @@ function createSourcefindSourcecard(fetchedSource){
 	let sourcefindSourcecard = document.createElement('div');
 	sourcefindSourcecard.id = 'sourcefind-sourcecard-' + fetchedSource.id;
 	sourcefindSourcecard.classList.add('sourcefind-sourcecard');
+	sourcefindSourcecard.tabIndex = 0;
 	sourcefindSourcecard.addEventListener('click', sourceCardClicked);
 	
 
@@ -40,7 +41,7 @@ function createSourcefindSourcecard(fetchedSource){
 let sourceCardClicked = async function(e){
 	let clickedElementId = e.target.id;
 	let sourceId = clickedElementId.match(/\d+$/g)
-	console.log('source clicked: ' + sourceId );
+	//console.log('source clicked: ' + sourceId );
 
 	// let fetchedSource = await Fetches.getSource(sourceId);
 	// console.log(fetchedSource);
@@ -54,7 +55,7 @@ let sourceCardClicked = async function(e){
 
 function highlightSourceCard(elementId){
 	// https://getcssscan.com/css-box-shadow-examples
-	document.getElementById(elementId).style.boxShadow = 'rgb(51, 51, 51) 0px 0px 0px 2px';
+	document.getElementById(elementId).style.boxShadow = 'var(--shadow-0)';
 	//document.getElementById(elementId).style.boxShadow = 'rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset';
 }
 
@@ -75,7 +76,7 @@ UPDATE DOM
 
 function removeSourcefindCard(id){
 	document.getElementById('sourcefind-sourcecard-' + id).remove();
-	console.log('remove card');
+	//console.log(`Source Card with id = ${id} has been removed`);
 }
 
 function updateSourcefindCard(id){

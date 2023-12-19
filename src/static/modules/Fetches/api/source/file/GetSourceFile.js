@@ -1,6 +1,6 @@
 
 async function getSourceFile(id){
-	console.log('loading file for source ' + id);
+	//console.log('loading file for source ' + id);
 	try {
 		const response = await fetch('/api/source/file/' + id, {
 			method: 'GET',

@@ -4,6 +4,7 @@
 import * as Sourcefind from './sourcing/sourcefind/Sourcefind.js';
 import * as Sourceview from './sourcing/sourceview/Sourceview.js';
 import * as VerticalSeperator from './VerticalSeperator.js';
+import * as listcard from './sourcing/sourcefind/listcard/Listcard.js';
 
 import * as log from './log/log.js';
 
@@ -35,9 +36,19 @@ function App(){
 	//root.appendChild(createShardlistPanel());
 
 	
+	//debugger;
 	// Fetch and pick first source
 	fetchSourcesClicked().then(() => {
-		document.getElementById('sourcefind-sourcecard-1').click();
+
+		//let id = listcard.getFirstSourcecardId();
+
+		localStorage.setItem("defaultSourceId", "1");
+		let id = localStorage.getItem("defaultSourceId");
+		//console.log(id);
+
+		// let id = (window.location.pathname).match(/\d+$/g)
+		document.getElementById(`sourcefind-sourcecard-${id}`).click();
+
 
 	})
 

@@ -12,7 +12,16 @@ async function selectAllLikeString(searchstring, limit) {
 
     return new Promise((acc, rej) => {
         // 'IS NULL' was added to not ignore newly created entries
-        connection.db.all("SELECT * FROM sources WHERE title LIKE ? OR title IS NULL LIMIT ?", [string, limit], (err, rows) => {
+        connection.db.all(` 
+
+                SELECT * FROM sources 
+                WHERE title 
+                LIKE ? 
+                ORDER BY id DESC
+                LIMIT ?
+
+                `, [string, limit], (err, rows) => {
+
             if (err) return rej(err);
             acc(
                 rows.map(item =>
@@ -33,7 +42,16 @@ async function selectDatesLikeString(searchstring, limit, fromdate, todate) {
     let string = '%' + searchstring + '%';
 
     return new Promise((acc, rej) => {
-        connection.db.all("SELECT * FROM sources WHERE dateCreated >= ? AND dateCreated <= ? AND title LIKE ? ", [fromdate, todate, string], (err, rows) => {
+        connection.db.all(`
+
+                SELECT * FROM sources 
+                WHERE dateCreated >= ? 
+                AND dateCreated <= ? 
+                AND title LIKE ?
+                ORDER BY id DESC
+        
+            `, [fromdate, todate, string], (err, rows) => {
+
             if (err) return rej(err);
             acc(
                 rows.map(item =>
@@ -76,7 +94,7 @@ async function updateSourceFileInfo(sourceId, fileType, fileEnding) {
 async function insertEmptySource() {
     return new Promise((acc, rej) => {
         connection.db.run(
-            "INSERT INTO sources (dateCreated, hasFile) values(DATE('now'), 0)",
+            "INSERT INTO sources (title, url, dateCreated, hasFile) values('', '', DATE('now'), 0)",
             (err, rows)  => {
                 if (err) return rej(err);
                 acc();

@@ -10,6 +10,34 @@ function createSourcefindListcard(){
 	return sourcefindList;
 }
 
-export {
-	createSourcefindListcard
+
+function getFirstSourcecardId(){
+	let listcard  = document.getElementById('sourcefind-listcard');
+	let firstSourcecard = listcard.firstElementChild;
+	let firstSourcecardId = firstSourcecard.id.match(/\d+/g)[0];
+	return firstSourcecardId;
+	//console.log(firstSourcecardId);
 }
+
+function getLastSourcecardId(){
+	let listcard  = document.getElementById('sourcefind-listcard');
+	let lastSourcecard = listcard.lastElementChild;
+	let lastSourcecardId = lastSourcecard.id.match(/\d+/g)[0];
+	return lastSourcecardId;
+	//console.log(lastSourcecardId);
+}
+
+export {
+	createSourcefindListcard,
+	getFirstSourcecardId,
+	getLastSourcecardId
+}
+/* 
+import * as listcard from '../listcard/Listcard.js';
+
+listcard.getFirstSourcecardId();
+listcard.getLastSourcecardId();
+
+*/
+
+

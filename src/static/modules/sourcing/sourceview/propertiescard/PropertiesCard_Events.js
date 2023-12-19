@@ -5,6 +5,7 @@ import * as ViewCard from '../viewcard/Viewcard.js';
 //import * as Fetches from '../../../Fetches/BaseFetches.js'
 //import { postSourceFile } from '../../../Fetches/api/source/file/PostSourceFile.js';
 import * as api from '../../../Fetches/api/api.js';
+import * as sourcecard from '../../sourcefind/listcard/sourcecard/Sourcecard.js';
 
 
 let sourceviewFieldFocusout = async function(e){
@@ -37,52 +38,44 @@ let sourceviewFieldFocusout = async function(e){
 }
 
 
-async function uploadSourceFilePressed(e){
-	console.log("File selected: ", e.target.files[0]);
-	
-	//Fetches.uploadSourceFile(extractCurrentSourceId(), e.target.files[0]);
-	api.postSourceFile(extractCurrentSourceId(), e.target.files[0]);
-
-	document.getElementById('sourceview-fileending-field').value = 'ending';
-	document.getElementById('sourceview-filetype-field').value = 'type';
-
-	//UpdateDOM.saveCurrentSource();
-	//UpdateDOM.loadSource();
-
-}
+async function deleteSourceFromDatabase(){
+	console.log();
+	//console.log('dummy delete from db :');
 
 
-async function loadSourceFilePressed(e){
-	//console.log("File load pressed");
-	let currentSourceId = extractCurrentSourceId();
+	if (confirm("Really delete?!") == true) {
 
-	//console.log(typeof(+document.getElementById('sourceview-hasfile-field').value));
+		let sourceId = PropertiesCard.extractCurrentSourceId();
+		
+		
 
-	if(currentSourceId == ''){
-		console.log('no source selected')
-	}
-	else if (+document.getElementById('sourceview-hasfile-field').value != 1) { //sourceview-hasfile-field
-		// check if source has a file to load. If not we don't do anything
-		console.log('There is no file associated with this source.')
-	}
-	else{
+		ViewCard.removeCurrentFileFromDOM();
+		//console.log('unload file');
 
+		sourcecard.removeSourcefindCard( sourceId );
+		//console.log('removed sourcecard');
 
-		let currentSourceFileType = extractCurrentSourceFileType();
+		PropertiesCard.clearSourceviewPropertiescard();
+		//console.log('clear properties card');
 
-		ViewCard.displaySourceFile(currentSourceId, currentSourceFileType);
+		api.deleteSource(sourceId);
 
-
+		console.log('Source: ' + sourceId + ' deleted from database.');
+		
+	} 
+	else {
+		console.log('nothing deleted')
 	}
 
 	
-}
 
+}
 
 
 export {
 	sourceviewFieldFocusout,
-	uploadSourceFilePressed,
-	loadSourceFilePressed,
+	deleteSourceFromDatabase
+	// uploadSourceFilePressed,
+	// loadSourceFilePressed,
 	
 }

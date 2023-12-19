@@ -30,8 +30,10 @@ module.exports = async (req, res) => {
 
         let resultLimit = 100000;
 
+        console.log(searchstring + ' ' + fromdate + ' ' + todate)
         const items = await sourceQueries.selectDatesLikeString(searchstring, resultLimit, fromdate, todate);
-    
+        console.log(items);
+        
         console.log(`Searched and fetched sources created between ${fromdate} and ${todate} using the searchstring '${searchstring}'. `);
         res.send(items);
 

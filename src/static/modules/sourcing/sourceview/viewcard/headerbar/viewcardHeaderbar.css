@@ -1,0 +1,50 @@
+
+
+
+#sourceview-headerbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+
+	width: 100%;
+	margin-bottom: 10px;
+
+	background-color: bisque;
+
+}
+/* OLD BUTTON CARD FOR REFERENCE */
+/* 
+#sourceview-button-card {
+	grid-column: 1 / span 1;
+	grid-row: 5 / span 1;
+	background-color: blueviolet;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+	grid-template-rows: 1fr;
+} */
+
+
+.headerbar-element {
+	background-color: lightgreen;
+	padding: 5px;
+	margin: 5px;
+	border: solid black 1px;
+	border-radius: 2px;
+
+	cursor: pointer;
+}
+
+/* #sourceview-file-load {
+	background-color: aqua;
+} */
+
+#sourceview-file-upload {
+	display: none;
+}
+/* #sourceview-file-upload-label {
+	background-color: aqua;
+} */
+
+
+

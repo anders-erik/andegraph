@@ -23,10 +23,15 @@ function extractCurrentSourceFileType(){
 	return document.getElementById('sourceview-filetype-field').value;
 }
 
+function hasFile(){
+	let hasfile = document.getElementById('sourceview-hasfile-field').value;
+	return ( hasfile == 1 ) ? true : false;
+}
 
 
 export {
 	extractCurrentSourceObject,
 	extractCurrentSourceId,
-	extractCurrentSourceFileType
+	extractCurrentSourceFileType,
+	hasFile
 }

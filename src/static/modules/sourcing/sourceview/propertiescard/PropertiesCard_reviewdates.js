@@ -12,7 +12,6 @@ function addReviewDatesElement() {
 	sourceviewDateAdd.id = 'sourceview-dates-add';
 	sourceviewDateAdd.classList.add('sourceview-dates-button');
 	sourceviewDateAdd.textContent = 'A';
-	sourceviewDateAdd.style.backgroundColor = 'red';
 	sourceviewDateAdd.addEventListener('click', addReviewDateClicked);
 	sourceviewReviewDates.appendChild(sourceviewDateAdd);
 
@@ -20,7 +19,6 @@ function addReviewDatesElement() {
 	sourceviewDateComplete.id = 'sourceview-dates-complete';
 	sourceviewDateComplete.classList.add('sourceview-dates-button');
 	sourceviewDateComplete.textContent = 'C';
-	sourceviewDateComplete.style.backgroundColor = 'red';
 	sourceviewDateComplete.addEventListener('click', completeReviewDateClicked);
 	sourceviewReviewDates.appendChild(sourceviewDateComplete);
 
@@ -28,7 +26,6 @@ function addReviewDatesElement() {
 	sourceviewDateUncomplete.id = 'sourceview-dates-uncomplete';
 	sourceviewDateUncomplete.classList.add('sourceview-dates-button');
 	sourceviewDateUncomplete.textContent = 'U';
-	sourceviewDateUncomplete.style.backgroundColor = 'red';
 	sourceviewDateUncomplete.addEventListener('click', uncompleteReviewDateClicked);
 	sourceviewReviewDates.appendChild(sourceviewDateUncomplete);
 
@@ -36,7 +33,6 @@ function addReviewDatesElement() {
 	sourceviewDateGenerate.id = 'sourceview-dates-generate';
 	sourceviewDateGenerate.classList.add('sourceview-dates-button');
 	sourceviewDateGenerate.textContent = 'G';
-	sourceviewDateGenerate.style.backgroundColor = 'red';
 	sourceviewDateGenerate.addEventListener('click', generateReviewDateClicked);
 	sourceviewReviewDates.appendChild(sourceviewDateGenerate);
 
@@ -50,7 +46,6 @@ function addReviewDatesElement() {
 	let sourceviewDateList = document.createElement('div');
 	sourceviewDateList.id = 'sourceview-dates-list';
 	sourceviewDateList.textContent = 'listlistlist';
-	sourceviewDateList.style.backgroundColor = 'red';
 	sourceviewReviewDates.appendChild(sourceviewDateList);
 	//sourceviewDateList.classList.add('sourceview-element');
 

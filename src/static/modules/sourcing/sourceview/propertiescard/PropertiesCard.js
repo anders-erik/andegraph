@@ -5,8 +5,8 @@ import * as Elements from '../../../Elements.js';
 //import * as ExtractDOM from '../../ExtractDOM.js';
 
 // PropertiesCard - children
-import { extractCurrentSourceObject, extractCurrentSourceId, extractCurrentSourceFileType } from './PropertiesCard_Extract.js';
-import { sourceviewFieldFocusout, uploadSourceFilePressed, loadSourceFilePressed } from './PropertiesCard_Events.js';
+import { extractCurrentSourceObject, extractCurrentSourceId, extractCurrentSourceFileType, hasFile } from './PropertiesCard_Extract.js';
+import { sourceviewFieldFocusout, deleteSourceFromDatabase} from './PropertiesCard_Events.js';
 import { loadSource, clearSourceviewPropertiescard, saveCurrentSource } from './PropertiesCard_Update.js';
 import { addReviewDatesElement } from './PropertiesCard_reviewdates.js';
 
@@ -56,12 +56,16 @@ function createSourceviewPropertiescard() {
 	sourceviewPropertiescardInner.appendChild(sourceviewFileEnding);
 
 
-	let sourceviewButtonCard = getSourceviewButtonCard();
-	sourceviewButtonCard.id = 'sourceview-button-card';
-	//sourceviewButtonCard.addEventListener('click', deleteSourceClicked);
-	sourceviewPropertiescardInner.appendChild(sourceviewButtonCard);
 
+	let deleteSourceButton = document.createElement('div');
+	deleteSourceButton.id = 'delete-source-button';
+	deleteSourceButton.classList.add('sourceview-element');
+	deleteSourceButton.tabIndex = 0;
+	deleteSourceButton.textContent = 'Delete Source';
+	deleteSourceButton.addEventListener('click', deleteSourceFromDatabase)
+	sourceviewPropertiescardInner.appendChild(deleteSourceButton);
 	
+
 
 	// let sourceviewReviewDates = Elements.getDateViewer('sourceview-reviewdates');
 	// sourceviewReviewDates.classList.add('sourceview-element');
@@ -74,36 +78,6 @@ function createSourceviewPropertiescard() {
 }
 
 
-/* PRIVATE */
-function getSourceviewButtonCard(){
-	let buttonCard = document.createElement('div');
-	//buttonCard.classList.add('button-card');
-
-	let sourceviewLoad = Elements.getSosButton('load');
-	sourceviewLoad.id = 'sourceview-load';
-	sourceviewLoad.addEventListener('click', loadSourceFilePressed);
-	buttonCard.appendChild(sourceviewLoad);
-
-
-	// Set costum label for file selector
-	// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
-	let sourceviewUpload = document.createElement('input');
-	sourceviewUpload.id = 'sourceview-upload';
-	sourceviewUpload.type = 'file';
-	sourceviewUpload.addEventListener('change', uploadSourceFilePressed);
-	let sourceviewUploadLabel = document.createElement('label');
-	sourceviewUploadLabel.id = 'sourceview-upload-label';
-	// https://stackoverflow.com/questions/15750290/setting-the-html-label-for-attribute-in-javascript
-	sourceviewUploadLabel.htmlFor = 'sourceview-upload';
-	sourceviewUploadLabel.textContent = 'upload';
-	
-	buttonCard.appendChild(sourceviewUpload);
-	buttonCard.appendChild(sourceviewUploadLabel);
-
-	
-
-	return buttonCard;
-}
 
 
 
@@ -116,6 +90,7 @@ export {
 	extractCurrentSourceObject,
 	extractCurrentSourceId,
 	extractCurrentSourceFileType,
+	hasFile,
 
 	loadSource,
 	clearSourceviewPropertiescard,

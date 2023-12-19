@@ -1,6 +1,8 @@
 import { extractCurrentSourceObject, extractCurrentSourceId, extractCurrentSourceFileType } from './PropertiesCard_Extract.js';
 import { reviewDateClicked, loadReviewDates } from './PropertiesCard_reviewdates.js';
 
+import * as viewcard from '../viewcard/Viewcard.js';
+
 // import * as Fetches from '../../../Fetches/BaseFetches.js';
 // import * as Fetchess from '../../../Fetches/BaseFetches.js';
 // import { patchSource } from '../../../Fetches/api/source/PatchSource.js';
@@ -14,7 +16,7 @@ import * as Sourcecard from '../../sourcefind/listcard/sourcecard/Sourcecard.js'
 
 
 async function loadSource(sourceId) {
-	console.log('loading source');
+	//console.log('loading source');
 	//console.log(fetchedSource);
 
 	let fetchedSource = await api.getSource(sourceId);
@@ -44,42 +46,23 @@ async function loadSource(sourceId) {
 	let sourceviewFileEnding = document.getElementById('sourceview-fileending-field');
 	sourceviewFileEnding.value = fetchedSource.fileEnding;
 
+
+
 	// review dates
 	loadReviewDates(sourceId);
-	//let sourceviewReviewDates = document.getElementById('sourceview-reviewdates');
 
-	// let sourceviewReviewDates = document.getElementById('sourceview-dates-list');
-	// sourceviewReviewDates.innerHTML = '';
-	// fetchedSource.sourceReviewDates.forEach(reviewDate => {
-	// 	//console.log(reviewDate.date);
-	// 	let reviewDateLabel = document.createElement('label');
-	// 	if(reviewDate.completed){
-	// 		reviewDateLabel.classList.add('sourceview-dates-list-labels-done');
+	// Display file
+	viewcard.displaySourceFile();
 
-	// 	}else {
-	// 		reviewDateLabel.classList.add('sourceview-dates-list-labels');
-	// 	}
-	// 	reviewDateLabel.addEventListener('click', reviewDateClicked);
-	// 	reviewDateLabel.textContent = reviewDate.date;
-	// 	sourceviewReviewDates.appendChild(reviewDateLabel);
-	// });
-
-
-	// For now we simply want to guarantee no lingering source files
-	document.getElementById('sourceview-viewcard').innerHTML = '';
-
-	// Load file for currrent source
-	document.getElementById('sourceview-load').click();
-
-	//let currentSource = extractCurrentSourceObject();
-	//displayNewSourceFile(currentSource.)
 }
 
 
 
 
 function clearSourceviewPropertiescard(){
-	console.log('clear');
+
+	let sourceId = document.getElementById('sourceview-id-field');
+	
 	document.getElementById('sourceview-title-field').value = '';
 	document.getElementById('sourceview-url-field').value = '';
 	document.getElementById('sourceview-id-field').value = '';
@@ -88,7 +71,11 @@ function clearSourceviewPropertiescard(){
 	document.getElementById('sourceview-filetype-field').value = '';
 	document.getElementById('sourceview-fileending-field').value = '';
 
-	document.getElementById('sourceview-viewcard').innerHTML = '';
+	//document.getElementById('sourceview-viewcard').innerHTML = '';
+	//viewcard.removeCurrentFileFromDOM();
+
+	//console.log(`Source with id ${sourceId} removed from properties card.`);
+
 }
 
 

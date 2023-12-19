@@ -1,18 +1,45 @@
-
+@import './headerbar/viewcardHeaderbar.css';
 
 #sourceview-viewcard {
 	flex-grow: 1;
 	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	
+}
+
+/* #sourceview-viewcard:focus-visible {
+	border: solid black 1px;
+} */
+
+#sourceview-viewcard:focus {
+	box-shadow: var(--shadow-2);
+}
+
+#sourceview-file-container {
+	flex-grow: 1;
+	width: 100%;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	background-color: rgb(150, 73, 222);
 }
-.sourceview-file {
+
+#sourceview-file {
 	max-height: 100%;
 	max-width: 100%;
 }
-/* #sourceview-file-video {
-	
+
+
+
+
+/* #sourceview-file-video:focus {
+	box-shadow: var(--shadow-1);
 } */
 
 

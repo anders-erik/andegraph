@@ -138,3 +138,45 @@ In short: clean up and add useful script to enable a good dev-experience
 	- moved DELETE:/api/source/:id to more sane queries after conflicts with DELETE:/api/source/reviewdate
 
 
+### 2023-12-19
+
+DONE
+- recolored date input
+- sourceview-viewcard
+	- enabled drag and drop (extremly buggy! Avoid!)
+	- enabled paste using focus + (ctrl+v) [not connected to load/upload yet..]
+	- moved upload/load buttons from the property card
+	- made sure file adding and removing was more consistnetly done by directly removing based on elment id
+- Search card
+	- redid the whole UI
+	- connected search cabability to backend sucesfully
+		- ORDER BY - new sane order
+		- NULL titles messed with searches constantly. NOW ADDS EMPTY STRING TO NEW SOURCES
+		- extract from searchcard and pass to api-fetch as a parameter-object
+
+TODO
+- Define they acceptable files and then make sure my input can handle those well!
+	- image - jpeg, png, webp, svg, gif
+	- text - plain text, code + appropriate file ending
+	- pdf
+	- video - mp4
+	- audio - mp3, wav, 
+- Put sourcing under the URL 'sourceshard.com/s/#'
+	- https://stackoverflow.com/questions/46722092/expressjs-passing-parameters-to-html-doesnt-work/46722250#46722250
+		- pug (npm module?)
+			- https://expressjs.com/en/guide/using-template-engines.html
+		- :: or just injecting myself using app.get('/static', injectFunction).
+			- https://medium.com/deno-the-complete-reference/the-hidden-cost-of-using-framework-express-vs-native-http-servers-ed761a5cfc4c
+	- WAIT! I'll just dynamically load the source using the client based on the URL!!!!!!
+		- https://stackoverflow.com/questions/1034621/get-the-current-url-with-javascript
+			- window.location.href
+			- document.URL
+			- window.location.pathname
+		- just tried and express.static will not accept a path name it cant find...
+			- BUT i added a defult id to be loaded using client storage
+				- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage
+				
+
+
+
+
