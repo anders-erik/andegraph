@@ -1,5 +1,6 @@
 
-import { displaySourceFile } from "../Viewcard.js";
+//import { displaySourceFile } from "../Viewcard.js";
+import { displaySourceFile, postFile } from "../fileviewer/fileviewer.js";
 import { extractCurrentSourceId, loadSource } from "../../propertiescard/PropertiesCard.js";
 import * as api from '../../../../Fetches/api/api.js';
 
@@ -12,52 +13,68 @@ function getSourceviewHeaderbar(){
 	//buttonCard.classList.add('button-card');
 
 
-	let sourceviewLoad = document.createElement('div');
-	sourceviewLoad.id = 'sourceview-file-load';
-	sourceviewLoad.classList.add('headerbar-element');
-	sourceviewLoad.textContent = 'load';
-	sourceviewLoad.addEventListener('click', loadSourceFilePressed);
-	sourceviewHeaderbar.appendChild(sourceviewLoad);
+	let sourceviewGet = document.createElement('div');
+	sourceviewGet.id = 'sourceview-file-get';
+	sourceviewGet.classList.add('headerbar-element');
+	sourceviewGet.textContent = 'GET file';
+	sourceviewGet.addEventListener('click', getSourceFilePressed);
+	sourceviewHeaderbar.appendChild(sourceviewGet);
 
 
 
 	// File selection input for new source file
 	// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
-	let sourceviewUpload = document.createElement('input');
-	sourceviewUpload.id = 'sourceview-file-upload';
-	sourceviewUpload.type = 'file';
-	sourceviewUpload.addEventListener('change', uploadSourceFilePressed);
+	let sourceviewPost = document.createElement('input');
+	sourceviewPost.id = 'sourceview-file-post';
+	sourceviewPost.type = 'file';
+	sourceviewPost.addEventListener('change', postSourceFilePressed);
 
 	// Set costum label for file selector
-	let sourceviewUploadLabel = document.createElement('label');
-	sourceviewUploadLabel.id = 'sourceview-file-upload-label';
-	sourceviewUploadLabel.classList.add('headerbar-element');
+	let sourceviewPostLabel = document.createElement('label');
+	sourceviewPostLabel.id = 'sourceview-file-post-label';
+	sourceviewPostLabel.classList.add('headerbar-element');
 	// https://stackoverflow.com/questions/15750290/setting-the-html-label-for-attribute-in-javascript
-	sourceviewUploadLabel.htmlFor = 'sourceview-file-upload';
-	sourceviewUploadLabel.textContent = 'upload';
+	sourceviewPostLabel.htmlFor = 'sourceview-file-post';
+	sourceviewPostLabel.textContent = 'POST file';
 	
-	sourceviewHeaderbar.appendChild(sourceviewUpload);
-	sourceviewHeaderbar.appendChild(sourceviewUploadLabel);
+	sourceviewHeaderbar.appendChild(sourceviewPost);
+	sourceviewHeaderbar.appendChild(sourceviewPostLabel);
 
 	return sourceviewHeaderbar;
 }
 
-async function loadSourceFilePressed(e){
+
+async function getSourceFilePressed(e){
 
 	//console.log('mock file load');
-	//ViewCard.displaySourceFile();
 	displaySourceFile();
 	
 }
 
 
-async function uploadSourceFilePressed(e){
+
+function enablePostButton(){
+	document.getElementById('sourceview-file-post-label').classList.remove('disabled-post');
+	document.getElementById('sourceview-file-post-label').removeAttribute('disabled');
+	document.getElementById('sourceview-file-post').removeAttribute('disabled');
+	//console.log('enabled');
+}
+
+
+function disablePostButton(){
+	document.getElementById('sourceview-file-post-label').classList.add('disabled-post');
+	document.getElementById('sourceview-file-post-label').setAttribute('disabled', 'true');
+	document.getElementById('sourceview-file-post').setAttribute('disabled', 'true');
+	//console.log('disabled');
+}
+
+async function postSourceFilePressed(e){
+
 	console.log("File selected: ", e.target.files[0]);
 	
+	postFile(e.target.files[0]);
 	//console.log('Mock file upload');
-	await api.postSourceFile(extractCurrentSourceId(), e.target.files[0]);
-
-	loadSource(extractCurrentSourceId());
+	
 
 	//document.getElementById('sourceview-fileending-field').value = 'ending';
 	//document.getElementById('sourceview-filetype-field').value = 'type';
@@ -68,8 +85,11 @@ async function uploadSourceFilePressed(e){
 }
 
 
+
 export {
-	getSourceviewHeaderbar
+	getSourceviewHeaderbar,
+	enablePostButton,
+	disablePostButton
 }
 
 

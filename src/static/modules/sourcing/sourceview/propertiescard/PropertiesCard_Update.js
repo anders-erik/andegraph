@@ -16,6 +16,9 @@ import * as Sourcecard from '../../sourcefind/listcard/sourcecard/Sourcecard.js'
 
 
 async function loadSource(sourceId) {
+
+	localStorage.setItem("lastLoadedSourceId", sourceId);
+
 	//console.log('loading source');
 	//console.log(fetchedSource);
 

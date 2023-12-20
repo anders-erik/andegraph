@@ -1,4 +1,5 @@
 @import './headerbar/viewcardHeaderbar.css';
+@import './fileviewer/fileviewer.css';
 
 #sourceview-viewcard {
 	flex-grow: 1;
@@ -18,29 +19,6 @@
 #sourceview-viewcard:focus {
 	box-shadow: var(--shadow-2);
 }
-
-#sourceview-file-container {
-	flex-grow: 1;
-	width: 100%;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	background-color: rgb(150, 73, 222);
-}
-
-#sourceview-file {
-	max-height: 100%;
-	max-width: 100%;
-}
-
-
-
-
-/* #sourceview-file-video:focus {
-	box-shadow: var(--shadow-1);
-} */
 
 
 

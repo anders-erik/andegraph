@@ -15,8 +15,14 @@ module.exports = async (req, res) => {
         res.send({'message': `400 @ /api/source/file/${req.params.id}. Content-type header not found.`}); 
     } 
 
-    let fileType = reqContentType.match(/^\w+/g);
-    let fileEnding = reqContentType.match(/\w+$/g);
+    //let fileType = reqContentType.match(/^\w+/g)[0];
+    //let fileEnding = reqContentType.match(/\w+$/g)[0];
+
+    let fileType = req.get('Content-fileType');
+    let fileEnding = req.get('Content-fileEnding');
+
+    //console.log('fileType: ' + req.get('Content-fileType'));
+    //console.log('fileEnding: ' + req.get('Content-fileEnding'));
 
 
     //const buffer = req.body;

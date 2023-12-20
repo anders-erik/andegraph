@@ -87,7 +87,7 @@ function updateSourcefindCard(id){
 	document.getElementById('sourcefind-id-' + id).textContent = document.getElementById('sourceview-id-field').value;
 	document.getElementById('sourcefind-datecreated-' + id).textContent = document.getElementById('sourceview-datecreated-field').value;
 
-	console.log('updated curent Sourcefind card');
+	//console.log('updated curent Sourcefind card');
 }
 
 

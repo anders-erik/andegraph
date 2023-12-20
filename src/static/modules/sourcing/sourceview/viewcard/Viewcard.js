@@ -2,7 +2,12 @@
 // import { getSourceFile } from '../../../Fetches/api/source/file/GetSourceFile.js';
 import * as api from '../../../Fetches/api/api.js';
 import { hasFile, extractCurrentSourceFileType, extractCurrentSourceId } from '../propertiescard/PropertiesCard_Extract.js';
-import { getSourceviewHeaderbar } from './headerbar/viewcardHeaderbar.js';
+import { getSourceviewHeaderbar, enablePostButton, disablePostButton } from './headerbar/viewcardHeaderbar.js';
+import { newFileviewer, postFile, displaySourceFile, removeCurrentFileFromDOM } from './fileviewer/fileviewer.js';
+
+
+
+
 
 function getSourceviewViewcard(){
 	let sourceviewViewcard = document.createElement('div');
@@ -13,9 +18,8 @@ function getSourceviewViewcard(){
 	
 	sourceviewViewcard.appendChild(getSourceviewHeaderbar());
 
-	let sourceviewFileContainer = document.createElement('div');
-	sourceviewFileContainer.id = 'sourceview-file-container';
-	sourceviewViewcard.appendChild(sourceviewFileContainer);
+	
+	sourceviewViewcard.appendChild(newFileviewer());
 
 	// FILE PASTING
 	sourceviewViewcard.addEventListener('paste', pasteOnViewcard);
@@ -31,18 +35,36 @@ function getSourceviewViewcard(){
 // PASTE
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
 function pasteOnViewcard(event) {
+
+	
+	// Disable paste when file is present!
+	if (+document.getElementById('sourceview-hasfile-field').value == 1){
+		//console.log('This source already has a file. Returning.');
+		return;
+	}
+
+
+
 	// make sure we paste to viewcard
-	if (document.activeElement === event.target) {
+	//if (document.activeElement === event.target) {
+	if (document.activeElement.id === 'sourceview-viewcard') {
+
 		// Some exec-links:
 		// https://stackoverflow.com/questions/7144702/the-proper-use-of-execcommandpaste-in-a-chrome-extension/24984030
 		//console.log(document.execCommand("paste"));
 		
 		// https://stackoverflow.com/questions/3390396/how-can-i-check-for-undefined-in-javascript
 		if(typeof event.clipboardData.files[0] !== 'undefined'){
-			console.log(event.clipboardData.files[0]);
+			//console.log("File selected: ", event.clipboardData.files[0]);
+			postFile(event.clipboardData.files[0]);
 		}
 		else if((event.clipboardData || window.clipboardData).getData("text") !== ''){
-			console.log((event.clipboardData || window.clipboardData).getData("text"));
+			//console.log((event.clipboardData || window.clipboardData).getData("text"));
+			let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
+			let blob = new Blob([clipboardText], { type: 'text/plain' });
+ 			let file = new File([blob], "clipboard.txt", {type: "text/plain"});
+
+			postFile(file);
 		}
 		else {
 			console.log('No file nor text detected.');
@@ -128,124 +150,7 @@ function dropOnViewcard(event){
 // }
 
 
-async function displaySourceFile() {
 
-	let currentSourceId = extractCurrentSourceId();
-
-	removeCurrentFileFromDOM();
-
-
-	if (currentSourceId == '') {
-
-		console.log('no source selected');
-
-	}
-	else if (+document.getElementById('sourceview-hasfile-field').value != 1) { //sourceview-hasfile-field
-		
-		// check if source has a file to load. If not we don't do anything
-		console.log('There is no file associated with this source.')
-
-	}
-	else {
-
-
-		let fetchedBlob = await api.getSourceFile(currentSourceId);
-
-		let fileUrl = URL.createObjectURL(fetchedBlob);
-		// console.log('fetched blob:');
-		// console.log(fetchedBlob);
-		// console.log('Size : ' + fetchedBlob.slice(1, 100).text().then((obj) => {console.log(obj)}));
-		// console.log();
-
-		
-		loadFileIntoDom(fileUrl);
-
-	}
-
-
-
-}
-
-
-
-function removeCurrentFileFromDOM() {
-	// Remove if already exists a file element in DOM
-	let fileElement = document.getElementById('sourceview-file');
-	if(fileElement){
-		document.getElementById('sourceview-file').remove()
-
-		let currentUrl = (import.meta.url).substring(20);
-		let indexOfThirdSlash = currentUrl.split('/', 3).join('/').length
-		let curentFilePath = currentUrl.substring(indexOfThirdSlash);
-		
-		//console.log(`File removed from DOM from file : ${curentFilePath}`);
-		//console.log('Removed in : ' + import.meta.url);
-	}
-}
-
-
-
-function loadFileIntoDom(fileUrl){
-	
-	let fileViewer;
-	let fileType = extractCurrentSourceFileType();
-
-
-	// Remove if already exists a file element in DOM
-	// let fileElement = document.getElementById('sourceview-file');
-	// if(fileElement){
-	// 	document.getElementById('sourceview-file').remove()
-	// }
-
-
-	switch (fileType) {
-		case 'image':
-			fileViewer = document.createElement('img');
-			fileViewer.id = 'sourceview-file';
-			break;
-
-		case 'video':
-			fileViewer = document.createElement('video');
-			fileViewer.id = 'sourceview-file';
-			fileViewer.setAttribute("controls", "controls");
-			fileViewer.setAttribute("preload", "auto"); // this enabled they playback to work as expected!
-			//fileViewer.setAttribute('type', 'video/mp4');
-			
-			// move focus to card
-			fileViewer.addEventListener('focus', (event) => {
-				document.getElementById('sourceview-viewcard').focus();
-			});
-			
-			//fileViewer.appendChild(addVideoClickCapturer());
-
-			// // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#events
-			// fileViewer.addEventListener('play', focusOnVideoClick);
-			// fileViewer.addEventListener('pause', focusOnVideoClick);
-			// fileViewer.addEventListener('volumechange', focusOnVideoClick);
-			// fileViewer.addEventListener('seeking', focusOnVideoClick);
-			// // https://stackoverflow.com/questions/60760150/how-can-i-detect-if-a-video-is-full-screen-using-js-jquery
-			// fileViewer.addEventListener('fullscreenchange webkitfullscreenchange mozfullscreenchange', focusOnVideoClick);
-
-			break;
-
-		default:
-			break;
-	}
-
-	fileViewer.classList.add('sourceview-file'); 
-	fileViewer.src = fileUrl;
-	//fileViewer.addEventListener('click', focusOnClick);
-	//fileViewer.setAttribute('type', 'video/mp4');
-	//fileViewer.style.maxWidth = '100%';
-
-	//document.getElementById('sourceview-viewcard').innerHTML = '';
-	//document.getElementById('sourceview-viewcard').overflow = 'hidden';
-
-	let sourceviewFileContainer = document.getElementById('sourceview-file-container');
-	sourceviewFileContainer.appendChild(fileViewer);
-	//document.getElementById('sourceview-viewcard').appendChild(fileViewer);
-
-}
 
 
 
@@ -254,6 +159,13 @@ function loadFileIntoDom(fileUrl){
 
 export {
 	getSourceviewViewcard,
+
+	// headerbar
+	enablePostButton,
+	disablePostButton,
+
+	// fileviewer
 	displaySourceFile,
-	removeCurrentFileFromDOM
+	removeCurrentFileFromDOM,
+	pasteOnViewcard
 }

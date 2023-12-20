@@ -51,8 +51,8 @@ In short: clean up and add useful script to enable a good dev-experience
 - Previously, js-modules had a very flay hierarcy. Modules/files were organized by function. (extractDOM, updateDom, etc.)
 - Now, It is organized by app-part/comomponent. (e.g. sourcing/sourcefind, sourcing/sourceview, etc.)
 - The function for a particular action is contained within the folder of a particular component. (events, update DOM, etc. are providied by component. Update/extract-commends are exposed to the rest of the app for cross-component manipulation) 
-- I tries to improve fetch-structure. I'm still not sure how to implement it the best. But remember to just try making it fetch well. Nothing else!
-- No Additional Features were added today, only refzctoring. 
+- I tried to improve fetch-structure. I'm still not sure how to implement it properly. But remember to just try making it fetch well. Nothing else!
+- No Additional Features were added today, only refactoring. 
 	- TODO:
 		- complete review
 		- finally add shards
@@ -175,8 +175,54 @@ TODO
 		- just tried and express.static will not accept a path name it cant find...
 			- BUT i added a defult id to be loaded using client storage
 				- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage
-				
 
+
+### 2023-12-20
+- Made adding source files barable
+	- Enabled pasting new source file by focusing on viewcard and pressing CTRL+V
+	- Disable ability to add new file if file already exists
+		- Sure, I the future I might add DELETE/PUT....
+	- File type detection
+		- fileviewer_utils.js
+			- grabs the file ending/extension
+			- matches extension against arrays contining extension for different file types
+			- file types are:
+				- image
+				- audio
+				- video
+				- pdf
+				- data
+				- text (txt + code)
+		- Still not completely done with displaying...
+- Fully acceptable search functionality!
+	- Automatically fetch for new sources on :
+		- toggling ANY of the checkboxes
+		- on content-change when searchbar is in focus
+	- Change order between ASC/DESC
+- localStorage
+	- All four checkboxes
+	- id of the last loaded source
+		- If the last loaded source is not found on reload, 410 error code is returned.
+			- Honestly it might be a 404 if i accidentily enter a future source id and it is silently cached!!
+			- but it is nice hving the 410 for the purpose of 'LAST LOADED SUORCE NOT FOUND!!'
+
+
+- TODO:
+	- display file types:
+		- audio
+		- pdf
+		- data
+	- source files
+		- PUT
+		- DELETE
+		- MAYBE NOT????
+	- review dates:
+		- PUT
+		- DELETE
+		- MAYBE NOT??
+	- SHARDS!
+	- SHARDS!
+	- SHARDS!
 
 
 

@@ -10,7 +10,7 @@ async function postSource() {
 
 		if (response.ok) {
 			const responseData = await response.json();
-			console.log('POST request successful:', responseData);
+			//console.log('POST request successful:', responseData);
 			return responseData;
 		} else {
 			throw new Error('POST request failed:', response.status);

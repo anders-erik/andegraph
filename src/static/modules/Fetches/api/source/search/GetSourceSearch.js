@@ -6,7 +6,9 @@
 			searchall: 1,
 			startdate: '2023-11-12',
 			enddate: '2023-12-19',
-			searchString: ''
+			searchString: '',
+			asc: 0,
+			review: 0,
  * 		}
  * @returns 
  */
@@ -18,7 +20,9 @@ async function getSourceSearch(searchParameters) {
 		+ `searchall=${searchParameters.searchall}&`
 		+ `fromdate=${searchParameters.fromdate}&`
 		+ `todate=${searchParameters.todate}&`
-		+ `searchstring=${searchParameters.searchstring}`
+		+ `searchstring=${searchParameters.searchstring}&`
+		+ `asc=${searchParameters.asc}&`
+		+ `review=${searchParameters.review}`
 	;
 
 	//console.log(urlString);

@@ -39,12 +39,14 @@
 	background-color: aqua;
 } */
 
-#sourceview-file-upload {
+#sourceview-file-post {
 	display: none;
 }
-/* #sourceview-file-upload-label {
-	background-color: aqua;
-} */
+.disabled-post {
+	background-color: lightgray;
+	pointer-events: none;
+	cursor: none;
+}
 
 
 

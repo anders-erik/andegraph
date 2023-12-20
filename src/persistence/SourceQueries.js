@@ -3,24 +3,66 @@ const connection = require('./Connection');
 
 
 
-async function selectAllLikeString(searchstring, limit) {
+async function selectAllLikeString(searchstring, limit, order) {
 
     // Didnt get the query parameter to work with " LIKE '%?%' ". 
     // No idea why the linked example works either. Probably something to do with the apstrophes.
     // https://stackoverflow.com/questions/63652590/issue-in-sqlite-while-using-node-js-like-operator-and-parameters
     let string = '%' + searchstring + '%';
+    //console.log(order);
+
+
+    // 'Need' to change 'ORDER BY ASC/DESC'. 
+    //  API provides a boolean value to be passed, which is converted to ASC/DESC at API endpoint
+    // https://stackoverflow.com/questions/39559072/sqlite3-query-order-by-parameter-with-notation
+    let queryString = `
+
+        SELECT * FROM sources 
+        WHERE title 
+        LIKE ? 
+        ORDER BY id {}
+        LIMIT ?
+
+    `
+    queryString = queryString.replace('{}', order);
+    
 
     return new Promise((acc, rej) => {
         // 'IS NULL' was added to not ignore newly created entries
-        connection.db.all(` 
+        connection.db.all( queryString, [string, limit], (err, rows) => {
 
-                SELECT * FROM sources 
-                WHERE title 
-                LIKE ? 
-                ORDER BY id DESC
-                LIMIT ?
+            // changed 2023-12-20
+            if (err) return rej(err);
+            acc(rows);
+        });
+    });
+}
 
-                `, [string, limit], (err, rows) => {
+async function selectDatesAndLikeString(searchstring, limit, fromdate, todate, order) {
+
+	// Didnt get the query parameter to work with " LIKE '%?%' ". 
+    // No idea why the linked example works either. Probably something to do with the apstrophes.
+    // https://stackoverflow.com/questions/63652590/issue-in-sqlite-while-using-node-js-like-operator-and-parameters
+    let string = '%' + searchstring + '%';
+
+    // 'Need' to change 'ORDER BY ASC/DESC'. 
+    //  API provides a boolean value to be passed, which is converted to ASC/DESC at API endpoint
+    // https://stackoverflow.com/questions/39559072/sqlite3-query-order-by-parameter-with-notation
+    let queryString = `
+
+        SELECT * FROM sources 
+        WHERE dateCreated >= ? 
+        AND dateCreated <= ? 
+        AND title LIKE ?
+        ORDER BY id {}
+        LIMIT ?
+
+    `
+    queryString = queryString.replace('{}', order);
+
+
+    return new Promise((acc, rej) => {
+        connection.db.all(queryString, [fromdate, todate, string, limit], (err, rows) => {
 
             if (err) return rej(err);
             acc(
@@ -34,7 +76,10 @@ async function selectAllLikeString(searchstring, limit) {
     });
 }
 
-async function selectDatesLikeString(searchstring, limit, fromdate, todate) {
+
+
+
+async function selectForReview(searchstring, limit) {
 
 	// Didnt get the query parameter to work with " LIKE '%?%' ". 
     // No idea why the linked example works either. Probably something to do with the apstrophes.
@@ -44,13 +89,16 @@ async function selectDatesLikeString(searchstring, limit, fromdate, todate) {
     return new Promise((acc, rej) => {
         connection.db.all(`
 
-                SELECT * FROM sources 
-                WHERE dateCreated >= ? 
-                AND dateCreated <= ? 
-                AND title LIKE ?
-                ORDER BY id DESC
+                SELECT DISTINCT sources.* from sources
+                INNER JOIN sourceReviewDates
+                ON sources.id = sourceReviewDates.sourceId
+                WHERE sourceReviewDates.date <= DATE('now')
+                AND sourceReviewDates.completed = 0
+                AND sources.title LIKE ?
+                ORDER BY sourceReviewDates.date DESC
+                LIMIT ?
         
-            `, [fromdate, todate, string], (err, rows) => {
+            `, [string , limit ], (err, rows) => {
 
             if (err) return rej(err);
             acc(
@@ -65,16 +113,20 @@ async function selectDatesLikeString(searchstring, limit, fromdate, todate) {
 }
 
 
+
+
 // NOT WORKING - somehow 'fileType' and 'fileEnding' were both converted to objects. Referencing index '0' solved it...
 // https://stackoverflow.com/questions/67517796/row-is-object-object-when-fetching-a-database-row-in-sqlite3
 // I guess the match-regex i used to extract the infromation returns matches in an array. But the old query automatically extracted the string value...
+
+// UPDATE: I no longer pass an array with ONE string. good job past me...
 async function updateSourceFileInfo(sourceId, fileType, fileEnding) {
 
     //console.log('POSTPOST' +' '+ sourceId +' '+ fileType +' '+ fileEnding);
     //console.log(typeof(fileType[0]));
 
     return new Promise((acc, rej) => {
-        connection.db.all("UPDATE sources SET fileType = ?, fileEnding=?, hasFile=1 WHERE id=?", [fileType[0], fileEnding[0], sourceId], (err, rows) => {
+        connection.db.all("UPDATE sources SET fileType = ?, fileEnding=?, hasFile=1 WHERE id=?", [fileType, fileEnding, sourceId], (err, rows) => {
             if (err) {
                 return rej(err);
                 //throw err;
@@ -236,7 +288,8 @@ async function deleteSource(id) {
 
 module.exports = {
     selectAllLikeString,
-    selectDatesLikeString,
+    selectDatesAndLikeString,
+    selectForReview,
     updateSourceFileInfo,
     insertEmptySource,
     selectMaxId,

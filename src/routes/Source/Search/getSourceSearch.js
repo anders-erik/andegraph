@@ -10,17 +10,31 @@ module.exports = async (req, res) => {
     let searchstring = req.query.searchstring;
     let fromdate = req.query.fromdate;
     let todate = req.query.todate;
-    
+    let asc = req.query.asc;
+    let review = req.query.review;
 
+    // what if I pass 2? Strange conversions from string?
+    let order = (asc == 1) ? `ASC` : "DESC";
+
+
+    let resultLimit = 100;
+
+
+    if(review == 1){
+        
+        const items = await sourceQueries.selectForReview(searchstring, resultLimit);
     
-    if(today == 1){
+        console.log(`Searched and fetched sources to be reviewed using the searchstring '${searchstring}'. `);
+        res.send(items);
+
+    }
+    else if(today == 1){
         //console.log('dateinterval');
         
-        let resultLimit = 100000;
 
         let todaysDate = (new Date(Date.now()) ).toISOString().substring(0, 10);
         //console.log(todaysDate);
-        const items = await sourceQueries.selectDatesLikeString(searchstring, resultLimit, todaysDate, todaysDate);
+        const items = await sourceQueries.selectDatesAndLikeString(searchstring, resultLimit, todaysDate, todaysDate, order);
     
         console.log(`Searched and fetched sources from today using the searchstring '${searchstring}'. `);
         res.send(items);
@@ -28,11 +42,10 @@ module.exports = async (req, res) => {
     else if (dateinterval == 1) {
         //console.log('dateinterval');
 
-        let resultLimit = 100000;
 
-        console.log(searchstring + ' ' + fromdate + ' ' + todate)
-        const items = await sourceQueries.selectDatesLikeString(searchstring, resultLimit, fromdate, todate);
-        console.log(items);
+        //console.log(searchstring + ' ' + fromdate + ' ' + todate)
+        const items = await sourceQueries.selectDatesAndLikeString(searchstring, resultLimit, fromdate, todate, order);
+        //console.log(items);
         
         console.log(`Searched and fetched sources created between ${fromdate} and ${todate} using the searchstring '${searchstring}'. `);
         res.send(items);
@@ -41,9 +54,8 @@ module.exports = async (req, res) => {
     else if (searchall == 1) {
         //console.log('searchall');
 
-        let resultLimit = 100000;
 
-        const items = await sourceQueries.selectAllLikeString(searchstring, resultLimit);
+        const items = await sourceQueries.selectAllLikeString(searchstring, resultLimit, order);
     
         console.log(`Searched and fetched all sources using the searchstring '${searchstring}'. `);
         res.send(items);

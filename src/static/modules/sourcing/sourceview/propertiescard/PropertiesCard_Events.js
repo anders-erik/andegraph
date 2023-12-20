@@ -60,7 +60,7 @@ async function deleteSourceFromDatabase(){
 
 		api.deleteSource(sourceId);
 
-		console.log('Source: ' + sourceId + ' deleted from database.');
+		//console.log('Source: ' + sourceId + ' deleted from database.');
 		
 	} 
 	else {

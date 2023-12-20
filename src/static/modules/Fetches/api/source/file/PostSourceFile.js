@@ -1,13 +1,15 @@
 
-async function postSourceFile(id, file){
-	console.log('uplading');
-	console.log(id + '  ' + file);
-	console.log(file.type);
+async function postSourceFile(id, file, fileType, fileEnding){
+	// console.log('uplading');
+	// console.log(id + '  ' + file);
+	// console.log(file.type);
 	try {
 		const response = await fetch('/api/source/file/' + id, {
 			method: 'POST',
 			headers: {
 				'Content-Type': file.type,
+				'Content-fileType': fileType,
+				'Content-fileEnding': fileEnding,
 			},
 			body: file,
 		});

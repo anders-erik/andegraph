@@ -12,7 +12,7 @@ export async function patchSource(sourceObject) {
 
 		if (response.ok) {
 			const responseData = await response.json();
-			console.log('PATCH request successful:', responseData);
+			//console.log('PATCH request successful:', responseData);
 			return responseData;
 		} else {
 			throw new Error('PATCH request failed:', response.status);

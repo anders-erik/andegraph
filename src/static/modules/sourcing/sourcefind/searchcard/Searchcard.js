@@ -37,6 +37,11 @@ function createSourcefindSearchcard(){
 	sourcefindSearchbar.style.gridColumn = '1 / span 4'
 	sourcefindSearchcard.appendChild(sourcefindSearchbar);
 
+	let sourcefindAscContainer = searchcardComponents.newSourcefindAsc();
+	sourcefindSearchcard.appendChild(sourcefindAscContainer);
+
+	let sourcefindReviewContainer = searchcardComponents.newSourcefindReview();
+	sourcefindSearchcard.appendChild(sourcefindReviewContainer);
 
 	let sourcefindTodayContainer = searchcardComponents.newSourcefindToday();
 	sourcefindSearchcard.appendChild(sourcefindTodayContainer);
@@ -66,45 +71,30 @@ function createSourcefindSearchcard(){
 }
 
 
-
-
-
-function extractSearchParameters(){
-
-	let parameters = {
-		today: 0,
-		dateinterval: 0,
-		searchall: 1,
-		fromdate: '2023-12-12',
-		todate: '2023-12-19',
-		searchstring: ''
-	}
-
-
-	let todayBox = document.getElementById('sourcefind-today-box');
-	let intervalBox = document.getElementById('sourcefind-daterange-box');
-
-	if(todayBox.checked){
-		parameters.today = 1;
-	}
-	else if(intervalBox.checked){
-		parameters.dateinterval = 1;
-	}
-
-	
-	parameters.fromdate = document.getElementById('sourcefind-startdate').value;
-	parameters.todate = document.getElementById('sourcefind-enddate').value;
-	parameters.searchstring = document.getElementById('sourcefind-searchbar-input').value;
-
-	
-	return parameters;
-}
-
-
 /* 
 EVENTS
 
 */
+
+
+
+let addSourceClicked = async function(e){
+	//console.log('create new source');
+	//let newSourceResponse = await Fetches.newSource();
+	let newSourceResponse = await api.postSource();
+	
+	await PropertiesCard.loadSource(newSourceResponse.id);
+
+
+	// simulate clicking on fetch button
+	await fetchSourcesClicked();
+
+
+	Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceResponse.id);
+	
+}
+
+
 
 
 
@@ -118,8 +108,9 @@ let fetchSourcesClicked = async function(e){
 
 	// Search parameters
 	let searchParameters = extractSearchParameters();
-	//console.log(searchParameters);
+	console.log(searchParameters);
 
+	
 	//let allFetchedSources = await Fetches.fetchAllSources();
 	let allFetchedSources = await api.getSourceSearch(searchParameters);
 
@@ -133,24 +124,44 @@ let fetchSourcesClicked = async function(e){
 	
 }
 
-let addSourceClicked = async function(e){
-	console.log('create new source');
-	//let newSourceResponse = await Fetches.newSource();
-	let newSourceResponse = await api.postSource();
+
+
+function extractSearchParameters(){
+
+	let parameters = {
+		today: 0,
+		dateinterval: 0,
+		searchall: 1,
+		fromdate: '2023-12-12',
+		todate: '2023-12-19',
+		asc: 0,
+		review: 0,
+		searchstring: '',
+	}
+
+	let reviewBox = document.getElementById('sourcefind-review-box');
+	let todayBox = document.getElementById('sourcefind-today-box');
+	let intervalBox = document.getElementById('sourcefind-daterange-box');
+	let ascBox = document.getElementById('sourcefind-asc-box');
+
+	parameters.review = reviewBox.checked ? 1 : 0;
+	if(todayBox.checked){
+		parameters.today = 1;
+	}
+	else if(intervalBox.checked){
+		parameters.dateinterval = 1;
+	}
+	parameters.asc = ascBox.checked ? 1 : 0;
+
+
+
+	parameters.fromdate = document.getElementById('sourcefind-startdate').value;
+	parameters.todate = document.getElementById('sourcefind-enddate').value;
+	parameters.searchstring = document.getElementById('sourcefind-searchbar').value;
+
 	
-	PropertiesCard.loadSource(newSourceResponse.id);
-
-	//console.log("asdf:::");
-	console.log('New source with id = ' + newSourceResponse.id);
-
-	// simulate clicking on fetch button
-	fetchSourcesClicked();
-
-	
+	return parameters;
 }
-
-
-
 
 
 
