@@ -224,5 +224,29 @@ TODO
 	- SHARDS!
 	- SHARDS!
 
+- late in evning:
+	- sourcefile
+		- enabled audio
+			- slightly buggy when forcing player to end of audio. Gets stuck with warnings/errors
+		- enabled embed/pdf
+			- firefox: 
+				- it is utilizing PDF.js ?
+				- unsolicited logs
+				- warnings about http..
+			- other browsers:
+				- not yet tried...
+	- added a quick and dirty way of horizontally rezsizing the panels
+		- the vertical seperators were given their own js-files
+		- some eventlisteners with focus and clicks did the trick
+		- not a good user experience. The two sperators are NOT MOVING INDEPENDENTLY
+	- added the sharding panel
+		- only the panel and a add/delete button at the top
+- TODO
+	- Shard DB
+	- Shard API
+	- Shard Fetch
+	- Shardlist
+		- shardcard
+
 
 

@@ -1,0 +1,22 @@
+
+.sharding-shardbar {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 3rem;
+}
+
+
+
+
+
+#sharding-add {
+	grid-column: 1 / span 1;
+	grid-row: 1 / span 1;
+
+}
+
+#sharding-delete {
+	grid-column: 2 / span 1;
+	grid-row: 1 / span 1;
+}
+

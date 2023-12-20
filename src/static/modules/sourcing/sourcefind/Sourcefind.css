@@ -4,9 +4,16 @@
 
 #sourcefind-panel {
 	min-width: 380px;
-	width: 18%;
+	height: 100%;
 }
 
+#sourcefind-panel-outer {
+	padding: 0px;
+	background-color: purple;
+	height: 100%;
+	width: 400px;
+	overflow-x: hidden;
+}
 
 
 
@@ -16,7 +23,9 @@
 }
 
 
-
+#sourcing-vertisep-1 {
+	cursor: ew-resize;
+}
 
 
 

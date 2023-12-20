@@ -1,6 +1,7 @@
 
 #sourceview-fileviewer {
 	flex-grow: 1;
+	min-height: 300px;
 	width: 100%;
 
 	display: flex;
@@ -13,6 +14,7 @@
 #sourceview-file {
 	max-height: 100%;
 	max-width: 100%;
+
 }
 
 .sourceview-file-text {
@@ -26,6 +28,10 @@
 	outline: none;
 }
 
+.sourceview-file-embed {
+	height: 100%;
+	width: 100%;
+}
 
 
 /* #sourceview-file-video:focus {

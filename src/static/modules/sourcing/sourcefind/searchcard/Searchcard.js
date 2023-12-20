@@ -34,7 +34,7 @@ function createSourcefindSearchcard(){
 
 	
 	let sourcefindSearchbar = searchcardComponents.newSourcefindSearchbar();
-	sourcefindSearchbar.style.gridColumn = '1 / span 4'
+	//sourcefindSearchbar.style.gridColumn = '1 / span 4'
 	sourcefindSearchcard.appendChild(sourcefindSearchbar);
 
 	let sourcefindAscContainer = searchcardComponents.newSourcefindAsc();

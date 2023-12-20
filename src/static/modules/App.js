@@ -14,6 +14,9 @@ import { fetchSourcesClicked } from './sourcing/sourcefind/searchcard/Searchcard
 import * as PropertiesCard from './sourcing/sourceview/propertiescard/PropertiesCard.js';
 
 import * as api from './Fetches/api/api.js';
+import { sourcingVertisep1 } from './sourcing/sourcefind/sourcefind_vertisep.js';
+import { sourcingVertisep2 } from './sourcing/sourceview/sourceview_vertisep.js';
+import { createShardingPanel } from './sourcing/sharding/sharding.js';
 
 
 function App(){
@@ -27,9 +30,10 @@ function App(){
 
 // 2023-12-14
 	root.appendChild(Sourcefind.createSourcefindPanel());
-	root.appendChild(VerticalSeperator.createVerticalSerperationPanel(1));
+	root.appendChild(sourcingVertisep1());
 	root.appendChild(Sourceview.createSourceviewPanel());
-	root.appendChild(VerticalSeperator.createVerticalSerperationPanel(1));
+	root.appendChild(sourcingVertisep2());
+	root.appendChild(createShardingPanel());
 
 // 2023-12-03
 	//root.appendChild(createSourcefindPanel());

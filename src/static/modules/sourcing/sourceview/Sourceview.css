@@ -3,12 +3,23 @@
 @import './viewcard/ViewCard.css';
 
 #sourceview-panel {
-	width: 35%;
+	min-width: 700px;
+	height: 100%;
 	
 }
 
 
+#sourceview-panel-outer {
+	padding: 0px;
+	background-color: purple;
+	height: 100%;
+	width: 700px;
+	overflow: hidden;
+}
 
+#sourcing-vertisep-2:hover {
+	cursor:ew-resize;
+}
 
 
 

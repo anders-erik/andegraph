@@ -4,6 +4,9 @@
 /* @import 'sourceview-styles.css'; */
 @import '../modules/sourcing/sourceview/Sourceview.css';
 
+@import '../modules/sourcing/sharding/sharding.css';
+
+
 :root{
     --light-1:#afeef5;
     --light-2:#c2c2c2;
@@ -67,7 +70,7 @@ body {
 
 
 .panel {
-	background-color: aliceblue;
+	background-color: rgb(126, 130, 134);
 	display: flex;
 	flex-direction: column;
 	min-height: 35em;
@@ -79,12 +82,13 @@ body {
 
 .seperation-panel {
 	background-color: goldenrod;
-	width: 5px;
+	width: 10px;
+	height: 100%;
 }
 
 
 .card {
-	background-color: rgb(131, 236, 236);
+	background-color: rgb(223, 126, 106);
 	margin: 10px;
 	padding: 10px;
 }

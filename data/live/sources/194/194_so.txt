@@ -1,1 +1,0 @@
-    let fileEnding = req.get('Content-fileEnding');

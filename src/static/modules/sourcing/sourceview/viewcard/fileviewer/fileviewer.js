@@ -55,6 +55,9 @@ async function displaySourceFile() {
 
 		let fetchedBlob = await api.getSourceFile(currentSourceId);
 
+		
+		//let fetchedFile = new File(  [fetchedBlob], 'testname.file' );
+
 		let fileUrl = URL.createObjectURL(fetchedBlob);
 		// console.log('fetched blob:');
 		// console.log(fetchedBlob);
@@ -136,6 +139,24 @@ async function loadFileIntoDom(fileUrl, fetchedBlob){
 			// fileViewer.addEventListener('fullscreenchange webkitfullscreenchange mozfullscreenchange', focusOnVideoClick);
 
 			break;
+
+		case 'audio':
+				fileViewer = document.createElement('audio');
+				fileViewer.setAttribute('controls', 'controls');
+				//fileViewer.src = '';
+				fileViewer.id = 'sourceview-file';
+				break;
+
+			case 'embed':
+				// WARNINGS + logs....
+				// https://github.com/mozilla/pdf.js/issues/13103
+				// https://stackoverflow.com/questions/43202973/google-chrome-does-not-show-pdf-files-in-iframe
+				fileViewer = document.createElement('embed');
+				//fileViewer.setAttribute('controls', 'controls');
+				//fileViewer.src = '';
+				fileViewer.id = 'sourceview-file';
+				fileViewer.classList.add('sourceview-file-embed');
+				break;
 
 		default:
 			break;
