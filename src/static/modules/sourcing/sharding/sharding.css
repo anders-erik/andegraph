@@ -1,5 +1,6 @@
 
 @import './shardbar/shardbar.css';
+@import './shardlist/shardcard/shardcard.css';
 
 
 #sharding-panel {
@@ -21,6 +22,8 @@
 #sharding-listcard {
 	flex-grow: 1;
 	overflow-y: scroll;
+
+	padding: 10px;
 }
 
 
@@ -28,44 +31,3 @@
 
 
 
-
-
-.sharding-sourcecard {
-	background-color: burlywood;	
-	margin: 5px;
-	margin-bottom: 10px;
-	padding: 5px;
-
-	display: grid;
-	gap: 5px;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr ;
-}
-
-
-
-.sharding-label {
-	/* background-color: darkorchid; */
-	border: solid black 1px;
-	pointer-events: none;
-
-	background-color: beige;
-	text-decoration: line-through;
-	padding-left: 10px;
-}
-
-.sharding-title {
-	grid-column: 1 / span 2;
-	grid-row: 1 / span 1;
-	background-color: aliceblue;
-}
-
-.sharding-id {
-	grid-column: 1 / span 1;
-	grid-row: 2 / span 1;
-}
-
-.sharding-datecreated {
-	grid-column: 2 / span 1;
-	grid-row: 2 / span 1;
-}

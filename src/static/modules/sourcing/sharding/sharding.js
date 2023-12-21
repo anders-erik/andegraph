@@ -1,6 +1,6 @@
 
 import * as shardbar from './shardbar/shardbar.js';
-import * as Listcard from './shardlist/shardlist.js';
+import * as shardlist from './shardlist/shardlist.js';
 
 function createShardingPanel(){
 
@@ -14,7 +14,9 @@ function createShardingPanel(){
 
 
 	shardingPanel.appendChild(shardbar.createShardbar());
-	shardingPanel.appendChild(Listcard.createShardlistcard());
+	shardingPanel.appendChild(shardlist.createShardlistcard());
+
+	//shardlist.loadShardsIntoShardlist();
 
 	shardingPanelOuter.appendChild(shardingPanel);
 

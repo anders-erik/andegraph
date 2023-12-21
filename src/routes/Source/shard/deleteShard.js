@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     // Cant use wildcard?
     // https://stackoverflow.com/questions/14917757/delete-unlink-files-matching-a-regex
     let shard = (await shardQueries.selectShard(shardid))[0];
-    console.log(shard);
+    //console.log(shard);
 
 
     // check if shard exists
@@ -24,31 +24,42 @@ module.exports = async (req, res) => {
     }
     else {
 
+        // If there is a filetype -> remove file
+        if (shard.fileType !== null) {
+            console.log('shard file detected during deletion ');
 
-        let filePath = `/data/live/sources/${sourceid}/shards/${shardid}_sh.${shard.fileEnding}`;
+            let filePath = `/data/live/sources/${sourceid}/shards/${shardid}_sh.${shard.fileEnding}`;
 
 
-        // Delete shard file
-        try {
+            // Delete shard file
+            try {
 
 
-            await fs.rm(filePath);
+                await fs.rm(filePath);
 
-            console.log(`Source directories successfully deleted @ ${filePath}`)
+                console.log(`Source directories successfully deleted @ ${filePath}`)
 
-        } catch (error) {
+            } catch (error) {
 
-            console.log(`Failed to delete shardfile @ ${filePath}`)
-            res.sendStatus(400);
-            throw error;
+                console.log(`Failed to delete shardfile @ ${filePath}`)
+                res.sendStatus(400);
+                throw error;
+            }
+
         }
+        else{
+            console.log('no shard file during deletion');
+            
+        }
+
+
 
 
         // OLD
         try {
             let rows = await shardQueries.deleteShard(shardid);
             console.log(`Shard no. ${shardid} was successfully deleted from database.`)
-            res.send(rows);
+            res.status(200).send({});
         } catch (error) {
             console.log(`Shard no. ${shardid} was NOT successfully deleted from database.`);
             res.status(404).send({ 'message': `Shard no. ${shardid} was NOT successfully deleted from database.` });

@@ -267,6 +267,37 @@ TODO
 	- /api/source{sourceid}/shard/{shardid}/file
 		- POST, GET, PUT
 
+- Completed a functioning shardlist with almost full CRUD
+	- NOTE: This was definitely a push today and there are many places where I did the quick and dirty thing to get it to work.
+		- No real care to structure
+		- I tried to copy too much code directly from the other panels. I should have done more structuring from scratch, and added snippets!!
+		- No clear naming and component responsibility
+		- I took many small, quick decisions. I will not remember most of this stuff in a week!!
+	- Basically I added the shardcards
+		- Ctrl+v - paste file from clipboard to shardcard with focus
+			- Then the WHOLE SOURCE is realoaded
+		- alt+shift+del - deletes the shardcard currently in focus
+		- top button (Add) will post a new, empty shard and then reload the whole SOURCE
+		- SOURCE RELOADS IS CURRENTLY THE ONLY REAL WAY OF RELOADING THE SHARDS!
+			- some sort of cashing is definietly needed
+			- Many this is not always a bad thing, as long as large files are not always transfered for each reload!
+			-
+	- Some techincal debt has been aquired today.
+		- But if I can use the app for some time,, then I should be able to clean it up some!
+- TODO:
+	- Deploy app for some inital data collecting!
+	- Enable the merging of two databases!
+		- files are easy to copy
+		- SQLite is trickier. Maybe I can simply use the .dump command! Then I read the dump from the other db!
+		- I need to make sure that there is continuity in entry ids..
+		- FOR NOW I ONLY MAKE *ONE* PRIMARY APP DATABASE. 
+			- ALSO START BUILDING TEST DATA!!
+
+
+
+
+
+
 
 
 

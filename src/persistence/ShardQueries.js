@@ -46,6 +46,7 @@ async function selectShardsOnSourceid(sourceid) {
             SELECT * 
             FROM shards 
             WHERE sourceId = ?
+            ORDER BY id DESC
             ;`,
             [sourceid],
 

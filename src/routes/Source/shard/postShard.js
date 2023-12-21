@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     
     try {
         await shardQueries.insertShard(sourceid);
-        let rows = await shardQueries.selectShards(sourceid);
+        let rows = await shardQueries.selectShardsOnSourceid(sourceid);
         res.send(rows);
     } catch (error) {
         console.log('error on new shard!');

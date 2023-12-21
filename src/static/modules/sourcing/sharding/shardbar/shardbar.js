@@ -80,14 +80,21 @@ let addShardClicked = async function(e){
 	// simulate clicking on fetch button
 	//await fetchSourcesClicked();
 
+	let sourceid = PropertiesCard.extractCurrentSourceId();
 
 	//Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceResponse.id);
-	
+	await api.postShard(sourceid);
 	console.log('new shard posted')
 
-	console.log('new shard fetched')
+	PropertiesCard.loadSource(sourceid);
 
-	console.log('new shard added the shardlist')
+
+
+
+
+	//console.log('new shard fetched')
+
+	//console.log('new shard added the shardlist')
 }
 
 

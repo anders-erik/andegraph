@@ -15,6 +15,17 @@ import { postSourceReviewDates } from "./source/reviewdate/postSourceReviewDate.
 import { patchSourceReviewDate } from "./source/reviewdate/patchSourceReviewDate.js";
 import { deleteSourceReviewDate } from "./source/reviewdate/deleteSourceReviewDates.js";
 
+
+import { postShard } from "./source/shard/postShard.js";
+import { getShards } from "./source/shard/getShards.js";
+import { patchShard } from "./source/shard/patchShard.js";
+import { deleteShard } from "./source/shard/deleteShard.js";
+
+import { getShardFile } from "./source/shard/file/getShardFile.js";
+import { postShardFile } from "./source/shard/file/postShardFile.js";
+
+
+
 export {
 	postSource,
 	getSource,
@@ -29,7 +40,16 @@ export {
 	getSourceReviewDates,
 	postSourceReviewDates,
 	patchSourceReviewDate,
-	deleteSourceReviewDate
+	deleteSourceReviewDate,
+
+	postShard,
+	getShards,
+	patchShard,
+	deleteShard,
+
+	getShardFile,
+	postShardFile,
+
 }
 
 

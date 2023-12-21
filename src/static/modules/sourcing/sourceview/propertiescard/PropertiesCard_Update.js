@@ -9,10 +9,9 @@ import * as viewcard from '../viewcard/Viewcard.js';
 // import { getSource } from '../../../Fetches/api/source/GetSource.js';
 import * as api from '../../../Fetches/api/api.js';
 
-
 import * as Sourcecard from '../../sourcefind/listcard/sourcecard/Sourcecard.js';
 
-
+import { loadShardsIntoShardlist } from '../../sharding/shardlist/shardlist.js';
 
 
 async function loadSource(sourceId) {
@@ -57,6 +56,9 @@ async function loadSource(sourceId) {
 	// Display file
 	viewcard.displaySourceFile();
 
+
+	// LOAD SHARDS
+	loadShardsIntoShardlist(sourceId);
 }
 
 
