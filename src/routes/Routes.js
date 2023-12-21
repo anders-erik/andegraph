@@ -1,6 +1,7 @@
 
 console.log('Run routes');
 
+// SOURCES
 const deleteSource = require('./Source/deleteSource');
 const getSource = require('./Source/getSource');
 const postSource = require('./Source/postSource');
@@ -9,30 +10,37 @@ const getSourcefile = require('./Source/File/getSourcefile');
 const postSourcefile = require('./Source/File/postSourcefile');
 const getSourceSearch = require('./Source/Search/getSourceSearch');
 
-
 const getSourceReviewDates = require('./Source/reviewdate/getSourceReviewDates');
 const postSourceReviewDate = require('./Source/reviewdate/postSourceReviewDate');
 const deleteSourceReviewDate = require('./Source/reviewdate/deleteSourceReviewDates');
 const patchSourceReviewDate = require('./Source/reviewdate/patchSourceReviewDate');
 
 
+// SHARDS
+const postShard = require('./Source/shard/postShard');
+const getShard = require('./Source/shard/getShard');
+const deleteShard = require('./Source/shard/deleteShard');
+const patchShard = require('./Source/shard/patchShard');
 
-const postShard = require('./shard/postShard');
+const postShardFile = require('./Source/shard/file/postShardFile');
+const getShardFile = require('./Source/shard/file/getShardFile');
+const putShardFile = require('./Source/shard/file/putShardFile');
 
 
 
 function initRoutes(app, express) {
 	console.log('Init routes');
 
-
+	// SOURCE
 	app.delete('/api/source', deleteSource);
 	app.get('/api/source', getSource);
 	app.post('/api/source', postSource);
 	app.patch('/api/source', patchSource);
-	app.get('/api/source/file/:id', getSourcefile);
-	app.post('/api/source/file/:id', express.raw({ limit: "10000kb", type: "*/*" }), postSourcefile);
-	app.get('/api/source/search', getSourceSearch);
 
+	app.post('/api/source/file/:id', express.raw({ limit: "10000kb", type: "*/*" }), postSourcefile);
+	app.get('/api/source/file/:id', getSourcefile);
+	
+	app.get('/api/source/search', getSourceSearch);
 
 	app.get('/api/source/reviewdate', getSourceReviewDates);
 	app.post('/api/source/reviewdate', postSourceReviewDate);
@@ -40,10 +48,15 @@ function initRoutes(app, express) {
 	app.patch('/api/source/reviewdate', patchSourceReviewDate);
 
 
+	// SOURCE / # / SHARD
+	app.post('/api/source/:sourceid/shard', postShard);
+	app.get('/api/source/:sourceid/shard', getShard);
+	app.delete('/api/source/:sourceid/shard/:shardid', deleteShard);
+	app.patch('/api/source/:sourceid/shard/:shardid', patchShard);
 
-
-	app.post('/api/shard', postShard);
-
+	app.post('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10000kb", type: "*/*" }), postShardFile);
+	app.get('/api/source/:sourceid/shard/:shardid/file', getShardFile);
+	app.put('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10000kb", type: "*/*" }), putShardFile);
 
 }
 

@@ -249,4 +249,25 @@ TODO
 		- shardcard
 
 
+### 2023-12-21
+
+- Shard SQLite queries
+	- insertShard
+	- selectShard
+    - selectShardsOnSourceid
+    - updateShard
+    - updateShardFileInfo
+    - deleteShard
+    - deleteShardsOnSourceid
+- deployed shard api
+	- changed file paths from the planned /api/shard/... to /api/source/{sourceid}/shard/..
+		- it makes more intuitive sense, and its FANTASTIC to always have access to sourceid at endpoints!
+	- /api/source{sourceid}/shard/{shardid}
+		- POST, GET, PATCH, DELETE
+	- /api/source{sourceid}/shard/{shardid}/file
+		- POST, GET, PUT
+
+
+
+
 
