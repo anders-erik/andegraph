@@ -22,8 +22,9 @@ import { patchShard } from "./source/shard/patchShard.js";
 import { deleteShard } from "./source/shard/deleteShard.js";
 
 import { getShardFile } from "./source/shard/file/getShardFile.js";
+import { getShardFileText } from "./source/shard/file/getShardFileText.js";
 import { postShardFile } from "./source/shard/file/postShardFile.js";
-
+import { patchShardFileText } from "./source/shard/file/patchShardFileText.js";
 
 
 export {
@@ -48,7 +49,9 @@ export {
 	deleteShard,
 
 	getShardFile,
+	getShardFileText,
 	postShardFile,
+	patchShardFileText
 
 }
 

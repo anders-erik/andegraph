@@ -294,6 +294,57 @@ TODO
 			- ALSO START BUILDING TEST DATA!!
 
 
+### 2023-12-22 
+
+- Extremely unproductive day given the amount of time I spent 'working'
+	- Essentially spen the hwole day on getting the shards to be reasonable to work with.
+	- Its not good yet, but I can actually use it now
+- Highlights:
+	- Moved all shards with filetype=text to a new column in the shards-table (textContent)
+		- not a well thought out plan and naming is whack all over the code bas
+			- at least it works for now
+		- The posting of shard files is still always done at the same path. As is 'GET'
+			- PATCH is moved to a separate API ednpoint for all shards consisting of text..
+		- The whole thing is a mess, but I can edit!
+	- A couple of hours was also spent starting the app with a clean /data/live
+		- Many pesky bugs too a while to figure out
+			- Docker at times did not register thate files were removed/added, leading to contradictory log messages
+			- had problems with the most recently loaded source, expecially in combination the docker idssue described above
+			- 
+	- played around with downscaling videos using ffmpeg. It worked well!
+		- Proably 240p (maybe 360p) for movies
+		- 360p for shorter videos
+		- example files, resolution table, and commands is located at "/home/andersubu/720to360" 
+			- ffmpeg -i movieAt720p.mp4 -vf "scale=256:144" -c:a copy movieAt240p.mp4
+		- my 12700 is still trying to recover from that load...!
+
+	- Snipping tool CAN RECORD VIDEO SNIPPETS DIRECTLY TO CLIPBOARD
+		- Great for extracting image and video
+		- no simple key combination for it....
+			- I guess I could create a shortcut and then creating a key combination for that
+	- still no good audio cpturing to clipboard..
+		- windows built in audio recorder is only generating files..
+	- I should create a table with all media extraction techinques/manipulations
+		- audio from computer, image to text, audio to text, video to audio, etc.etc.
+		- I need to be very comfortable converting between iles
+		- I need an established workflow for all of them! This is CRITIICAL for 'sources'
+			- without the streamlined movement and handling of files one can never expect to being able to maximize the actual learning. 
+	- hiding the lables for the shards.
+		- they vere just taking up valuable real estate for the shards, which are at the core of the actual learning process.
+	- I GUESS THE EXPRESS JSON PARSER RULES AT THE ENDPOINT AND IGNORES THE WHOLE BODY OF ANY REQUEST THAT DOES NOT CARRY THE APPLICATION/JSON HEDER FOR CONTENT TYPE....
+	- Much of the problems I had today comes from not planning properly, but instead is focused on just getting it to work as quickly as possible.
+	- ACCIDENTELLY ADDED 100MB file to repo and commited. GITHUB PROMPTLY BLOCKED THE SYNC.
+		- SINCE EVEN IF I REMOVE THE FILE THE OLD COMMIT IS STILL THERE
+		- https://stackoverflow.com/questions/20002557/how-to-remove-a-too-large-file-in-a-commit-when-my-branch-is-ahead-of-master-by
+			- TWO 'git reset HEAD^'
+			- commit a much shrunken version
+			- 
+
+- TODO: 
+	- Sizing of the shards in the shardlist is an absolute mess.
+		- too many nested divs with different max, min, and widths.
+		- many different file types are displayed
+	- 
 
 
 

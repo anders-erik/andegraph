@@ -1,0 +1,11 @@
+-   1 andersubu andersubu    31 Dec 12 15:41 .gitignore
+drwxr-xr-x   2 andersubu andersubu  4096 Dec 21 08:19 .vscode/
+-rw-r--r--   1 andersubu an
+-   1 andersubu andersubu    31 Dec 12 15:41 .gitignore
+drwxr-xr-x   2 andersubu andersubu  4096 Dec 21 08:19 .vscode/
+-rw-r--r--   1 andersubu an-   1 andersubu andersubu    31 Dec 12 15:41 .gitignore
+drwxr-xr-x   2 andersubu andersubu  4096 Dec 21 08:19 .vscode/
+-rw-r--r--   1 andersubu andersubu   178 Dsfd -   1 andersubu andersubu    31 Dec 12 15:41 .gitignore
+drwxr-xr-x   2 andersubu andersubu  4096 Dec 21 08:19 .vscode/
+-rw-r--r--   1 andersubu andersubu   178 Dsfd -   1 andersubu andersubu    31 Dec 12 15:41 .gitignore
+drwxr-xr-x   2 andersubu andersubu  4096 Dec 21 08:19 .vscode/

@@ -35,23 +35,49 @@ module.exports = async (req, res) => {
     }
     else {
 
-
+        
 
         try {
-            fs.appendFile(`/data/live/sources/${sourceid}/shards/${shardid}_sh.${fileEnding}`, Buffer.from(new Uint8Array(req.body)), function (err) {
-                if (err) throw err;
-                //console.log(`File for source #${sourceid} saved successfully at /data/live/sources/${sourceid}/${sourceid}.${fileEnding}`);
 
-                // if image write was succesful, update file fields in db
-                //await sqlite.queryString(`UPDATE sources SET fileType='${fileType}', fileEnding='${fileEnding}', hasFile=1 WHERE id='${sourceid}'`);
-                shardQueries.updateShardFileInfo(shardid, fileType, fileEnding).then(() => {
+            if(fileType == 'text'){
 
-                    //console.log(`File info for source #${sourceid} successfully updated in database.`);
-                    res.status(200);
-                    res.send({ 'message': `File saved successfully for source #${sourceid}` });
+                //let textContent = await req.body.text();
+                //console.log( req.body);
+                //console.log( Buffer.from(req.body).toString('utf-8'));
+                let textContent = Buffer.from(req.body).toString('utf-8');
+                console.log('TEXT : ', textContent)
 
-                })
-            });
+                //console.log('TEXT - WRITE TO DB INSTEAD');
+    
+                // console.log('a');
+                await shardQueries.updateShardFileInfo(shardid, fileType, fileEnding, textContent);
+                // console.log('b');
+                
+                res.status(200);
+                res.send({ 'message': `File saved successfully for source #${sourceid}` });
+                
+
+
+            }
+            else{
+
+                fs.appendFile(`/data/live/sources/${sourceid}/shards/${shardid}_sh.${fileEnding}`, Buffer.from(new Uint8Array(req.body)), function (err) {
+                    if (err) throw err;
+                    //console.log(`File for source #${sourceid} saved successfully at /data/live/sources/${sourceid}/${sourceid}.${fileEnding}`);
+    
+                    // if image write was succesful, update file fields in db
+                    //await sqlite.queryString(`UPDATE sources SET fileType='${fileType}', fileEnding='${fileEnding}', hasFile=1 WHERE id='${sourceid}'`);
+                    shardQueries.updateShardFileInfo(shardid, fileType, fileEnding, '').then(() => {
+    
+                        //console.log(`File info for source #${sourceid} successfully updated in database.`);
+                        res.status(200);
+                        res.send({ 'message': `File saved successfully for source #${sourceid}` });
+    
+                    })
+                });
+
+            }
+
 
         } catch (error) {
 

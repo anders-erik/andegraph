@@ -108,7 +108,7 @@ let fetchSourcesClicked = async function(e){
 
 	// Search parameters
 	let searchParameters = extractSearchParameters();
-	console.log(searchParameters);
+	//console.log(searchParameters);
 
 	
 	//let allFetchedSources = await Fetches.fetchAllSources();

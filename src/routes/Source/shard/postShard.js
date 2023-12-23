@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
         res.send(rows);
     } catch (error) {
         console.log('error on new shard!');
+        console.log(error)
         res.status(404).send({'message': 'error posting shard'});
     }
     

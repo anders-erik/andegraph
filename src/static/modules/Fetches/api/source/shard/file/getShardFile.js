@@ -8,7 +8,7 @@ async function getShardFile(sourceid, shardid) {
 	let fetchString = `/api/source/${sourceid}/shard/${shardid}/file`;
 
 	let promise = fetch(fetchString, options)
-		.then(response => response.blob())
+		.then((response) => response.blob())
 		.catch(err => console.error(err));
 
 	return promise;

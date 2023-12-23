@@ -4,6 +4,8 @@
 	min-height: 300px;
 	width: 100%;
 
+	overflow-x: hidden;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -19,15 +21,24 @@
 	max-width: 100%;
 	background-color: aqua;
 
+	max-width: 500px;
+}
+
+.shardcard-file-video {
+	
+	max-width: 600px;
 	
 }
 
 .shardcard-file-text {
-	height: 300px;
-	width: 95%;
+	
+	width: 75%;
+	padding: 20px;
+
 	resize: none;
 	font-size: medium;
 	background-color: aliceblue;
+	
 }
 .sourceview-file-text:focus {
 	outline: none;
@@ -36,6 +47,7 @@
 .sourceview-file-embed {
 	height: 100%;
 	width: 100%;
+	min-height: 600px;
 }
 
 

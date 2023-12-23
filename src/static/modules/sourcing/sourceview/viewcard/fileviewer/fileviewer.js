@@ -119,14 +119,17 @@ async function loadFileIntoDom(fileUrl, fetchedBlob){
 		case 'video':
 			fileViewer = document.createElement('video');
 			fileViewer.id = 'sourceview-file';
+			fileViewer.classList.add('sourceview-file-video');
+
 			fileViewer.setAttribute("controls", "controls");
 			fileViewer.setAttribute("preload", "auto"); // this enabled they playback to work as expected!
 			//fileViewer.setAttribute('type', 'video/mp4');
 			
 			// move focus to card
-			fileViewer.addEventListener('focus', (event) => {
-				document.getElementById('sourceview-viewcard').focus();
-			});
+			// WHY??
+			// fileViewer.addEventListener('focus', (event) => {
+			// 	document.getElementById('sourceview-viewcard').focus();
+			// });
 			
 			//fileViewer.appendChild(addVideoClickCapturer());
 

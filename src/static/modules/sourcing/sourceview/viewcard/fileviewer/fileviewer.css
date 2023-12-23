@@ -17,6 +17,10 @@
 
 }
 
+.sourceview-file-video {
+	min-height: 360px;
+}
+
 .sourceview-file-text {
 	height: 95%;
 	width: 95%;

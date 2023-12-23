@@ -13,13 +13,27 @@ module.exports = async (req, res) => {
     let queryReturn = await sourceQueries.selectMaxId();
     
     let newSourceId = Object.values(queryReturn[0])[0];
-    //console.log('New Source id: ' + newSourceId);
+    console.log('New Source id: ' + newSourceId);
 
     //console.log('New Source id:__ ' + Object.values(queryReturn_[0])[0]);
 
+
     // Add directories
-    await fs.mkdir(`/data/live/sources/${newSourceId}`);
-    await fs.mkdir(`/data/live/sources/${newSourceId}/shards`);
+    try {
+
+        await fs.mkdir(`/data/live/sources/${newSourceId}`);
+        await fs.mkdir(`/data/live/sources/${newSourceId}/shards`);
+
+    } catch (error) {
+
+        sourceQueries.deleteSource(newSourceId);
+
+        console.log('Unable to create new source directory or shard directory');
+        console.log(error);
+
+    }
+    
+    
 
 
     // generate review schedule

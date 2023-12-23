@@ -60,8 +60,10 @@ db = new sqlite3.Database(location, err => {
         `CREATE TABLE IF NOT EXISTS shards (
             "id"	INTEGER,
             "prompt"	varchar(255),
+            "dateCreated"	varchar(10),
             "fileType"	varchar(8),
             "fileEnding"	varchar(8),
+            "textContent"	TEXT,
             "sourceId"	INTEGER NOT NULL,
             FOREIGN KEY("sourceId") REFERENCES "sources"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
@@ -71,18 +73,19 @@ db = new sqlite3.Database(location, err => {
         },
     ); 
     db.run(
-        `CREATE TABLE IF NOT EXISTS sourceReviewDates (
+        `CREATE TABLE IF NOT EXISTS shardReviewDates (
             "id"	INTEGER,
-            "date"	varchar(255),
+            "date"	varchar(10),
             "completed"	INTEGER,
-            "sourceId"	INTEGER NOT NULL,
-            FOREIGN KEY("sourceId") REFERENCES "sources"("id"),
+            "shardId"	INTEGER NOT NULL,
+            FOREIGN KEY("shardId") REFERENCES "shards"("id"),
             PRIMARY KEY("id" AUTOINCREMENT)
         );`, // FOREIGN KEY(sourceId) REFERENCES sources(id)
         (err, result) => {
             if (err) return rej(err);
         },
     );
+    
     // this is needed. Otherwise program exits!!
     //acc();
 });

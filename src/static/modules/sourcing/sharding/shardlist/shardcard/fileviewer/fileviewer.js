@@ -54,10 +54,30 @@ async function loadShardFile(shard, sourceid){
 		return;
 	}
 
-	let shardBlob = await api.getShardFile(sourceid, shard.id);
+	let shardBlob;
+	let fileUrl;
+	
+	if (shard.fileType == 'text'){
+		let shardTextReadableStream = await api.getShardFileText(sourceid, shard.id);
+		//console.log(shardTextReadableStream[0].textContent)
+		shardBlob = new Blob([shardTextReadableStream[0].textContent]);
+		// const file = new File(
+		// 	[shardTextReadableStream[0].textContent], 
+		// 	"foo.txt", {
+		// 	type: "text/plain",
+		//   });
+		
+		fileUrl = URL.createObjectURL(shardBlob);
+		  
+	}
+	else {
+		shardBlob = await api.getShardFile(sourceid, shard.id);
+		fileUrl = URL.createObjectURL(shardBlob);
+	}
+	
 	//console.log(shardBlob);
 
-	let fileUrl = URL.createObjectURL(shardBlob);
+	
 
 	//console.log(shardBlob);
 	//console.log(fileUrl);
@@ -93,6 +113,7 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 
 
 	switch (fileType) {
+
 		case 'image':
 			fileViewer = document.createElement('img');
 			fileViewer.id = 'shardcard-file-' + shard.id;
@@ -102,10 +123,17 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 			fileViewer = document.createElement('textarea');
 			fileViewer.id = 'shardcard-file-' + shard.id;
 			fileViewer.classList.add('shardcard-file-text');
-			fileViewer.setAttribute('readonly', 'true');
+			//fileViewer.setAttribute('readonly', 'false');
 			fileViewer.textContent = await fetchedBlob.text()
 
+			//console.log('text length: ', fetchedBlob.size)
+			let textareaRows = 5 + Math.floor(fetchedBlob.size / 30);
+			if (textareaRows > 20)
+				fileViewer.setAttribute('rows', 20);
+			else
+				fileViewer.setAttribute('rows', textareaRows);
 			
+			fileViewer.addEventListener('focusout', patchTextOnFocusout);
 			//console.log(await fetchedBlob.text());
 			
 			// fileViewer.src = fileUrl;
@@ -122,6 +150,8 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 		case 'video':
 			fileViewer = document.createElement('video');
 			fileViewer.id = 'shardcard-file-' + shard.id;
+			fileViewer.classList.add('shardcard-file-video');
+
 			fileViewer.setAttribute("controls", "controls");
 			fileViewer.setAttribute("preload", "auto"); // this enabled they playback to work as expected!
 			//fileViewer.setAttribute('type', 'video/mp4');
@@ -184,6 +214,23 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 	//document.getElementById('sourceview-viewcard').appendChild(fileViewer);
 
 }
+
+
+async function patchTextOnFocusout(event){
+
+	let patchText = event.target.value;
+	//console.log(patchText)
+	
+	let shardid = event.target.id.match(/\d+/g)[0];
+
+	let fileEnding = document.getElementById('shardcard-fileending-' + shardid).textContent.match(/\w+$/g)[0];
+
+	let sourceid = extractCurrentSourceId();
+
+	await api.patchShardFileText(sourceid, shardid, fileEnding, patchText);
+	
+}
+
 
 
 function removeCurrentShardFileFromDOM(shardid) {

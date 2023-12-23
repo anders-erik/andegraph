@@ -7,6 +7,7 @@ function createShardingPanel(){
 	let shardingPanelOuter = document.createElement('div');
 	shardingPanelOuter.id = 'sharding-panel-outer';
 
+	
 	let shardingPanel = document.createElement('div');
 	shardingPanel.id = 'sharding-panel';
 	shardingPanel.classList.add('panel');

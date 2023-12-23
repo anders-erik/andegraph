@@ -25,6 +25,7 @@ const patchShard = require('./Source/shard/patchShard');
 const postShardFile = require('./Source/shard/file/postShardFile');
 const getShardFile = require('./Source/shard/file/getShardFile');
 const putShardFile = require('./Source/shard/file/putShardFile');
+const patchShardTextfile = require('./Source/shard/file/patchShardTextfile');
 
 
 
@@ -37,7 +38,7 @@ function initRoutes(app, express) {
 	app.post('/api/source', postSource);
 	app.patch('/api/source', patchSource);
 
-	app.post('/api/source/file/:id', express.raw({ limit: "10000kb", type: "*/*" }), postSourcefile);
+	app.post('/api/source/file/:id', express.raw({ limit: "200mb", type: "*/*" }), postSourcefile);
 	app.get('/api/source/file/:id', getSourcefile);
 	
 	app.get('/api/source/search', getSourceSearch);
@@ -54,9 +55,10 @@ function initRoutes(app, express) {
 	app.delete('/api/source/:sourceid/shard/:shardid', deleteShard);
 	app.patch('/api/source/:sourceid/shard/:shardid', patchShard);
 
-	app.post('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10000kb", type: "*/*" }), postShardFile);
+	app.post('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10mb", type: "*/*" }), postShardFile);
 	app.get('/api/source/:sourceid/shard/:shardid/file', getShardFile);
-	app.put('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10000kb", type: "*/*" }), putShardFile);
+	app.patch('/api/source/:sourceid/shard/:shardid/textfile', patchShardTextfile);
+	app.put('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10mb", type: "*/*" }), putShardFile);
 
 }
 

@@ -59,6 +59,25 @@ async function selectShardsOnSourceid(sourceid) {
 }
 
 
+async function selectShardTextContent(shardid) {
+    return new Promise((acc, rej) => {
+        connection.db.all(
+            `
+            SELECT textContent 
+            FROM shards 
+            WHERE id = ?
+            ;`,
+            [shardid],
+
+            (err, rows) => {
+                if (err) return rej(err);
+                acc(rows);
+            },
+        );
+    });
+}
+
+
 async function updateShard(shardid, prompt) {
     return new Promise((acc, rej) => {
         connection.db.all(
@@ -77,15 +96,15 @@ async function updateShard(shardid, prompt) {
     });
 }
 
-async function updateShardFileInfo(shardid, fileType, fileEnding) {
+async function updateShardFileInfo(shardid, fileType, fileEnding, textContent) {
     return new Promise((acc, rej) => {
         connection.db.all(
             `
             UPDATE shards 
-            set fileType=?, fileEnding=? 
+            set fileType=?, fileEnding=?, textContent=?
             WHERE id = ?
             ;`,
-            [fileType, fileEnding, shardid],
+            [fileType, fileEnding, textContent, shardid],
 
             (err, rows) => {
                 if (err) return rej(err);
@@ -135,6 +154,7 @@ module.exports = {
 	insertShard,
     selectShard,
     selectShardsOnSourceid,
+    selectShardTextContent,
     updateShard,
     updateShardFileInfo,
     deleteShard,
