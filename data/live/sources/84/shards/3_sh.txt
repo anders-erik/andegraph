@@ -1,1 +1,0 @@
-It should not be confused with the func.prototype property of functions, which instead specifies the [[Prototype]] to be assigned to all instances of objects created by the given function when used as a constructor. We will discuss the prototype property of constructor functions in a later section.

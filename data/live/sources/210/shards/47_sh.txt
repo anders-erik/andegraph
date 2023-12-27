@@ -1,7 +1,0 @@
-- Honestly, "flow" contributes 90% to a developers productivity ... *when writing software!*
-- Software usually starts in small groups with 1 to 3 developers. They have different challenge than the 10+ dev team a decade later that is working on incremental improvements.
-- Keyboard and mouse shortcuts are a huuuuuge game changer. There’s just something about feeling so comfortable with your machine when you can use shortcuts well - it feels like a whole different world.
-    - This might be an odd take, but I have found the more senior you get the less keyboard and mouse shortcuts are handy.
-- Good but basic advice overall. However I am not sure about the first one. I perfectly agree about the explanation of the flow thing, but leaving things slightly unfinished in the evening before stopping work is a sure way for me thinking about it during the whole evening/night and not being able to relax
-    - This is probably why they get so much done the next day. Their mind spends the evening processing.
-    - I actually do this. When there are too many things to do that I can’t see the solution I write down notes and go away. The next day it’s so much easier. I love it
