@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 
         // If there is a filetype -> remove file
         if (shard.fileType !== null) {
-            console.log('shard file detected during deletion ');
+            console.log('shard contents detected during deletion ');
 
             let filePath = `/data/live/sources/${sourceid}/shards/${shardid}_sh.${shard.fileEnding}`;
 
@@ -34,10 +34,16 @@ module.exports = async (req, res) => {
             // Delete shard file
             try {
 
+                if(shard.fileType == 'text'){
 
-                await fs.rm(filePath);
+                }
+                else {
+                    await fs.rm(filePath);
 
-                console.log(`Source directories successfully deleted @ ${filePath}`)
+                    console.log(`Source directories successfully deleted @ ${filePath}`)
+                }
+
+                
 
             } catch (error) {
 

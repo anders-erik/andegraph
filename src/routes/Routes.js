@@ -55,10 +55,10 @@ function initRoutes(app, express) {
 	app.delete('/api/source/:sourceid/shard/:shardid', deleteShard);
 	app.patch('/api/source/:sourceid/shard/:shardid', patchShard);
 
-	app.post('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10mb", type: "*/*" }), postShardFile);
+	app.post('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "20mb", type: "*/*" }), postShardFile);
 	app.get('/api/source/:sourceid/shard/:shardid/file', getShardFile);
 	app.patch('/api/source/:sourceid/shard/:shardid/textfile', patchShardTextfile);
-	app.put('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "10mb", type: "*/*" }), putShardFile);
+	app.put('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "20mb", type: "*/*" }), putShardFile);
 
 }
 
