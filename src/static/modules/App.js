@@ -1,96 +1,57 @@
 //import { addSourceListContainer, addSourceViewerContainer } from './Containers.js';
 //import { createSourcefindPanel, createSourceviewPanel,createVerticalSerperationPanel, createShardlistPanel } from './Panels.js';
 
-import * as Sourcefind from './sourcing/sourcefind/Sourcefind.js';
-import * as Sourceview from './sourcing/sourceview/Sourceview.js';
-import * as VerticalSeperator from './VerticalSeperator.js';
-import * as listcard from './sourcing/sourcefind/listcard/Listcard.js';
+import * as mainMenu from './mainMenu/mainMenu.js';
+
+import * as Sourcing from './sourcing/sourcing.js';
+
+import * as Homedash from './homedash/homedash.js';
+
+
 
 import * as log from './log/log.js';
 
-// DEV IMPORT
-//import { fetchSourcesClicked } from './DOMEvents.js';
-import { fetchSourcesClicked } from './sourcing/sourcefind/searchcard/Searchcard.js';
-import * as PropertiesCard from './sourcing/sourceview/propertiescard/PropertiesCard.js';
-
-import * as api from './Fetches/api/api.js';
-import { sourcingVertisep1 } from './sourcing/sourcefind/sourcefind_vertisep.js';
-import { sourcingVertisep2 } from './sourcing/sourceview/sourceview_vertisep.js';
-import { createShardingPanel } from './sourcing/sharding/sharding.js';
 
 
-function App(){
+function initApp(rootId){
 
-	let root = document.getElementById('root');
+	let root = document.getElementById(rootId);
+
+	root.appendChild(mainMenu.createMainMenu());
 	
-	
-	//addSourceListContainer();
-	//addSourceViewerContainer();
-
-
-// 2023-12-14
-	root.appendChild(Sourcefind.createSourcefindPanel());
-	root.appendChild(sourcingVertisep1());
-	root.appendChild(Sourceview.createSourceviewPanel());
-	root.appendChild(sourcingVertisep2());
-	root.appendChild(createShardingPanel());
-
-// 2023-12-03
-	//root.appendChild(createSourcefindPanel());
-	//root.appendChild(createVerticalSerperationPanel(1));
-	//root.appendChild(createSourceviewPanel());
-	//root.appendChild(createVerticalSerperationPanel(1));
-	//root.appendChild(createShardlistPanel());
-
-
-	//debugger;
-	// Fetch and pick first source
-	fetchSourcesClicked().then(() => {
-
-		try {
-
-			//localStorage.setItem("lastLoadedSourceId", "1");
-
-			let lastLoadedSourceId = localStorage.getItem("lastLoadedSourceId");
-
-
-			// Make sure the source exists!
-			api.getSource(lastLoadedSourceId).then((response) => {
-	
-				if(response.status == 410){
-					console.log('Source no longer exists.');
-				}
-				else {
-					PropertiesCard.loadSource(lastLoadedSourceId);
-				}
-
-			});
-
-			//PropertiesCard.loadSource(lastLoadedSourceId);
-
-			//let id = listcard.getFirstSourcecardId();
-
-			//let id = localStorage.getItem("defaultSourceId");
-
-			// let id = (window.location.pathname).match(/\d+$/g)
-			//document.getElementById(`sourcefind-sourcsecard-${id}`).click();
-
-
-		} catch (error) {
-
-			console.log('Silent error: Unable to select most recently loaded source.');
-
-		}
+	let mainContent = document.createElement('div');
+	mainContent.id = 'mainContent';
+	root.appendChild(mainContent);
 
 
 
-	})
+	let urlPath = window.location.pathname;
+	let urlPathBase = urlPath.split('/')[1];
+	// window.location.pathname.split('/')[1]
 
 
-	//log.showToast('showtime');
+	if(urlPathBase === 'sourcing'){
+		//console.log('sourcing detected');
+		//loadSourcing();
+		let urlPathId = urlPath.split('/')[2]
+		Sourcing.loadSourcing(urlPathId);
+	}
+	else{
+		Homedash.loadHomedash();
+	}
+
 }
 
 
+
+
+
+
+
+
+
+
+
 export {
-	App
+	initApp,
 }

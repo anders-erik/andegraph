@@ -6,6 +6,7 @@
 
 @import '../modules/sourcing/sharding/sharding.css';
 
+@import '../modules/mainMenu/mainMenu.css';
 
 :root{
     --light-1:#afeef5;
@@ -38,10 +39,21 @@ body {
 }
 
 
+
+#mainContent {
+	height: 100%;
+	flex-grow: 1;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	background-color: rgb(164, 159, 159);
+}
+
+
 .shadow-all {
 	box-shadow: var(--shadow-all);
 }
-
 
 
 .primary-panel {
