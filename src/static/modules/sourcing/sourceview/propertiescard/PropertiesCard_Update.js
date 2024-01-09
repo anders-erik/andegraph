@@ -16,6 +16,8 @@ import { loadShardsIntoShardlist } from '../../sharding/shardlist/shardlist.js';
 
 async function loadSource(sourceId) {
 
+	
+
 	localStorage.setItem("lastLoadedSourceId", sourceId);
 
 	//console.log('loading source');
@@ -60,6 +62,9 @@ async function loadSource(sourceId) {
 	// LOAD SHARDS
 	loadShardsIntoShardlist(sourceId);
 }
+
+
+
 
 
 

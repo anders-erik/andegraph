@@ -40,7 +40,8 @@ let loadMainFromUrlPath = function(urlPath) {
 	if(urlPathBase === 'sourcing'){
 		//console.log('sourcing detected');
 		//loadSourcing();
-		let urlPathId = urlPath.split('/')[2]
+		let urlPathId = urlPath.split('/')[2];
+		//console.log(urlPathId);
 		Sourcing.loadSourcing(urlPathId);
 	}
 	else{

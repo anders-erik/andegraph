@@ -43,6 +43,8 @@ let sourceCardClicked = async function(e){
 	let sourceId = clickedElementId.match(/\d+$/g)
 	//console.log('source clicked: ' + sourceId );
 
+	history.pushState({}, '', '/sourcing/' + sourceId);
+
 	// let fetchedSource = await Fetches.getSource(sourceId);
 	// console.log(fetchedSource);
 

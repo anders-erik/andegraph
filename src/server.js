@@ -10,7 +10,7 @@ app.use(express.json());
 
 // https://stackoverflow.com/questions/10434001/static-files-with-express-js
 app.use(express.static(__dirname + '/static'));
-app.use('/sourcing', express.static(__dirname + '/static'));
+app.use('/sourcing/*', express.static(__dirname + '/static'));
 
 // Make sure this is after we add the json-middleware
 const routes = require('./routes/Routes');

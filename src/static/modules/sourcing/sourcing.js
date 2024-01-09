@@ -11,7 +11,7 @@ import { sourcingVertisep2 } from './sourceview/sourceview_vertisep.js';
 import { createShardingPanel } from './sharding/sharding.js';
 
 
-let loadSourcing = function(sourceId) {
+let loadSourcing = function(sourceIdToLoad) {
 	//console.log('asdf')
 	
 	//let root = document.getElementById('root');
@@ -37,14 +37,7 @@ let loadSourcing = function(sourceId) {
 	//root.appendChild(createVerticalSerperationPanel(1));
 	//root.appendChild(createShardlistPanel());
 
-	if((sourceId == '') || (sourceId == null)){
-		console.log('no sourceid passed')
-	}
-	else {
-		console.log(sourceId);
-		
-	}
-
+	
 	//debugger;
 	// Fetch and pick first source
 	fetchSourcesClicked().then(() => {
@@ -53,17 +46,32 @@ let loadSourcing = function(sourceId) {
 
 			//localStorage.setItem("lastLoadedSourceId", "1");
 
-			let lastLoadedSourceId = localStorage.getItem("lastLoadedSourceId");
+			//let lastLoadedSourceId;
+
+			if((sourceIdToLoad == '') || (sourceIdToLoad == null)){
+				console.log('no sourceid passed. Loading most recent source.');
+
+				sourceIdToLoad = localStorage.getItem("lastLoadedSourceId");
+		
+			}
+			else {
+				console.log(sourceIdToLoad);
+				
+			}
+		
+			console.log(`Trying to load source id ${sourceIdToLoad}`);
+			
 
 
 			// Make sure the source exists!
-			api.getSource(lastLoadedSourceId).then((response) => {
+			api.getSource(sourceIdToLoad).then((response) => {
 	
 				if(response.status == 410){
-					console.log('Source no longer exists.');
+					console.log('Source does not exist.');
 				}
 				else {
-					PropertiesCard.loadSource(lastLoadedSourceId);
+					//history.pushState({}, '', '/sourcing/' + sourceIdToLoad);
+					PropertiesCard.loadSource(sourceIdToLoad);
 				}
 
 			});
