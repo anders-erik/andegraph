@@ -4,6 +4,8 @@ import * as Sourcing from '../sourcing/sourcing.js';
 
 import * as Homedash from '../homedash/homedash.js';
 
+import * as App from '../App.js';
+
 
 let createMainMenu = function(){
 
@@ -53,6 +55,15 @@ let sourcingButtonClicked = function(event){
 	Sourcing.loadSourcing();
 
 }
+
+
+// https://gomakethings.com/how-to-detect-when-the-browser-url-changes-with-vanilla-js/
+window.addEventListener('popstate', function (event) {
+	console.log('pop');
+	App.loadMainFromUrlPath(window.location.pathname);
+});
+
+
 
 
 export {

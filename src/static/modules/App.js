@@ -26,6 +26,13 @@ function initApp(rootId){
 
 
 	let urlPath = window.location.pathname;
+	loadMainFromUrlPath(urlPath);
+
+}
+
+
+let loadMainFromUrlPath = function(urlPath) {
+
 	let urlPathBase = urlPath.split('/')[1];
 	// window.location.pathname.split('/')[1]
 
@@ -39,11 +46,8 @@ function initApp(rootId){
 	else{
 		Homedash.loadHomedash();
 	}
-
+	
 }
-
-
-
 
 
 
@@ -54,4 +58,5 @@ function initApp(rootId){
 
 export {
 	initApp,
+	loadMainFromUrlPath
 }
