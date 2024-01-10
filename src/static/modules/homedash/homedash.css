@@ -1,0 +1,9 @@
+
+
+#audioWidget {
+	border: solid black 1px;
+	background-color: aliceblue;
+	height: 100px;
+	width: 100px;
+	cursor: pointer;
+}

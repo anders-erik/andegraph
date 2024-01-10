@@ -8,6 +8,8 @@
 
 @import '../modules/mainMenu/mainMenu.css';
 
+@import '../modules/homedash/homedash.css';
+
 :root{
     --light-1:#afeef5;
     --light-2:#c2c2c2;

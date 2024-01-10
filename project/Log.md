@@ -347,7 +347,36 @@ TODO
 	- 
 
 
+### 2024-01-10
 
+CHANGES SINCE LAST LOG ENTRY:
+- a lot of practice with the app 
+- small adjustments
+- split the UI into a mainMenu and mainContent
+	- mainMenu lists all pages available (only sourcing and home-dashboard atm)
+	- History API enables SPA behavior
+	- because routing is preserved using History API, user can copy links to specific pages
+	- Routing for the different pages all return the same html, but different parst of the app is fetched and redered based on URL
+- added my first small widget on homedash: frequency detector
+	- three versions:
+		- first I used DFT to extract frequency using MediaRecorder (navigatior/audioSetup + fft.js)
+		- I then replaced the DFT with a zero-=crossing algorithm because DFT resulted in a huge compute-outcome ratio. Still MediaRecorder was VERY cumbersome to work with.
+		- Finally I moved away from MediaRecorder but kept the zero-crossing (thank you ChatGPT!), And I ended up with a fairly good widget to detect a single frequency!
+			- https://chat.openai.com/c/f569861d-6ccf-49a8-a733-5462b0024cbf
+
+TODO:
+- sources need to act as shards!
+- I need more control over source/shard creation!
+	- shortcuts!
+		- source
+			- author(s)
+		- shard
+		- base object
+			- person
+			- place
+			- object
+			- word
+		- 
 
 
 
