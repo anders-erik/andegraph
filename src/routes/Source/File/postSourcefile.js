@@ -1,5 +1,5 @@
 
-const sourceQueries = require('../../../persistence/SourceQueries');
+const sourceQueries = require('../../../sql/SourceQueries');
 
 const fs = require('node:fs');
 

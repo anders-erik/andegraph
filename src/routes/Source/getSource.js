@@ -1,7 +1,7 @@
 //const connection = require('../persistence/Connection');
 
-const sqlite = require('../../persistence/SourceQueries');
-const sourceReviewDatesQueries = require('../../persistence/SourceReviewDatesQueries');
+const sqlite = require('../../sql/SourceQueries');
+const sourceReviewDatesQueries = require('../../sql/SourceReviewDatesQueries');
 
 module.exports = async (req, res) => {
     //console.log(req.headers.id)

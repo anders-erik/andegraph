@@ -2,7 +2,7 @@
 const express = require('express'); 
 const app = express(); 
 //const sqlite = require('./persistence/sqlite');
-const sqlite = require('./persistence/Connection'); // import AND init database
+const sqlite = require('./sql/Connection'); // import AND init database
 
 
 

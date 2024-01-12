@@ -1,7 +1,7 @@
 //const connection = require('../persistence/Connection');
 
 //const sqlite = require('../../persistence/SourceQueries');
-const sourceReviewDatesQueries = require('../../../persistence/SourceReviewDatesQueries');
+const sourceReviewDatesQueries = require('../../../sql/SourceReviewDatesQueries');
 
 
 

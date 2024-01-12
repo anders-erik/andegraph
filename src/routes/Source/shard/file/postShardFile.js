@@ -1,5 +1,5 @@
 
-const shardQueries = require('../../../../persistence/ShardQueries');
+const shardQueries = require('../../../../sql/ShardQueries');
 
 const fs = require('node:fs');
 

@@ -1,6 +1,6 @@
-const sourceQueries = require('../../persistence/SourceQueries');
+const sourceQueries = require('../../sql/SourceQueries');
 //const sqlite = require('../../persistence/Queries');
-const sourceReviewDatesQueries = require('../../persistence/SourceReviewDatesQueries');
+const sourceReviewDatesQueries = require('../../sql/SourceReviewDatesQueries');
 const fs = require('node:fs/promises');
 
 

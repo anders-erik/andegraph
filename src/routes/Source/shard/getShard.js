@@ -1,4 +1,4 @@
-const shardQueries = require('../../../persistence/ShardQueries');
+const shardQueries = require('../../../sql/ShardQueries');
 
 
 module.exports = async (req, res) => {

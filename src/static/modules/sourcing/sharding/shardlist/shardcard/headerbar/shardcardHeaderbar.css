@@ -4,7 +4,7 @@
 .shardcard-headerbar {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr ;
-	grid-template-rows: 3.5rem 1fr;
+	grid-template-rows: 3.5rem 2rem ;
 
 	row-gap: 5px;
 
@@ -71,7 +71,7 @@
 	justify-content: center;
 	align-items: center;
 
-	display: none;
+	/* display: none; */
 }
 .shardcard-element:hover {
 	display: none;

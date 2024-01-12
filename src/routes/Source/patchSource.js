@@ -1,4 +1,4 @@
-const sourceQueries = require('../../persistence/SourceQueries');
+const sourceQueries = require('../../sql/SourceQueries');
 
 
 module.exports = async (req, res) => {

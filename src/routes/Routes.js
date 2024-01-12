@@ -28,6 +28,11 @@ const putShardFile = require('./Source/shard/file/putShardFile');
 const patchShardTextfile = require('./Source/shard/file/patchShardTextfile');
 
 
+// FILES
+const getFile = require('./files/GetFile');
+
+
+
 
 function initRoutes(app, express) {
 	console.log('Init routes');
@@ -59,6 +64,11 @@ function initRoutes(app, express) {
 	app.get('/api/source/:sourceid/shard/:shardid/file', getShardFile);
 	app.patch('/api/source/:sourceid/shard/:shardid/textfile', patchShardTextfile);
 	app.put('/api/source/:sourceid/shard/:shardid/file', express.raw({ limit: "20mb", type: "*/*" }), putShardFile);
+
+
+
+	// FILE
+	//app.get('/api/file/:fileid', getFile);
 
 }
 
