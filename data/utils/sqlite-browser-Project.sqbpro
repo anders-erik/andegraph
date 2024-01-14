@@ -1,8 +1,170 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/andersubu/dev/sources/data/live/sources.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1859"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,16:mainshardReviewDates"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="shardReviewDates" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="32"/><column index="2" value="83"/><column index="3" value="82"/><column index="4" value="60"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sources" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="32"/><column index="2" value="300"/><column index="3" value="300"/><column index="4" value="104"/><column index="5" value="66"/><column index="6" value="70"/><column index="7" value="87"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="createSourceParentChild">CREATE TABLE IF NOT EXISTS &quot;sourceParentChild&quot; (
-	&quot;id&quot;	INTEGER,
-	&quot;parentUuid&quot;	INTEGER NOT NULL,
-	&quot;childUuid&quot;	INTEGER NOT NULL,
-	PRIMARY KEY(&quot;id&quot; AUTOINCREMENT)
-);</sql><sql name="populateSourceParentChild">INSERT INTO sourceParentChild (parentUuid, childUuid)
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/andersubu/dev/sources/data/live/sources.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2513"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,17:mainsourceReviewDates"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="edges" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="28"/><column index="2" value="96"/><column index="3" value="82"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="nibbles" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="28"/><column index="2" value="46"/><column index="3" value="104"/><column index="4" value="44"/><column index="5" value="101"/><column index="6" value="107"/><column index="7" value="93"/><column index="8" value="140"/><column index="9" value="34"/><column index="10" value="78"/><column index="11" value="108"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="shardReviewDates" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="32"/><column index="2" value="83"/><column index="3" value="82"/><column index="4" value="60"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="shards" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="32"/><column index="2" value="300"/><column index="3" value="104"/><column index="4" value="70"/><column index="5" value="87"/><column index="6" value="76"/><column index="7" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sourceReviewDates" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="41"/><column index="2" value="83"/><column index="3" value="91"/><column index="4" value="76"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sources" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="32"/><column index="2" value="300"/><column index="3" value="300"/><column index="4" value="104"/><column index="5" value="66"/><column index="6" value="70"/><column index="7" value="87"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sqlite_sequence" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="135"/><column index="2" value="41"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="selectShardsFromSource">
+SELECT * FROM nodes
+INNER JOIN edges
+ON nodes.id = edges.node2
+WHERE node1 == 281;
+</sql><sql name="createAndPopulateEdges">DROP TABLE edges;
+CREATE TABLE IF NOT EXISTS edges (
+	&quot;id&quot;	INTEGER PRIMARY KEY,
+	&quot;node1&quot;	INTEGER NOT NULL,
+	&quot;node2&quot;	INTEGER NOT NULL,
+	&quot;directed&quot; INTEGER NOT NULL,
+	&quot;edgeOrder&quot; INTEGER DEFAULT '',
+	&quot;edgePath&quot; TEXT DEFAULT ''
+);
+
+INSERT INTO edges (id, node1, node2, directed)
+SELECT id+15000, sourceId, id+9000, 1 FROM shards;
+
+SELECT * FROM edges;</sql><sql name="createAndPopulateNodes">DROP TABLE nodes;
+CREATE TABLE IF NOT EXISTS nodes(
+	id INTEGER PRIMARY KEY,
+	dateCreated TEXT NOT NULL,
+	title TEXT DEFAULT '' NOT NULL,
+	textContent TEXT DEFAULT '' NOT NULL,
+	elementType TEXT DEFAULT '' NOT NULL,
+	nodeType TEXT DEFAULT '' NOT NULL,
+	nodeTypeType TEXT DEFAULT '' NOT NULL,
+	url TEXT DEFAULT '' NOT NULL,
+	fileName TEXT DEFAULT '' NOT NULL,
+	fileExtension TEXT DEFAULT '' NOT NULL
+);
+
+UPDATE sources SET fileEnding='' WHERE fileEnding ISNULL;
+UPDATE sources SET fileType='' WHERE fileType ISNULL;
+UPDATE sources SET hasFile=0 WHERE hasFile ISNULL;
+
+INSERT INTO nodes (id, dateCreated, url, title, elementType, fileExtension, fileName)
+SELECT id, dateCreated, url, title, fileType, fileEnding, id FROM sources;
+
+--INSERT INTO nodes (fileName) VALUES 'asdf';
+--UPDATE node SET fileEnding='asdf' WHERE id;
+UPDATE nodes SET fileName = (id || '_so.' || fileExtension) WHERE fileExtension != '';
+UPDATE nodes SET fileName = '' WHERE fileExtension == '';
+UPDATE nodes SET nodeType = 'source' WHERE id &lt; 1000 AND id &gt; 0;
+
+
+
+-- SHARDS
+
+
+UPDATE shards SET prompt='' WHERE prompt ISNULL;
+UPDATE shards SET dateCreated='2023-12-14' WHERE id=11 ISNULL;
+UPDATE shards SET fileType='' WHERE fileType ISNULL;
+UPDATE shards SET fileEnding='' WHERE fileEnding ISNULL;
+UPDATE shards SET textContent='' WHERE textContent ISNULL;
+
+
+INSERT INTO nodes (id, dateCreated, title, textContent, elementType, fileExtension)
+SELECT id+9000, dateCreated, prompt, textContent, fileType, fileEnding FROM shards;
+
+
+UPDATE nodes SET fileName = '' WHERE fileExtension == '';
+UPDATE nodes SET nodeType = 'shard' WHERE id &lt; 10000 AND id &gt; 9000;
+UPDATE nodes SET fileName = ((id-9000) || '_sh.' || fileExtension) WHERE fileExtension != '' AND nodeType = 'shard';
+
+
+SELECT * FROM nodes;
+
+
+
+
+</sql><sql name="createReviewDates">DROP TABLE reviewDates;
+
+CREATE TABLE reviewDates AS
+SELECT * FROM sourceReviewDates;
+
+ALTER TABLE reviewDates
+RENAME COLUMN sourceId TO nodeId;
+
+UPDATE reviewDates SET id = id+100000;
+
+SELECT * FROM reviewDates;
+
+</sql><sql name="shards">
+
+select * from shards;</sql><sql name="sources">
+
+--CREATE TABLE sources2 AS SELECT * FROM sources;
+
+--UPDATE sources2 SET fileEnding='' WHERE fileEnding ISNULL;
+
+select * from sources;</sql><sql name="createNodeTable_sources">DROP TABLE nodes;
+CREATE TABLE IF NOT EXISTS nodes(
+	id INTEGER PRIMARY KEY,
+	dateCreated TEXT NOT NULL,
+	title TEXT DEFAULT '' NOT NULL,
+	textContent TEXT DEFAULT '' NOT NULL,
+	elementType TEXT DEFAULT '' NOT NULL,
+	nodeType TEXT DEFAULT '' NOT NULL,
+	nodeTypeType TEXT DEFAULT '' NOT NULL,
+	url TEXT DEFAULT '' NOT NULL,
+	fileName TEXT DEFAULT '' NOT NULL,
+	fileExtension TEXT DEFAULT '' NOT NULL
+);
+
+UPDATE sources SET fileEnding='' WHERE fileEnding ISNULL;
+UPDATE sources SET fileType='' WHERE fileType ISNULL;
+UPDATE sources SET hasFile=0 WHERE hasFile ISNULL;
+
+INSERT INTO nodes (id, dateCreated, url, title, elementType, fileExtension, fileName)
+SELECT id, dateCreated, url, title, fileType, fileEnding, id FROM sources;
+
+--INSERT INTO nodes (fileName) VALUES 'asdf';
+--UPDATE node SET fileEnding='asdf' WHERE id;
+UPDATE nodes SET fileName = (id || '_so.' || fileExtension) WHERE fileExtension != '';
+UPDATE nodes SET fileName = '' WHERE fileExtension == '';
+UPDATE nodes SET nodeType = 'source' WHERE id &lt; 1000 AND id &gt; 0;
+
+SELECT * FROM nodes;
+
+
+</sql><sql name="createNodeTable_shards">DROP TABLE nodes;
+CREATE TABLE IF NOT EXISTS nodes(
+	id INTEGER PRIMARY KEY,
+	dateCreated TEXT NOT NULL,
+	title TEXT DEFAULT '' NOT NULL,
+	textContent TEXT DEFAULT '' NOT NULL,
+	elementType TEXT DEFAULT '' NOT NULL,
+	nodeType TEXT DEFAULT '' NOT NULL,
+	nodeTypeType TEXT DEFAULT '' NOT NULL,
+	url TEXT DEFAULT '' NOT NULL,
+	fileName TEXT DEFAULT '' NOT NULL,
+	fileExtension TEXT DEFAULT '' NOT NULL
+);
+
+UPDATE shards SET prompt='' WHERE prompt ISNULL;
+UPDATE shards SET dateCreated='2023-12-14' WHERE id=11 ISNULL;
+UPDATE shards SET fileType='' WHERE fileType ISNULL;
+UPDATE shards SET fileEnding='' WHERE fileEnding ISNULL;
+UPDATE shards SET textContent='' WHERE textContent ISNULL;
+
+
+INSERT INTO nodes (id, dateCreated, title, textContent, elementType, fileExtension)
+SELECT id+9000, dateCreated, prompt, textContent, fileType, fileEnding FROM shards;
+
+
+UPDATE nodes SET fileName = ((id-9000) || '_sh.' || fileExtension) WHERE fileExtension != '';
+UPDATE nodes SET fileName = '' WHERE fileExtension == '';
+UPDATE nodes SET nodeType = 'shard' WHERE id &lt; 10000 AND id &gt; 9000;
+
+SELECT * FROM nodes;
+
+
+</sql><sql name="populateSourceParentChild">INSERT INTO sourceParentChild (parentUuid, childUuid)
 SELECT sourceId, id FROM shards
-</sql><sql name="delete parentChild rows">DELETE FROM sourceParentChild</sql><current_tab id="2"/></tab_sql></sqlb_project>
+</sql><sql name="delete parentChild rows">DELETE FROM sourceParentChild</sql><sql name="SQL 6">DROP TABLE test;
+
+CREATE TABLE test (
+	id INTEGER,
+	c1 INTEGER,
+	
+	PRIMARY KEY(&quot;id&quot; AUTOINCREMENT)
+);
+
+INSERT INTO test (c1)
+VALUES ( time('2023-12-12') );
+
+SELECT * FROM test;
+</sql><sql name="SQL 8">select * from sources2;
+</sql><current_tab id="3"/></tab_sql></sqlb_project>
