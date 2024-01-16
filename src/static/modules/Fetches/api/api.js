@@ -43,7 +43,7 @@ import { deleteNode } from "./node/DeleteNode.js";
 
 // NODES
 import { getNodeSearch } from "./node/search/GetNodeSearch.js";
-import { getNodeAdjacent } from "./node/adjacent/GetNodeAdjacent.js";
+import { getNodesAdjacent } from "./node/adjacent/GetNodeAdjacent.js";
 
 // EDGE
 
@@ -97,7 +97,7 @@ export {
 
 	// NODES 
 	getNodeSearch,
-	getNodeAdjacent,
+	getNodesAdjacent,
 
 	// EDGE
 

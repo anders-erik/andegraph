@@ -4,7 +4,7 @@
  * @param {int} children 
  * @returns 
  */
-async function getNodeAdjacent(nodeId, parents, children) {
+async function getNodesAdjacent(nodeId, parents, children) {
 
 	let urlString = `/api/node/adjacent/${nodeId}?`
 		+ `parents=${parents}&`
@@ -37,5 +37,5 @@ async function getNodeAdjacent(nodeId, parents, children) {
 }
 
 export {
-	getNodeAdjacent
+	getNodesAdjacent
 }

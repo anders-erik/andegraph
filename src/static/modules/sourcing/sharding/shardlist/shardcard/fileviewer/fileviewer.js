@@ -48,16 +48,18 @@ async function loadShardFile(shard, sourceid){
 
 	//console.log('loading shard file for ', shard.id);
 
-	let fileType = shard.fileType;
-	if(fileType == null){
-		//console.log(`no filetype detected for shard no. ${shard.id}. No file fetch performed.`);
+	let elementType = shard.elementType;
+	//console.log(shard.elementType)
+	//console.log('asdfasdfasdfasdfasdfasdfasdfasdf')
+	if(elementType == ''){
+		console.log(`no filetype detected for shard no. ${shard.id}. No file fetch performed.`);
 		return;
 	}
 
 	let shardBlob;
 	let fileUrl;
 	
-	if (shard.fileType == 'text'){
+	if (elementType == 'text'){
 		let shardTextReadableStream = await api.getShardFileText(sourceid, shard.id);
 		//console.log(shardTextReadableStream[0].textContent)
 		shardBlob = new Blob([shardTextReadableStream[0].textContent]);

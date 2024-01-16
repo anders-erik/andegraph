@@ -12,7 +12,10 @@ async function postNode(nodeObject, isChild, parentId) {
 
 	//console.log(options)
 
-	let fetchString = `/api/node/${nodeObject[0].id}`;
+	let fetchString = `/api/node/${nodeObject[0].id}?`
+		+ `isChild=${isChild}&`
+		+ `parentId=${parentId}`
+	;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)

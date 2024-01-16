@@ -19,12 +19,12 @@ function getSourceviewHeaderbar(shard){
 	//buttonCard.classList.add('button-card');
 
 
-	let shardcardPrompt = document.createElement('input');
-	shardcardPrompt.id = 'shardcard-prompt-' + shard.id;
-	shardcardPrompt.classList.add('shardcard-prompt');
-	shardcardPrompt.value = shard.prompt;
-	shardcardPrompt.addEventListener('focusout', shardcardPromptFocusout);
-	shardcardHeaderbar.appendChild(shardcardPrompt);
+	let shardcardTitle = document.createElement('input');
+	shardcardTitle.id = 'shardcard-title-' + shard.id;
+	shardcardTitle.classList.add('shardcard-title');
+	shardcardTitle.value = shard.title;
+	shardcardTitle.addEventListener('focusout', shardcardPromptFocusout);
+	shardcardHeaderbar.appendChild(shardcardTitle);
 
 
 	let shardcardShardid = document.createElement('div');
@@ -42,14 +42,14 @@ function getSourceviewHeaderbar(shard){
 	let shardcardFileType = document.createElement('div');
 	shardcardFileType.id = 'shardcard-filetype-' + shard.id;
 	shardcardFileType.classList.add('shardcard-element', 'shardcard-filetype');
-	shardcardFileType.textContent = 'File Type : ' + shard.fileType;
+	shardcardFileType.textContent = 'File Type : ' + shard.elementType;
 	shardcardHeaderbar.appendChild(shardcardFileType);
 
-	let shardcardFileEnding = document.createElement('div');
-	shardcardFileEnding.id = 'shardcard-fileending-' + shard.id;
-	shardcardFileEnding.classList.add('shardcard-element', 'shardcard-fileending');
-	shardcardFileEnding.textContent = 'File Ext. : ' + shard.fileEnding;
-	shardcardHeaderbar.appendChild(shardcardFileEnding);
+	let shardcardFileExtension = document.createElement('div');
+	shardcardFileExtension.id = 'shardcard-fileending-' + shard.id;
+	shardcardFileExtension.classList.add('shardcard-element', 'shardcard-fileending');
+	shardcardFileExtension.textContent = 'File Ext. : ' + shard.fileExtension;
+	shardcardHeaderbar.appendChild(shardcardFileExtension);
 
 	//shardcardHeaderbar.appendChild();
 

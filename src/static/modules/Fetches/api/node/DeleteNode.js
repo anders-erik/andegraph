@@ -7,6 +7,8 @@ async function deleteNode(nodeId) {
 			},
 		});
 
+		return response;
+
 		/*
 		if (response.ok) {
 			const responseData = await response.json();

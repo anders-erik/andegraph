@@ -26,7 +26,8 @@ async function loadShardsIntoShardlist(sourceId){
 	let shardlist = document.getElementById('sharding-listcard');
 
 
-	let shards = await api.getShards(sourceId);
+	//let shards = await api.getShards(sourceId);
+	let shards = await api.getNodesAdjacent(sourceId, 0, 1);
 	//console.log('back')
 	
 	// get the cards in place
@@ -37,9 +38,12 @@ async function loadShardsIntoShardlist(sourceId){
 		
 	});
 
+
+	// TODOO
 	// load file into cards
 	for(let i = 0; i <shards.length; i++){
 		//console.log(i);
+
 		await loadShardFile(shards[i], sourceId);
 	}
 	

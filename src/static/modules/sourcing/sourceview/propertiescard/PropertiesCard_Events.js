@@ -47,7 +47,9 @@ async function deleteSourceFromDatabase(){
 
 		let sourceId = PropertiesCard.extractCurrentSourceId();
 		
-		
+		let fileName = PropertiesCard.extractCurrentSourceFileName();
+
+		await api.deleteFile(fileName);
 
 		ViewCard.removeCurrentFileFromDOM();
 		//console.log('unload file');

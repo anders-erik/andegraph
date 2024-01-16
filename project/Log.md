@@ -428,6 +428,7 @@ TODO:
 		- Added an IsoDate-file in utils (primary for extracting todays day in iso format : YYYY-MM-DD)
 		- a 'models' module for generating new 'empty' objects
 	- Searchcard
+		- ONE BIG PROBELEM: forgetting the 'content/type':'application/json' is a nightmare!
 		- Straightforward
 	- Searchlist
 		- Straighforward
@@ -445,5 +446,7 @@ TODO:
 			- reviewDates: complete/completed
 			- FileType/ElementType
 			- extension/ending
-			- 
-	
+- (forgot to remove file on source deletion. Added in the next section - sharding)
+
+TODO:
+	- SHARDING!

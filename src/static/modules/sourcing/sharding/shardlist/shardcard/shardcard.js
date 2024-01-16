@@ -6,10 +6,12 @@ import { getSourceviewHeaderbar } from './headerbar/shardcardHeaderbar.js';
 import { newFileviewer, /* postFile,  displayShardFile, removeCurrentFileFromDOM */} from './fileviewer/fileviewer.js';
 import { deleteShardcard } from '../shardlist.js';
 
-import { determineFileCategories } from './fileviewer/fileviewer_utils.js';
+//import { determineFileCategories_ } from './fileviewer/fileviewer_utils.js';
+import { determineFileCategories } from '../../../../filehandling/DetermineFileCategories.js';
 
 import { loadShardFile } from './fileviewer/fileviewer.js';
 import { loadSource } from '../../../sourceview/propertiescard/PropertiesCard_Update.js';
+
 
 
 
@@ -19,7 +21,10 @@ function getShardcard(shard){
 	shardcard.classList.add('shardcard');
 	shardcard.tabIndex = 0;
 
+	//console.log(shard)
 
+	// Append shard object to shardcard
+	shardcard.shard = shard;
 	
 	shardcard.appendChild(getSourceviewHeaderbar(shard));
 
@@ -73,7 +78,8 @@ async function keydownDuringShardcardFocus(event) {
 		if (confirm(`Really delete shard no. ${shardid}?!`) == true) {
 
 
-			let deleteResponse = await api.deleteShard(sourceid, shardid);
+			//let deleteResponse = await api.deleteShard(sourceid, shardid);
+			let deleteResponse = await api.deleteNode(shardid);
 			//console.log(deleteResponse)
 
 			if(deleteResponse.ok)
@@ -103,18 +109,27 @@ function extractSourceIdFromCard(shardcardElement){
 async function pasteDuringShardcardFocus(event){
 	//console.log('pasteDuringShardcardFocus - ', event.target.childNodes);
 
+	//console.log('pasting to : ', event.target.id)
+
 	let shardid = event.target.id.match(/\d+$/g)[0];
-	let sourceid = extractCurrentSourceId();
+	let shardObject = document.getElementById('shardcard-' + shardid).shard;
 
-
-	// Disable paste when file is present!
-	let regex = new RegExp(/[null]$/g);
-	let result = regex.exec(document.getElementById('shardcard-filetype-' + shardid).textContent)
-	
-	if (result == null){
+	if (shardObject.fileName != ''){
 		console.log('This source already has a file. Returning.');
 		return;
 	}
+
+
+	//let sourceid = extractCurrentSourceId();
+
+	//console.log('Pasting to nodeId: ', document.getElementById('shardcard-' + shardid).shard)
+
+
+	// Disable paste when file is present!
+	//let regex = new RegExp(/[null]$/g);
+	//let result = regex.exec(document.getElementById('shardcard-filetype-' + shardid).textContent)
+	
+	
 
 
 	// https://stackoverflow.com/questions/3390396/how-can-i-check-for-undefined-in-javascript
@@ -129,7 +144,7 @@ async function pasteDuringShardcardFocus(event){
 		let blob = new Blob([clipboardText], { type: 'text/plain' });
 		 let file = new File([blob], "clipboard.txt", {type: "text/plain"});
 
-		postFile(file, sourceid, shardid);
+		postFile(file, shardid);
 	}
 	else {
 		console.log('No file nor text detected.');
@@ -143,16 +158,18 @@ async function pasteDuringShardcardFocus(event){
 
 
 
-async function postFile(selectedFile, sourceid, shardid){
+async function postFile(selectedFile, shardid){
 	//console.log('postie pete');
 	//console.log(selectedFile)
 
 	let fileCategories = determineFileCategories(selectedFile);
-	//console.log('Extracted file-type data: ', fileCategories);
+	console.log('Extracted file-type data: ', fileCategories);
 
 	// await api.postSourceFile(extractCurrentSourceId(), selectedFile, fileCategories.fileType, fileCategories.fileEnding);
 
-	await api.postShardFile(selectedFile, sourceid, shardid, fileCategories.fileType, fileCategories.fileEnding);
+
+	// TODO
+	//await api.postShardFile(selectedFile, sourceid, shardid, fileCategories.fileType, fileCategories.fileEnding);
 
 
 

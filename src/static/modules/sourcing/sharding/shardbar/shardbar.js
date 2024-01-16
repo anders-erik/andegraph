@@ -8,6 +8,8 @@ import * as PropertiesCard from '../../sourceview/propertiescard/PropertiesCard.
 
 import * as listcard from '../shardlist/shardlist.js';
 
+import * as models from '../../../models/models.js';
+
 
 
 function createShardbar(){
@@ -83,7 +85,9 @@ let addShardClicked = async function(e){
 	let sourceid = PropertiesCard.extractCurrentSourceId();
 
 	//Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceResponse.id);
-	await api.postShard(sourceid);
+	let newShard = models.generateNewShard();
+
+	await api.postNode(newShard, 1, PropertiesCard.extractCurrentSourceId());
 	console.log('new shard posted')
 
 	PropertiesCard.loadSource(sourceid);
