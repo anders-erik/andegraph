@@ -5,7 +5,7 @@ import * as Elements from '../../../Elements.js';
 //import * as ExtractDOM from '../../ExtractDOM.js';
 
 // PropertiesCard - children
-import { extractCurrentSourceObject, extractCurrentSourceId, extractCurrentSourceFileType, hasFile } from './PropertiesCard_Extract.js';
+import { extractCurrentSourceObject, extractCurrentSourceId,extractCurrentSourceFileName, extractCurrentSourceFileType, hasFile } from './PropertiesCard_Extract.js';
 import { sourceviewFieldFocusout, deleteSourceFromDatabase} from './PropertiesCard_Events.js';
 import { loadSource, clearSourceviewPropertiescard, saveCurrentSource } from './PropertiesCard_Update.js';
 import { addReviewDatesElement } from './PropertiesCard_reviewdates.js';
@@ -43,17 +43,29 @@ function createSourceviewPropertiescard() {
 	sourceviewDate.classList.add('sourceview-element');
 	sourceviewPropertiescardInner.appendChild(sourceviewDate);
 
-	let sourceviewHasFile = Elements.getSosDisabledInput('sourceview-hasfile', 'Has File:', '');
-	sourceviewHasFile.classList.add('sourceview-element');
-	sourceviewPropertiescardInner.appendChild(sourceviewHasFile);
+	let sourceviewFileName = Elements.getSosDisabledInput('sourceview-filename', 'File Name:', '');
+	sourceviewFileName.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewFileName);
 
-	let sourceviewFileType = Elements.getSosDisabledInput('sourceview-filetype', 'File Type:', '');
-	sourceviewFileType.classList.add('sourceview-element');
-	sourceviewPropertiescardInner.appendChild(sourceviewFileType);
+	let sourceviewElementType = Elements.getSosDisabledInput('sourceview-elementtype', 'elementType:', '');
+	sourceviewElementType.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewElementType);
 
-	let sourceviewFileEnding = Elements.getSosDisabledInput('sourceview-fileending', 'File Ending:', '');
-	sourceviewFileEnding.classList.add('sourceview-element');
-	sourceviewPropertiescardInner.appendChild(sourceviewFileEnding);
+	let sourceviewFileExtension = Elements.getSosDisabledInput('sourceview-fileextension', 'File Extension:', '');
+	sourceviewFileExtension.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewFileExtension);
+
+	let sourceviewTextContent = Elements.getSosDisabledInput('sourceview-textcontent', 'Text cont.', '');
+	sourceviewTextContent.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewTextContent);
+
+	let sourceviewNodeType = Elements.getSosDisabledInput('sourceview-nodetype', 'Node Type:', '');
+	sourceviewNodeType.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewNodeType);
+
+	let sourceviewNodeTypeType = Elements.getSosDisabledInput('sourceview-nodetypetype', 'Node TypeType:', '');
+	sourceviewNodeTypeType.classList.add('sourceview-element');
+	sourceviewPropertiescardInner.appendChild(sourceviewNodeTypeType);
 
 
 
@@ -89,6 +101,7 @@ export {
 	// loadSourceFilePressed,
 	extractCurrentSourceObject,
 	extractCurrentSourceId,
+	extractCurrentSourceFileName,
 	extractCurrentSourceFileType,
 	hasFile,
 

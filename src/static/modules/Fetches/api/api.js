@@ -54,6 +54,8 @@ import { patchReviewDate } from "./reviewdates/PatchReviewDate.js";
 import { postReviewDate } from "./reviewdates/PostReviewDate.js";
 import { deleteReviewDate } from "./reviewdates/DeleteReviewDate.js";
 
+import { getReviewDates } from "./reviewdates/GetReviewDates.js";
+
 export {
 	postSource,
 	getSource,
@@ -105,6 +107,8 @@ export {
 	patchReviewDate,
 	postReviewDate,
 	deleteReviewDate,
+
+	getReviewDates,
 
 }
 

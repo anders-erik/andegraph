@@ -13,8 +13,8 @@ import * as apiTester from './modules/Fetches/apitester/ApiTester.js';
 
 // MODELS
 import * as models from './modules/models/models.js';
-console.log(models.generateNewSource())
-console.log(models.generateNewShard())
+//console.log(models.generateNewSource())
+//console.log(models.generateNewShard())
 
 
 

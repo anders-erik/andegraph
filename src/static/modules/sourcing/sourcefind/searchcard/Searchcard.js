@@ -5,6 +5,8 @@ import * as Sourcecard from '../listcard/sourcecard/Sourcecard.js';
 //import * as Fetches from '../../../Fetches/BaseFetches.js'
 
 import * as api from '../../../Fetches/api/api.js';
+
+import * as models from '../../../models/models.js';
 // import { postSource } from '../../../Fetches/api/source/PostSource.js';
 // import { deleteSource } from '../../../Fetches/api/source/DeleteSource.js';
 // import { getSourceSearch } from '../../../Fetches/api/source/search/GetSourceSearch.js';
@@ -81,16 +83,31 @@ EVENTS
 let addSourceClicked = async function(e){
 	//console.log('create new source');
 	//let newSourceResponse = await Fetches.newSource();
-	let newSourceResponse = await api.postSource();
+
+	let newSourceNode = models.generateNewSource();
+
+	//console.log(newSourceNode)
+
+	let postNodeResponse = await api.postNode(newSourceNode, 0, '');
+	//let newSourceResponse = await api.postSource();	
+
+
+	if(postNodeResponse.ok){
+		//console.log('postpost goodgood');
+		await PropertiesCard.loadSource(newSourceNode[0].id);
+
+		// simulate clicking on fetch button
+		await fetchSourcesClicked();
+
+		Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceNode[0].id);
+	}
+	else{
+		console.log('Node POST failed!')
+	}
+
+
 	
-	await PropertiesCard.loadSource(newSourceResponse.id);
-
-
-	// simulate clicking on fetch button
-	await fetchSourcesClicked();
-
-
-	Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceResponse.id);
+	
 	
 }
 
@@ -111,8 +128,9 @@ let fetchSourcesClicked = async function(e){
 	//console.log(searchParameters);
 
 	
-	//let allFetchedSources = await Fetches.fetchAllSources();
-	let allFetchedSources = await api.getSourceSearch(searchParameters);
+	//
+	//let allFetchedSources = await api.getSourceSearch(searchParameters);
+	let allFetchedSources = await api.getNodeSearch(searchParameters);
 
 	//console.log(allFetchedSources);
 	

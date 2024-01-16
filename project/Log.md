@@ -420,6 +420,30 @@ TODO:
 	- When i create a shard (i.e. the body contains nodeType=shard on POST), I simply also pass the parent node and create an directed edge to the child. I Should always do this when sourcing!
 - Completed frontend fetches
 	- Goal was to create the fetch-files to essentially match the backend api
-	- Just like with bakend it is not properly tested
+	- Just like with backend it is not properly tested
 	- Started building my own simple api tester 
 		- only for text-files for the /api/file route atm....
+- Migrating Front-end to new nodes/edges/reviewdates and new API
+	- utility files/modules
+		- Added an IsoDate-file in utils (primary for extracting todays day in iso format : YYYY-MM-DD)
+		- a 'models' module for generating new 'empty' objects
+	- Searchcard
+		- Straightforward
+	- Searchlist
+		- Straighforward
+	- Propertiescard
+		- Most work here. 
+		- Had to create new fields for the new node-db-files
+		- many places were referencing old property names
+		- still proably uncaught references I will have to deal with in the future
+		- reviewDates: had to implement reviewateId lookups
+	- Sourceviewcard
+		- Also a bit of work. Making sure file names, extensions, node-properties, etc. are all matching.
+	- Most common problems:
+		- objects are sometimes on their own. Sometimes alone in an array. THERE IS NO ORDER!
+		- many lingering small naming dicrepencies
+			- reviewDates: complete/completed
+			- FileType/ElementType
+			- extension/ending
+			- 
+	

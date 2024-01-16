@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     //console.log(req.headers.id)
 
 
-
+	//console.log('asdff')
     //console.log(req.body)
 
 	// let edgeId = uuid.generate('edge');
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
 	//let newNodeId = req.body[0].id;
 	let newNodeId = req.params.nodeId;
-
+ 
 
     //const queriedRows = await nodeQueries.insertNode(req.body[0]);
 	const queriedRows = await nodeQueries.checkIfNodeExists(newNodeId);

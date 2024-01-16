@@ -84,6 +84,8 @@ function removeSourcefindCard(id){
 function updateSourcefindCard(id){
 	//let currentSourcefindCard = document.getElementById('sourcefind-sourcecard-' + id);
 	//console.log(document.getElementById('sourcefind-title-' + id).textContent);
+	
+	//console.log(id)
 
 	document.getElementById('sourcefind-title-' + id).textContent = document.getElementById('sourceview-title-field').value;
 	document.getElementById('sourcefind-id-' + id).textContent = document.getElementById('sourceview-id-field').value;

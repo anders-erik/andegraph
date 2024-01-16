@@ -1,18 +1,18 @@
 
 async function postNode(nodeObject, isChild, parentId) {
 
-
 	const options = {
 		method: 'POST',
 		headers: {
 		  'User-Agent': 'firefox',
+		  'Content-Type': 'application/json',
 		},
-		body: nodeObject
+		body: JSON.stringify(nodeObject),
 	};
 
-	let fetchString = `/api/node/${nodeObject.id}?`
-		+ `isChild=${isChild}&`
-		+ `parentId=${parentId}`;
+	//console.log(options)
+
+	let fetchString = `/api/node/${nodeObject[0].id}`;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)

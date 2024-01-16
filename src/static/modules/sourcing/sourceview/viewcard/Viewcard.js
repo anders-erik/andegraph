@@ -38,7 +38,7 @@ function pasteOnViewcard(event) {
 
 	
 	// Disable paste when file is present!
-	if (+document.getElementById('sourceview-hasfile-field').value == 1){
+	if (document.getElementById('sourceview-filename-field').value != ''){
 		//console.log('This source already has a file. Returning.');
 		return;
 	}
@@ -61,6 +61,11 @@ function pasteOnViewcard(event) {
 		else if((event.clipboardData || window.clipboardData).getData("text") !== ''){
 			//console.log((event.clipboardData || window.clipboardData).getData("text"));
 			let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
+
+			/* 
+				IMPLEMENT TEXT TYPE DETECTION ! ! !
+			*/
+
 			let blob = new Blob([clipboardText], { type: 'text/plain' });
  			let file = new File([blob], "clipboard.txt", {type: "text/plain"});
 

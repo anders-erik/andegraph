@@ -5,11 +5,12 @@ async function putNode(nodeObject) {
 		method: 'PUT',
 		headers: {
 		  'User-Agent': 'firefox',
+		  'Content-Type': 'application/json',
 		},
-		body: nodeObject
+		body: JSON.stringify(nodeObject),
 	};
 
-	let fetchString = `/api/node/${nodeObject.id}`;
+	let fetchString = `/api/node/${nodeObject[0].id}`;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)

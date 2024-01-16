@@ -50,19 +50,30 @@
 	align-items: center;
 	cursor: pointer;
 }
-#sourceview-hasfile {
+#sourceview-filename {
 	grid-column: 2 / span 1;
 	grid-row: 3 / span 1;
 }
-#sourceview-fileending {
+#sourceview-fileextension {
 	grid-column: 2 / span 1;
 	grid-row: 4 / span 1;
 }
-#sourceview-filetype {
+#sourceview-elementtype {
 	grid-column: 2 / span 1;
 	grid-row: 5 / span 1;
 }
-
+#sourceview-textcontent {
+	grid-column: 3 / span 1;
+	grid-row: 3 / span 1;
+}
+#sourceview-nodetype {
+	grid-column: 3 / span 1;
+	grid-row: 4 / span 1;
+}
+#sourceview-nodetypetype {
+	grid-column: 3 / span 1;
+	grid-row: 5 / span 1;
+}
 
 
 

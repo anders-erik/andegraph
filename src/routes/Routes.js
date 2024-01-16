@@ -101,15 +101,16 @@ function initRoutes(app, express) {
 	app.put('/api/file/:fileName', express.raw({ limit: "200mb", type: "*/*" }), putFile);
 	app.delete('/api/file/:fileName', deleteFile);
 
+	// NODES
+	app.get('/api/node/adjacent/:nodeId', getNodes);
+	app.get('/api/node/search', getNodeSearch);
+
 	// NODE
 	app.get('/api/node/:nodeId', getNode);
 	app.post('/api/node/:nodeId', postNode);
 	app.put('/api/node/:nodeId', putNode);
 	app.delete('/api/node/:nodeId', deleteNode);
 
-	// NODES
-	app.get('/api/node/adjacent/:nodeId', getNodes);
-	app.get('/api/node/search', getNodeSearch);
 
 	// EDGE
 	app.get('/api/edge/:id', getEdge);

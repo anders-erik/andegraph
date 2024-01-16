@@ -1,7 +1,8 @@
 import * as api from '../../../../Fetches/api/api.js';
-import { extractCurrentSourceId, extractCurrentSourceFileType, loadSource } from "../../propertiescard/PropertiesCard.js";
+import { extractCurrentSourceId,extractCurrentSourceFileName ,extractCurrentSourceFileType, loadSource, extractCurrentSourceObject } from "../../propertiescard/PropertiesCard.js";
 import { determineFileCategories } from './fileviewer_utils.js';
 import { enablePostButton, disablePostButton } from '../Viewcard.js';
+import * as uuid from '../../../../utils/uuid.js';
 
 
 
@@ -16,13 +17,34 @@ function newFileviewer() {
 
 async function postFile(selectedFile){
 	//console.log('postie pete');
+	console.log(selectedFile)
 
 	let fileCategories = determineFileCategories(selectedFile);
 	console.log('Extracted file-type data: ', fileCategories);
+	
+	let fileId = uuid.generate('file');
+	
 
-	await api.postSourceFile(extractCurrentSourceId(), selectedFile, fileCategories.fileType, fileCategories.fileEnding);
+	try {
+		await api.postFile(selectedFile, fileId + '.' + fileCategories.fileEnding);
 
-	loadSource(extractCurrentSourceId());
+		let sourceObject = extractCurrentSourceObject();
+
+		sourceObject[0].fileName = fileId + '.' + fileCategories.fileEnding;
+		sourceObject[0].fileExtension = fileCategories.fileEnding;
+		sourceObject[0].elementType = fileCategories.fileType;
+
+		await api.putNode(sourceObject);
+		
+		loadSource(extractCurrentSourceId());
+
+	} catch (error) {
+		console.log(error)
+	}
+
+	//await api.postSourceFile(extractCurrentSourceId(), selectedFile, fileCategories.fileType, fileCategories.fileEnding);
+
+	//loadSource(extractCurrentSourceId());
 }
 
 
@@ -42,7 +64,7 @@ async function displaySourceFile() {
 		console.log('no source selected');
 
 	}
-	else if (+document.getElementById('sourceview-hasfile-field').value != 1) { //sourceview-hasfile-field
+	else if (document.getElementById('sourceview-filename-field').value == '') { //sourceview-hasfile-field
 		
 		// check if source has a file to load. If not we don't do anything
 		//console.log('There is no file associated with this source.')
@@ -53,12 +75,14 @@ async function displaySourceFile() {
 	else {
 
 
-		let fetchedBlob = await api.getSourceFile(currentSourceId);
-
+		//let fetchedBlob = await api.getSourceFile(currentSourceId);
+		let fetchedBlob = await api.getFile(extractCurrentSourceFileName());
+		//console.log('bloblboblbo')
 		
 		//let fetchedFile = new File(  [fetchedBlob], 'testname.file' );
 
 		let fileUrl = URL.createObjectURL(fetchedBlob);
+		console.log('fileUrl: ', fileUrl)
 		// console.log('fetched blob:');
 		// console.log(fetchedBlob);
 		// console.log('Size : ' + fetchedBlob.slice(1, 100).text().then((obj) => {console.log(obj)}));

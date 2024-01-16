@@ -66,9 +66,9 @@ let loadSourcing = function(sourceIdToLoad) {
 
 
 			// Make sure the source exists!
-			api.getSource(sourceIdToLoad).then((response) => {
+			api.getNode(sourceIdToLoad).then((response) => {
 	
-				if(response.status == 410){
+				if(response.status == 404){
 					console.log('Source does not exist.');
 				}
 				else {

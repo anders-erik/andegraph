@@ -58,7 +58,8 @@ async function deleteSourceFromDatabase(){
 		PropertiesCard.clearSourceviewPropertiescard();
 		//console.log('clear properties card');
 
-		api.deleteSource(sourceId);
+		//api.deleteSource(sourceId);
+		api.deleteNode(sourceId);
 
 		//console.log('Source: ' + sourceId + ' deleted from database.');
 		

@@ -23,7 +23,8 @@ async function loadSource(sourceId) {
 	//console.log('loading source');
 	//console.log(fetchedSource);
 
-	let fetchedSource = await api.getSource(sourceId);
+	//let fetchedSource = await api.getSource(sourceId);
+	let fetchedSource = await api.getNode(sourceId);
 
 	let sourceviewPropertiescardInner = document.getElementById('sourceview-propertiescard-outer');
 	
@@ -41,14 +42,25 @@ async function loadSource(sourceId) {
 	let sourceviewDate = document.getElementById('sourceview-datecreated-field');
 	sourceviewDate.value = fetchedSource.dateCreated;
 	
-	let sourceviewHasFile = document.getElementById('sourceview-hasfile-field');
-	sourceviewHasFile.value = fetchedSource.hasFile;
+	let sourceviewfileName = document.getElementById('sourceview-filename-field');
+	sourceviewfileName.value = fetchedSource.fileName;
 
-	let sourceviewFileType = document.getElementById('sourceview-filetype-field');
-	sourceviewFileType.value = fetchedSource.fileType;
+	let sourceviewFileExtension = document.getElementById('sourceview-fileextension-field');
+	sourceviewFileExtension.value = fetchedSource.fileExtension;
 
-	let sourceviewFileEnding = document.getElementById('sourceview-fileending-field');
-	sourceviewFileEnding.value = fetchedSource.fileEnding;
+	let sourceviewElementType = document.getElementById('sourceview-elementtype-field');
+	sourceviewElementType.value = fetchedSource.elementType;
+
+	let sourceviewTextContent = document.getElementById('sourceview-textcontent-field');
+	sourceviewTextContent.value = fetchedSource.textContent;
+
+	let sourceviewNodeType = document.getElementById('sourceview-nodetype-field');
+	sourceviewNodeType.value = fetchedSource.nodeType;
+
+	let sourceviewNodeTypeType = document.getElementById('sourceview-nodetypetype-field');
+	sourceviewNodeTypeType.value = fetchedSource.nodeTypeType;
+
+	
 
 
 
@@ -77,9 +89,12 @@ function clearSourceviewPropertiescard(){
 	document.getElementById('sourceview-url-field').value = '';
 	document.getElementById('sourceview-id-field').value = '';
 	document.getElementById('sourceview-datecreated-field').value = '';
-	document.getElementById('sourceview-hasfile-field').value = '';
-	document.getElementById('sourceview-filetype-field').value = '';
-	document.getElementById('sourceview-fileending-field').value = '';
+	document.getElementById('sourceview-filename-field').value = '';
+	document.getElementById('sourceview-fileextension-field').value = '';
+	document.getElementById('sourceview-elementtype-field').value = '';
+	document.getElementById('sourceview-textcontent-field').value = '';
+	document.getElementById('sourceview-nodetype-field').value = '';
+	document.getElementById('sourceview-nodetypetype-field').value = '';
 
 	//document.getElementById('sourceview-viewcard').innerHTML = '';
 	//viewcard.removeCurrentFileFromDOM();
@@ -96,10 +111,12 @@ function saveCurrentSource(){
 	//console.log(JSON.stringify(currentSourceObject));
 	//console.log(objectString);
 
-	//Fetches.updateSource(JSON.stringify(currentSourceObject));
-	api.patchSource(JSON.stringify(currentSourceObject));
+	console.log('patchpatchpatch')
+	
+	//api.patchSource(JSON.stringify(currentSourceObject));
+	api.putNode(currentSourceObject);
 
-	Sourcecard.updateSourcefindCard(currentSourceObject.id);
+	Sourcecard.updateSourcefindCard(currentSourceObject[0].id);
 }
 
 

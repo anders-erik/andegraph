@@ -6,8 +6,9 @@ async function postReviewDate(reviewDateObject) {
 		method: 'POST',
 		headers: {
 		  'User-Agent': 'firefox',
+		  'Content-Type':'application/json',
 		},
-		body: reviewDateObject
+		body: JSON.stringify(reviewDateObject)
 	};
 
 	let fetchString = `/api/reviewdate/${reviewDateObject.id}`;

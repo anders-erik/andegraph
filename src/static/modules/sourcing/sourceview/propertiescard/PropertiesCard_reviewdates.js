@@ -1,6 +1,9 @@
 import { extractCurrentSourceId } from "./PropertiesCard_Extract.js";
 import * as api from '../../../Fetches/api/api.js';
+import * as models from "../../../models/models.js";
 
+
+let mostRecentReviewDateId = 0;
 
 function addReviewDatesElement() {
 	// let sourceviewReviewDates = Elements.getDateViewer('sourceview-reviewdates');
@@ -56,7 +59,8 @@ function addReviewDatesElement() {
 
 async function loadReviewDates(sourceId) {
 	// console.log(api.getSourceReviewDates(sourceId));
-	let reviewDatesArray = await  api.getSourceReviewDates(sourceId);
+	//let reviewDatesArray = await  api.getSourceReviewDates(sourceId);
+	let reviewDatesArray = await api.getReviewDates(sourceId);
 
 	//console.log(reviewDatesArray[0]);
 
@@ -73,6 +77,7 @@ async function loadReviewDates(sourceId) {
 		}
 		reviewDateLabel.addEventListener('click', reviewDateClicked);
 		reviewDateLabel.textContent = reviewDate.date;
+		reviewDateLabel.dataset.reviewDateId = reviewDate.id;
 		sourceviewReviewDates.appendChild(reviewDateLabel);
 	});
 
@@ -91,7 +96,8 @@ async function addReviewDateClicked() {
 	if(validateDateInput(dateInput)){
 
 		// setSchedule == 0 --> do no worry about the last parameters!
-		await api.postSourceReviewDates(sourceId, dateInput, 0, 'default', 0);
+		// await api.postSourceReviewDates(sourceId, dateInput, 0, 'default', 0);
+		await api.postReviewDate(models.createReviewDate(sourceId, dateInput));
 
 	loadReviewDates(sourceId);
 	
@@ -107,12 +113,28 @@ async function completeReviewDateClicked() {
 
 	let sourceId = extractCurrentSourceId();
 	let dateInput = extractDateInput();
+
+	//let reviewDateId = 
 	
 	//console.log(`Clicked to complete ${dateInput} belonging to source no. ${sourceId}`);
 	if(validateDateInput(dateInput)){
 
 		// Final parameter '1' : indicated that the date is to be marked as completed
-		await api.patchSourceReviewDate(sourceId, dateInput, 1);
+		//await api.patchSourceReviewDate(sourceId, dateInput, 1);
+
+		let reviewDateId = extractReviewDateIdFromTextInput();
+
+		console.log(reviewDateId);
+
+		if(reviewDateId == 0){
+			console.log('No matching review date was found to complete.')
+		}
+		else{
+			await api.patchReviewDate(reviewDateId, 1);
+		}
+		//await api.patchReviewDate(mostRecentReviewDateId, )
+
+		//extractReviewDateIdFromTextInput()
 
 		loadReviewDates(sourceId);
 
@@ -136,7 +158,18 @@ async function uncompleteReviewDateClicked() {
 	if(validateDateInput(dateInput)){
 
 		// Final parameter '0' : indicating that the date is to be marked as NOT completed
-		await api.patchSourceReviewDate(sourceId, dateInput, 0);
+		//await api.patchSourceReviewDate(sourceId, dateInput, 0);
+
+		let reviewDateId = extractReviewDateIdFromTextInput();
+		
+		console.log(reviewDateId);
+
+		if(reviewDateId == 0){
+			console.log('No matching review date was found to uncomplete.')
+		}
+		else{
+			await api.patchReviewDate(reviewDateId, 0);
+		}
 
 		loadReviewDates(sourceId);
 
@@ -179,7 +212,7 @@ async function deleteReviewDateClicked() {
 }
 
 
-
+// Currently does nothing!
 async function generateReviewDateClicked() {
 
 	let sourceId = extractCurrentSourceId();
@@ -214,6 +247,8 @@ function validateDateInput(inputString){
 async function reviewDateClicked(e){
 	//console.log(e.target.innerHTML);
 	//console.log(typeof(e.target.innerHTML));
+	mostRecentReviewDateId = e.target.dataset.reviewDateId;
+	console.log('ididid: ', mostRecentReviewDateId);
 	writeDateInput(e.target.innerHTML);
 }
 
@@ -224,6 +259,29 @@ function extractDateInput(){
 }
 function writeDateInput(DateInputString){
 	document.getElementById('sourceview-dates-input').value = DateInputString;
+}
+
+function extractReviewDateIdFromTextInput(){
+	let reviewDateId = 0;
+
+
+	let reviewDateList = document.getElementsByClassName('sourceview-dates-list-labels-done');
+	for(let reviewDateLabel of reviewDateList){
+		if(extractDateInput() == reviewDateLabel.textContent){
+			//console.log(reviewDateLabel.dataset.reviewDateId);
+			reviewDateId = reviewDateLabel.dataset.reviewDateId;
+		}
+	}
+
+	reviewDateList = document.getElementsByClassName('sourceview-dates-list-labels');
+	for(let reviewDateLabel of reviewDateList){
+		if(extractDateInput() == reviewDateLabel.textContent){
+			//console.log(reviewDateLabel.dataset.reviewDateId);
+			reviewDateId = reviewDateLabel.dataset.reviewDateId;
+		}
+	}
+
+	return reviewDateId;
 }
 
 export {
