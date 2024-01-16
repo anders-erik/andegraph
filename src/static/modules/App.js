@@ -5,7 +5,14 @@
 
 import * as log from './log/log.js';
 
-//window.showToast = log.showToast;
+// window.showToast = log.showToast;
+// window.addEventListener("error", function (event) {
+// 	log.showToast();
+// 	console.log('AAAAAAAAAAA')
+//   })
+
+
+
 
 import * as mainMenu from './mainMenu/mainMenu.js';
 

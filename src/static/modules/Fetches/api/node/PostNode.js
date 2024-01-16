@@ -1,5 +1,5 @@
 
-async function postNode(nodeObject) {
+async function postNode(nodeObject, isChild, parentId) {
 
 
 	const options = {
@@ -10,7 +10,9 @@ async function postNode(nodeObject) {
 		body: nodeObject
 	};
 
-	let fetchString = `/api/node/${nodeObject.id}`;
+	let fetchString = `/api/node/${nodeObject.id}?`
+		+ `isChild=${isChild}&`
+		+ `parentId=${parentId}`;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)
