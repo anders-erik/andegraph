@@ -5,9 +5,11 @@ module.exports = async (req, res) => {
 
     //console.log(req.query.fileName)
 
-	const file = `/data/live/files/${req.query.fileName}`;
+    let fileName = req.params.fileName;
 
-    console.log(`Downloaded file #${req.query.fileName}, at path ${file}`);
+	const file = `/data/live/files/${fileName}`;
+
+    console.log(`Downloaded file #${fileName}, at path ${file}`);
 
 	try{
 

@@ -7,7 +7,8 @@ const reviewDatesQueries = require('../../sql/graphQueries/ReviewDatesQueries');
 module.exports = async (req, res) => {
     //console.log(req.headers.id)
 
-    let nodeId = req.query.nodeId;
+    //let nodeId = req.query.nodeId;
+    let nodeId = req.params.nodeId;
     
     // TODO : CHECK IF THE SOURCEID EXISTS!
 

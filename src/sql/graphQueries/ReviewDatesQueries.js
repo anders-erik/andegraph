@@ -37,12 +37,12 @@ async function reviewDateExists(reviewDateId) {
 }
 
 
-async function insertReviewDate(reviewDate){
+async function insertReviewDate(reviewDateObject){
     return new Promise((acc, rej) => {
 
         graphDb.connection.run(
             'INSERT INTO reviewDates (id, date, completed, nodeId) values(?, ?, ?, ?)',
-            [reviewDate.id, reviewDate.date, reviewDate.complete, reviewDate.nodeId],
+            [reviewDateObject.id, reviewDateObject.date, reviewDateObject.complete, reviewDateObject.nodeId],
             (err, rows)  => {
                 if (err){
                     return rej(err);

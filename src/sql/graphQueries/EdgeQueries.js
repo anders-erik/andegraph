@@ -53,6 +53,17 @@ async function checkIfEdgeIdExists(edgeId) {
 
 
 
+async function deleteEdgeOnNodeId(nodeId) {
+    return new Promise((acc, rej) => {
+        graphDb.connection.all('DELETE FROM edges WHERE node1=? OR node2=?', [nodeId, nodeId], (err, rows) => {
+            if (err) return rej(err);
+            acc(rows);
+        });
+    });
+}
+
+
+
 
 // ===============================================
 
@@ -100,14 +111,7 @@ async function updateNode(node) {
 
 
 
-async function deleteNode(id) {
-    return new Promise((acc, rej) => {
-        graphDb.connection.all('DELETE FROM nodes WHERE id=?', [id], (err, rows) => {
-            if (err) return rej(err);
-            acc(rows);
-        });
-    });
-}
+
 
 
 
@@ -245,11 +249,10 @@ module.exports = {
     selectEdgeFromId,
     insertEdge,
     checkIfEdgeIdExists,
-
+    deleteEdgeOnNodeId,
 
 	
 	updateNode,
-	deleteNode,
 
     selectAllLikeString,
     selectDatesAndLikeString,

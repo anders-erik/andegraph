@@ -13,6 +13,51 @@ async function selectNodeFromId(sourceId) {
     });
 }
 
+
+
+async function selectAllChildrenNodes(parentId) {
+
+    let queryString = `
+        SELECT nodes.* FROM nodes
+        INNER JOIN edges
+        ON edges.node1 = ?
+        WHERE
+        nodes.id = edges.node2
+    `;
+
+    return new Promise((acc, rej) => {
+        graphDb.connection.all(
+            queryString, 
+            [parentId], 
+            (err, rows) => {
+            if (err) return rej(err);
+            acc(rows);
+        });
+    });
+}
+
+
+async function selectAllParentNodes(childId) {
+
+    let queryString = `
+        SELECT nodes.* FROM nodes
+        INNER JOIN edges
+        ON edges.node2 = ?
+        WHERE
+        nodes.id = edges.node1
+    `;
+
+    return new Promise((acc, rej) => {
+        graphDb.connection.all(
+            queryString, 
+            [childId], 
+            (err, rows) => {
+            if (err) return rej(err);
+            acc(rows);
+        });
+    });
+}
+
 async function checkIfNodeExists(sourceId) {
     return new Promise((acc, rej) => {
         graphDb.connection.all('SELECT nodes.id FROM nodes WHERE id=?', [sourceId], (err, rows) => {
@@ -221,11 +266,13 @@ async function selectForReview(searchstring, limit) {
 
 module.exports = {
 	selectNodeFromId,
+    selectAllChildrenNodes,
+    selectAllParentNodes,
 	checkIfNodeExists,
 	insertNode,
 	updateNode,
 	deleteNode,
-
+    // below is source specific....
     selectAllLikeString,
     selectDatesAndLikeString,
     selectForReview,

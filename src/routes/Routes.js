@@ -44,7 +44,8 @@ const postNode = require('./node/PostNode');
 const putNode = require('./node/PutNode');
 const deleteNode = require('./node/DeleteNode');
 
-// NODE / SEARCH
+// NODES
+const getNodes = require('./node/GetNodes');
 const getNodeSearch = require('./node/search/GetNodeSearch');
 
 // EDGE
@@ -95,20 +96,20 @@ function initRoutes(app, express) {
 
 
 	// FILE
-	app.get('/api/file/', getFile);
-	app.post('/api/file/', express.raw({ limit: "200mb", type: "*/*" }), postFile);
-	app.put('/api/file/', express.raw({ limit: "200mb", type: "*/*" }), putFile);
-	app.delete('/api/file/', deleteFile);
+	app.get('/api/file/:fileName', getFile);
+	app.post('/api/file/:fileName', express.raw({ limit: "200mb", type: "*/*" }), postFile);
+	app.put('/api/file/:fileName', express.raw({ limit: "200mb", type: "*/*" }), putFile);
+	app.delete('/api/file/:fileName', deleteFile);
+
+	// NODE
+	app.get('/api/node/:nodeId', getNode);
+	app.post('/api/node/:nodeId', postNode);
+	app.put('/api/node/:nodeId', putNode);
+	app.delete('/api/node/:nodeId', deleteNode);
 
 	// NODES
-	app.get('/api/node/', getNode);
-	app.post('/api/node/', postNode);
-	app.put('/api/node/', putNode);
-	app.delete('/api/node/', deleteNode);
-
-	// NODE/SEARCH
+	app.get('/api/nodes/:nodeId', getNodes);
 	app.get('/api/node/search', getNodeSearch);
-	// app.get('/api/node/shards', getNodeShards);
 
 	// EDGE
 	app.get('/api/edge/:id', getEdge);
@@ -120,7 +121,7 @@ function initRoutes(app, express) {
 	app.patch('/api/reviewdate/:id', patchReviewDate);
 	app.delete('/api/reviewdate/:id', deleteReviewDate);
 
-	app.get('/api/reviewdates/', getReviewDates);
+	app.get('/api/reviewdates/:nodeId', getReviewDates);
 
 }
 

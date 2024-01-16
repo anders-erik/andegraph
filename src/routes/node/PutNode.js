@@ -5,12 +5,13 @@ const nodeQueries = require('../../sql/graphQueries/NodeQueries');
 module.exports = async (req, res) => {
     //console.log(req.headers.id)
 
-
+	//let nodeId = req.body[0].id;
+	let nodeId = req.params.nodeId;
 
     console.log(req.body)
 
     //const queriedRows = await nodeQueries.insertNode(req.body[0]);
-	const queriedRows = await nodeQueries.checkIfNodeExists(req.body[0].id);
+	const queriedRows = await nodeQueries.checkIfNodeExists(nodeId);
 
 	if(queriedRows == ''){
 

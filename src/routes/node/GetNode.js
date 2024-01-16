@@ -5,9 +5,9 @@ const nodeQueries = require('../../sql/graphQueries/NodeQueries');
 module.exports = async (req, res) => {
     //console.log(req.headers.id)
 
-    
+    let nodeId = req.params.nodeId;
 
-    const queriedRows = await nodeQueries.selectNodeFromId(req.query.id);
+    const queriedRows = await nodeQueries.selectNodeFromId(nodeId);
 
     if (queriedRows == '') {
 

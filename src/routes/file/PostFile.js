@@ -6,9 +6,11 @@ module.exports = async (req, res) => {
 
     //console.log(req.query.fileName)
 
-    const file = `/data/live/files/${req.query.fileName}`;
+    let fileName = req.params.fileName;
 
-    console.log(`POSTing file #${req.query.fileName}, at path ${file}`);
+    const file = `/data/live/files/${fileName}`;
+
+    console.log(`POSTing file #${fileName}, at path ${file}`);
 
 
     if(fs.existsSync(file)){
@@ -23,7 +25,7 @@ module.exports = async (req, res) => {
             //console.log(Buffer.from(new Uint8Array( req.body )));
             fs.writeFile(file, Buffer.from(new Uint8Array(req.body)), function (err) {
                 if (err) throw err;
-                console.log(`File #${req.query.fileName} saved successfully at ${file}`);
+                console.log(`File #${fileName} saved successfully at ${file}`);
     
             });
     
@@ -32,10 +34,10 @@ module.exports = async (req, res) => {
     
         } catch (error) {
     
-            console.log(`Error @ /api/file/${req.query.fileName}. Unable to properly create new file. `);
+            console.log(`Error @ /api/file/${fileName}. Unable to properly create new file. `);
     
             res.status(500);
-            res.send({'message': `Error @ /api/file/${req.query.fileName}. Unable to properly create new file. `});
+            res.send({'message': `Error @ /api/file/${fileName}. Unable to properly create new file. `});
         }
 
     }
