@@ -27,6 +27,17 @@ import { postShardFile } from "./source/shard/file/postShardFile.js";
 import { patchShardFileText } from "./source/shard/file/patchShardFileText.js";
 
 
+// FILE
+import { getFile } from "./file/GetFile.js";
+import { postFile } from "./file/PostFile.js";
+import { putFile } from "./file/PutFile.js";
+import { deleteFile } from "./file/DeleteFile.js";
+
+// NODE
+
+
+
+
 export {
 	postSource,
 	getSource,
@@ -51,7 +62,12 @@ export {
 	getShardFile,
 	getShardFileText,
 	postShardFile,
-	patchShardFileText
+	patchShardFileText,
+
+	getFile,
+	postFile,
+	putFile,
+	deleteFile,
 
 }
 

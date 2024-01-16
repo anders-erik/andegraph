@@ -4,6 +4,7 @@ dragdrop-clipboard
 /data/live/sources/*
 /data/live/files/*
 /data/live/sources.db
+/data/live/graph.db
 /data/backups/app/*
 /data/backups/db/*
 /data/backups/sql/*

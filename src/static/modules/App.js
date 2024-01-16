@@ -1,15 +1,18 @@
 //import { addSourceListContainer, addSourceViewerContainer } from './Containers.js';
 //import { createSourcefindPanel, createSourceviewPanel,createVerticalSerperationPanel, createShardlistPanel } from './Panels.js';
 
+//import * as log from './log/log.js';
+
+import * as log from './log/log.js';
+
+//window.showToast = log.showToast;
+
 import * as mainMenu from './mainMenu/mainMenu.js';
 
 import * as Sourcing from './sourcing/sourcing.js';
 
 import * as Homedash from './homedash/homedash.js';
 
-
-
-import * as log from './log/log.js';
 
 
 

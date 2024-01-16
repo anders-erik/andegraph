@@ -28,9 +28,36 @@ const putShardFile = require('./Source/shard/file/putShardFile');
 const patchShardTextfile = require('./Source/shard/file/patchShardTextfile');
 
 
-// FILES
-const getFile = require('./files/GetFile');
 
+
+
+// FILES
+const getFile = require('./file/GetFile');
+const postFile = require('./file/PostFile');
+const putFile = require('./file/PutFile');
+const deleteFile = require('./file/DeleteFile');
+
+
+// NODE
+const getNode = require('./node/GetNode');
+const postNode = require('./node/PostNode');
+const putNode = require('./node/PutNode');
+const deleteNode = require('./node/DeleteNode');
+
+// NODE / SEARCH
+const getNodeSearch = require('./node/search/GetNodeSearch');
+
+// EDGE
+const getEdge = require('./edge/GetEdge');
+const postEdge = require('./edge/PostEdge');
+
+// REVIEWDATES
+const getReviewDate = require('./reviewdates/GetReviewDate');
+const postReviewDate = require('./reviewdates/PostReviewDate');
+const patchReviewDate = require('./reviewdates/PatchReviewDate');
+const deleteReviewDate = require('./reviewdates/DeleteReviewDate');
+
+const getReviewDates = require('./reviewdates/GetReviewDates');
 
 
 
@@ -68,7 +95,32 @@ function initRoutes(app, express) {
 
 
 	// FILE
-	//app.get('/api/file/:fileid', getFile);
+	app.get('/api/file/', getFile);
+	app.post('/api/file/', express.raw({ limit: "200mb", type: "*/*" }), postFile);
+	app.put('/api/file/', express.raw({ limit: "200mb", type: "*/*" }), putFile);
+	app.delete('/api/file/', deleteFile);
+
+	// NODES
+	app.get('/api/node/', getNode);
+	app.post('/api/node/', postNode);
+	app.put('/api/node/', putNode);
+	app.delete('/api/node/', deleteNode);
+
+	// NODE/SEARCH
+	app.get('/api/node/search', getNodeSearch);
+	// app.get('/api/node/shards', getNodeShards);
+
+	// EDGE
+	app.get('/api/edge/:id', getEdge);
+	app.post('/api/edge/:id', postEdge);
+
+	// REVIEWDATES
+	app.get('/api/reviewdate/:id', getReviewDate);
+	app.post('/api/reviewdate/:id', postReviewDate); // add params to get more meaningfull url!
+	app.patch('/api/reviewdate/:id', patchReviewDate);
+	app.delete('/api/reviewdate/:id', deleteReviewDate);
+
+	app.get('/api/reviewdates/', getReviewDates);
 
 }
 

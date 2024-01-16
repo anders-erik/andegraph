@@ -13,7 +13,7 @@ function createToast() {
 		}
 
 		#toast {
-			background-color: orange;
+			background-color: red;
       		display: none;
       		position: absolute;
       		height: var(--toasth);
@@ -22,6 +22,8 @@ function createToast() {
       		left: calc( 100vw - var(--toastw) - 10px );
       		white-space: nowrap;
       		overflow-x: hidden;
+
+			border: solid black 5px;
 			
 		}
 
@@ -43,9 +45,10 @@ function showToast(toastString) {
 	// Hide the toast after 1 second
 	setTimeout(function () {
 		toast.style.display = 'none';
-	}, 5000);
+	}, 3000);
 
 }
+
 
 export {
 	createToast,

@@ -380,5 +380,31 @@ TODO:
 
 
 
+### 2024-01-15
+
+- after a lot of thinking, I have decided to move all sources/shards into one object
+	- I realized that they are very similar, and relate similar to nodes/vertices in a graph
+	- Also there will be many more similar objects in the futures (comment, fundamental object, etc.)
+- The new structure is that of a mathematical graph
+	- nodes
+	- edges
+	- review dates
+- Also dicided on a solution UUID
+	- ill use 48-bit integers
+		- not to slow for DB to search
+		- enough values to last me a lifetime
+	- 46-14 : unix time - epoch (1_700_000_000)
+	- 13-10 : random bits
+	- 9-4   : object specific index for each second
+	- 3-1   : object specific id
+- App name:
+	- hprag (graph backwards)
+		- I now realized that is not correct..
+			- hparg nor pharg is available as .com ...
+
+TODO:
+- Complete the API tomorrow
+- Complete the front end fetches
+
 
 
