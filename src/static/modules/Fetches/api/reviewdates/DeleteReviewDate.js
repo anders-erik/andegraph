@@ -1,18 +1,20 @@
 
-async function getFile(fileName){
 
-	let urlString = `/api/file/${fileName}`;
+
+async function deleteReviewDate(reviewDateId){
+
+	let urlString = `/api/reviewdate/${reviewDateId}`;
 
 	try {
 		const response = await fetch(urlString, {
-			method: 'GET',
+			method: 'DELETE',
 			headers: {
 			},
 		});
 
 		if (response.ok) {
 			
-			return response.blob();
+			return response;
 		} else {
 			throw new Error('GET request failed:', response.status);
 		}
@@ -24,5 +26,5 @@ async function getFile(fileName){
 }
 
 export {
-	getFile
+	deleteReviewDate
 }

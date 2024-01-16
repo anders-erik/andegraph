@@ -45,7 +45,7 @@ const putNode = require('./node/PutNode');
 const deleteNode = require('./node/DeleteNode');
 
 // NODES
-const getNodes = require('./node/GetNodes');
+const getNodes = require('./node/adjacent/GetNodeAdjacent');
 const getNodeSearch = require('./node/search/GetNodeSearch');
 
 // EDGE
@@ -108,7 +108,7 @@ function initRoutes(app, express) {
 	app.delete('/api/node/:nodeId', deleteNode);
 
 	// NODES
-	app.get('/api/nodes/:nodeId', getNodes);
+	app.get('/api/node/adjacent/:nodeId', getNodes);
 	app.get('/api/node/search', getNodeSearch);
 
 	// EDGE

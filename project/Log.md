@@ -404,7 +404,22 @@ TODO:
 
 TODO:
 - Complete the API tomorrow
-- Complete the front end fetches
+- Complete the front-end fetches
 
 
+### 2024-01-16
 
+- completed backend API
+	- moved queries (id=123456) to parameters (/123456)
+		- This simplfies a ot of things!
+	- Added the getting of all parent or child-nodes on /api/nodes/372?parents=0&children=1
+- Big worry over night was the handling of 'shards'.
+	- what is a shard? a connect? an extracted piece?
+		- It is a piece of a source.
+		- it is a type of source-child!
+	- When i create a shard (i.e. the body contains nodeType=shard on POST), I simply also pass the parent node and create an directed edge to the child. I Should always do this when sourcing!
+- Completed frontend fetches
+	- Goal was to create the fetch-files to essentially match the backend api
+	- Just like with bakend it is not properly tested
+	- Started building my own simple api tester 
+		- only for text-files for the /api/file route atm....

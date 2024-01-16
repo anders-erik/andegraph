@@ -10,7 +10,7 @@ async function putFile(file, fileName) {
 		body: file
 	};
 
-	let fetchString = `/api/file?fileName=${fileName}`;
+	let fetchString = `/api/file/${fileName}`;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)

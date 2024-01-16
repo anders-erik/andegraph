@@ -1,6 +1,6 @@
-async function deleteSource(id) {
+async function deleteNode(nodeId) {
 	try {
-		const response = await fetch('/api/source?sourceid=' + id, {
+		const response = await fetch(`/api/node/${nodeId}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
@@ -21,5 +21,5 @@ async function deleteSource(id) {
 	}
 }
 export {
-	deleteSource
+	deleteNode
 }

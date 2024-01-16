@@ -1,24 +1,25 @@
 
-async function postSource() {
-	try {
-		const response = await fetch('/api/source', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			}
-		});
+async function postNode(nodeObject) {
 
-		if (response.ok) {
-			const responseData = await response.json();
-			//console.log('POST request successful:', responseData);
-			return responseData;
-		} else {
-			throw new Error('POST request failed:', response.status);
-		}
-	} catch (error) {
-		console.error('Error making POST request:', error);
-	}
+
+	const options = {
+		method: 'POST',
+		headers: {
+		  'User-Agent': 'firefox',
+		},
+		body: nodeObject
+	};
+
+	let fetchString = `/api/node/${nodeObject.id}`;
+
+	let promise = fetch(fetchString, options)
+		.then(response => response)
+		.catch(err => console.error(err));
+
+	return promise;
 }
+
+
 export {
-	postSource
+	postNode
 }

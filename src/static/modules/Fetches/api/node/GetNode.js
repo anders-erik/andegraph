@@ -1,34 +1,30 @@
 
 
-async function getSource(id) {
+
+async function getNode(nodeId){
+
+	let urlString = `/api/node/${nodeId}`;
+
 	try {
-		
-		const response = await fetch('/api/source?' + `sourceid=${id}`, {
+		const response = await fetch(urlString, {
 			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json',
 			},
 		});
 
 		if (response.ok) {
-			const responseData = await response.json();
-			//console.log('GET request successful:', responseData[0]);
-			return responseData[0];
-		} 
-		else if(response.status == 410) {
-			return response;
+			
+			return await response.json();
+		} else {
+			throw new Error('GET request failed:', response.status);
 		}
-		else {
-			return new Error('GET request failed:', response.status);
-
-		}
-
 	} catch (error) {
 		console.error('Error making GET request:', error);
 	}
+
+
 }
 
-
 export {
-	getSource
+	getNode
 }

@@ -1,5 +1,5 @@
 
-async function postFile(file, fileName) {
+async function postReviewDate(reviewDateObject) {
 
 
 	const options = {
@@ -7,10 +7,10 @@ async function postFile(file, fileName) {
 		headers: {
 		  'User-Agent': 'firefox',
 		},
-		body: file
+		body: reviewDateObject
 	};
 
-	let fetchString = `/api/file/${fileName}`;
+	let fetchString = `/api/reviewdate/${reviewDateObject.id}`;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)
@@ -21,5 +21,5 @@ async function postFile(file, fileName) {
 
 
 export {
-	postFile
+	postReviewDate
 }

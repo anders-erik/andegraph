@@ -1,5 +1,5 @@
 
-const nodeQueries = require('../../sql/graphQueries/NodeQueries');
+const nodeQueries = require('../../../sql/graphQueries/NodeQueries');
 
 
 module.exports = async (req, res) => {
@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
     let parentsBit = req.query.parents;
     let childrenBit = req.query.children;
 
-    console.log(parentsBit);
-    console.log(childrenBit);
+    //console.log(parentsBit);
+    //console.log(childrenBit);
 
     if(parentsBit == 1){
       let parentNodes = await nodeQueries.selectAllParentNodes(nodeId);

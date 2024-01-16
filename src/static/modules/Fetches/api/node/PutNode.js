@@ -1,16 +1,15 @@
-
-async function postFile(file, fileName) {
+async function putNode(nodeObject) {
 
 
 	const options = {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 		  'User-Agent': 'firefox',
 		},
-		body: file
+		body: nodeObject
 	};
 
-	let fetchString = `/api/file/${fileName}`;
+	let fetchString = `/api/node/${nodeObject.id}`;
 
 	let promise = fetch(fetchString, options)
 		.then(response => response)
@@ -21,5 +20,5 @@ async function postFile(file, fileName) {
 
 
 export {
-	postFile
+	putNode
 }

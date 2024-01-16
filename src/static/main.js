@@ -8,6 +8,9 @@ App.initApp('root');
 
 
 
+import * as apiTester from './modules/Fetches/apitester/ApiTester.js';
+
+apiTester.testTextFile();
 
 
 

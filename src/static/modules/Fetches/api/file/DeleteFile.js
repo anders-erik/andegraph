@@ -1,8 +1,7 @@
 
 async function deleteFile(fileName){
 
-	let urlString = `/api/file?`
-		+ `fileName=${fileName}`;
+	let urlString = `/api/file/${fileName}`;
 
 	try {
 		const response = await fetch(urlString, {

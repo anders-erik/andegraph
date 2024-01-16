@@ -1,7 +1,9 @@
 
-async function getFile(fileName){
 
-	let urlString = `/api/file/${fileName}`;
+
+async function getReviewDate(reviewDateId){
+
+	let urlString = `/api/reviewdate/${reviewDateId}`;
 
 	try {
 		const response = await fetch(urlString, {
@@ -12,7 +14,7 @@ async function getFile(fileName){
 
 		if (response.ok) {
 			
-			return response.blob();
+			return await response.json();
 		} else {
 			throw new Error('GET request failed:', response.status);
 		}
@@ -24,5 +26,5 @@ async function getFile(fileName){
 }
 
 export {
-	getFile
+	getReviewDate
 }
