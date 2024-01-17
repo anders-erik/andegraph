@@ -82,7 +82,7 @@ async function displaySourceFile() {
 		//let fetchedFile = new File(  [fetchedBlob], 'testname.file' );
 
 		let fileUrl = URL.createObjectURL(fetchedBlob);
-		console.log('fileUrl: ', fileUrl)
+		//console.log('fileUrl: ', fileUrl)
 		// console.log('fetched blob:');
 		// console.log(fetchedBlob);
 		// console.log('Size : ' + fetchedBlob.slice(1, 100).text().then((obj) => {console.log(obj)}));

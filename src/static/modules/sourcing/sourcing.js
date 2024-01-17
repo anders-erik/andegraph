@@ -57,11 +57,11 @@ let loadSourcing = function(sourceIdToLoad) {
 		
 			}
 			else {
-				console.log(sourceIdToLoad);
+				//console.log(sourceIdToLoad);
 				
 			}
 		
-			console.log(`Trying to load source id ${sourceIdToLoad}`);
+			//console.log(`Trying to load source id ${sourceIdToLoad}`);
 			
 
 
@@ -90,7 +90,7 @@ let loadSourcing = function(sourceIdToLoad) {
 
 		} catch (error) {
 
-			console.log('Silent error: Unable to select most recently loaded source.');
+			console.log('Silent error: Unable to select most recently loaded source. Node id: ', sourceIdToLoad);
 
 		}
 

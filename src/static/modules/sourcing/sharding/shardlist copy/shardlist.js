@@ -1,5 +1,5 @@
 
-import { newShardcard } from "./shardcard/shardcard.js";
+import { getShardcard } from "./shardcard/shardcard.js";
 
 import * as api from "../../../Fetches/api/api.js";
 import { loadShardFile } from "./shardcard/fileviewer/fileviewer.js";
@@ -16,7 +16,6 @@ function createShardlistcard(){
 
 	return shardlist;
 }
-
 
 // sourceid??
 async function loadShardsIntoShardlist(sourceId){
@@ -35,7 +34,7 @@ async function loadShardsIntoShardlist(sourceId){
 	shards.forEach(shard => {
 		//console.log(shard);
 		//console.log(Math.random())
-		shardlist.appendChild(newShardcard(shard));
+		shardlist.appendChild(getShardcard(shard));
 		
 	});
 
@@ -45,10 +44,7 @@ async function loadShardsIntoShardlist(sourceId){
 	for(let i = 0; i <shards.length; i++){
 		//console.log(i);
 
-		if(shards[i].fileName != ''){
-			await loadShardFile(shards[i], sourceId);
-		}
-		
+		await loadShardFile(shards[i], sourceId);
 	}
 	
 
@@ -84,7 +80,7 @@ async function loadShardsIntoShardlist(sourceId){
 	//shardlist.appendChild(getShardcard(shard1));
 	//shardlist.appendChild(getShardcard(shard2));
 
-	//console.log('done loading shards');
+	console.log('done loading shards');
 }
 
 function clearShardlist(){

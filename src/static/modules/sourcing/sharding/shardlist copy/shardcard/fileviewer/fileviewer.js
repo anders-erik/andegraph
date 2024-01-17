@@ -1,7 +1,7 @@
 // import * as api from '../../../../Fetches/api/api.js';
 // import { extractCurrentSourceId, extractCurrentSourceFileType, loadSource } from "../../propertiescard/PropertiesCard.js";
 import { extractCurrentSourceId, extractCurrentSourceFileType } from '../../../../sourceview/propertiescard/PropertiesCard_Extract.js';
-//import { determineFileCategories } from './fileviewer_utils.js';
+import { determineFileCategories } from './fileviewer_utils.js';
 // import { enablePostButton, disablePostButton } from '../Viewcard.js';
 import * as api from '../../../../../Fetches/api/api.js';
 
@@ -51,21 +51,14 @@ async function loadShardFile(shard, sourceid){
 	let elementType = shard.elementType;
 	//console.log(shard.elementType)
 	//console.log('asdfasdfasdfasdfasdfasdfasdfasdf')
-	/* if(elementType == ''){
+	if(elementType == ''){
 		console.log(`no filetype detected for shard no. ${shard.id}. No file fetch performed.`);
 		return;
-	} */
+	}
 
 	let shardBlob;
 	let fileUrl;
 	
-
-	//shardBlob = await api.getShardFile(sourceid, shard.id);
-	console.log(shard)
-	shardBlob = await api.getFile(shard.fileName);
-	
-	fileUrl = URL.createObjectURL(shardBlob);
-	/* 
 	if (elementType == 'text'){
 		let shardTextReadableStream = await api.getShardFileText(sourceid, shard.id);
 		//console.log(shardTextReadableStream[0].textContent)
@@ -83,7 +76,7 @@ async function loadShardFile(shard, sourceid){
 		shardBlob = await api.getShardFile(sourceid, shard.id);
 		fileUrl = URL.createObjectURL(shardBlob);
 	}
-	 */
+	
 	//console.log(shardBlob);
 
 	
@@ -103,9 +96,9 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 	
 	let fileViewer;
 	//let fileType = extractCurrentSourceFileType();
-	let fileType = shard.elementType;
+	let fileType = shard.fileType;
 
-	if(fileType == ''){
+	if(fileType == null){
 		console.log(`Shard id ${shard.id} : no file detected!`)
 		return;
 	}

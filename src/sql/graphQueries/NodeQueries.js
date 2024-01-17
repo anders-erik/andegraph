@@ -23,6 +23,7 @@ async function selectAllChildrenNodes(parentId) {
         ON edges.node1 = ?
         WHERE
         nodes.id = edges.node2
+        ORDER BY nodes.id DESC
     `;
 
     return new Promise((acc, rej) => {

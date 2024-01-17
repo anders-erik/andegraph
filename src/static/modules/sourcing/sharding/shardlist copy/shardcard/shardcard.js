@@ -2,7 +2,7 @@
 
 import * as api from '../../../../Fetches/api/api.js';
 import { hasFile, extractCurrentSourceFileType, extractCurrentSourceId } from '../../../sourceview/propertiescard/PropertiesCard_Extract.js';
-//import { getSourceviewHeaderbar } from './headerbar/shardcardHeaderbar.js';
+import { getSourceviewHeaderbar } from './headerbar/shardcardHeaderbar.js';
 import { newFileviewer, /* postFile,  displayShardFile, removeCurrentFileFromDOM */} from './fileviewer/fileviewer.js';
 import { deleteShardcard } from '../shardlist.js';
 
@@ -12,43 +12,33 @@ import { determineFileCategories } from '../../../../filehandling/DetermineFileC
 import { loadShardFile } from './fileviewer/fileviewer.js';
 import { loadSource } from '../../../sourceview/propertiescard/PropertiesCard_Update.js';
 
-import { determineClipboardContentType } from '../../../../filehandling/DetermineClipboardContents.js';
 
 
-let shardcardInnerHtmlOnFocus = '';
 
-
-function newShardcard(shard){
+function getShardcard(shard){
 	let shardcard = document.createElement('div');
 	shardcard.id = 'shardcard-' + shard.id;
-	shardcard.dataset.nodeId = shard.id;
 	shardcard.classList.add('shardcard');
 	shardcard.tabIndex = 0;
+
+	//console.log(shard)
 
 	// Append shard object to shardcard
 	shardcard.shard = shard;
 	
-	// No file detected, so we load node.textContent
-	if(shard.fileName == ''){
-
-		insertShardcardTextContent(shardcard, shard.textContent);
-		
-		shardcard.contentEditable = false;
-
-	}
-	else {
-
-		shardcard.appendChild(newFileviewer(shard));
-
-	}
+	shardcard.appendChild(getSourceviewHeaderbar(shard));
 
 
-	// Event listeners that will add and remove keybindings when focusing/focusingout of shardcard
+	shardcard.appendChild(newFileviewer(shard));
+
+
+	// deleting shard
 	shardcard.addEventListener('focus', focusShardcard);
 	shardcard.addEventListener('focusout', focusoutShardcard);
 
+	// // FILE PASTING
+	// shardcard.addEventListener('paste', pasteOnViewcard);
 
-	// DRAG AND DROP FILES
 	// shardcard.addEventListener('dragenter', dragEnterViewcard);
 	// shardcard.addEventListener('dragleave', dragLeaveViewcard);
 	// shardcard.addEventListener('drop', dropOnViewcard);
@@ -57,81 +47,21 @@ function newShardcard(shard){
 	return shardcard;
 }
 
-
-
-function extractShardcardTextContent(shardcard){
-
-	let stringArray = [];
-
-	for (const child of shardcard.children) {
-		//console.log(child.textContent);
-		stringArray.push(child.textContent);
-	}
-	
-
-	let storeString = stringArray.join(`\n`);
-
-	//console.log('raw extracted: ', JSON.stringify(rawExtractedText));
-	return storeString;
-}
-
-function insertShardcardTextContent(shardcard, textString) {
-	
-	//let textString = shard.textContent;
-
-	let textArray = textString.split('\n');
-	//console.log(textArray);
-	let divString = textArray.join('<br>»');
-
-	for(let i = 0; i < textArray.length; i++){
-		let p = document.createElement('p');
-		p.classList.add('shard-p');
-		p.id = 'shard-p-' + shardcard.shard.id;
-		p.textContent = textArray[i];
-		shardcard.appendChild(p)
-	}
-	
-	//console.log(divString)
-	//shardcard.textContent = shard.textContent;
-
-	//shardcard.innerHTML = divString;
-
-
-	//shardcard.innerHTML = divString;
-
-}
-
-
-
-
 function focusShardcard(event){
+	//console.log('focus: ' + event.target.id);
 
 	event.target.addEventListener('keydown', keydownDuringShardcardFocus);
 	event.target.addEventListener('paste', pasteDuringShardcardFocus);
 
-	shardcardInnerHtmlOnFocus = event.target.innerHTML;
 }
 
-async function focusoutShardcard(event){
-
-	event.target.contentEditable = false;
+function focusoutShardcard(event){
+	//console.log('focusout: ', event.target.id);
 
 	event.target.removeEventListener('keydown', keydownDuringShardcardFocus);
 	event.target.removeEventListener('paste', pasteDuringShardcardFocus);
 
-	// update InnerHTML if changed
-	if(event.target.innerHTML != shardcardInnerHtmlOnFocus){
-		
-		event.target.shard.textContent = extractShardcardTextContent(event.target);
-		console.log(JSON.stringify(event.target.shard.textContent))
-		await api.putNode([event.target.shard]);
-	}
-
 }
-
-
-
-//function saveShard
 
 async function keydownDuringShardcardFocus(event) {
 	//console.log('keykey' + event.key);
@@ -162,46 +92,6 @@ async function keydownDuringShardcardFocus(event) {
 		
 
 	}
-	else if(event.key == 'Enter'){
-		//alert('enter on ' + event.target.id)
-		if(event.target.shard.fileName == ''){
-
-			//console.log('contentEditable: ', event.target.contentEditable)
-			let isEditable = (event.target.contentEditable === 'true'); // property returns string
-
-			if(isEditable){
-				//let elementText = event.target.textContent;
-				
-				// https://stackoverflow.com/questions/3972014/get-contenteditable-caret-position
-				let caretIndex = window.getSelection().focusOffset;
-				//console.log(elementText.slice(0, caretIndex) + '<br>' + elementText.slice(caretIndex))
-
-				//window.getSelection().getRangeAt(0).insertNode(document.createElement("br"))
-				//window.getSelection().getRangeAt(0).insertNode(document.createTextNode('»'))
-				
-				//event.preventDefault();
-			}
-			else{
-				//console.log('enabling editable')
-				event.target.contentEditable = true;
-				event.preventDefault()
-			}
-			
-		}
-		
-	}
-	else if(event.key == 'Escape'){
-		//alert('escape on ' + event.target.id)
-		event.target.contentEditable = false;
-	}
-	else if(event.key == 'Tab'){
-		//alert('tabtab')
-		let isEditable = (event.target.contentEditable === 'true');
-		if(isEditable){
-			event.preventDefault();
-		}
-		
-	}
 
 
 }
@@ -220,56 +110,17 @@ async function pasteDuringShardcardFocus(event){
 	//console.log('pasteDuringShardcardFocus - ', event.target.childNodes);
 
 	//console.log('pasting to : ', event.target.id)
-	
-	/* if(event.target.textContent != ''){
-		console.log('Cant post file to a shard with text!')
-		return;
-	} */
-
-	//https://stackoverflow.com/questions/58980235/stop-pasting-html-style-in-a-contenteditable-div-only-paste-the-plain-text
-	let isEditable = (event.target.contentEditable === 'true');
-	if (isEditable) {
-		console.log('editable')
-		return;
-	}
-	console.log('pasting to element id: ', event.target.id)
 
 	let shardid = event.target.id.match(/\d+$/g)[0];
 	let shardObject = document.getElementById('shardcard-' + shardid).shard;
 
-
-	//let shardObject = event.target.shard;
-
-	// console.log()
-	// console.log('pasted to element-id: ', event.target.id)
-	// console.log('pasted to shard-id: ', shardid)
-	// console.log('shard object: ', shardObject)
-
-	//let shardid = event.target.id.match(/\d+$/g)[0];
-	//let shardObject = document.getElementById('shardcard-' + shardid).shard;
-
-	// console.log(shardObject.fileName != '')
-	// console.log(shardObject.textContent != '')
-	if ( (shardObject.fileName != '') || (shardObject.textContent != '')){
-		console.log('This source already has a file or textContent. Returning.');
+	if (shardObject.fileName != ''){
+		console.log('This source already has a file. Returning.');
 		return;
 	}
 
 
-	let clipboardContentType = determineClipboardContentType(event.clipboardData);
-
-
-	if(clipboardContentType === 'text'){
-		console.log('add to textContent');
-	}
-	else if (clipboardContentType === 'file'){
-		console.log('deal with file')
-	}
-
-	//console.log();
-
-	return;
-	
+	//let sourceid = extractCurrentSourceId();
 
 	//console.log('Pasting to nodeId: ', document.getElementById('shardcard-' + shardid).shard)
 
@@ -279,7 +130,7 @@ async function pasteDuringShardcardFocus(event){
 	//let result = regex.exec(document.getElementById('shardcard-filetype-' + shardid).textContent)
 	
 	
-	let sourceid = extractCurrentSourceId();
+
 
 	// https://stackoverflow.com/questions/3390396/how-can-i-check-for-undefined-in-javascript
 	if(typeof event.clipboardData.files[0] !== 'undefined'){
@@ -293,7 +144,7 @@ async function pasteDuringShardcardFocus(event){
 		let blob = new Blob([clipboardText], { type: 'text/plain' });
 		 let file = new File([blob], "clipboard.txt", {type: "text/plain"});
 
-		postFile(file, sourceid, shardid);
+		postFile(file, shardid);
 	}
 	else {
 		console.log('No file nor text detected.');
@@ -307,7 +158,7 @@ async function pasteDuringShardcardFocus(event){
 
 
 
-async function postFile(selectedFile, sourceid, shardid){
+async function postFile(selectedFile, shardid){
 	//console.log('postie pete');
 	//console.log(selectedFile)
 
@@ -464,7 +315,7 @@ function dropOnViewcard(event){
 
 
 export {
-	newShardcard,
+	getShardcard,
 
 	// // headerbar
 	// enablePostButton,
