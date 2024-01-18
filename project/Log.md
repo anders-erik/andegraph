@@ -450,3 +450,65 @@ TODO:
 
 TODO:
 	- SHARDING!
+
+
+### 2024-01-18
+
+- 2024-01-17
+	- solved the problem of textContent vs. files for shards!
+		- files are always prioritized if present
+		- if not file is associated with the node, textContent is loaded
+		- if neither is present, we display a small, empty shard (similar to a notion text block)
+	- implemented a textContent editor for shards
+		- The default text editors were to bulky and lacked configurability
+		- I decided on using a div with contentEditable set to true/false
+		- Two modes:
+			- focus	: the shard-div is the active element, but you cant input text
+			- edit: the regular navigati is turned of and all inputs go to the div-content!
+		- HAD A RIGHT FEW HOURS TRYING TO FIGURE OUT TEXT ENCODINGS AND DEALIGN WITH HTML PECULIARITIES
+			- browsers love ignoring white space
+			- they love <br> instead of new line (\n)
+			- etc. etc. (cant remember)
+	- the result turned out to be bareble, but not great...
+
+- 2024-01-18
+	- I thought the the textContent editing was pretty much done yesterday. 
+		- Oh boy were there a ton of stuff left!
+		- There were so many small things that I fixed, including imroving the two modes..
+			- using colors to inidcate the two modes
+			- new 'p' s generated did not have to parropriate id (started using data-node-id instead)
+			- if i start writing in a new shard, an empty 'p' is not generated! thus nothing is saved!
+				- if I dynamically input a new 'p' it will recieve the caret/focus!
+					- I had to use selections and ranges to dynamically move the cursor/caret!!
+			- if i use backspace on an empty, last 'p' I will delete it and the edit mode is broken!
+				- so I had to block backspace if there was no text left	
+					- but if there were multiple lines left (empty p's), I still want to be able to delete those lines!
+						- so I had to only block backspace with empty textContent and one p-node
+			- I want to enter the edit-mode using both a key (enter) or mouse click
+				- I just couldn't get a mousclick during focus to moove user into edit mode
+					- because the click triggered element focus before click
+				- I settled on having to double click to enter edit mode
+			- text editing ignores any 'p's that does not include <br>'s
+				- So I need to actively insert those in empty lines
+				- But I dont need to actively extract them because they are treated as new line??
+		- A strong seperation of the two modes is critical for the previous changes to be made!!
+	- started implmeenting more shortcuts in focum mode
+		- 'i' : get shardcard id
+		- 'o' : print shardcard object
+		- THESE WERE SOOOOOO HELPFUL!!!!
+	- made sure sources and shards can handle files properly!
+	- shardlist: inner and outer container
+	- shardlist/shardcard mini menu
+		- made a hovering mini menu that moves with the shard curriently in focus
+		- can't interact using the mouse because that removes shardcard focus..
+		- but It is intentded to be a visual guide when using the keuboard shortcuts!
+			- e.g. shard info, new shard/source/data/etc., edit certain shard properties, etc. etc.
+	- shardbar was improved to enable certain key actions without keyboard shortcuts
+TODO:
+	- make shardbar usable beyond adding shards
+	- make properties card collapsable?
+		- I really want most component to be collapsable and posses good max size constraints
+			- This will enable modularity and usablility! especially on mobile devices!
+
+
+

@@ -10,6 +10,9 @@ import * as listcard from '../shardlist/shardlist.js';
 
 import * as models from '../../../models/models.js';
 
+import * as shardlist from '../shardlist/shardlist.js';
+
+import * as shardbarComponents from './shardbar_components.js';
 
 
 function createShardbar(){
@@ -17,6 +20,12 @@ function createShardbar(){
 	let shardbar = document.createElement('div');
 	shardbar.id = 'sharding-shardbar';
 	shardbar.classList.add('card', 'sharding-shardbar');
+	// shardbar.innerHTML = `
+	// 	<button id='sharding-add' >
+	// 		add shard
+	// 	</button>
+	// `;
+	
 	//sourcefindSearchcard.textContent = 'cardcard';
 
 
@@ -25,19 +34,18 @@ function createShardbar(){
 	// sourcefindSearchcard.appendChild(sourcefindSearchbar);
 
 
-	//let sourcefindFetch = Elements.getSosButton('sourcefind-fetch');
-	let shardbarAdd = document.createElement('button');
-	shardbarAdd.id = 'sharding-add';
-	shardbarAdd.textContent = 'Add';
-	shardbarAdd.addEventListener('click', addShardClicked);
-	shardbar.appendChild(shardbarAdd);
+	// ADD SHARD
+	shardbar.appendChild(newAddShardButton());
+	shardbar.appendChild(newNodeInfoDropdown());
 
-	//let sourcefindAdd = Elements.getSosButton('sourcefind-add');
-	let shardbarDelete = document.createElement('button');
-	shardbarDelete.id = 'shardbar-delete';
-	shardbarDelete.textContent = 'Delete';
-	shardbarDelete.addEventListener('click', deleteShardClicked);
-	shardbar.appendChild(shardbarDelete);
+	
+
+	// DELETE
+	// let shardbarDelete = document.createElement('button');
+	// shardbarDelete.id = 'shardbar-delete';
+	// shardbarDelete.textContent = 'Delete';
+	// shardbarDelete.addEventListener('click', deleteShardClicked);
+	// shardbar.appendChild(shardbarDelete);
 
 	
 	
@@ -45,6 +53,34 @@ function createShardbar(){
 	return shardbar;
 }
 
+
+function newAddShardButton(){
+	
+	let shardbarAdd = document.createElement('button');
+	shardbarAdd.id = 'sharding-add';
+	shardbarAdd.textContent = 'Add Shard';
+	shardbarAdd.addEventListener('click', addShardClicked);
+	return shardbarAdd
+}
+
+function newNodeInfoDropdown(){
+	let newNodeInfoDropdown = document.createElement('div');
+	newNodeInfoDropdown.id = 'node-info-dropdown';
+	newNodeInfoDropdown.textContent = 'Node object';
+
+	newNodeInfoDropdown.addEventListener('click', displayNodeInfoDropdown);
+
+	return newNodeInfoDropdown;
+
+}
+
+function displayNodeInfoDropdown(event){
+	console.log('display')
+}
+
+function updateNodeInfoDropdown(nodeObject){
+	//console.log('update shardbar info dropdown with : ', nodeObject);
+}
 
 /* 
 EVENTS
@@ -82,16 +118,9 @@ let addShardClicked = async function(e){
 	// simulate clicking on fetch button
 	//await fetchSourcesClicked();
 
-	let sourceid = PropertiesCard.extractCurrentSourceId();
+	createNewSourceChild('shard');
 
-	//Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceResponse.id);
-	let newShard = models.generateNewShard();
-
-	await api.postNode(newShard, 1, PropertiesCard.extractCurrentSourceId());
-	console.log('new shard posted')
-
-	PropertiesCard.loadSource(sourceid);
-
+	
 
 
 
@@ -101,6 +130,25 @@ let addShardClicked = async function(e){
 	//console.log('new shard added the shardlist')
 }
 
+
+async function createNewSourceChild(newNodeType){
+
+	let sourceid = PropertiesCard.extractCurrentSourceId();
+
+	//Sourcecard.highlightSourceCard('sourcefind-sourcecard-' + newSourceResponse.id);
+	let newNodeObject;
+	if(newNodeType === 'shard'){
+		newNodeObject = models.generateNewShard();
+	}
+	//let newShard = models.generateNewShard();
+
+	await api.postNode(newNodeObject, 1, PropertiesCard.extractCurrentSourceId());
+	console.log('new shard posted')
+
+	//PropertiesCard.loadSource(sourceid);
+	shardlist.loadShardsIntoShardlist(sourceid);
+
+}
 
 
 
@@ -114,7 +162,7 @@ let addShardClicked = async function(e){
 
 export {
 	createShardbar,
-
+	updateNodeInfoDropdown,
 	
 	
 }

@@ -1,0 +1,41 @@
+
+#sharding-listcard-outer {
+	flex-grow: 1;
+
+	background-color: bisque;
+
+	overflow: scroll;
+
+	display: flex;
+
+	padding: 10px;
+}
+
+#sharding-listcard-inner {
+	
+	/* overflow-y: scroll; */
+	
+	position: relative;
+
+	overflow-y: hidden;
+	
+	flex-grow: 1;
+
+	padding: 10px;
+}
+
+
+
+#shard-mini-menu {
+	height: 25px;
+	width: 25px;
+	background-color: aliceblue;
+
+	border: solid black 1px;
+
+	position: absolute;
+	left: calc(100% - 50px);
+
+	display: none;
+}
+

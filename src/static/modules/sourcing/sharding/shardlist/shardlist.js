@@ -5,18 +5,46 @@ import * as api from "../../../Fetches/api/api.js";
 import { loadShardFile } from "./shardcard/fileviewer/fileviewer.js";
 
 
+let shardlistScrollValue = 0;
+
 
 function createShardlistcard(){
-	let shardlist = document.createElement('div');
-	shardlist.id = 'sharding-listcard';
-	shardlist.classList.add('card');
+	let shardlistOuter = document.createElement('div');
+	shardlistOuter.id = 'sharding-listcard-outer';
+	shardlistOuter.classList.add('card');
+
+
+	let shardlistInner = document.createElement('div');
+	shardlistInner.id = 'sharding-listcard-inner';
+	shardlistInner.classList.add('card');
+
+	//createShardMiniMenu();
+
+	// let shardMiniMenu = document.createElement('div');
+	// shardMiniMenu.id = 'shard-mini-menu';
+	// shardMiniMenu.textContent = 'M';
+	// shardlist.appendChild(shardMiniMenu);
+
 	//sourcefindList.textContent = 'sourcefind-listcard';
+
+	//shardlist.addEventListener('scroll', (e) => {console.log(e.target.scrollTop)})
 	
 	//loadShardsIntoShardlist();
 
-	return shardlist;
+	shardlistOuter.appendChild(shardlistInner);
+
+	return shardlistOuter;
 }
 
+function createShardMiniMenu(){
+	let shardlist = document.getElementById('sharding-listcard-inner');
+	
+	let shardMiniMenu = document.createElement('div');
+	shardMiniMenu.id = 'shard-mini-menu';
+	shardMiniMenu.textContent = 'M';
+	shardlist.appendChild(shardMiniMenu);
+
+}
 
 // sourceid??
 async function loadShardsIntoShardlist(sourceId){
@@ -24,7 +52,9 @@ async function loadShardsIntoShardlist(sourceId){
 
 	clearShardlist();
 
-	let shardlist = document.getElementById('sharding-listcard');
+	createShardMiniMenu()
+
+	let shardlist = document.getElementById('sharding-listcard-inner');
 
 
 	//let shards = await api.getShards(sourceId);
@@ -88,7 +118,7 @@ async function loadShardsIntoShardlist(sourceId){
 }
 
 function clearShardlist(){
-	let shardlist = document.getElementById('sharding-listcard');
+	let shardlist = document.getElementById('sharding-listcard-inner');
 
 	// Quick and dirty..
 	shardlist.innerHTML = '';

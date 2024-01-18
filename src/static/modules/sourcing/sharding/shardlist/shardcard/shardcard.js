@@ -14,8 +14,13 @@ import { loadSource } from '../../../sourceview/propertiescard/PropertiesCard_Up
 
 import { determineClipboardContentType } from '../../../../filehandling/DetermineClipboardContents.js';
 
+import * as shardbar from '../../shardbar/shardbar.js';
+
+import * as shardlist from '../shardlist.js';
+
 
 let shardcardInnerHtmlOnFocus = '';
+let listeningDoubleClick = false;
 
 
 function newShardcard(shard){
@@ -24,6 +29,8 @@ function newShardcard(shard){
 	shardcard.dataset.nodeId = shard.id;
 	shardcard.classList.add('shardcard');
 	shardcard.tabIndex = 0;
+
+
 
 	// Append shard object to shardcard
 	shardcard.shard = shard;
@@ -58,6 +65,40 @@ function newShardcard(shard){
 }
 
 
+function insertShardcardTextContent(shardcard, textStringInput) {
+	
+	// If WHOLE shard-textContent is empty
+	if(textStringInput == ''){
+		return;
+	}
+
+	let textStringSpaces = textStringInput.replaceAll('\t', '\xa0\xa0\xa0\xa0');
+	console.log(JSON.stringify(textStringSpaces));
+	
+
+	let textArray = textStringSpaces.split('\n');
+	//console.log(textArray);
+	//let divString = textArray.join('<br>»');
+
+	for(let i = 0; i < textArray.length; i++){
+		let p = document.createElement('p');
+		p.classList.add('shard-p');
+		// p.id = 'shard-p-' + shardcard.shard.id;
+		p.dataset.nodeId = shardcard.shard.id;
+		// https://stackoverflow.com/questions/75397803/chrome-skips-over-empty-paragraphs-of-contenteditable-parent-when-moving-cursor/75397804
+		if(textArray[i] == ''){
+			p.innerHTML = `<br>`;
+		}
+		else {
+			p.textContent = textArray[i];
+		}
+		
+		shardcard.appendChild(p)
+	}
+	
+	//console.log(divString)
+
+}
 
 function extractShardcardTextContent(shardcard){
 
@@ -75,39 +116,26 @@ function extractShardcardTextContent(shardcard){
 	return storeString;
 }
 
-function insertShardcardTextContent(shardcard, textString) {
-	
-	//let textString = shard.textContent;
-
-	let textArray = textString.split('\n');
-	//console.log(textArray);
-	let divString = textArray.join('<br>»');
-
-	for(let i = 0; i < textArray.length; i++){
-		let p = document.createElement('p');
-		p.classList.add('shard-p');
-		p.id = 'shard-p-' + shardcard.shard.id;
-		p.textContent = textArray[i];
-		shardcard.appendChild(p)
-	}
-	
-	//console.log(divString)
-	//shardcard.textContent = shard.textContent;
-
-	//shardcard.innerHTML = divString;
-
-
-	//shardcard.innerHTML = divString;
-
-}
 
 
 
 
 function focusShardcard(event){
+	//console.log('focus')
 
 	event.target.addEventListener('keydown', keydownDuringShardcardFocus);
 	event.target.addEventListener('paste', pasteDuringShardcardFocus);
+	event.target.addEventListener('click', clickDuringShardcardFocus);
+	
+	shardbar.updateNodeInfoDropdown(event.target.shard);
+
+	
+	//let shardTop = event.target.offsetTop;
+	//console.log(shardTop)
+	let miniMenu = document.getElementById('shard-mini-menu');
+	miniMenu.style.top = event.target.offsetTop + 'px';
+	miniMenu.style.display = 'block';
+
 
 	shardcardInnerHtmlOnFocus = event.target.innerHTML;
 }
@@ -115,10 +143,20 @@ function focusShardcard(event){
 async function focusoutShardcard(event){
 
 	event.target.contentEditable = false;
+	event.target.classList.remove('shardcard-editing');
+	if(event.target.textContent == ''){
+		event.target.innerHTML = '';
+	}
+
 
 	event.target.removeEventListener('keydown', keydownDuringShardcardFocus);
 	event.target.removeEventListener('paste', pasteDuringShardcardFocus);
+	event.target.removeEventListener('click', clickDuringShardcardFocus);
 
+	let miniMenu = document.getElementById('shard-mini-menu');
+	miniMenu.style.display = 'none';
+
+	//console.log(event.target.innerHTML)
 	// update InnerHTML if changed
 	if(event.target.innerHTML != shardcardInnerHtmlOnFocus){
 		
@@ -131,82 +169,181 @@ async function focusoutShardcard(event){
 
 
 
+
 //function saveShard
 
 async function keydownDuringShardcardFocus(event) {
+	//console.log(event.target)
 	//console.log('keykey' + event.key);
-	if (event.altKey && event.shiftKey && (event.key == 'Delete')) {
+	let shardid = event.target.id.match(/\d+$/g)[0];
+	let shardcard = document.getElementById('shardcard-' + shardid);
+	
 
-		let shardid = event.target.id.match(/\d+$/g)[0];
-		//console.log(shardid);
+	if(event.target.contentEditable === 'true'){
 
-		let sourceid = extractCurrentSourceId();
-		//console.log(sourceid);
+		if(event.key == 'Escape'){
+			//alert('escape on ' + event.target.id)
+			event.target.contentEditable = false;
+			event.target.classList.remove('shardcard-editing');
 
-		console.log(`Delete keypress detected : shard ${shardid} (source id : ${sourceid})`);
-
-		if (confirm(`Really delete shard no. ${shardid}?!`) == true) {
-
-
-			//let deleteResponse = await api.deleteShard(sourceid, shardid);
-			let deleteResponse = await api.deleteNode(shardid);
-			//console.log(deleteResponse)
-
-			if(deleteResponse.ok)
-				deleteShardcard(shardid);
-			else
-				console.log('Unable to delete shard');
-				
+			if(event.target.textContent == ''){
+				event.target.innerHTML = '';
+			}
+		}
+		if(event.key == 'Backspace' && shardcard.textContent == '' && shardcard.childElementCount == 1){
+			// prevent deletion of the last 'p' element!
+			// if the last one is deleted any new textContent is not extracted and saved!!
+			console.log('dsds')
+			event.preventDefault();
+		}
+		if(event.key == 'Tab'){
+			event.preventDefault();
+			window.getSelection().getRangeAt(0).insertNode(document.createTextNode(`\xa0\xa0\xa0\xa0`));
+			// window.getSelection().getRangeAt(0)
+			// window.getSelection().empty()
 		}
 
+	}
+	else {
 		
 
-	}
-	else if(event.key == 'Enter'){
-		//alert('enter on ' + event.target.id)
-		if(event.target.shard.fileName == ''){
+		if(event.key == 'i'){
+			console.log(event.target.id)
+		}
 
-			//console.log('contentEditable: ', event.target.contentEditable)
-			let isEditable = (event.target.contentEditable === 'true'); // property returns string
+		if(event.key == 'o'){
+			console.log(event.target.shard)
+		}
 
-			if(isEditable){
-				//let elementText = event.target.textContent;
+		if (event.altKey && event.shiftKey && (event.key == 'D')) {
+
+			//let shardid = event.target.id.match(/\d+$/g)[0];
+			//console.log(shardid);
+	
+			let sourceid = extractCurrentSourceId();
+			//console.log(sourceid);
+	
+			console.log(`Delete keypress detected : shard ${shardid} (source id : ${sourceid})`);
+	
+			if (confirm(`Really delete shard no. ${shardid}?!`) == true) {
+	
+	
+				//let deleteResponse = await api.deleteShard(sourceid, shardid);
+
+				if(event.target.shard.fileName != ''){
+					await api.deleteFile(event.target.shard.fileName);
+				}
 				
-				// https://stackoverflow.com/questions/3972014/get-contenteditable-caret-position
-				let caretIndex = window.getSelection().focusOffset;
-				//console.log(elementText.slice(0, caretIndex) + '<br>' + elementText.slice(caretIndex))
 
-				//window.getSelection().getRangeAt(0).insertNode(document.createElement("br"))
-				//window.getSelection().getRangeAt(0).insertNode(document.createTextNode('»'))
-				
-				//event.preventDefault();
+				let deleteResponse = await api.deleteNode(shardid);
+				//console.log(deleteResponse)
+	
+				if(deleteResponse.ok)
+					deleteShardcard(shardid);
+				else
+					console.log('Unable to delete shard');
+					
 			}
-			else{
-				//console.log('enabling editable')
-				event.target.contentEditable = true;
-				event.preventDefault()
+	
+			
+	
+		}
+		else if(event.key == 'Enter'){
+			//alert('enter on ' + event.target.id)
+			if(event.target.shard.fileName == ''){
+	
+				if(event.target.contentEditable === 'false'){
+					
+					event.preventDefault();
+
+					//console.log('enabling editable')
+					event.target.contentEditable = true;
+					event.target.classList.add('shardcard-editing');
+
+
+					if(event.target.textContent == ''){
+
+						event.target.innerHTML = `<p id='shard-p-${event.target.shard.id}' class='shard-p'></p>`
+						
+						// move the curesor/caret to the new, empty paragraph element
+						// If this is not done the users input will end up in the wrapping instead
+						// 
+						let emptyP = document.getElementById(`shard-p-${event.target.shard.id}`);
+						let range = document.createRange();
+						range.setStart(emptyP, 0);
+						range.collapse(true);
+						let sel = window.getSelection();
+						sel.removeAllRanges();
+						sel.addRange(range);
+						console.log();
+					}
+					
+					
+	
+				}
+				else{
+					//let elementText = event.target.textContent;
+					
+					// https://stackoverflow.com/questions/3972014/get-contenteditable-caret-position
+					let caretIndex = window.getSelection().focusOffset;
+					//console.log(elementText.slice(0, caretIndex) + '<br>' + elementText.slice(caretIndex))
+	
+					//window.getSelection().getRangeAt(0).insertNode(document.createElement("br"))
+					//window.getSelection().getRangeAt(0).insertNode(document.createTextNode('»'))
+					
+					//event.preventDefault();
+				}
+				
 			}
 			
 		}
-		
-	}
-	else if(event.key == 'Escape'){
-		//alert('escape on ' + event.target.id)
-		event.target.contentEditable = false;
-	}
-	else if(event.key == 'Tab'){
-		//alert('tabtab')
-		let isEditable = (event.target.contentEditable === 'true');
-		if(isEditable){
-			event.preventDefault();
-		}
-		
-	}
 
+
+	}
 
 }
 
 
+
+function clickDuringShardcardFocus(event) {
+
+	//console.log('click')
+	if (!listeningDoubleClick) {
+		listeningDoubleClick = true;
+	}
+	else if (listeningDoubleClick) {
+		//console.log('double click!')
+
+		//let shardid = event.target.id.match(/\d+$/g)[0];
+		let shardid = event.target.dataset.nodeId;
+		let shardcard = document.getElementById('shardcard-' + shardid);
+		//window.getSelection().empty();
+
+		shardcard.contentEditable = true;
+		shardcard.classList.add('shardcard-editing');
+
+		if (shardcard.textContent == '') {
+			shardcard.innerHTML = `<p id='shard-p-${shardid}' class='shard-p'></p>`
+			// move the curesor/caret to the new, empty paragraph element
+			// If this is not done the users input will end up in the wrapping instead
+			// 
+			let emptyP = document.getElementById(`shard-p-${event.target.shard.id}`);
+			let range = document.createRange();
+			range.setStart(emptyP, 0);
+			range.collapse(true);
+			let sel = window.getSelection();
+			sel.removeAllRanges();
+			sel.addRange(range);
+			console.log();
+		}
+	}
+
+
+	setTimeout(() => {
+		listeningDoubleClick = false;
+		//console.log('stop listening')
+	}, 300);
+}
 
 
 function extractSourceIdFromCard(shardcardElement){
@@ -214,9 +351,29 @@ function extractSourceIdFromCard(shardcardElement){
 	
 }
 
+function editingShardcard(shardcard){
+	//console.log(document.activeElement)
+	if(shardcard.contentEditable === 'true'){
+		return true;
+		//console.log('aaaa')
+	}
+	else{
+		return false;
+	}
+	// else if (document.activeElement == shardcard){
+	// 	//return 'focus';
+	// 	console.log('bbbbb')
+	// }
+	
+}
+
 
 // PASTE
 async function pasteDuringShardcardFocus(event){
+
+
+	//console.log(event.clipboardData.getData())
+
 	//console.log('pasteDuringShardcardFocus - ', event.target.childNodes);
 
 	//console.log('pasting to : ', event.target.id)
@@ -227,15 +384,19 @@ async function pasteDuringShardcardFocus(event){
 	} */
 
 	//https://stackoverflow.com/questions/58980235/stop-pasting-html-style-in-a-contenteditable-div-only-paste-the-plain-text
-	let isEditable = (event.target.contentEditable === 'true');
+	/* let isEditable = (event.target.contentEditable === 'true');
 	if (isEditable) {
 		console.log('editable')
+		event.preventDefault()
 		return;
-	}
-	console.log('pasting to element id: ', event.target.id)
+	} */
+	console.log('pasted to element id: ', event.target.id)
+
+
 
 	let shardid = event.target.id.match(/\d+$/g)[0];
-	let shardObject = document.getElementById('shardcard-' + shardid).shard;
+	let shardcard = document.getElementById('shardcard-' + shardid);
+	let shardObject = shardcard.shard;
 
 
 	//let shardObject = event.target.shard;
@@ -250,6 +411,15 @@ async function pasteDuringShardcardFocus(event){
 
 	// console.log(shardObject.fileName != '')
 	// console.log(shardObject.textContent != '')
+	// Prevent automatic pasting when editing shard-text
+	//let pastingWhileEditing = false;
+	/* if(event.target.id.substring(0, 7) === 'shard-p'){
+		console.log('pasting when editing text');
+		pastingWhileEditing = true;
+		event.preventDefault();  
+	} */
+
+
 	if ( (shardObject.fileName != '') || (shardObject.textContent != '')){
 		console.log('This source already has a file or textContent. Returning.');
 		return;
@@ -261,9 +431,19 @@ async function pasteDuringShardcardFocus(event){
 
 	if(clipboardContentType === 'text'){
 		console.log('add to textContent');
+
+		let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
+		
+		insertShardcardTextContent(shardcard, clipboardText);
+
 	}
 	else if (clipboardContentType === 'file'){
 		console.log('deal with file')
+
+		let sourceid = extractCurrentSourceId();
+
+		postFile(event.clipboardData.files[0], sourceid, shardid);
+
 	}
 
 	//console.log();
@@ -315,17 +495,40 @@ async function postFile(selectedFile, sourceid, shardid){
 	console.log('Extracted file-type data: ', fileCategories);
 
 	// await api.postSourceFile(extractCurrentSourceId(), selectedFile, fileCategories.fileType, fileCategories.fileEnding);
+	
+	let shardObject = document.getElementById('shardcard-' + shardid).shard;
+	let fileName = shardid + '.' + fileCategories.fileEnding;
+	
+	shardObject.fileName = fileName;
+	shardObject.fileExtension = fileCategories.fileEnding;
+	shardObject.elementType = fileCategories.fileType;
 
+
+	await api.postFile(selectedFile, fileName);
+
+	await api.putNode([shardObject]);
 
 	// TODO
 	//await api.postShardFile(selectedFile, sourceid, shardid, fileCategories.fileType, fileCategories.fileEnding);
 
 
-
 	//loadShardFile(shardid, sourceid);
-	loadSource(extractCurrentSourceId());
+	shardlist.loadShardsIntoShardlist(extractCurrentSourceId());
 	// loadSource(extractCurrentSourceId());
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
