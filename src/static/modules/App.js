@@ -5,6 +5,8 @@
 
 import * as log from './log/log.js';
 
+import * as threepanels from './uiskeleton/threepanels/threepanels.js';
+
 // window.showToast = log.showToast;
 // window.addEventListener("error", function (event) {
 // 	log.showToast();
@@ -36,8 +38,15 @@ function initApp(rootId){
 
 
 	let urlPath = window.location.pathname;
+
+	/* 
+		SOURCING ENTRY POINT!
+	*/
 	loadMainFromUrlPath(urlPath);
 
+	//mainContent.appendChild(threepanels.initThreePanels(mainContent));
+	
+	//threepanels.animateToWidthPanel1(100, 1000);
 }
 
 
@@ -52,7 +61,10 @@ let loadMainFromUrlPath = function(urlPath) {
 		//loadSourcing();
 		let urlPathId = urlPath.split('/')[2];
 		//console.log(urlPathId);
+		
+		
 		Sourcing.loadSourcing(urlPathId);
+
 	}
 	else{
 		Homedash.loadHomedash();

@@ -10,6 +10,7 @@ import { sourcingVertisep1 } from './sourcefind/sourcefind_vertisep.js';
 import { sourcingVertisep2 } from './sourceview/sourceview_vertisep.js';
 import { createShardingPanel } from './sharding/sharding.js';
 
+import * as threepanels from '../uiskeleton/threepanels/threepanels.js';
 
 
 
@@ -25,12 +26,20 @@ let loadSourcing = function(sourceIdToLoad) {
 	//addSourceViewerContainer();
 
 
+// 2024-01-18
+	mainContent.appendChild(threepanels.initThreePanels(mainContent));
+
+	threepanels.panel1.appendChild(Sourcefind.createSourcefindPanel())
+	threepanels.panel2.appendChild(Sourceview.createSourceviewPanel());
+	threepanels.panel3.appendChild(createShardingPanel());
+
 // 2023-12-14
-	mainContent.appendChild(Sourcefind.createSourcefindPanel());
-	mainContent.appendChild(sourcingVertisep1());
-	mainContent.appendChild(Sourceview.createSourceviewPanel());
-	mainContent.appendChild(sourcingVertisep2());
-	mainContent.appendChild(createShardingPanel());
+	console.log()
+	//mainContent.appendChild(Sourcefind.createSourcefindPanel());
+	//mainContent.appendChild(sourcingVertisep1());
+	//mainContent.appendChild(Sourceview.createSourceviewPanel());
+	//mainContent.appendChild(sourcingVertisep2());
+	//mainContent.appendChild(createShardingPanel());
 
 // 2023-12-03
 	//root.appendChild(createSourcefindPanel());

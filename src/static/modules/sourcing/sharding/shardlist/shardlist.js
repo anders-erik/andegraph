@@ -46,6 +46,22 @@ function createShardMiniMenu(){
 
 }
 
+
+async function loadNodeAtShardlistTop(nodeId){
+	//console.log(nodeObject)
+	let shardlist = document.getElementById('sharding-listcard-inner');
+
+	let nodeObject = await api.getNode(nodeId);
+
+	shardlist.insertBefore(newShardcard(nodeObject), shardlist.firstChild);
+
+	//	I am not at the moment trying to add a file to the shardcard because its a completely new node!
+
+	//console.log(nodeObject);
+
+}
+
+
 // sourceid??
 async function loadShardsIntoShardlist(sourceId){
 	//console.log('start loading shards');
@@ -138,6 +154,7 @@ function deleteShardcard(shardid){
 
 export {
 	createShardlistcard,
+	loadNodeAtShardlistTop,
 	loadShardsIntoShardlist,
 	deleteShardcard
 }

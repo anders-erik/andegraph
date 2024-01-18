@@ -35,9 +35,12 @@ function panelFocusout(event){
 function movePointerWhileDragable(mouseevent){
 	//console.log(mouseevent.movementX);
 
-	let findPanel = document.getElementById('sourceview-panel-outer');
+	let sourceviewPanel = document.getElementById('sourceview-panel-outer');
+	let shardingPanel = document.getElementById('sharding-panel-outer');
 	
-	findPanel.style.width = (findPanel.clientWidth + mouseevent.movementX) + 'px';
+	
+	sourceviewPanel.style.width = (sourceviewPanel.clientWidth + mouseevent.movementX) + 'px';
+	//shardingPanel.style.width = (shardingPanel.clientWidth - mouseevent.movementX) + 'px';
 
 	//console.log(findPanel.style.width);
 }

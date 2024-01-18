@@ -11,8 +11,9 @@
 
 	/* word-wrap:break-word; */
 
-	max-width: 600px;
+	/* max-width: 600px; */
 	/* width: calc(100% - 50px); */
+	width: calc(100% - 50px);
 
 	position: relative;
 

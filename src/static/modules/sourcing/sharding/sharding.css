@@ -6,8 +6,9 @@
 
 #sharding-panel {
 	min-width: 500px;
+
 	height: 100%;
-	max-width: 1200px;
+	
 
 	
 }
@@ -16,9 +17,11 @@
 	padding: 0px;
 	background-color: purple;
 	height: 100%;
+	max-height: 100vh;
 	overflow-x: hidden;
 
 	min-width: 500px;
+	width: 100%;
 
 	flex-grow: 1;
 }

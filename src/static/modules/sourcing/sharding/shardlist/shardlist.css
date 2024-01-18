@@ -4,11 +4,13 @@
 
 	background-color: bisque;
 
-	overflow: scroll;
+
+	overflow: hidden;
 
 	display: flex;
 
-	padding: 10px;
+	padding: 0px;
+
 }
 
 #sharding-listcard-inner {
@@ -17,7 +19,7 @@
 	
 	position: relative;
 
-	overflow-y: hidden;
+	overflow-y: scroll;
 	
 	flex-grow: 1;
 
@@ -31,10 +33,14 @@
 	width: 25px;
 	background-color: aliceblue;
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	border: solid black 1px;
 
 	position: absolute;
-	left: calc(100% - 50px);
+	left: calc(100% - 30px);
 
 	display: none;
 }

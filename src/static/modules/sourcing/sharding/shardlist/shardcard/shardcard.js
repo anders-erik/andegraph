@@ -73,7 +73,7 @@ function insertShardcardTextContent(shardcard, textStringInput) {
 	}
 
 	let textStringSpaces = textStringInput.replaceAll('\t', '\xa0\xa0\xa0\xa0');
-	console.log(JSON.stringify(textStringSpaces));
+	//console.log(JSON.stringify(textStringSpaces));
 	
 
 	let textArray = textStringSpaces.split('\n');
@@ -134,7 +134,7 @@ function focusShardcard(event){
 	//console.log(shardTop)
 	let miniMenu = document.getElementById('shard-mini-menu');
 	miniMenu.style.top = event.target.offsetTop + 'px';
-	miniMenu.style.display = 'block';
+	miniMenu.style.display = 'flex';
 
 
 	shardcardInnerHtmlOnFocus = event.target.innerHTML;
@@ -225,7 +225,10 @@ async function keydownDuringShardcardFocus(event) {
 	
 			console.log(`Delete keypress detected : shard ${shardid} (source id : ${sourceid})`);
 	
-			if (confirm(`Really delete shard no. ${shardid}?!`) == true) {
+			
+			let isEmpty = (event.target.innerHTML === '');
+
+			if ( isEmpty || confirm(`Really delete shard no. ${shardid}?!`)) {
 	
 	
 				//let deleteResponse = await api.deleteShard(sourceid, shardid);

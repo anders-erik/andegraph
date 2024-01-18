@@ -146,7 +146,9 @@ async function createNewSourceChild(newNodeType){
 	console.log('new shard posted')
 
 	//PropertiesCard.loadSource(sourceid);
-	shardlist.loadShardsIntoShardlist(sourceid);
+
+	shardlist.loadNodeAtShardlistTop(newNodeObject[0].id);
+	//shardlist.loadShardsIntoShardlist(sourceid);
 
 }
 

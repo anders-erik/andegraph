@@ -509,6 +509,54 @@ TODO:
 	- make properties card collapsable?
 		- I really want most component to be collapsable and posses good max size constraints
 			- This will enable modularity and usablility! especially on mobile devices!
+		- A first step in usability is making sure that the current 3-panel model is good!
+			- I need to create a separate module that will hold the the sourcing panels!
+			- 
+
+- Tried adding a module for my three sourcing panels
+	- It actually turned out pretty good!
+		- obviously there is some nueiance..
+	- Problems:
+		- tried using CSS variables to lock parent containers in place
+			- turned out I got the syntax wrong and I almost gave up
+		- js-css mix is sometimes complex and annoying..
+		- getting the max-values right is not easy
+		- forgot the vertisep-widths for a long time, creating some minor visual gliches
+		- vertisep is not following the cursor well enough
+			- Instead of changing the size of the panels I should move the vertisep, and adjust the panels accordingly
+			- THIS WORKED OUT WELL!
+			- still slight issues:
+				- shrinking panels to zero results in small gaps
+	- SOLUTION
+		- in the end I included all width constrains in the js-file
+		- then before applying anny width changes from dragging the panel seperators I simply checked if the new changes conform to the constraints
+			- If the constraints were not met, I simply dont do the update...
+	- tried animating the panels
+		- Did not go well
+		- Coding the method I had in mind went better than expected
+			- But the outcome of that method was very poor..
+		- The big problem was that the width-movement on each frame was never a clean fraction of the total animated distance. 
+			- As a rsult, the end location of a 'linear' animation was never where I wanted. So I either got the wor poistion or a big final jump in position...
+TOTO
+	- When the middle panel has reached its minimum width it should squeze the next panel ! !
+
+- Moved the Actual sourcing 'app' into the threepanels-UI
+	- it honestly worked perfectly!
+	- Only adjusting some obsolete max/min/width-values.
+	- still my inability to shrink multiple panels accordion-style is the only reaminigng obvious issue
+		- THere is still the visual selection-glitch when resizing!
+	- I am still hesitant to remove the old code for now.
+		- I'll keep it around until next restructuring..
+- I just realized how easy it would be to push new shards tp shardlist without reload. SO I added that.
+	- Also enabled shard deletion without promp if its empty!
+TODO:
+	- figure out how to make the edge-object forchildren/shards available in the frontend
+		- This is (for now) primarily for ordering the shards in the shardlist
+		- Intuitively there seems to be two options:
+			- always including that information when fetching a shard, or
+			- doing separate fetches to get the edge matching a source-child pair.
+		- Regardless of how I do it I cannot immediately simply add it.
+			- also, I cannot implement child-order in my shardlist until I've solved that problem!
 
 
 
