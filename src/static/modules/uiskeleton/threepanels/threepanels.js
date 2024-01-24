@@ -5,6 +5,7 @@ export let panel1;
 export let panel2;
 export let panel3;
 
+
 let mainMenuWidth = 50;
 
 let parentContainerWidth;
@@ -15,11 +16,15 @@ let panel1Width;
 let panel1MinWidth = 0;
 let panel1MaxWidth = 3000;
 let panel2Width;
-let panel2MinWidth = 500;
+let panel2MinWidth = 400;
 let panel2MaxWidth = 3000;
 let panel3Width;
-let panel3MinWidth = 500;
+let panel3MinWidth = 400;
 let panel3MaxWidth = 3000;
+
+
+let vertisep1;
+let vertisep2;
 
 let vertisepWidth = 8;
 let vertisepHalfWidth = 4;
@@ -29,7 +34,6 @@ let vertisepX2;
 let cursorX;
 
 let xCoordWhenEnabled1;
-let xCoordWhenEnabled2;
 
 
 export function initThreePanels(parentContainer){
@@ -41,9 +45,18 @@ export function initThreePanels(parentContainer){
 	maxWidth = parentContainerWidth;
 	//console.log(parentContainerWidth)
 
-	panel1Width = Math.floor(parentContainerWidth * 0.25);
-	panel2Width = Math.floor(parentContainerWidth * 0.36); 
+	//panel3Width = Math.floor(parentContainerWidth * 0.35);
+	panel1Width = Math.floor(parentContainerWidth * 0.30);
+	panel2Width = Math.floor(parentContainerWidth * 0.40); 
 	panel3Width = parentContainerWidth - panel1Width - panel2Width - 2 * vertisepWidth;
+	//panel1Width = parentContainerWidth - panel3Width - panel2Width - 2 * vertisepWidth;
+	if(panel1Width < panel1MinWidth)
+		panel1Width = panel1MinWidth + 5;
+	if(panel2Width < panel2MinWidth)
+		panel2Width = panel2MinWidth + 5;
+	if(panel3Width < panel3MinWidth)
+		panel3Width = panel3MinWidth + 5;
+	
 	
 	vertisepX1 = mainMenuWidth + panel1Width + vertisepHalfWidth;
 	vertisepX2 = vertisepX1 + vertisepHalfWidth + panel2Width + vertisepHalfWidth;
@@ -98,10 +111,12 @@ function newVertisep(index){
 	//vertisep.textContent = index;
 
 	if(index == 1){
+		vertisep1 = vertisep;
 		vertisep.addEventListener('mousedown', panelFocus1);
 		vertisep.addEventListener('focusout', panelFocusout1);
 	}
 	else{
+		vertisep2 = vertisep;
 		vertisep.addEventListener('mousedown', panelFocus2);
 		vertisep.addEventListener('focusout', panelFocusout2);
 	}
@@ -146,8 +161,10 @@ function movePointerWhileDragable1(mouseevent){
 
 	// let newwidthPanel1 = panel1.clientWidth + mouseevent.movementX;
 	// let newwidthPanel2 = panel2.clientWidth - mouseevent.movementX;
-	let newwidthPanel1 = panel1.clientWidth + diffX1;
-	let newwidthPanel2 = panel2.clientWidth - diffX1;
+	// let newwidthPanel1 = panel1.clientWidth + diffX1;
+	// let newwidthPanel2 = panel2.clientWidth - diffX1;
+	let newwidthPanel1 = panel1.offsetWidth + diffX1;
+	let newwidthPanel2 = panel2.offsetWidth - diffX1;
 	
 	
 
@@ -158,10 +175,6 @@ function movePointerWhileDragable1(mouseevent){
 
 		panel1.style.width = newwidthPanel1 + 'px';
 		panel2.style.width = newwidthPanel2 + 'px';
-
-		// console.log(vertisep1.getBoundingClientRect().x)
-		// console.log(mouseevent.clientX)
-
 
 
 	}
@@ -197,6 +210,7 @@ function movePointerWhileDragable2(mouseevent){
 
 	let newVertisep2X = mouseevent.clientX;
 	let diffX2 = newVertisep2X - vertisepX2;
+	
 
 	let panel1 = document.getElementById('threepanels-panel-1');
 	let panel2 = document.getElementById('threepanels-panel-2');
@@ -204,13 +218,20 @@ function movePointerWhileDragable2(mouseevent){
 	
 	// let newwidthPanel2 = panel2.clientWidth + mouseevent.movementX;
 	// let newwidthPanel3 = panel3.clientWidth - mouseevent.movementX;
-	let newwidthPanel2 = panel2.clientWidth + diffX2;
-	let newwidthPanel3 = panel3.clientWidth - diffX2;
+	// let newwidthPanel2 = panel2.clientWidth + diffX2;
+	// let newwidthPanel3 = panel3.clientWidth - diffX2;
+	let newwidthPanel2 = panel2.offsetWidth + diffX2;
+	let newwidthPanel3 = panel3.offsetWidth - diffX2;
+	
 
 	if(isNewWidthGoodPanel2(newwidthPanel2) && isNewWidthGoodPanel3(newwidthPanel3)){
 
 		vertisepX2 = newVertisep2X;
 		
+		// console.log()
+		// console.log('style: ', panel2.style.width)
+		// console.log('client: ', panel2.clientWidth)
+		// console.log(diffX2)
 		panel2.style.width = newwidthPanel2 + 'px';
 		panel3.style.width = newwidthPanel3 + 'px';
 

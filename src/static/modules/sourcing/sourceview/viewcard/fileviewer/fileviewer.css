@@ -7,8 +7,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	background-color: rgb(150, 73, 222);
+	
+	background-color: rgba(0, 0, 0, 0.368);
 }
 
 #sourceview-file {
@@ -23,6 +23,7 @@
 
 .sourceview-file-text {
 	height: 95%;
+	min-height: 300px;
 	width: 95%;
 	resize: none;
 	font-size: medium;

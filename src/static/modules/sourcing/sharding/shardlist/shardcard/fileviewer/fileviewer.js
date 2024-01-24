@@ -13,6 +13,7 @@ function newFileviewer(shard) {
 	let shardfileContainer = document.createElement('div');
 	shardfileContainer.id = 'shardcard-fileviewer-' + shard.id;
 	shardfileContainer.classList.add('shardcard-fileviewer');
+	shardfileContainer.dataset.nodeId = shard.id;
 
 	shardfileContainer.appendChild(newFileElement(shard.id))
 
@@ -28,6 +29,7 @@ function newFileElement(shardid){
 	shardfileElement.id = 'shardcard-file-' + shardid;
 	shardfileElement.classList.add('shardcard-file');
 	shardfileElement.textContent = shardfileElement.id;
+	shardfileElement.dataset.nodeId = shardid;
 
 
 	// let fetchedBlob = await api.getSourceFile(extractCurrentSourceId(), shardid);
@@ -61,7 +63,7 @@ async function loadShardFile(shard, sourceid){
 	
 
 	//shardBlob = await api.getShardFile(sourceid, shard.id);
-	console.log(shard)
+	//console.log(shard)
 	shardBlob = await api.getFile(shard.fileName);
 	
 	fileUrl = URL.createObjectURL(shardBlob);
@@ -103,6 +105,7 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 	
 	let fileViewer;
 	//let fileType = extractCurrentSourceFileType();
+	//
 	let fileType = shard.elementType;
 
 	if(fileType == ''){
@@ -132,7 +135,8 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 			fileViewer = document.createElement('textarea');
 			fileViewer.id = 'shardcard-file-' + shard.id;
 			fileViewer.classList.add('shardcard-file-text');
-			//fileViewer.setAttribute('readonly', 'false');
+			fileViewer.setAttribute('readonly', 'true');
+			fileViewer.setAttribute('disabled', 'true');
 			fileViewer.textContent = await fetchedBlob.text()
 
 			//console.log('text length: ', fetchedBlob.size)
@@ -142,7 +146,8 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 			else
 				fileViewer.setAttribute('rows', textareaRows);
 			
-			fileViewer.addEventListener('focusout', patchTextOnFocusout);
+			//fileViewer.addEventListener('focusout', patchTextOnFocusout);
+
 			//console.log(await fetchedBlob.text());
 			
 			// fileViewer.src = fileUrl;
@@ -206,6 +211,8 @@ async function loadShardfileIntoDom(fileUrl, fetchedBlob, shard, sourceid){
 
 	fileViewer.classList.add('shardcard-file'); 
 	fileViewer.src = fileUrl;
+	fileViewer.dataset.nodeId = shard.id;
+
 	//fileViewer.addEventListener('click', focusOnClick);
 	//fileViewer.setAttribute('type', 'video/mp4');
 	//fileViewer.style.maxWidth = '100%';

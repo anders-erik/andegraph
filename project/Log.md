@@ -547,6 +547,7 @@ TOTO
 		- THere is still the visual selection-glitch when resizing!
 	- I am still hesitant to remove the old code for now.
 		- I'll keep it around until next restructuring..
+	- I ALSO REALIZED THAT I HAVENT RENAMED THE TERRIBLE THREEPANELS FUNCTION NAMES LOL !
 - I just realized how easy it would be to push new shards tp shardlist without reload. SO I added that.
 	- Also enabled shard deletion without promp if its empty!
 TODO:

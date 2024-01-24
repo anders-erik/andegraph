@@ -8,7 +8,8 @@ module.exports = async (req, res) => {
 	//let nodeId = req.body[0].id;
 	let nodeId = req.params.nodeId;
 
-    console.log(req.body)
+    //console.log(req.body)
+	
 
     //const queriedRows = await nodeQueries.insertNode(req.body[0]);
 	const queriedRows = await nodeQueries.checkIfNodeExists(nodeId);
@@ -22,6 +23,7 @@ module.exports = async (req, res) => {
 
 		await nodeQueries.updateNode(req.body[0])
 		//console.log('dummy update')
+		console.log(`Node updated. NodeId = ${nodeId}`)
 
 		res.status(200).send('Node updated.');
 		

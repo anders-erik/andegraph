@@ -12,6 +12,34 @@ let frequency = 0;
 let frequencyString = '';
 
 
+function newAudioWidgetElement(){
+
+	let audioWidget = document.createElement('div');
+	audioWidget.id = 'audioWidget';
+	//audioWidget.textContent = 'audioWidget';
+	audioWidget.addEventListener('click', startAudioWidget);
+	return audioWidget;
+
+}
+
+
+function startAudioWidget(){
+	nodeCreate();
+	viewAudioChunks();
+	setInterval(updatefrequencyElement, 300);
+}
+
+function stopAudioWidget(){
+
+}
+
+function updatefrequencyElement(){
+	let elem = document.getElementById('audioWidget');
+	elem.textContent = frequencyString;
+
+	
+}
+
 
 async function nodeCreate(){
 
@@ -318,12 +346,14 @@ async function viewAudioChunks(buff){
 
 
 export {
+	newAudioWidgetElement,
+	startAudioWidget,
 	nodeCreate,
 
 	audioSetup,
 	startAudioNav,
 	viewAudioChunks,
 
-	frequencyString
+	frequencyString,
 }
 

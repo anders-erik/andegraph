@@ -4,7 +4,8 @@
 	max-width: 100%;
 	width: calc(100vw - 50px);
 	flex-grow: 1;
-	/* margin: 10px; */
+	margin: 0px;
+	padding: 0px;
 	background-color: rgb(228, 142, 245);
 
 	display: flex;
@@ -15,7 +16,10 @@
 
 .threepanels-panel {
 	background-color: bisque;
-	overflow: scroll;
+	
+
+	margin: 0px;
+	padding: 0px;
 	/* margin: 5px; */
 	/* min-width: 100px; */
 	/* max-width: 1000px; */
@@ -30,6 +34,8 @@
 	background-color: rgb(4, 200, 200);
 	/* margin: 5px; */
 	/* width: 8px; */
+	margin: 0px;
+	padding: 0px;
 	cursor: ew-resize;
 }
 

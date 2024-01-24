@@ -16,7 +16,12 @@ import * as models from './modules/models/models.js';
 //console.log(models.generateNewSource())
 //console.log(models.generateNewShard())
 
-
+// UUID 
+import { extractUnixTime, extractObjectType } from './modules/utils/uuid.js';
+// New source + immediately new shard/child, with associated edge id
+//console.log(extractObjectType(92746373136) + ' ' + extractUnixTime(92746373136))
+//console.log(extractObjectType(92746381312) + ' ' + extractUnixTime(92746381312))
+//console.log(extractObjectType(92746379265) + ' ' + extractUnixTime(92746379265))
 
 
 

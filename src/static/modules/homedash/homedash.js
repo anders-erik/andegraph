@@ -1,5 +1,6 @@
 
-import { nodeCreate, audioSetup, startAudioNav, viewAudioChunks,   frequencyString } from "../audiowidget/audiowidget.js";
+import { newAudioWidgetElement } from "../audiowidget/audiowidget.js";
+
 
 
 let loadHomedash = function() {
@@ -10,32 +11,31 @@ let loadHomedash = function() {
 	mainContent.innerHTML = 'home';
 
 
-	let audioWidget = document.createElement('div');
-	audioWidget.id = 'audioWidget';
-	//audioWidget.textContent = 'audioWidget';
-	audioWidget.addEventListener('click', viewAudioChunks);
-	mainContent.appendChild(audioWidget);
 
+	let audioWidget = newAudioWidgetElement();
 
-	//audioSetup();
-	nodeCreate();
-
-
-	//setInterval(nodeCreate, 1000);
-	//startAudioNav();
-	//viewAudioChunks();
-	//setTimeout(viewAudioChunks, 500);
-
-	setInterval(updatefrequencyElement, 300);
-
-}
-
-function updatefrequencyElement(){
-	let elem = document.getElementById('audioWidget');
-	elem.textContent = frequencyString;
+	let nodesOverview = newNodesOverview();
+	console.log(typeof nodesOverview)
 
 	
+	mainContent.append(nodesOverview, audioWidget);
+
+	
+
+	
+
 }
+
+
+function newNodesOverview(){
+	let nodesOverview = document.createElement('div');
+	nodesOverview.id = 'nodes-overview';
+	nodesOverview.textContent = 'nodes overview';
+	
+	return nodesOverview;
+	
+}
+
 
 
 export {

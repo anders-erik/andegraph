@@ -5,7 +5,7 @@
 
 .shardcard {
 	
-	background-color: aqua;
+	background-color: rgb(37, 37, 37);
 
 	/* overflow-x: hidden; */
 
@@ -25,7 +25,7 @@
 	padding: 10px;
 
 	border-radius: 5px;
-	border: solid black 2px;
+	border: solid black 1px;
 
 	display: flex;
 	flex-direction: column;
@@ -35,24 +35,32 @@
 }
 
 .shardcard-editing {
-	background-color: bisque;
+	background-color: rgb(44, 41, 41);
+	border: solid rgb(106, 23, 23) 2px;
+
 }
 
 .shard-p {
-	margin: 1px 0px 1px 0px;
+	margin: 0px 0px 0px 0px;
 	padding: 0px;
-	border: solid rgba(0, 0, 0, 0.441) 1px;
+	/* border: solid rgba(0, 0, 0, 0.441) 1px; */
 	width: 100%;
 	min-height: 1.3rem;
+
+	color: aliceblue;
 	/* word-break: break-all; */
 	word-break:break-word;
     /* white-space: normal; */
 	/* white-space: nowrap; */
 	white-space: pre-wrap;
 }
+/* .shard-p:hover {
+	border-left: solid rgb(30, 71, 116) 1px;
+} */
 
 .shardcard:focus {
 	box-shadow: var(--shadow-2);
+	border: solid rgb(91, 91, 91) 1px;
 }
 
 

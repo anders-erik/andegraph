@@ -12,6 +12,8 @@
 
 @import '../modules/uiskeleton/threepanels/threepanels.css';
 
+@import '../modules/globalnodecontext/GlobalNodeContext.css';
+
 :root{
     --light-1:#afeef5;
     --light-2:#c2c2c2;
@@ -33,6 +35,8 @@ body {
 	padding: 0;
 	background-color: black;
 	height: 100vh;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	font-size: small;
 }
 
 #root {
@@ -118,7 +122,7 @@ body {
 
 
 .card {
-	background-color: rgb(223, 126, 106);
+	background-color: rgb(49, 55, 79);
 	margin: 10px;
 	padding: 10px;
 }

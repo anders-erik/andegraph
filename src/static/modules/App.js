@@ -22,12 +22,15 @@ import * as Sourcing from './sourcing/sourcing.js';
 
 import * as Homedash from './homedash/homedash.js';
 
+import * as globalNodeContext from './globalnodecontext/GlobalNodeContext.js';
 
 
 
-function initApp(rootId){
+function initApp(rootId){	
 
 	let root = document.getElementById(rootId);
+
+	
 
 	root.appendChild(mainMenu.createMainMenu());
 	
@@ -35,6 +38,7 @@ function initApp(rootId){
 	mainContent.id = 'mainContent';
 	root.appendChild(mainContent);
 
+	root.append(globalNodeContext.newGlobalNodeContext());
 
 
 	let urlPath = window.location.pathname;

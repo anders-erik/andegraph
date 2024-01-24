@@ -14,14 +14,27 @@ import { loadSource } from '../../../sourceview/propertiescard/PropertiesCard_Up
 
 import { determineClipboardContentType } from '../../../../filehandling/DetermineClipboardContents.js';
 
+import * as uuid from '../../../../utils/uuid.js';
+
 import * as shardbar from '../../shardbar/shardbar.js';
 
 import * as shardlist from '../shardlist.js';
 
+let shardcardShortcutsString = '';
 
 let shardcardInnerHtmlOnFocus = '';
 let listeningDoubleClick = false;
+let doubleClickNodeId = 0;
 
+// PROBLEM!
+// CANT PUT MENU INSIDE SHARDCARD BECAUS$E THAT INTEFERES WITH THE TEXTCONTENT!!!
+function testFloatingMenu() {
+	let floatmenu = document.createElement('div');
+	floatmenu.textContent = 'floatfloat';
+	floatmenu.style.position = 'absolute';
+
+	return floatmenu;
+}
 
 function newShardcard(shard){
 	let shardcard = document.createElement('div');
@@ -30,6 +43,7 @@ function newShardcard(shard){
 	shardcard.classList.add('shardcard');
 	shardcard.tabIndex = 0;
 
+	
 
 
 	// Append shard object to shardcard
@@ -71,6 +85,8 @@ function insertShardcardTextContent(shardcard, textStringInput) {
 	if(textStringInput == ''){
 		return;
 	}
+
+	shardcard.innerHTML = '';
 
 	let textStringSpaces = textStringInput.replaceAll('\t', '\xa0\xa0\xa0\xa0');
 	//console.log(JSON.stringify(textStringSpaces));
@@ -142,12 +158,10 @@ function focusShardcard(event){
 
 async function focusoutShardcard(event){
 
-	event.target.contentEditable = false;
-	event.target.classList.remove('shardcard-editing');
-	if(event.target.textContent == ''){
-		event.target.innerHTML = '';
-	}
+	let nodeId = event.target.dataset.nodeId;
+	let shardcard = document.getElementById('shardcard-' + nodeId);
 
+	shardcardShortcutsString = '';
 
 	event.target.removeEventListener('keydown', keydownDuringShardcardFocus);
 	event.target.removeEventListener('paste', pasteDuringShardcardFocus);
@@ -156,17 +170,54 @@ async function focusoutShardcard(event){
 	let miniMenu = document.getElementById('shard-mini-menu');
 	miniMenu.style.display = 'none';
 
-	//console.log(event.target.innerHTML)
-	// update InnerHTML if changed
-	if(event.target.innerHTML != shardcardInnerHtmlOnFocus){
-		
-		event.target.shard.textContent = extractShardcardTextContent(event.target);
-		console.log(JSON.stringify(event.target.shard.textContent))
-		await api.putNode([event.target.shard]);
-	}
+	//if(shardcard.shard.fileName === '')
+
+	// convert to text type (2024-01-19 - AE)
+	/* if(event.target.textContent != ''){
+			event.target.shard.textContent = extractShardcardTextContent(event.target);
+			event.target.shard.elementType = 'text';
+			console.log(JSON.stringify(event.target.shard.textContent))
+			await api.putNode([event.target.shard]);
+	} */
+
+	shardcard.contentEditable = false;
+	shardcard.classList.remove('shardcard-editing');
+	
+	updateShardcardTextContent(shardcard);
+	
+
+	
 
 }
 
+async function updateShardcardTextContent(shardcard){
+
+	let hasTextContent = shardcard.textContent != '';
+	let isTextContentShard = shardcard.shard.elementType === 'text';
+	let isFileNode = shardcard.shard.fileName !== '';
+
+
+	if(!isFileNode){
+
+		if (shardcard.innerHTML == '' || (shardcard.childElementCount == 1 && shardcard.textContent == '')) {
+			shardcard.innerHTML = '';
+			shardcard.shard.elementType = '';
+		}
+
+		// update InnerHTML if changed
+		if (shardcard.innerHTML != shardcardInnerHtmlOnFocus) {
+
+			shardcard.shard.textContent = extractShardcardTextContent(shardcard);
+			shardcard.shard.elementType = 'text';
+			console.log(JSON.stringify(shardcard.shard.textContent))
+			await api.putNode([shardcard.shard]);
+
+			let updatedNodeFromServer = await api.getNode(shardcard.shard.id);
+			insertShardcardTextContent(shardcard, updatedNodeFromServer.textContent)
+		}
+
+	}
+}
 
 
 
@@ -182,13 +233,12 @@ async function keydownDuringShardcardFocus(event) {
 	if(event.target.contentEditable === 'true'){
 
 		if(event.key == 'Escape'){
-			//alert('escape on ' + event.target.id)
-			event.target.contentEditable = false;
-			event.target.classList.remove('shardcard-editing');
+			
+			updateShardcardTextContent(shardcard);
 
-			if(event.target.textContent == ''){
-				event.target.innerHTML = '';
-			}
+			shardcard.contentEditable = false;
+			shardcard.classList.remove('shardcard-editing');
+
 		}
 		if(event.key == 'Backspace' && shardcard.textContent == '' && shardcard.childElementCount == 1){
 			// prevent deletion of the last 'p' element!
@@ -206,16 +256,19 @@ async function keydownDuringShardcardFocus(event) {
 	}
 	else {
 		
+		//console.log(event.key)
 
-		if(event.key == 'i'){
-			console.log(event.target.id)
+		
+		if(event.key === 'ArrowUp'){
+			focusPreviousSibling(shardcard);
+			event.preventDefault();
 		}
-
-		if(event.key == 'o'){
-			console.log(event.target.shard)
+		else if(event.key === 'ArrowDown'){
+			focusNextSibling(shardcard);
+			event.preventDefault();
 		}
-
-		if (event.altKey && event.shiftKey && (event.key == 'D')) {
+		// DELETE !
+		else if (event.altKey && event.shiftKey && (event.key == 'D')) {
 
 			//let shardid = event.target.id.match(/\d+$/g)[0];
 			//console.log(shardid);
@@ -241,10 +294,15 @@ async function keydownDuringShardcardFocus(event) {
 				let deleteResponse = await api.deleteNode(shardid);
 				//console.log(deleteResponse)
 	
-				if(deleteResponse.ok)
+				if(deleteResponse.ok){
+					focusNextSibling(shardcard);
 					deleteShardcard(shardid);
-				else
+					
+				}
+				else{
 					console.log('Unable to delete shard');
+				}
+					
 					
 			}
 	
@@ -302,24 +360,81 @@ async function keydownDuringShardcardFocus(event) {
 		}
 
 
+		// KEYBOARD COMMAND BUILDER
+		if(event.key === 'Escape'){
+			// CLEAR KEYBOARD COMMAND BUILDING
+			shardcardShortcutsString = '';
+		}
+		else{
+
+			// KEYBOARD COMMAND BUILDING USING SINGLE LETTERS
+			// If other than single letters are entered, then they will be cleared during detection below due to too many characters
+			shardcardShortcutsString += event.key;
+		}
+
+
+		// KEYBOARD COMMAND BUILDING DETECTION
+		if (shardcardShortcutsString != '' && shardcardShortcutsString.length <= 3)  console.log(shardcardShortcutsString);
+		switch (shardcardShortcutsString) {
+			case 'i': console.log(event.target.id); shardcardShortcutsString = ''; break;
+			case 'o': console.log(event.target.shard); shardcardShortcutsString = ''; break;
+			case 'ncj': console.log('new javascript code!'); shardcardShortcutsString = ''; break;
+		
+			default:
+				if(shardcardShortcutsString.length > 2){
+					shardcardShortcutsString = '';
+				}
+				
+				break;
+		}
+		
+		
+
 	}
 
 }
 
+function focusNextSibling(shardcard){
+	let nextSibling = shardcard.nextElementSibling;
+	if(nextSibling != null){
+		nextSibling.focus();
+	}
+}
+function focusPreviousSibling(shardcard){
+	let previousSibling = shardcard.previousElementSibling;
+	if(previousSibling != null){
+		previousSibling.focus();
+	}
+}
 
 
 function clickDuringShardcardFocus(event) {
 
+	let shardid = event.target.dataset.nodeId;
+	let shardcard = document.getElementById('shardcard-' + shardid);
+
+
 	//console.log('click')
-	if (!listeningDoubleClick) {
-		listeningDoubleClick = true;
+	if(shardcard.shard.fileName != ''){
+		listeningDoubleClick = false;
 	}
-	else if (listeningDoubleClick) {
+	else if (!listeningDoubleClick) {
+
+		
+		listeningDoubleClick = true;
+		doubleClickNodeId = event.target.dataset.nodeId;
+
+		setTimeout(() => {
+			listeningDoubleClick = false;
+			//console.log('stop listening')
+		}, 300);
+
+	}
+	else if (listeningDoubleClick && doubleClickNodeId == event.target.dataset.nodeId) {
 		//console.log('double click!')
 
 		//let shardid = event.target.id.match(/\d+$/g)[0];
-		let shardid = event.target.dataset.nodeId;
-		let shardcard = document.getElementById('shardcard-' + shardid);
+		
 		//window.getSelection().empty();
 
 		shardcard.contentEditable = true;
@@ -341,11 +456,8 @@ function clickDuringShardcardFocus(event) {
 		}
 	}
 
-
-	setTimeout(() => {
-		listeningDoubleClick = false;
-		//console.log('stop listening')
-	}, 300);
+	
+	
 }
 
 
@@ -397,7 +509,8 @@ async function pasteDuringShardcardFocus(event){
 
 
 
-	let shardid = event.target.id.match(/\d+$/g)[0];
+	//let shardid = event.target.id.match(/\d+$/g)[0];
+	let shardid = event.target.dataset.nodeId;
 	let shardcard = document.getElementById('shardcard-' + shardid);
 	let shardObject = shardcard.shard;
 
@@ -422,11 +535,12 @@ async function pasteDuringShardcardFocus(event){
 		event.preventDefault();  
 	} */
 
+	
 
-	if ( (shardObject.fileName != '') || (shardObject.textContent != '')){
+	/* if ( (shardObject.fileName != '') || (shardObject.textContent != '')){
 		console.log('This source already has a file or textContent. Returning.');
 		return;
-	}
+	} */
 
 
 	let clipboardContentType = determineClipboardContentType(event.clipboardData);
@@ -436,8 +550,23 @@ async function pasteDuringShardcardFocus(event){
 		console.log('add to textContent');
 
 		let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
+
+
+		if(shardcard.contentEditable === 'true'){
+			document.execCommand("insertHTML", false, clipboardText);
+			event.preventDefault();
+		}
+		else if (shardObject.textContent == '' && shardObject.fileName == ''){
+			insertShardcardTextContent(shardcard, clipboardText);
+			//shardcard.shard.elementType = 'text';
+			updateShardcardTextContent(shardcard);
+		}
+		else {
+			console.log('This source already has content. Returning.');
 		
-		insertShardcardTextContent(shardcard, clipboardText);
+		}
+		
+		
 
 	}
 	else if (clipboardContentType === 'file'){
@@ -445,43 +574,21 @@ async function pasteDuringShardcardFocus(event){
 
 		let sourceid = extractCurrentSourceId();
 
-		postFile(event.clipboardData.files[0], sourceid, shardid);
+		if(shardObject.fileName == '' && shardObject.textContent == ''){
+			postFile(event.clipboardData.files[0], sourceid, shardid);
+			console.log('nonono')
+		}
+		else {
+			console.log('This source already has content. Returning.');
+		}
+
+		
 
 	}
 
 	//console.log();
 
-	return;
 	
-
-	//console.log('Pasting to nodeId: ', document.getElementById('shardcard-' + shardid).shard)
-
-
-	// Disable paste when file is present!
-	//let regex = new RegExp(/[null]$/g);
-	//let result = regex.exec(document.getElementById('shardcard-filetype-' + shardid).textContent)
-	
-	
-	let sourceid = extractCurrentSourceId();
-
-	// https://stackoverflow.com/questions/3390396/how-can-i-check-for-undefined-in-javascript
-	if(typeof event.clipboardData.files[0] !== 'undefined'){
-		//console.log("File selected: ", event.clipboardData.files[0]);
-		postFile(event.clipboardData.files[0], sourceid, shardid);
-	}
-	else if((event.clipboardData || window.clipboardData).getData("text") !== ''){
-		//console.log((event.clipboardData || window.clipboardData).getData("text"));
-
-		let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
-		let blob = new Blob([clipboardText], { type: 'text/plain' });
-		 let file = new File([blob], "clipboard.txt", {type: "text/plain"});
-
-		postFile(file, sourceid, shardid);
-	}
-	else {
-		console.log('No file nor text detected.');
-	}
-
 	
 }
 
@@ -500,7 +607,8 @@ async function postFile(selectedFile, sourceid, shardid){
 	// await api.postSourceFile(extractCurrentSourceId(), selectedFile, fileCategories.fileType, fileCategories.fileEnding);
 	
 	let shardObject = document.getElementById('shardcard-' + shardid).shard;
-	let fileName = shardid + '.' + fileCategories.fileEnding;
+	let fileUuid = uuid.generate('file');
+	let fileName = fileUuid + '.' + fileCategories.fileEnding;
 	
 	shardObject.fileName = fileName;
 	shardObject.fileExtension = fileCategories.fileEnding;

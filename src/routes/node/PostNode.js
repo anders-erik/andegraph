@@ -31,9 +31,11 @@ module.exports = async (req, res) => {
 		// NOTE : NOT DONE
 		// Make sure that we pass the associated sourceId with new shards!
 		if (req.query.isChild == 1) {
-			console.log(req.query.parentId);
+			//console.log('new child ')
+			//console.log(req.query.parentId);
 			let edgeId = uuid.generate('edges');
-			console.log(edgeId);
+			//console.log(edgeId);
+			console.log(`new child : childId = ${newNodeId}, parentId = ${req.query.parentId}, edgeId = ${edgeId}`)
 
 			await edgeQueries.insertEdge({
 				id: edgeId,

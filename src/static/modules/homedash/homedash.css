@@ -1,5 +1,12 @@
 
 
+#nodes-overview {
+	border: solid black 1px;
+	background-color: aliceblue;
+	height: 100px;
+	width: 100px;
+}
+
 #audioWidget {
 	border: solid black 1px;
 	background-color: aliceblue;

@@ -17,6 +17,7 @@ function createShardlistcard(){
 	let shardlistInner = document.createElement('div');
 	shardlistInner.id = 'sharding-listcard-inner';
 	shardlistInner.classList.add('card');
+	//shardlistInner.tabIndex = 0;
 
 	//createShardMiniMenu();
 
