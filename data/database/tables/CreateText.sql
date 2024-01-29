@@ -1,0 +1,19 @@
+
+DROP TABLE IF EXISTS Text;
+CREATE TABLE Text (
+	"Uuid" INTEGER PRIMARY KEY,
+	"NodeUuid" INTEGER NOT NULL, 
+	"Table" TEXT DEFAULT 'Text' NOT NULL, 
+	"Type" TEXT DEFAULT '' NOT NULL, 
+	"Title" TEXT DEFAULT '' NOT NULL,
+	"TimeCreated" INTEGER NOT NULL, 
+	"TimeLastChange" INTEGER NOT NULL,
+	
+	"TextContent" TEXT NOT NULL,
+	"Language" TEXT NOT NULL,
+	"IAmAuthor" INTEGER DEFAULT 0 NOT NULL,
+
+	FOREIGN KEY("NodeUuid") REFERENCES Node("Uuid"),
+	FOREIGN KEY("Type") REFERENCES TextType("Type")
+);
+

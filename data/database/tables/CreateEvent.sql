@@ -1,0 +1,17 @@
+
+DROP TABLE IF EXISTS Event;
+CREATE TABLE Event (
+	"Uuid" INTEGER PRIMARY KEY,
+	"NodeUuid" INTEGER NOT NULL, 
+	"Table" TEXT DEFAULT 'Source' NOT NULL, 
+	"Type" TEXT DEFAULT '' NOT NULL, 
+	"Title" TEXT DEFAULT '' NOT NULL,
+	"TimeCreated" INTEGER NOT NULL, 
+	"TimeLastChange" INTEGER NOT NULL,
+	
+	"StartTime" INTEGER NOT NULL,
+	"EndTime" INTEGER NOT NULL,
+
+	FOREIGN KEY("NodeUuid") REFERENCES Node("Uuid")
+);
+

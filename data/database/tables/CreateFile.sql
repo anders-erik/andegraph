@@ -1,0 +1,18 @@
+
+DROP TABLE IF EXISTS File;
+CREATE TABLE File (
+	"Uuid" INTEGER PRIMARY KEY,
+	"NodeUuid" INTEGER NOT NULL, 
+	"Table" TEXT DEFAULT 'File' NOT NULL, 
+	"Type" TEXT DEFAULT '' NOT NULL, 
+	"Title" TEXT DEFAULT '' NOT NULL,
+	"TimeCreated" INTEGER NOT NULL, 
+	"TimeLastChange" INTEGER NOT NULL,
+
+	"Extension" TEXT NOT NULL,
+	"SizeBytes" INTEGER,
+	"IAmAuthor" INTEGER DEFAULT 0 NOT NULL,
+
+	FOREIGN KEY("NodeUuid") REFERENCES Node("Uuid")
+);
+
