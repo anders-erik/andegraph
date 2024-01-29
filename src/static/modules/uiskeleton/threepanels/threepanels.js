@@ -34,6 +34,7 @@ let vertisepX2;
 let cursorX;
 
 let xCoordWhenEnabled1;
+let xCoordWhenEnabled2;
 
 
 export function initThreePanels(parentContainer){
