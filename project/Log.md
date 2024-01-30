@@ -566,6 +566,10 @@ TODO:
 - STARTING UPGRADE TO v0.2!
 	- Updated and more robust database
 	- Add projects, event, etc.
+	- logging lib
+	- testing lib
+	- web extension!
+	- enable usage on smaller screens
 
 - As is usually the case, a few weeks pass from the point of realizing that I need to upgrade to software, to finilize the visiom of how that should happen
 	- A big part has simply been to figure out how to structure the database!
@@ -585,5 +589,32 @@ TODO:
 			- files, text, code, etc.
 		- Also, shard information will becaome part of the edge!
 			- a directed edge from parent (source), but also edge type will be shard
+
+
+
+### 2024-01-30
+
+- Created bash script where I rename all old source and shard files
+	- xxx_so -> 50xxx
+	- xxx_sh -> 56xxx
+- Old sources
+	- TWO PARTS
+		- Moved source-node into new 'Source' table. 
+		- Created a new File-node-sibling and linked using edge for old source that had a built in file
+	- First step was not too bad
+	Second was a a bit more invloved in both theory and implmentation
+- Old Shards
+	- Checks:
+		- is file?
+		- is Code?
+		- is source?
+		- else is text
+	- One SQL script for each check
+	- At least one shard was incorectly categorized (use of curly braces, reddit package-handling discussion)
+		- Probably my exists.
+- Reviews
+	- Turned the old review dates into review objects with associated node
+	- Had to add edges to link the review dates to their associated object to be reviewed
+
 
 

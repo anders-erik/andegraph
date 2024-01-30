@@ -10,7 +10,8 @@ CREATE TABLE Review (
 	
 	"ReviewDate" TEXT NOT NULL,
 	"ReviewCompleted" INTEGER DEFAULT 0 NOT NULL,
-	"ReviewCompletedOnDate" TEXT NOT NULL
+	"ReviewCompletedOnDate" TEXT NOT NULL,
+	"NodeToReviewUuid" INTEGER NOT NULL
 	
 );
 

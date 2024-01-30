@@ -16,8 +16,15 @@ sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateProject.sql
 sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateReview.sql
 sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateEvent.sql
 
-
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertFile.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertEdge.sql
 sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertSource.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShard.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShardFile.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShardCode.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShardSource.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShardText.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertReview.sql
+
+
+#sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertFile.sql
+# sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShard.sql
 

@@ -1,6 +1,7 @@
 node_modules
 dragdrop-clipboard
 
+/data/live/*
 /data/live/sources/*
 /data/live/files/*
 /data/live/sources.db
