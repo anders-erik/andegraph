@@ -6,6 +6,7 @@ CREATE TABLE Edge (
 	"Node2Uuid" INTEGER NOT NULL, 
 	"Directed" INTEGER NOT NULL,
 	"Type" TEXT NOT NULL,
+	"ChildOrder" INTEGER DEFAULT 0 NOT NULL,
 	"Path" TEXT DEFAULT '/' NOT NULL,
 
 	FOREIGN KEY("Node1Uuid") REFERENCES Node("Uuid"),

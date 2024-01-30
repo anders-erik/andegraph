@@ -561,3 +561,29 @@ TODO:
 
 
 
+### 2024-01-29
+
+- STARTING UPGRADE TO v0.2!
+	- Updated and more robust database
+	- Add projects, event, etc.
+
+- As is usually the case, a few weeks pass from the point of realizing that I need to upgrade to software, to finilize the visiom of how that should happen
+	- A big part has simply been to figure out how to structure the database!
+	- I;ve considered different realitionshiups and table stuructures, and everytime you come up with a new idea, You have to live with it at least a few days until you can clearly see the implications of that change, and wether or not it will scale.
+	- A BIG realization was that I need to organize my sources and shards in logical units. Not taks, not difinitions, but for now it will be projects!
+	- Also I've thought a lot about categorizzation of information. These things will come later!
+
+- Done Today 
+	- Create base table classes
+	- Create table sub types tables for several tables
+		- Make sure foreign keys point to primary key!
+		- No traling commas on create table!
+	- Statring to export old data to new structure
+		- Files and sources pretty easy + done!
+			- NO ! Files ahave their own id!!!
+		- Shards are complicatied because they can pratiacelly be any of the new types
+			- files, text, code, etc.
+		- Also, shard information will becaome part of the edge!
+			- a directed edge from parent (source), but also edge type will be shard
+
+

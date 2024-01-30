@@ -2,17 +2,15 @@
 DROP TABLE IF EXISTS Source;
 CREATE TABLE Source (
 	"Uuid" INTEGER PRIMARY KEY,
-	"NodeUuid" INTEGER NOT NULL, 
 	"Table" TEXT DEFAULT 'Source' NOT NULL, 
 	"Type" TEXT DEFAULT '' NOT NULL, 
 	"Title" TEXT DEFAULT '' NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
-	"Url" TEXT NOT NULL,
+	"Url" TEXT DEFAULT '' NOT NULL,
 	"IAmSource" INTEGER DEFAULT 0 NOT NULL,
 
-
-	FOREIGN KEY("NodeUuid") REFERENCES Node("Uuid")
+	FOREIGN KEY("Type") REFERENCES SourceType("Type")
 );
 
