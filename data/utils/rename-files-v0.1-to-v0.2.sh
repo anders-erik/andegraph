@@ -21,7 +21,8 @@ rename_files() {
 
 			new_base_padded_56="56${new_base_padded}"
 
-			new_file="${new_base_padded_56}.${extension}"
+			#new_file="${new_base_padded_56}.${extension}"
+			new_file="${new_base_padded_56}"
 
 			# mv "$file" "$new_file"
 
@@ -41,7 +42,8 @@ rename_files() {
 
 			new_base_padded_50="50${new_base_padded}"
 
-			new_file="${new_base_padded_50}.${extension}"
+			#new_file="${new_base_padded_50}.${extension}"
+			new_file="${new_base_padded_50}"
 
 			# mv "$file" "$new_file"
 
