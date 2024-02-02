@@ -25,6 +25,10 @@ sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShard
 sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertReview.sql
 
 
+# Save new db
+sqlite3 graph-v0.1-to-v0.2/output.db .dump > ./graph-v0.1-to-v0.2/output.sql
+
+
 #sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertFile.sql
 # sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertShard.sql
 

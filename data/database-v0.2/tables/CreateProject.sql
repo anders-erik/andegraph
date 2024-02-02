@@ -1,5 +1,6 @@
-
 DROP TABLE IF EXISTS Project;
+
+
 CREATE TABLE Project (
 	"Uuid" INTEGER PRIMARY KEY,
 	"Table" TEXT DEFAULT 'Project' NOT NULL, 

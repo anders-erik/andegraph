@@ -1,8 +1,9 @@
-
 DROP TABLE IF EXISTS Review;
+
+
 CREATE TABLE Review (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Source' NOT NULL, 
+	"Table" TEXT DEFAULT 'Review' NOT NULL, 
 	"Type" TEXT DEFAULT '' NOT NULL, 
 	"Title" TEXT DEFAULT '' NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 

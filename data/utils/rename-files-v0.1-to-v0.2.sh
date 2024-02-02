@@ -1,6 +1,10 @@
 
-
 #!/bin/bash
+
+# ONLY CHANGES THE NAMES OF THE OLD FORMAT!
+# The remaing ones I simply remove manually
+
+
 
 # Function to rename files
 rename_files() {
@@ -24,7 +28,7 @@ rename_files() {
 			#new_file="${new_base_padded_56}.${extension}"
 			new_file="${new_base_padded_56}"
 
-			# mv "$file" "$new_file"
+			mv "$file" "$new_file"
 
 			echo "Renamed $file to $new_file"
 		fi
@@ -45,7 +49,7 @@ rename_files() {
 			#new_file="${new_base_padded_50}.${extension}"
 			new_file="${new_base_padded_50}"
 
-			# mv "$file" "$new_file"
+			mv "$file" "$new_file"
 
 			echo "Renamed $file to $new_file"
 		fi

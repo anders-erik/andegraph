@@ -1,5 +1,6 @@
-
 DROP TABLE IF EXISTS Edge;
+
+
 CREATE TABLE Edge (
 	"Uuid" INTEGER PRIMARY KEY,
 	"Node1Uuid" INTEGER NOT NULL, 
@@ -13,6 +14,6 @@ CREATE TABLE Edge (
 	FOREIGN KEY("Node2Uuid") REFERENCES Node("Uuid")	
 );
 
-CREATE INDEX "IndexEdgeNode1Uuid" ON Edge("Node1Uuid");
-CREATE INDEX "IndexEdgeNode2Uuid" ON Edge("Node2Uuid");
+CREATE INDEX "Index_Edge_Node1Uuid" ON Edge("Node1Uuid");
+CREATE INDEX "Index_Edge_Node2Uuid" ON Edge("Node2Uuid");
 
