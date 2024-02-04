@@ -1,17 +1,15 @@
-DROP TABLE IF EXISTS Event;
 
 
-CREATE TABLE Event (
+CREATE TABLE IF NOT EXISTS Equation (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Event' NOT NULL, 
+	"Table" TEXT DEFAULT 'Text' NOT NULL, 
 	"Type" TEXT DEFAULT '' NOT NULL, 
 	"Title" TEXT DEFAULT '' NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
-	"StartTime" INTEGER NOT NULL,
-	"EndTime" INTEGER NOT NULL,
-	"Location" TEXT NOT NULL
+	"Tex" TEXT NOT NULL,
+	"MathMl" TEXT NOT NULL
 
 );
 

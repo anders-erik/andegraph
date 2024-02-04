@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS SourceType;
 
-CREATE TABLE SourceType (
+CREATE TABLE IF NOT EXISTS SourceType (
 	"Type" TEXT PRIMARY KEY
 );
 INSERT INTO "SourceType" (Type) VALUES ('');

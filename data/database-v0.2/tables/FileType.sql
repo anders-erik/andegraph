@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS FileType;
 
-CREATE TABLE FileType (
+CREATE TABLE IF NOT EXISTS FileType (
 	"Type" TEXT PRIMARY KEY
 );
 INSERT INTO "FileType" (Type) VALUES ('');

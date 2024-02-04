@@ -1,17 +1,16 @@
-DROP TABLE IF EXISTS "Code";
 
 
-CREATE TABLE "Code" (
+CREATE TABLE IF NOT EXISTS Event (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Code' NOT NULL, 
+	"Table" TEXT DEFAULT 'Event' NOT NULL, 
 	"Type" TEXT DEFAULT '' NOT NULL, 
 	"Title" TEXT DEFAULT '' NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
-	"CodeContent" TEXT NOT NULL,
-	
-	FOREIGN KEY("Type") REFERENCES CodeType("Type")
-);
+	"StartTime" INTEGER NOT NULL,
+	"EndTime" INTEGER NOT NULL,
+	"Location" TEXT NOT NULL
 
+);
 

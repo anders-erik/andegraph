@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS TextType;
 
-CREATE TABLE TextType (
+CREATE TABLE IF NOT EXISTS TextType (
 	"Type" TEXT PRIMARY KEY
 );
 INSERT INTO "TextType" (Type) VALUES ('');

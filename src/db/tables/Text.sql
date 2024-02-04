@@ -1,0 +1,16 @@
+
+CREATE TABLE IF NOT EXISTS Text (
+	"Uuid" INTEGER PRIMARY KEY,
+	"Table" TEXT DEFAULT 'Text' NOT NULL, 
+	"Type" TEXT DEFAULT '' NOT NULL, 
+	"Title" TEXT DEFAULT '' NOT NULL,
+	"TimeCreated" INTEGER NOT NULL, 
+	"TimeLastChange" INTEGER NOT NULL,
+	
+	"TextContent" TEXT NOT NULL,
+	"Language" TEXT NOT NULL,
+	"IAmAuthor" INTEGER DEFAULT 0 NOT NULL,
+
+	FOREIGN KEY("Type") REFERENCES TextType("Type")
+);
+

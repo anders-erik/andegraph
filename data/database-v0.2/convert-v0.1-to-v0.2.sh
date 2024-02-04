@@ -2,19 +2,21 @@ rm ./graph-v0.1-to-v0.2/output.db
 cp ./graph-v0.1-to-v0.2/input.db ./graph-v0.1-to-v0.2/output.db 
 
 
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateNode.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateEdge.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateFileType.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateFile.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateSourceType.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateSource.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateTextType.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateText.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateCodeType.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateCode.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateProject.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateReview.sql
-sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CreateEvent.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Node.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/NodeTable.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Edge.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/FileType.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/File.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/SourceType.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Source.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/TextType.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Text.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/CodeType.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Code.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Project.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Review.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Event.sql
+sqlite3 ./graph-v0.1-to-v0.2/output.db < ./tables/Equation.sql
 
 sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertEdge.sql
 sqlite3 ./graph-v0.1-to-v0.2/output.db < ./graph-v0.1-to-v0.2/ExtractInsertSource.sql

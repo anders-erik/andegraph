@@ -18,8 +18,8 @@ routes.initRoutes(app, express);
 
 
 
-const { db, dbTeardown} = require('./db/ErigraphDB');
-
+const { db, initDB, dbTeardown} = require('./db/ErigraphDB');
+initDB();
 
 
 // UUID TESTS

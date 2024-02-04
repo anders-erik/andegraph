@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS "CodeType";
 
-CREATE TABLE "CodeType" (
+CREATE TABLE IF NOT EXISTS "CodeType" (
 	"Type" TEXT PRIMARY KEY
 );
 INSERT INTO "CodeType" (Type) VALUES ('');

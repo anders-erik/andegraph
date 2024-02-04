@@ -2,42 +2,285 @@
 
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
-const dbLocation = process.env.GRAPH_DB_LOCATION || '/data/live/graph.db';
+const dbLocationLegacy = process.env.GRAPH_DB_LOCATION;
+const dbLocation = '/data/live/graph-v0.2-test.db';
+const dbLocationTemp = '/data/live/graph-v0.2-temp.db';
+let db;
 
 
+const tableNames = [
+    'CodeType',
+    'Code',
+    'FileType',
+    'File',
+    'SourceType',
+    'Source',
+    'TextType',
+    'Text',
 
-let db = new sqlite3.Database(dbLocation, (error) => { if (error) return rej(error); })
+    'Event',
+    'Equation',
+    'Project',
+    'Review',
+
+    'Node',
+    'NodeTable',
+    'Edge'
+]
 
 
+async function initDB() {
 
-if (process.env.NODE_ENV !== 'test') {
-    console.log(`Using sqlite database at ${dbLocation}`);
+    // Legacy check
+    if (process.env.NODE_ENV !== 'test') {
+        console.log(`Using sqlite database at ${dbLocation}`);
+    }
+
+
+    // If the db-file does not exist, create new db
+    if (!fs.existsSync(dbLocation)) {
+
+        // TODO : on table-string errors the console informs me of an uncaught error,
+        // effectively preventing me from unlinking the temp-db
+        // I am yet to figure out how to resolving this issue...
+
+        // Remove temporary db-file on error
+        // NOT WOKRING. SE NOTE ABOVE!
+        try {
+
+            await newDatabase();
+            
+        } catch (error) {
+            console.log('|||||||||||||||||||||||||||||||||||||||||')
+            fs.unlinkSync(dbLocationTemp);
+            throw Error;
+        }
+
+    }
+
+
+    // Connect to Database
+    try {
+        let connectionPromise = await connectDB(dbLocation);
+        console.log(connectionPromise)
+    } catch (error) {
+        throw error;
+    }
+
+    
+    // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
+    // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
+    // https://github.com/TryGhost/node-sqlite3/issues/896
+    // I GUESS THIS WORKS?!
+    db.get("PRAGMA foreign_keys = ON");
+
 }
 
 
-// https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
-// You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
-// https://github.com/TryGhost/node-sqlite3/issues/896
-// I GUESS THIS WORKS??
-db.get("PRAGMA foreign_keys = ON");
+
+
+async function newDatabase(){
+
+    // Make sure owner is 'node' before connecting
+            // TODO: I should really make sure its writable as well!
+            try {
+                let content = '';
+                fs.writeFileSync(dbLocationTemp, content);
+                fs.chownSync(dbLocationTemp, 1000, 1000);
+                // file written successfully
+            } catch (error) {
+                throw error;
+            }
+
+            // console.log('1')
+            try {
+                let connectionPromise = await connectDB(dbLocationTemp);
+                console.log(connectionPromise)
+            } catch (error) {
+                throw error;
+            }
+
+            // console.log('3')
 
 
 
 
-// let filenames = fs.readdirSync('/src/db/tables/CreateCode.sql');
-let tableDir = __dirname + '/tables/';
+            // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
+            // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
+            // https://github.com/TryGhost/node-sqlite3/issues/896
+            // I GUESS THIS WORKS??
+            db.get("PRAGMA foreign_keys = ON");
 
-let filenames = fs.readdirSync(tableDir);
-filenames.forEach(filename => {
-    console.log(filename)
-    fs.readFile(tableDir + filename, 'utf8', function(err, data) {
-        if (err) throw err;
-        
-        console.log(data)
-      });
-});
-console.log(filenames)
-// console.log(__dirname)
+
+
+            // Create Tables
+            try {
+                console.log('11')
+                let createTablePromise = await createTables();
+                console.log('Tables ok? \n', createTablePromise)
+                console.log('13')
+            } catch (error) {
+                throw Error;
+            }
+
+
+
+
+
+            // Move db to 'real' db location
+            try {
+
+                await dbTeardown();
+
+                fs.renameSync(dbLocationTemp, dbLocation);
+
+                // console.log('1')
+
+                let connectionPromise = await connectDB(dbLocation);
+                console.log(connectionPromise)
+
+            } catch (error) {
+                throw error;
+            }
+
+}
+
+
+
+async function connectDB(dbPath) {
+
+
+    function DBConnectionPromise(resolve, reject) {
+        db = new sqlite3.Database(dbPath, (error) => {
+            if (error) {
+                // console.log('2')
+                return reject('Connection Failed');
+            }
+            else {
+                // console.log('2')
+                return resolve('Connection OK');
+            }
+
+        })
+    }
+
+
+    return new Promise(DBConnectionPromise);
+
+}
+
+
+
+
+async function createTables() {
+
+    return new Promise(async (resolve, reject) => {
+
+        let tableDir = __dirname + '/tables/';
+
+        let filenames = fs.readdirSync(tableDir);
+
+        //console.log(filenames)
+
+        for (const tableName of tableNames) {
+            let tablePath = tableDir + tableName + '.sql';
+            let data;
+            try {
+                data = fs.readFileSync(tablePath, 'utf8');
+            } catch (error) {
+                throw error;
+            }
+
+            try {
+                let execTableStringPromise = await execTableString(data);
+                console.log(execTableStringPromise);
+                console.log('New Table from file : ', tablePath);
+
+            } catch (error) {
+                throw error;
+            }
+
+
+
+            //console.log(tablePath)
+        }
+
+        resolve('ok')
+
+        console.log('DONE?')
+        // console.log(__dirname)
+
+
+    });
+
+
+
+}
+
+
+async function execTableString(tableString) {
+
+    return new Promise((resolve, reject) => {
+
+        try {
+
+            db.exec(tableString, (firstParam) => {
+
+                // If firstParam is not null, an error occured dring the sqlite call
+                // https://github.com/TryGhost/node-sqlite3/wiki/API#execsql--callback
+
+                //console.log("firstParam: ", typeof firstParam)
+                if (firstParam != null) {
+                    //throw new Error('Unable to run tableString: \n' + tableString);
+                    reject('Unable to run tableString: \n' + tableString)
+                }
+
+                resolve('ok')
+            })
+
+        } catch (error) {
+            //reject('Unable to run tableString: \n' + tableString)
+        }
+
+    });
+
+
+}
+
+
+
+// // let filenames = fs.readdirSync('/src/db/tables/CreateCode.sql');
+// let tableDir = __dirname + '/tables/';
+
+// let filenames = fs.readdirSync(tableDir );
+
+// for (const filename of filenames){
+//     console.log('a')
+//     fs.readFile(tableDir + filename, 'utf8', function(err, data) {
+//         if (err) throw err;
+
+//         console.log('b')
+//         db.run(data, (err, result) => {
+//             if (err) throw err;
+//             console.log('c')
+//             console.log('ran table at : ', tableDir + filename);
+//             console.log(typeof data)
+//         },)
+
+//         console.log(data)
+//       });
+// }
+// console.log('d')
+// console.log(filenames)
+// // console.log(__dirname)
+
+
+
+
+
+
+
+
 
 
 
@@ -114,6 +357,7 @@ async function dbTeardown() {
 
 module.exports = {
     db,
+    initDB,
     dbTeardown
 }
 
