@@ -23,8 +23,8 @@ const tableNames = [
     'Project',
     'Review',
 
-    'Node',
     'NodeTable',
+    'Node',
     'Edge'
 ]
 
@@ -33,10 +33,10 @@ async function initDB() {
 
     // Legacy check
     if (process.env.NODE_ENV !== 'test') {
-        console.log(`Using sqlite database at ${dbLocation}`);
+        //console.log(`Using sqlite database at ${dbLocation}`);
     }
 
-
+    console.log(1)
     // If the db-file does not exist, create new db
     if (!fs.existsSync(dbLocation)) {
 
@@ -47,26 +47,31 @@ async function initDB() {
         // Remove temporary db-file on error
         // NOT WOKRING. SE NOTE ABOVE!
         try {
-
+            console.log(2)
+            console.log('No database found. Creating new.')
             await newDatabase();
-            
+            console.log(3)
         } catch (error) {
-            console.log('|||||||||||||||||||||||||||||||||||||||||')
+            // console.log('|||||||||||||||||||||||||||||||||||||||||')
             fs.unlinkSync(dbLocationTemp);
-            throw Error;
+            return new Error('No db and failed to create new db.')
+            
         }
-
+        console.log(4)
     }
 
-
+    console.log(5)
     // Connect to Database
     try {
+        console.log('Connecting to database at', dbLocation)
+        // console.trace('Connecting to database at', dbLocation)
         let connectionPromise = await connectDB(dbLocation);
         console.log(connectionPromise)
     } catch (error) {
         throw error;
     }
 
+    console.log(6)
     
     // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
     // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
@@ -79,69 +84,77 @@ async function initDB() {
 
 
 
-async function newDatabase(){
+async function newDatabase() {
 
-    // Make sure owner is 'node' before connecting
-            // TODO: I should really make sure its writable as well!
-            try {
-                let content = '';
-                fs.writeFileSync(dbLocationTemp, content);
-                fs.chownSync(dbLocationTemp, 1000, 1000);
-                // file written successfully
-            } catch (error) {
-                throw error;
-            }
+    return new Promise(async (resolve, reject) => {
+
+        // Make sure owner is 'node' before connecting
+        // TODO: I should really make sure its writable as well!
+        console.log(21)
+        try {
+            let content = '';
+            fs.writeFileSync(dbLocationTemp, content);
+            fs.chownSync(dbLocationTemp, 1000, 1000);
+            // file written successfully
+        } catch (error) {
+            return error;
+        }
+
+        console.log(22)
+        // console.log('1')
+        try {
+            let connectionPromise = await connectDB(dbLocationTemp);
+            console.log(connectionPromise)
+        } catch (error) {
+            return error;
+        }
+
+        // console.log('3')
+        console.log(23)
+
+
+
+        // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
+        // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
+        // https://github.com/TryGhost/node-sqlite3/issues/896
+        // I GUESS THIS WORKS??
+        db.get("PRAGMA foreign_keys = ON");
+
+
+
+        // Create Tables
+        try {
+            console.log('231')
+            let createTablePromise = await createTables();
+            console.log('Tables ok? \n', createTablePromise)
+            console.log('232')
+        } catch (error) {
+            console.log('createTables error')
+            reject('error at create table call')
+        }
+
+        console.log(24)
+
+
+
+        // Move db to 'real' db location
+        try {
+
+            await dbTeardown();
+
+            fs.renameSync(dbLocationTemp, dbLocation);
 
             // console.log('1')
-            try {
-                let connectionPromise = await connectDB(dbLocationTemp);
-                console.log(connectionPromise)
-            } catch (error) {
-                throw error;
-            }
 
-            // console.log('3')
+            let connectionPromise = await connectDB(dbLocation);
+            console.log(connectionPromise)
 
+        } catch (error) {
+            return error;
+        }
+        console.log(25)
 
-
-
-            // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
-            // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
-            // https://github.com/TryGhost/node-sqlite3/issues/896
-            // I GUESS THIS WORKS??
-            db.get("PRAGMA foreign_keys = ON");
-
-
-
-            // Create Tables
-            try {
-                console.log('11')
-                let createTablePromise = await createTables();
-                console.log('Tables ok? \n', createTablePromise)
-                console.log('13')
-            } catch (error) {
-                throw Error;
-            }
-
-
-
-
-
-            // Move db to 'real' db location
-            try {
-
-                await dbTeardown();
-
-                fs.renameSync(dbLocationTemp, dbLocation);
-
-                // console.log('1')
-
-                let connectionPromise = await connectDB(dbLocation);
-                console.log(connectionPromise)
-
-            } catch (error) {
-                throw error;
-            }
+    });
 
 }
 
@@ -188,16 +201,19 @@ async function createTables() {
             try {
                 data = fs.readFileSync(tablePath, 'utf8');
             } catch (error) {
-                throw error;
+                reject('failed to read tablePath');
+                return; // necessary to halt execution?!?!
             }
 
             try {
                 let execTableStringPromise = await execTableString(data);
-                console.log(execTableStringPromise);
+                console.log(execTableStringPromise, tableName);
                 console.log('New Table from file : ', tablePath);
 
             } catch (error) {
-                throw error;
+                console.log('AAAAAAAAAAAAA')
+                reject('failed to execute new table');
+                return; // necessary to halt execution?!?!
             }
 
 

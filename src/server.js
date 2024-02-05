@@ -12,18 +12,25 @@ app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 app.use('/sourcing/*', express.static(__dirname + '/static'));
 
-// Make sure this is after we add the json-middleware
+// Make sure this is AFTER we add the json-middleware
 const routes = require('./routes/Routes');
 routes.initRoutes(app, express);
 
 
 
+
 const { db, initDB, dbTeardown} = require('./db/ErigraphDB');
-initDB();
+
+initDB().then((x) => {
+    console.log('Connection to db was successful')
+}).catch((error) => {
+    console.log(error)
+})
+// console.log('initDbResponse', initDbResponse) // couldn't add await to the function? or did i accidentally use asuync?? idfk...
+
 
 
 // UUID TESTS
-
 const uuid = require('./utils/uuid')
 
 uuid.generate('file');

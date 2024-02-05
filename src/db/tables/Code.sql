@@ -1,3 +1,4 @@
+-- select * from dummyTableHehe; -- create breaking change during new db creation
 
 CREATE TABLE IF NOT EXISTS "Code" (
 	"Uuid" INTEGER PRIMARY KEY,
