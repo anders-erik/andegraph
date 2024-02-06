@@ -5,7 +5,9 @@ const fs = require('fs');
 const dbLocationLegacy = process.env.GRAPH_DB_LOCATION;
 const dbLocation = '/data/live/graph-v0.2-test.db';
 const dbLocationTemp = '/data/live/graph-v0.2-temp.db';
-let db;
+let db = {};
+let r = 0;
+
 
 
 const tableNames = [
@@ -28,8 +30,13 @@ const tableNames = [
     'Edge'
 ]
 
+function getDb(){
+    return db;
+}
 
 async function initDB() {
+    r = Math.random();
+    console.log(r)
 
     // Legacy check
     if (process.env.NODE_ENV !== 'test') {
@@ -374,7 +381,9 @@ async function dbTeardown() {
 module.exports = {
     db,
     initDB,
-    dbTeardown
+    dbTeardown,
+    getDb,
+    r
 }
 
 

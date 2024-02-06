@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Event (
 	
 	"StartTime" INTEGER NOT NULL,
 	"EndTime" INTEGER NOT NULL,
-	"Location" TEXT NOT NULL
+	"EventDate" TEXT NOT NULL
 
 );
 

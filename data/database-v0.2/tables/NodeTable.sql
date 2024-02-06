@@ -10,3 +10,4 @@ INSERT INTO "NodeTable" ("Table") VALUES ('Review');
 INSERT INTO "NodeTable" ("Table") VALUES ('Text');
 INSERT INTO "NodeTable" ("Table") VALUES ('Code');
 INSERT INTO "NodeTable" ("Table") VALUES ('Equation');
+INSERT INTO "NodeTable" ("Table") VALUES ('Event');

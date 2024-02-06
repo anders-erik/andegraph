@@ -7195,6 +7195,8 @@ INSERT INTO NodeTable VALUES('File');
 INSERT INTO NodeTable VALUES('Review');
 INSERT INTO NodeTable VALUES('Text');
 INSERT INTO NodeTable VALUES('Code');
+INSERT INTO NodeTable VALUES('Equation');
+INSERT INTO NodeTable VALUES('Event');
 CREATE TABLE Edge (
 	"Uuid" INTEGER PRIMARY KEY,
 	"Node1Uuid" INTEGER NOT NULL, 
@@ -13412,7 +13414,7 @@ CREATE TABLE Event (
 	
 	"StartTime" INTEGER NOT NULL,
 	"EndTime" INTEGER NOT NULL,
-	"Location" TEXT NOT NULL
+	"EventDate" TEXT NOT NULL
 
 );
 CREATE TABLE Equation (
@@ -13432,4 +13434,5 @@ CREATE INDEX "Index_Node_Table" ON Node("Table");
 CREATE INDEX "Index_Node_Type" ON Node("Type");
 CREATE INDEX "Index_Edge_Node1Uuid" ON Edge("Node1Uuid");
 CREATE INDEX "Index_Edge_Node2Uuid" ON Edge("Node2Uuid");
+CREATE INDEX "Index_Source_Url" ON Source("Url");
 COMMIT;

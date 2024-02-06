@@ -13,3 +13,5 @@ CREATE TABLE IF NOT EXISTS Source (
 	FOREIGN KEY("Type") REFERENCES SourceType("Type")
 );
 
+CREATE INDEX "Index_Source_Url" ON Source("Url");
+

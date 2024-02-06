@@ -617,4 +617,18 @@ TODO:
 	- Had to add edges to link the review dates to their associated object to be reviewed
 
 
+### 2024-02-05
+
+- Built the base queries for the new database
+	- still a few left
+		- 
+- Started buildning the comopsite 'procedures'
+- small unit testing
+- models and enums
+- errors:
+	- restarting within one second on tests will trigger unique Uuid constraint 
+		- The server obviously does not remember the previous sessions second-secific index...
+	- Recursive require-statements will cause some errors...
+
+
 
