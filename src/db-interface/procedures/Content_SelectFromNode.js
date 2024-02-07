@@ -7,36 +7,42 @@ let db = getDb();
 async function Content_SelectFromNode(nodeObject) {
     return new Promise(async (acc, rej) => {
 
+        let contentObject;
         
         switch (nodeObject.Table) {
 
             case 'Code':
-                await queries.Code_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Code_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'Equation':
-                await queries.Equation_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Equation_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'Event':
-                await queries.Event_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Event_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'File':
-                await queries.File_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.File_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'Project':
-                await queries.Project_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Project_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'Review':
-                await queries.Review_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Review_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'Source':
-                await queries.Source_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Source_SelectOnUuid(nodeObject.Uuid); break;
                 
             case 'Text':
-                await queries.Text_SelectOnUuid(nodeObject); break;
+                contentObject = await queries.Text_SelectOnUuid(nodeObject.Uuid); break;
                 
             default:
+                rej('no valid table name');
+                return;
                 break;
         }
+
+
+        acc(contentObject)
 
 
     });

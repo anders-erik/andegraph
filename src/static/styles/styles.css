@@ -14,6 +14,10 @@
 
 @import '../modules/globalnodecontext/GlobalNodeContext.css';
 
+@import '../modules/components/childtable/ChildTable.css';
+
+@import '../modules/components/statustable/StatusTable.css';
+
 :root{
     --light-1:#afeef5;
     --light-2:#c2c2c2;

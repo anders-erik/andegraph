@@ -10,7 +10,9 @@ app.use(express.json());
 
 // https://stackoverflow.com/questions/10434001/static-files-with-express-js
 app.use(express.static(__dirname + '/static'));
+
 app.use('/sourcing/*', express.static(__dirname + '/static'));
+app.use('/source/*', express.static(__dirname + '/static'));
 
 // Make sure this is AFTER we add the json-middleware
 const routes = require('./routes/Routes');
@@ -20,12 +22,20 @@ routes.initRoutes(app, express);
 
 
 const { db, initDB, dbTeardown} = require('./db/ErigraphDB');
+let dbir;
+
+
 
 // await initDB();
 
 initDB().then((x) => {
     console.log('Connection to db was successful')
-    dbTest()
+    
+    // start api
+    dbir = require('./dbi-receive/Dbir');
+    dbir.initDbir(app, express);
+
+    dbTest();
     
 }).catch((error) => {
     console.log(error)
@@ -48,8 +58,8 @@ async function dbTest(){
 
     // console.log(await queries.NodeEdge_SelectChildOfUuid(372));
     // console.log(await queries.Node_SelectChildOfUuid(372));
-    console.table(await queries.NodeEdge_SelectChildOfUuid(372));
-    console.table(await queries.Node_SelectChildOfUuid(372));
+    //console.table(await queries.NodeEdge_SelectChildOfUuid(372));
+    //console.table(await queries.Node_SelectChildOfUuid(372));
 
 
 
@@ -59,13 +69,13 @@ async function dbTest(){
     // await tests.runEventCrud();
     // await tests.runFileCrud();
     // await tests.runNodeCrud();
-    await tests.runProjectCrud();
+    //await tests.runProjectCrud();
     // await tests.runReviewCrud();
     // await tests.runSourceCrud();
     // await tests.runTextCrud();
 
 
-    await tests.InsertChild();
+    //await tests.InsertChild();
     
 
 

@@ -25,6 +25,23 @@ import * as Homedash from './homedash/homedash.js';
 import * as globalNodeContext from './globalnodecontext/GlobalNodeContext.js';
 
 
+import {dbis} from './dbi-send/dbi-send.js';
+// dbis.Content_SelectChildOfUuid(372);
+let childNodes = await dbis.Node_SelectChildOfUuid(369);
+// dbis.NodeEdge_SelectChildOfUuid(372);
+
+import { ChildTable } from './components/childtable/ChildTable.js';
+let childTable = new ChildTable();
+childTable.createChildTable();
+ChildTable.insertChildren(childNodes);
+
+import { StatusTable } from './components/statustable/StatusTable.js';
+let statusTable = new StatusTable();
+statusTable.createStatusTable();
+
+import { initGlobalListener } from './globallistener/globallistener.js';
+initGlobalListener();
+
 
 function initApp(rootId){	
 

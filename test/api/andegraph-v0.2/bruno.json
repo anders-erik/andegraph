@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "andegraph-v0.2",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
