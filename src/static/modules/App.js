@@ -39,7 +39,12 @@ import { StatusTable } from './components/statustable/StatusTable.js';
 let statusTable = new StatusTable();
 statusTable.createStatusTable();
 
-import { initGlobalListener } from './globallistener/globallistener.js';
+import { NodeProperties } from './components/nodeproperties/NodeProperties.js';
+let nodeProperties = new NodeProperties();
+nodeProperties.createNodeProperties();
+nodeProperties.insertProperties(childNodes[0])
+
+import { initGlobalListener } from './globallistener/GlobalListener.js';
 initGlobalListener();
 
 

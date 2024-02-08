@@ -55,7 +55,7 @@ export class ChildTable {
             tr.classList.add('childtable-tr');
             tr.nodeObject = nodeObject;
             tr.dataset.Node = 1;
-            tr.tabIndex = 1;
+            tr.tabIndex = 0;
             tr.innerHTML = tableRowHtml;
             // tr.contentEditable = 'True';
 

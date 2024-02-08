@@ -10,4 +10,5 @@ dragdrop-clipboard
 /data/backups/db/*
 /data/backups/sql/*
 
-
+/src/borderify
+/src/beastify
