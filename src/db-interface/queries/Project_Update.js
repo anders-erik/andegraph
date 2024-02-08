@@ -18,7 +18,7 @@ async function Project_Update(projectObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "Goal" = ?
             WHERE 
                 Uuid = ?
@@ -27,7 +27,7 @@ async function Project_Update(projectObject) {
 
 
         db.all(queryString,
-            [projectObject.Uuid, projectObject.Table, projectObject.Type, projectObject.Title, projectObject.TimeCreated, projectObject.TimeLastChange, projectObject.Goal, projectObject.Uuid],
+            [projectObject.Uuid, projectObject.Table, projectObject.Type, projectObject.Title, projectObject.TimeCreated, projectObject.Goal, projectObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

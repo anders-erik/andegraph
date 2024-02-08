@@ -1,0 +1,16 @@
+meta {
+  name: Edge_DeleteOnNodeUuids
+  type: http
+  seq: 2
+}
+
+delete {
+  url: http://localhost:3000/api/v02/edge/Edge-DeleteOnNodeUuids?Uuid1=123&Uuid2=123
+  body: none
+  auth: none
+}
+
+query {
+  Uuid1: 123
+  Uuid2: 123
+}

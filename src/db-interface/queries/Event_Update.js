@@ -18,7 +18,7 @@ async function Event_Update(eventObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "StartTime" = ?,
                 "EndTime" = ?,
                 "EventDate" = ?
@@ -29,7 +29,7 @@ async function Event_Update(eventObject) {
 
 
         db.all(queryString,
-            [eventObject.Uuid, eventObject.Table, eventObject.Type, eventObject.Title, eventObject.TimeCreated, eventObject.TimeLastChange, eventObject.StartTime, eventObject.EndTime, eventObject.EventDate, eventObject.Uuid],
+            [eventObject.Uuid, eventObject.Table, eventObject.Type, eventObject.Title, eventObject.TimeCreated, eventObject.StartTime, eventObject.EndTime, eventObject.EventDate, eventObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

@@ -2,21 +2,21 @@
 const models = require('../../models/models')
 const queries = require("../Queries");
 const enumContentTables = require('../../enums/contentTables');
-const { Content_InsertObject } = require('./Content_InsertObject');
+const { Content_InsertOnTable } = require('./Content_InsertOnTable');
 
 
 
-async function Content_InsertChild(parentUuid, childTableName) {
+async function Content_InsertChildUuidTable(parentUuid, childTableName) {
     return new Promise(async (acc, rej) => {
 
 
         // console.log(Array.isArray(enumContentTables))
         if (enumContentTables.includes(childTableName)) {
 
-            let newChildObject = models.getEmptyObject(childTableName);
+            // let newChildObject = models.getEmptyObject(childTableName);
             //console.table([newChildObject])
 
-            await Content_InsertObject(newChildObject);
+            let newChildObject = await Content_InsertOnTable(childTableName);
 
 
             let edgeObject = models.getEmptyObject('Edge');
@@ -41,6 +41,6 @@ async function Content_InsertChild(parentUuid, childTableName) {
 }
 
 module.exports = {
-    Content_InsertChild,
+    Content_InsertChildUuidTable,
 }
 

@@ -17,7 +17,7 @@ async function Source_Update(sourceObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "Url" = ?,
                 "IAmSource" = ?
             WHERE 
@@ -27,7 +27,7 @@ async function Source_Update(sourceObject) {
 
 
         db.all(queryString,
-            [sourceObject.Uuid, sourceObject.Table, sourceObject.Type, sourceObject.Title, sourceObject.TimeCreated, sourceObject.TimeLastChange, sourceObject.Url, sourceObject.IAmSource, sourceObject.Uuid],
+            [sourceObject.Uuid, sourceObject.Table, sourceObject.Type, sourceObject.Title, sourceObject.TimeCreated, sourceObject.Url, sourceObject.IAmSource, sourceObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

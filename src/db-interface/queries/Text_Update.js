@@ -18,7 +18,7 @@ async function Text_Update(codeObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "TextContent" = ?,
                 "Language" = ?,
                 "IAmAuthor" = ?
@@ -29,7 +29,7 @@ async function Text_Update(codeObject) {
 
 
         db.all(queryString,
-            [codeObject.Uuid, codeObject.Table, codeObject.Type, codeObject.Title, codeObject.TimeCreated, codeObject.TimeLastChange, codeObject.TextContent, codeObject.Language, codeObject.IAmAuthor, codeObject.Uuid],
+            [codeObject.Uuid, codeObject.Table, codeObject.Type, codeObject.Title, codeObject.TimeCreated, codeObject.TextContent, codeObject.Language, codeObject.IAmAuthor, codeObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

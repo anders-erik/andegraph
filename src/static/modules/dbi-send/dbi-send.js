@@ -1,10 +1,11 @@
 
 
-const basePath = '/api/v02/content'
+const basePath = '/api/v02'
 
 export class dbis {
 
 	static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', {'Uuid': Uuid}) };
+
 	static async Node_SelectChildOfUuid(Uuid) { return contentGet('Node-SelectChildOfUuid', {'Uuid': Uuid}) };
 	static async NodeEdge_SelectChildOfUuid(Uuid) { return contentGet('NodeEdge-SelectChildOfUuid', {'Uuid': Uuid}) };
 
@@ -13,8 +14,8 @@ export class dbis {
 
 
 async function contentGet(functionstring, paramObject){
-	let url = basePath + `/${functionstring}?`;
-
+	let url = basePath + `content//${functionstring}?`;
+ 
 	for (const [key, value] of Object.entries(paramObject)) {
 		console.log(`${key}: ${value}`);
 		url += `${key}=${value}`;

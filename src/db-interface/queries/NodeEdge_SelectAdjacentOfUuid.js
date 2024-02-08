@@ -24,7 +24,7 @@ async function NodeEdge_SelectAdjacentOfUuid(Uuid) {
 		INNER JOIN "Edge"
 		ON "Node"."Uuid" = "Edge"."Node2Uuid"
 		WHERE
-			"Edge"."Node2Uuid" = ?
+			"Edge"."Node1Uuid" = ?
 
 		UNION
 
@@ -41,16 +41,18 @@ async function NodeEdge_SelectAdjacentOfUuid(Uuid) {
 		INNER JOIN "Edge"
 		ON "Node"."Uuid" = "Edge"."Node1Uuid"
 		WHERE
-			"Edge"."Node1Uuid" = ?
+			"Edge"."Node2Uuid" = ?
                     
         ;`;
 
+
         db.all(queryString,
-            [Uuid],
+            [Uuid, Uuid],
             (err, rows) => {
                if (err) return rej(err);
 
                let nodeEdgeObjectRows = dbNodeEdgesToObjects(rows);
+			   
 
                acc(nodeEdgeObjectRows);
            });

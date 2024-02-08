@@ -11,7 +11,7 @@ async function Node_SelectAdjacentOfUuid(Uuid) {
 
         	SELECT "Node".* FROM "Node"
 			INNER JOIN "Edge"
-			ON "Node"."Uuid" = "Edge"."Node1Uuid"
+			ON "Node"."Uuid" = "Edge"."Node2Uuid"
 			WHERE
 				"Edge"."Node1Uuid" = ?
 
@@ -19,13 +19,14 @@ async function Node_SelectAdjacentOfUuid(Uuid) {
 
             SELECT "Node".* FROM "Node"
 			INNER JOIN "Edge"
-			ON "Node"."Uuid" = "Edge"."Node2Uuid"
+			ON "Node"."Uuid" = "Edge"."Node1Uuid"
 			WHERE
 				"Edge"."Node2Uuid" = ?
         ;`;
 
+
         db.all(queryString,
-            [Uuid],
+            [Uuid, Uuid],
             (err, rows) => {
                if (err) return rej(err);
                acc(rows);

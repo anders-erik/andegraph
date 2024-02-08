@@ -18,7 +18,7 @@ async function Equation_Update(equationObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "Tex" = ?,
                 "MathMl" = ?
             WHERE 
@@ -28,7 +28,7 @@ async function Equation_Update(equationObject) {
 
 
         db.all(queryString,
-            [equationObject.Uuid, equationObject.Table, equationObject.Type, equationObject.Title, equationObject.TimeCreated, equationObject.TimeLastChange, equationObject.Tex, equationObject.MathMl, equationObject.Uuid],
+            [equationObject.Uuid, equationObject.Table, equationObject.Type, equationObject.Title, equationObject.TimeCreated, equationObject.Tex, equationObject.MathMl, equationObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

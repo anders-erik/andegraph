@@ -17,17 +17,10 @@ module.exports = async (req, res) => {
 
 	switch (functionstring) {
 
-		// CONTENT
-		case 'Content-SelectOnUuid':
+		case 'Content-DropFullOnUuid':
 			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
-			returnArray = await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid);
+			await dbi.procedures.Content_DropFullOnUuid(queryObject.Uuid);
 			break;
-
-		case 'Content-SelectChildOfUuid':
-			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
-			returnArray = await dbi.procedures.Content_SelectChildOfUuid(queryObject.Uuid);
-			break;
-
 
 	
 		default:

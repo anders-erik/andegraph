@@ -1,6 +1,6 @@
 const queries = require("../Queries");
 
-
+// NEVER USED (?????)
 
 async function Content_DeleteFromGraph(contentObject) {
     return new Promise(async (acc, rej) => {
@@ -46,6 +46,9 @@ async function Content_DeleteFromGraph(contentObject) {
             //console.log(adjacentNodeEdge.edge.Uuid)
             await queries.Edge_DeleteOnUuid(adjacentNodeEdge.edge.Uuid);
         }
+
+        await queries.Node_DeleteOnUuid(contentObject.Uuid);
+        
         acc(1);
 
     });

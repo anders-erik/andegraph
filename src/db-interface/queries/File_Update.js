@@ -18,7 +18,7 @@ async function File_Update(fileObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "Extension" = ?,
                 "SizeBytes" = ?,
                 "IAmAuthor" = ?
@@ -29,7 +29,7 @@ async function File_Update(fileObject) {
 
 
         db.all(queryString,
-            [fileObject.Uuid, fileObject.Table, fileObject.Type, fileObject.Title, fileObject.TimeCreated, fileObject.TimeLastChange, fileObject.Extension, fileObject.SizeBytes, fileObject.IAmAuthor, fileObject.Uuid],
+            [fileObject.Uuid, fileObject.Table, fileObject.Type, fileObject.Title, fileObject.TimeCreated, fileObject.Extension, fileObject.SizeBytes, fileObject.IAmAuthor, fileObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

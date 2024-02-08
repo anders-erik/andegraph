@@ -18,7 +18,7 @@ async function Review_Update(reviewObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "ReviewDate" = ?,
                 "ReviewCompleted" = ?,
                 "ReviewCompletedOnDate" = ?,
@@ -30,7 +30,7 @@ async function Review_Update(reviewObject) {
 
 
         db.all(queryString,
-            [reviewObject.Uuid, reviewObject.Table, reviewObject.Type, reviewObject.Title, reviewObject.TimeCreated, reviewObject.TimeLastChange, reviewObject.ReviewDate, reviewObject.ReviewCompleted, reviewObject.ReviewCompletedOnDate, reviewObject.NodeToReviewUuid, reviewObject.Uuid],
+            [reviewObject.Uuid, reviewObject.Table, reviewObject.Type, reviewObject.Title, reviewObject.TimeCreated, reviewObject.ReviewDate, reviewObject.ReviewCompleted, reviewObject.ReviewCompletedOnDate, reviewObject.NodeToReviewUuid, reviewObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 

@@ -18,7 +18,7 @@ async function Code_Update(codeObject) {
                 "Type" = ?, 
                 "Title" = ?, 
                 "TimeCreated" = ?, 
-                "TimeLastChange" = ?, 
+                "TimeLastChange" = strftime('%s'), 
                 "CodeContent" = ?
             WHERE 
                 Uuid = ?
@@ -27,7 +27,7 @@ async function Code_Update(codeObject) {
 
 
         db.all(queryString,
-            [codeObject.Uuid, codeObject.Table, codeObject.Type, codeObject.Title, codeObject.TimeCreated, codeObject.TimeLastChange, codeObject.CodeContent, codeObject.Uuid],
+            [codeObject.Uuid, codeObject.Table, codeObject.Type, codeObject.Title, codeObject.TimeCreated, codeObject.CodeContent, codeObject.Uuid],
             (err, rows) => {
                if (err) return rej(err);
 
