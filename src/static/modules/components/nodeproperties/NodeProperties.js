@@ -25,30 +25,30 @@ let htmlContent = `
 
 export class NodeProperties {
 
-	propertiesElement;
+    propertiesElement;
 
-	constructor(){
-		
-	}
+    constructor() {
 
-    createNodeProperties(){
+    }
+
+    createNodeProperties() {
         this.propertiesElement = document.createElement('div');
-		this.propertiesElement.id = 'nodeproperties-outer';
-		this.propertiesElement.innerHTML = htmlContent;
+        this.propertiesElement.id = 'nodeproperties-outer';
+        this.propertiesElement.innerHTML = htmlContent;
         document.body.append(this.propertiesElement)
         // console.log(this.propertiesElement.innerHTML)
     }
 
-    
-	insertProperties(nodeObject){
+
+    insertProperties(nodeObject) {
         let tbody = document.getElementById('nodeproperties-tbody');
         tbody.innerHTML = '';
 
         let tbodyHtmlString = ``;
 
         console.log(nodeObject)
-        for(const [key, value] of Object.entries(nodeObject)){
-            
+        for (const [key, value] of Object.entries(nodeObject)) {
+
             console.log(key, value)
 
             let trString = `
@@ -83,7 +83,7 @@ export class NodeProperties {
         // console.log(tr)
         // console.properties(nodeObjects)
 
-	}
+    }
 }
 
 

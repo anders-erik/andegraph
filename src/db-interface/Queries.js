@@ -28,6 +28,7 @@ const { File_Update } = require("./queries/File_Update");
 const { Project_DeleteOnUuid } = require("./queries/Project_DeleteOnUuid");
 const { Project_Insert } = require("./queries/Project_Insert");
 const { Project_SelectOnUuid } = require("./queries/Project_SelectOnUuid");
+const { Project_SelectLikeString } = require("./queries/Project_SelectLikeString");
 const { Project_Update } = require("./queries/Project_Update");
 
 const { Review_DeleteOnUuid } = require("./queries/Review_DeleteOnUuid");
@@ -100,6 +101,7 @@ module.exports = {
 	Project_DeleteOnUuid,
 	Project_Insert,
 	Project_SelectOnUuid,
+	Project_SelectLikeString,
 	Project_Update,
 
 	Review_DeleteOnUuid,

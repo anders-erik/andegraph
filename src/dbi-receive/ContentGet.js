@@ -17,7 +17,12 @@ module.exports = async (req, res) => {
 
 	switch (functionstring) {
 
-		// CONTENT
+		case 'Project-SelectLikeString':
+			console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
+			returnArray = await dbi.queries.Project_SelectLikeString(queryObject.searchString);
+			break;
+
+			
 		case 'Content-SelectOnUuid':
 			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
 			returnArray = await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid);
@@ -28,6 +33,8 @@ module.exports = async (req, res) => {
 			returnArray = await dbi.procedures.Content_SelectChildOfUuid(queryObject.Uuid);
 			break;
 
+
+			
 
 	
 		default:
