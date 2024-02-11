@@ -25,7 +25,7 @@ browser.commands.onCommand.addListener((command) => {
 
 
 
-
+/*
 
 // moved to a different tab
 browser.tabs.onActivated.addListener((onActivatedObject) => {
@@ -34,6 +34,7 @@ browser.tabs.onActivated.addListener((onActivatedObject) => {
 	writeCurrentTabToState()
 		.then((response) => {
 			notifyContentScriptOfStateChange();
+			sendStateToContentScript();
 
 			if (extensionState.active == true) {
 				sendStartExtensionMessage();
@@ -57,24 +58,35 @@ browser.tabs.onUpdated.addListener((id, change, tab) => {
 	// writeCurrentTabToState();
 	// Prevent the onUpdate call-spam during state change
 
+	// console.log(tab)
+	if (tab.status === 'complete') {
+		// console.log("UPDATE ON ")
 
 
-	writeCurrentTabToState()
-		.then((response) => {
-			notifyContentScriptOfStateChange();
+		writeCurrentTabToState()
+			.then((response) => {
+				notifyContentScriptOfStateChange();
 
-			if (extensionState.active == true) {
-				sendStartExtensionMessage();
-			}
-			else {
-				sendStopExtensionMessage();
-			}
-		})
+				if (extensionState.active == true) {
+					sendStartExtensionMessage();
+				}
+				else {
+					sendStopExtensionMessage();
+				}
+			})
+
+	}
+	else {
+		// console.log('WAITING')
+	}
+	// if()
+
+
 
 
 });
 
-
+*/
 
 
 

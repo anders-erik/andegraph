@@ -4,11 +4,11 @@ let dbi = require('../db-interface/DbInterface');
 
 
 module.exports = async (req, res) => {
-    //console.log(req.headers.id)
+	//console.log(req.headers.id)
 
 	// queries = require('../db-interface/Queries');
 
-    let functionstring = req.params.functionstring;
+	let functionstring = req.params.functionstring;
 	console.log(functionstring)
 	let queryObject = req.query;
 	console.log(queryObject)
@@ -20,9 +20,10 @@ module.exports = async (req, res) => {
 		case 'Project-SelectLikeString':
 			console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
 			returnArray = await dbi.queries.Project_SelectLikeString(queryObject.searchString);
+			res.set('Access-Control-Allow-Origin', `*`);
 			break;
 
-			
+
 		case 'Content-SelectOnUuid':
 			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
 			returnArray = await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid);
@@ -34,9 +35,9 @@ module.exports = async (req, res) => {
 			break;
 
 
-			
 
-	
+
+
 		default:
 			res.status(400).send({});
 			return;

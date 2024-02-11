@@ -1,13 +1,34 @@
 
 
-### START COMMAND
+### CURRENT START COMMANDS
+cd C:\Users\ander\Desktop\webextension
+node build
+
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+cd C:\Users\ander\Desktop\webextension
+web-ext run --firefox="C:\Program Files\Firefox Nightly\firefox.exe" --source-dir ./src/
+
+
+
 
 cd \\wsl.localhost\Ubuntu\home\andersubu\dev\sources\src\webextension
+C:\Users\ander\Desktop\webextension
+
+web-ext run --firefox="C:\Program Files\Firefox Nightly\firefox.exe" --source-dir ./src/
+
+// https://github.com/mozilla/web-ext?tab=readme-ov-file
+--source-dir ./overlay-dist/
+
 web-ext run --firefox="C:\Program Files\Firefox Developer Edition\firefox.exe"
+web-ext run --firefox="C:\Program Files\Firefox Nightly\firefox.exe"
 
 
 ### Firefox developer dedition - path
 "C:\Program Files\Firefox Developer Edition\firefox.exe"
+
+### Firefox  - path
+"C:\Program Files\Firefox Nightly\firefox.exe"
+
 
 
 
@@ -38,3 +59,10 @@ https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext
 https://stackoverflow.com/questions/75043889/manifest-v3-background-scripts-service-worker-on-firefox
 - Chrome is not happy with background.scripts and insists on using background.service_worker
 - Firefox doesn't support background.service_worker and wants background.scripts
+
+
+
+// CORS
+https://stackoverflow.com/questions/48886617/disable-firefox-same-origin-policy-without-installing-a-plugin
+https://bugzilla.mozilla.org/show_bug.cgi?id=1039678
+

@@ -30,11 +30,11 @@
 
 
 .nodeproperties-tbody-tr {
-	/* 
+
 	display: flex;
 	flex-direction: row;
-	justify-content: start; 
-	*/
+	justify-content: start;
+
 	background-color: aliceblue;
 }
 
