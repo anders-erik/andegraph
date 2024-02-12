@@ -50,7 +50,7 @@ function writeToState(propertiesToWriteObject) {
 // function updateFrontOnState() {
 
 // }
-console.log("Reload. ")
+console.log("Reload page update. ")
 browser.runtime.sendMessage({
 	name: "requestBackStateOnFrontLoaded",
 });

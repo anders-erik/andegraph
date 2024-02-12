@@ -1,40 +1,24 @@
-# beastify
+# Andegraph Web Extension
 
-## What it does ##
 
-The extension includes:
+## Purpose
 
-* a browser action with a popup including HTML, CSS, and JS
-* a content script
-* three images, each of a different beast, packaged as web accessible resources
+Extracting shards from sources in firefox.
 
-When the user clicks the browser action button, the popup is shown, enabling
-the user to choose one of three beasts.
+## Dev
 
-When it is shown, the popup injects a content script into the current page.
+### web-ext
 
-When the user chooses a beast, the extension sends the content script a message containing
-the name of the chosen beast.
+$ web-ext run --firefox="C:\Program Files\Firefox Nightly\firefox.exe" --source-dir ./src/
 
-When the content script receives this message, it replaces the current page
-content with an image of the chosen beast.
+Watches the source directory and will reload the extension on updates.
 
-When the user clicks the reset button, the page reloads, and reverts to its original form.
 
-Note that:
+### node build
 
-* if the user reloads the tab, or switches tabs, while the popup is open, then the popup won't be able to beastify the page any more (because the content script was injected into the original tab).
+nodejs file at the root of webextension directory will watch and output from dev-directory to src-folder.
 
-* by default [`tabs.executeScript()`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/executeScript) injects the script only when the web page and its resources have finished loading. This means that clicks in the popup will have no effect until the page has finished loading.
+On write to src/dist the web=ext watcher will reload the extension.
 
-* it's not possible to inject content scripts into certain pages, including privileged browser pages like "about:debugging" and the [addons.mozilla.org](https://addons.mozilla.org/) website. If the user clicks the beastify icon when such a page is loaded into the active tab, the popup displays an error message.
 
-## What it shows ##
 
-* write a browser action with a popup
-* how to have different browser_action images based upon the theme
-* give the popup style and behavior using CSS and JS
-* inject a content script programmatically using `tabs.executeScript()`
-* send a message from the main extension to a content script
-* use web accessible resources to enable web pages to load packaged content
-* reload web pages

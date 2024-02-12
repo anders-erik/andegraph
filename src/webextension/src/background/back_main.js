@@ -5,7 +5,7 @@ console.clear()
 // EXTENSION VARIABLES / STATE
 
 let extensionState = {
-	active: false,
+	active: true,
 	capturing: false,
 	current_tabId: 0,
 	current_tabUrl: '',

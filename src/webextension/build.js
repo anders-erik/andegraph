@@ -99,7 +99,7 @@ function writeToDist() {
 	// Moved to 'window.reload.location()' in order to clear style sheets injected into header
 	tempFileContent = `
 
-	if(document.getElementById('contextOverlay') != undefined){
+	if(document.getElementById('ae-contextOverlay') != undefined){
 		// document.remove(document.getElementById('contextOverlay'))
 		// document.getElementById('contextOverlay').remove()
 		window.location.reload();

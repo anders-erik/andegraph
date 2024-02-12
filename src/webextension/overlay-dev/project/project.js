@@ -1,11 +1,12 @@
 
 
-let searchButton;
-let propertiesButton;
+let projectSearchButton;
+let projectPropertiesButton;
+let projectNewButton;
 
-let searchInput;
-let searchTable;
-let propertiesTable;
+let projectSearchInput;
+let projectSearchTable;
+let projectPropertiesTable;
 
 let focusProjectSearch = false;
 
@@ -18,18 +19,23 @@ function initProject() {
 	// 	document.getElementById('contextOverlay').style.display = 'none';
 	// }
 
-	searchButton = document.getElementById('searchButton');
-	propertiesButton = document.getElementById('propertiesButton');
+	writeProjectPropertiesToDom();
 
-	searchInput = document.getElementById('searchInput');
-	searchTable = document.getElementById('searchTable');
-	propertiesTable = document.getElementById('propertiesTable');
 
-	searchButton.addEventListener('click', projectToggleClicked);
-	propertiesButton.addEventListener('click', projectToggleClicked);
+	projectSearchButton = document.getElementById('ae-projectSearchButton');
+	projectPropertiesButton = document.getElementById('ae-projectPropertiesButton');
+	projectNewButton = document.getElementById('ae-projectNewButton');
 
-	searchInput.addEventListener('focus', searchProjectIn);
-	searchInput.addEventListener('focusout', searchProjectOut);
+	projectSearchInput = document.getElementById('ae-projectSearchInput');
+	projectSearchTable = document.getElementById('ae-projectSearchTable');
+	projectPropertiesTable = document.getElementById('ae-projectPropertiesTable');
+
+	projectSearchButton.addEventListener('click', projectToggleClicked);
+	projectPropertiesButton.addEventListener('click', projectToggleClicked);
+	projectNewButton.addEventListener('click', createNewProject);
+
+	projectSearchInput.addEventListener('focus', searchProjectIn);
+	projectSearchInput.addEventListener('focusout', searchProjectOut);
 
 	console.log('INTINTINTITNIT')
 
@@ -37,133 +43,161 @@ function initProject() {
 }
 
 
-function searchProjectIn() {
-	focusProjectSearch = true;
-	if (searchInput.textContent == '') {
-		searchInput.innerHTML = '<br>';
-		// setInterval(() => { searchInput.innerHTML += '<br>' }, 50);
-	}
-	console.log('focus search ')
-	// searchInput.addEventListener('keypress', keyPressDuringSearch)
-	searchInput.addEventListener('keydown', keyDownDuringSearch)
-	keyDownDuringSearch();
-}
+function createNewProject() {
+	console.log('new project')
 
-function searchProjectOut() {
-	focusProjectSearch = false;
-	// console.log('focusout search ')
-	// searchInput.removeEventListener('keypress', keyPressDuringSearch)
-	searchInput.addEventListener('keydown', keyDownDuringSearch)
-}
-
-let lastSearchString = '';
-// Perform search with slight delay to make sure new input is written to contentEditanle input
-function keyDownDuringSearch(keyEvent) {
-	// keyEvent.preventDefault();
-	setTimeout(() => {
-
-		// console.log()
-		lastSearchString = searchInput.textContent;
-		dbisWe.Project_SelectLikeString(lastSearchString)
-			.then((data) => {
-				// console.log(data)
-				populateChildTable(data);
-			})
-	}, 100);
+	dbisWe.Content_InsertOnTable('Project')
+		.then((newProject) => {
+			// console.log(newProject)
+			extensionStateFront.current_projectObject = newProject;
+			writeProjectPropertiesToDom();
+			writeStateFromFront();
+		})
 
 }
 
-function populateChildTable(childObjects) {
-	// console.log('populate with children dones', childObjects)
 
-	let tbody = document.getElementById('searchTable-tbody');
-	tbody.innerHTML = '';
 
-	for (let childObject of childObjects) {
-		let tableRowHtml = `
-                
-                <th data-Uuid="${childObject.Uuid}">${childObject.Table}</th>
-                <td data-Uuid="${childObject.Uuid}">${childObject.Title}</td>
+function addSourceToCurrentProject() {
 
-            `;
-		let tr = document.createElement('tr');
-		tr.id = 'projectSearchNode-' + childObject.Uuid;
-		tr.nodeObject = childObject;
-		// tr.dataset.Node = 1;
-		// tr.dataset.Uuid = childObject.Uuid;
-		tr.setAttribute('data-Node', '1');
-		tr.setAttribute('data-Uuid', childObject.Uuid);
-		tr.tabIndex = 0;
-		tr.innerHTML = tableRowHtml;
-		tr.addEventListener('click', clickProjectRow);
-		// tr.contentEditable = 'True';
-
-		tbody.append(tr);
-		// console.log(tr)
-	}
-	// console.table(childObjects)
-
-}
-
-function clickProjectRow(event) {
-	// console.log(event.target.dataset.Uuid)
-	if (event.target.dataset.node != '1') {
-		console.log('NOT ELEMENT WITH NODE OBJECT')
-
-		let nodeRow = document.getElementById('projectSearchNode-' + event.target.dataset.uuid)
-
-		// console.log(nodeRow.nodeObject)
-
-		// extensionStateFront.current_projectUuid = nodeRow.dataset.Uuid;
-		extensionStateFront.current_projectUuid = nodeRow.nodeObject.Uuid;
-		extensionStateFront.current_projectObject = nodeRow.nodeObject;
-		document.getElementById('titleDiv').textContent = nodeRow.nodeObject.Title;
-		// extensionStateFront.current_projectUuid = event.target.dataset.uuid;
-		console.log(extensionStateFront)
-		writeStateFromFront();
+	if (extensionStateFront.current_projectUuid == 0) {
+		console.log('NO PROJECT SELECTED')
 	}
 	else {
-		console.log('ELMENET CONTAINS NODEOBJECTSS')
+		dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectUuid, 'Source')
 	}
 
+}
 
+
+function writeProjectPropertiesToDom() {
+
+	let projectObject = extensionStateFront.current_projectObject;
+	extensionStateFront.current_projectUuid = projectObject.Uuid;
+
+	document.getElementById('aa-projectTitle').textContent = projectObject.Title;
+
+	let tbody = document.getElementById('ae-projectPropertiesTable-tbody');
+	tbody.innerHTML = '';
+
+	for (const key in projectObject) {
+		// console.log(`${key}: ${projectObject[key]}`);
+		if (key === 'Type' || key === 'Title' || key === 'Goal') {
+
+			tbody.innerHTML += `
+		
+			<tr>
+				<th id=ae-projPropTable-${key}-key class="ae-element" >${key}</th>
+				<td id=ae-projPropTable-${key}-value class="ae-editableProjectProperty ae-element" contenteditable="true" >${projectObject[key]}</td>
+			</tr>
+		
+		`;
+
+		}
+		else {
+			tbody.innerHTML += `
+		
+			<tr>
+				<th id=ae-projPropTable-${key}-key class="ae-element" >${key}</th>
+				<td id=ae-projPropTable-${key}-value class="ae-element">${projectObject[key]}</td>
+			</tr>
+		
+		`;
+		}
+
+	}
+
+	// console.log(document.querySelectorAll('#ae-projectPropertiesTable tbody tr'))
+	let editableProjectPropertyTds = document.querySelectorAll('.ae-editableProjectProperty');
+	// console.log(editableProjectPropertyTd)
+	for (let editableProjectPropertyTd of editableProjectPropertyTds) {
+		console.log(editableProjectPropertyTd.textContent);
+		// console.log(propertyRow.textContent.length)
+		editableProjectPropertyTd.addEventListener('focusout', readProjectPropertiesFromDomAndWritePut)
+		// editableProjectPropertyTd.addEventListener('focusout', postProjectProperties)
+	}
 
 }
+
+// extract values, update title, save to extensionStateFront, and then return the object
+function readProjectPropertiesFromDomAndWritePut() {
+
+	// let tbody = document.getElementById('ae-projectPropertiesTable-tbody');
+
+	// let editableProjectPropertyTds = document.querySelectorAll('.ae-editableProjectProperty');
+
+	// for (let editableProjectPropertyTd of editableProjectPropertyTds) {
+	// 	console.log(editableProjectPropertyTd.textContent);
+	// 	// console.log(propertyRow.textContent.length)
+	// 	editableProjectPropertyTd.addEventListener('focusout', readProjectPropertiesFromDom)
+	// 	editableProjectPropertyTd.addEventListener('focusout', postProjectProperties)
+	// }
+
+	let newType = document.getElementById('ae-projPropTable-Type-value').textContent;
+	let newTitle = document.getElementById('ae-projPropTable-Title-value').textContent;
+	let newGoal = document.getElementById('ae-projPropTable-Goal-value').textContent;
+
+	// SET TITLE
+	document.getElementById('aa-projectTitle').textContent = newTitle;
+
+	extensionStateFront.current_projectObject.Type = newType;
+	extensionStateFront.current_projectObject.Title = newTitle;
+	extensionStateFront.current_projectObject.Goal = newGoal;
+
+	writeStateFromFront();
+
+	// console.log(extensionStateFront.current_projectObject)
+
+	console.log(newType, newTitle, newGoal)
+
+	putProjectProperties();
+
+	return '';
+}
+
+
+
+function putProjectProperties() {
+	// console.log('Posting current project properties', readProjectPropertiesFromDom())
+	console.log('PUT ProjectObject: ', extensionStateFront.current_projectObject)
+	dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_projectObject);
+}
+
 
 
 
 function projectToggleClicked(event) {
-	// propertiesButton.style.backgroundColor = 'rgba(26, 133, 180, 0.568)';
-	// searchButton.style.backgroundColor = 'rgba(26, 133, 180, 0.568)';
+	// projectPropertiesButton.style.backgroundColor = 'rgba(26, 133, 180, 0.568)';
+	// projectSearchButton.style.backgroundColor = 'rgba(26, 133, 180, 0.568)';
 
-	propertiesButton.classList.remove('projectButtonOff');
-	propertiesButton.classList.remove('projectButtonOn');
-	searchButton.classList.remove('projectButtonOff');
-	searchButton.classList.remove('projectButtonOn');
-
-
-	searchInput.classList.add('displayNone');
-	searchInput.classList.remove('centerWithFlex');
-	searchTable.classList.add('displayNone');
-
-	propertiesTable.classList.add('displayNone');
+	projectPropertiesButton.classList.remove('ae-projectButtonOff');
+	projectPropertiesButton.classList.remove('ae-projectButtonOn');
+	projectSearchButton.classList.remove('ae-projectButtonOff');
+	projectSearchButton.classList.remove('ae-projectButtonOn');
 
 
+	projectSearchInput.classList.add('ae-displayNone');
+	projectSearchInput.classList.remove('ae-centerWithFlex');
+	projectSearchTable.classList.add('ae-displayNone');
+
+	projectPropertiesTable.classList.add('ae-displayNone');
 
 
-	if (event.target.id === 'searchButton') {
-		searchButton.classList.add('projectButtonOn');
-		propertiesButton.classList.add('projectButtonOff');
 
-		searchInput.classList.remove('displayNone');
-		searchInput.classList.add('centerWithFlex');
-		searchTable.classList.remove('displayNone');
+
+	if (event.target.id === 'ae-projectSearchButton') {
+		projectSearchButton.classList.add('ae-projectButtonOn');
+		projectPropertiesButton.classList.add('ae-projectButtonOff');
+
+		projectSearchInput.classList.remove('ae-displayNone');
+		projectSearchInput.classList.add('ae-centerWithFlex');
+		projectSearchTable.classList.remove('ae-displayNone');
 	}
 	else {
-		searchButton.classList.add('projectButtonOff');
-		propertiesButton.classList.add('projectButtonOn');
+		projectSearchButton.classList.add('ae-projectButtonOff');
+		projectPropertiesButton.classList.add('ae-projectButtonOn');
 
-		propertiesTable.classList.remove('displayNone');
+		projectPropertiesTable.classList.remove('ae-displayNone');
 	}
 
 }

@@ -1,10 +1,10 @@
-#ae-projectOuter {
+#ae-sourceOuter {
 	height: 100%;
 	width: 100%;
 }
 
 
-#ae-projectInner {
+#ae-sourceInner {
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -13,7 +13,7 @@
 	align-items: center;
 }
 
-#aa-projectTitle {
+#aa-sourceTitle {
 	width: 90%;
 	height: 30px;
 	min-height: 30px;
@@ -36,7 +36,7 @@
 
 }
 
-#ae-projectButtonContainer {
+#ae-sourceButtonContainer {
 	width: 100%;
 	height: 30px;
 
@@ -47,40 +47,40 @@
 	justify-content: space-evenly;
 }
 
-#ae-projectSearchButton {
+#ae-sourceSearchButton {
 	/* background-color: rgba(26, 133, 180, 0.568); */
 	width: 35%;
 	height: 20px;
 }
 
-#ae-projectPropertiesButton {
+#ae-sourcePropertiesButton {
 	/* background-color: rgba(26, 133, 180, 0.568); */
 	width: 35%;
 	height: 20px;
 }
 
-#ae-projectNewButton {
+#ae-sourceNewButton {
 	background-color: darkblue;
 	color: aliceblue;
 	width: 20px;
 }
 
-.ae-projectButton {
+.ae-sourceButton {
 	margin: 3px;
 	padding: 3px;
 	border-radius: 5px;
 
 }
 
-.ae-projectButton:hover {
+.ae-sourceButton:hover {
 	cursor: pointer;
 }
 
-.ae-projectButton.selected {}
+.ae-sourceButton.selected {}
 
 
 
-#ae-projectTableContainer {
+#ae-sourceTableContainer {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -100,7 +100,7 @@
 /* SEARCH TABLE */
 
 
-#ae-projectSearchInput {
+#ae-sourceSearchInput {
 
 	width: 90%;
 	height: 1.5rem;
@@ -121,7 +121,7 @@
 }
 
 
-#ae-projectSearchTable {
+#ae-sourceSearchTable {
 	width: 100%;
 	/* display: none; */
 	/* display: inline; */
@@ -132,24 +132,24 @@
 	margin: 5px 5px 5px 5px;
 }
 
-#ae-projectSearchTable thead {
+#ae-sourceSearchTable thead {
 	/* background-color: rgb(85, 123, 177); */
 }
 
-#ae-projectSearchTable thead th {
+#ae-sourceSearchTable thead th {
 	padding: 3px;
 	background-color: rgb(85, 123, 177);
 	box-shadow: inset 0 0 0 1px rgb(0, 0, 0);
 }
 
 
-#ae-projectSearchTable tbody {
+#ae-sourceSearchTable tbody {
 	background-color: rgb(109, 58, 58);
 	/* padding: 30px; */
 }
 
 
-#ae-projectSearchTable tbody tr {
+#ae-sourceSearchTable tbody tr {
 	font-size: 0.9rem;
 
 	/* border: solid black 1px;
@@ -162,11 +162,11 @@
 	border: solid black 3px;
 } */
 
-#ae-projectSearchTable tbody tr :hover {
+#ae-sourceSearchTable tbody tr :hover {
 	cursor: pointer;
 }
 
-#ae-projectSearchTable tbody th {
+#ae-sourceSearchTable tbody th {
 	/* border: solid black 1px; */
 	padding: 3px;
 	background-color: rgb(83, 133, 203);
@@ -176,7 +176,7 @@
 
 }
 
-#ae-projectSearchTable tbody td {
+#ae-sourceSearchTable tbody td {
 	/* border: solid black 1px; */
 	padding: 3px;
 	background-color: rgb(129, 151, 183);
@@ -196,7 +196,7 @@
 
 
 
-#ae-projectPropertiesTable {
+#ae-sourcePropertiesTable {
 	/* display: none; */
 	/* display: block; */
 
@@ -211,27 +211,27 @@
 	justify-content: start; */
 }
 
-#ae-projectPropertiesTable thead {
+#ae-sourcePropertiesTable thead {
 	/* background-color: rgb(85, 123, 177); */
 }
 
-#ae-projectPropertiesTable thead th {
+#ae-sourcePropertiesTable thead th {
 	padding: 3px;
 	background-color: rgb(85, 123, 177);
 	box-shadow: inset 0 0 0 1px rgb(0, 0, 0);
 }
 
-/* #ae-projectPropertiesTable-thead {
+/* #ae-sourcePropertiesTable-thead {
 
 	background-color: rgb(109, 58, 58);
 } */
 
-#ae-projectPropertiesTable tbody {
+#ae-sourcePropertiesTable tbody {
 	background-color: rgb(109, 58, 58);
 	/* padding: 30px; */
 }
 
-#ae-projectPropertiesTable tbody tr {
+#ae-sourcePropertiesTable tbody tr {
 	font-size: 0.9rem;
 
 	/* border: solid black 1px;
@@ -240,7 +240,7 @@
 
 }
 
-#ae-projectPropertiesTable tbody th {
+#ae-sourcePropertiesTable tbody th {
 	/* border: solid black 1px; */
 	padding: 3px;
 	background-color: rgb(83, 133, 203);
@@ -250,7 +250,7 @@
 
 }
 
-#ae-projectPropertiesTable tbody td {
+#ae-sourcePropertiesTable tbody td {
 	/* border: solid black 1px; */
 	padding: 3px;
 	background-color: rgb(129, 151, 183);
@@ -258,7 +258,7 @@
 
 }
 
-#ae-projectPropertiesTable tbody td.ae-editableProjectProperty {
+#ae-sourcePropertiesTable tbody td.ae-editablesourceProperty {
 	background-color: rgb(140, 166, 205);
 	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.408);
 }

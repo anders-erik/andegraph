@@ -6,10 +6,12 @@ browser.runtime.onMessage.addListener((message) => {
 	if (message.name === 'startExtension') {
 		// startExtension();
 		showOverlay();
+		addExtensionActiveEventListener();
 	}
 	if (message.name === 'stopExtension') {
 		// stopExtension();
 		hideOverlay();
+		removeExtensionActiveEventListener();
 	}
 
 	if (message.name === 'newState') {
@@ -40,6 +42,7 @@ browser.runtime.onMessage.addListener((message) => {
 		console.log('new state', extensionStateFront)
 
 		initProject();
+		initSource();
 
 		if (extensionStateFront.active) {
 			showOverlay();
