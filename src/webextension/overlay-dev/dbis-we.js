@@ -27,9 +27,15 @@ class dbisWe {
 	// static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', {'Uuid': Uuid}) };
 
 	static async Node_SelectChildOfUuid(Uuid) { return nodeGet('Node-SelectChildOfUuid', { 'Uuid': Uuid }) };
+	static async NodeEdge_SelectChildOfUuid(Uuid) { return nodeGet('NodeEdge-SelectChildOfUuid', { 'Uuid': Uuid }) };
 	// static async NodeEdge_SelectChildOfUuid(Uuid) { return contentGet('NodeEdge-SelectChildOfUuid', {'Uuid': Uuid}) };
 
 	static async Project_SelectLikeString(searchString) { return await contentGet('Project-SelectLikeString', { 'searchString': searchString }) };
+
+
+
+	static async Content_SelectOnUuid(Uuid) { return await contentGet('Content-SelectOnUuid', { 'Uuid': Uuid }) };
+
 
 	static async Content_UpdateOnContentObject(contentObject) { return await contentPut('Content-UpdateOnContentObject', contentObject) };
 
@@ -48,13 +54,15 @@ async function contentGet(functionstring, paramObject) {
 		url += `${key}=${value}`;
 	}
 
-	console.log(url)
+	// console.log(url)
 
 	const options = { method: 'GET', body: undefined };
 	// console.log(url)
 	try {
 		const response = await fetch(url, options);
 		const data = await response.json();
+		console.log(response.status, url)
+		// console.log(url)
 		// console.log(data)
 		return data;
 		// console.table(data);
@@ -73,13 +81,14 @@ async function nodeGet(functionstring, paramObject) {
 		url += `${key}=${value}`;
 	}
 
-	console.log(url)
+	// console.log(url)
 
 	const options = { method: 'GET', body: undefined };
 	// console.log(url)
 	try {
 		const response = await fetch(url, options);
 		const data = await response.json();
+		console.log(response.status, url)
 		// console.log(data)
 		return data;
 		// console.table(data);
@@ -93,7 +102,7 @@ async function nodeGet(functionstring, paramObject) {
 async function contentPost(functionstring, paramObject) {
 
 	let url = baseUrl + basePath + `/content/${functionstring}`;
-	console.log(url)
+	// console.log(url)
 
 	let bodyArray = [];
 
@@ -110,12 +119,12 @@ async function contentPost(functionstring, paramObject) {
 		},
 		body: JSON.stringify(bodyArray),
 	};
-	console.log(options)
+	// console.log(options)
 
 	try {
 		const response = await fetch(url, options);
 		const data = await response.json();
-		console.log(response.status)
+		console.log(response.status, url)
 		if (response.status == 200) {
 			return data;
 		}
@@ -132,7 +141,7 @@ async function contentPost(functionstring, paramObject) {
 
 async function contentPut(functionstring, putObject) {
 	let url = baseUrl + basePath + `/content/${functionstring}`;
-	console.log(url)
+	// console.log(url)
 
 	const options = {
 		method: 'PUT',
@@ -145,7 +154,7 @@ async function contentPut(functionstring, putObject) {
 	try {
 		const response = await fetch(url, options);
 		// const data = await response.json();
-		console.log(response.status)
+		console.log(response.status, url)
 		if (response.status == 200) {
 			return;
 		}
@@ -160,7 +169,7 @@ async function contentPut(functionstring, putObject) {
 
 }
 
-dbisWe.Project_SelectLikeString('')
-	.then((data) => {
-		// console.log(data)
-	})
+// dbisWe.Project_SelectLikeString('')
+// 	.then((data) => {
+// 		// console.log(data)
+// 	})

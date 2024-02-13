@@ -10,11 +10,17 @@ let extensionState = {
 	current_tabId: 0,
 	current_tabUrl: '',
 	current_tabTitle: '',
-	current_projectUuid: 0,
+	// current_projectUuid: 0,
 	current_projectObject: {},
-	current_sourceUuid: 0,
+	current_projectSearchObjects: [],
+	current_projectChildNodeEdges: [],
+	// current_sourceUuid: 0,
 	current_sourceObject: {},
-	current_sourceChildNodes: [],
+	current_sourceChildNodeEdges: [],
+	projectSearchActive: false,
+	projectSearchString: '',
+	textConcatenationCapturing: false,
+	textConcatenationContent: '',
 }
 
 

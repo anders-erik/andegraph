@@ -5,7 +5,7 @@ let sourcePropertiesButton;
 let sourceNewButton;
 
 let sourceSearchInput;
-let sourceSearchTable;
+let sourceChildTable;
 let sourcePropertiesTable;
 
 let focusSourceSearch = false;
@@ -19,7 +19,7 @@ function initSource() {
 	// 	document.getElementById('contextOverlay').style.display = 'none';
 	// }
 
-	writeSourcePropertiesToDom();
+	// writeCurrentSourceObjectToDom();
 
 
 	sourceSearchButton = document.getElementById('ae-sourceSearchButton');
@@ -27,28 +27,26 @@ function initSource() {
 	sourceNewButton = document.getElementById('ae-sourceNewButton');
 
 	// sourceSearchInput = document.getElementById('ae-sourceSearchInput');
-	sourceSearchTable = document.getElementById('ae-sourceSearchTable');
+	sourceChildTable = document.getElementById('ae-sourceChildTable');
 	sourcePropertiesTable = document.getElementById('ae-sourcePropertiesTable');
 
 	sourceSearchButton.addEventListener('click', sourceToggleClicked);
 	sourcePropertiesButton.addEventListener('click', sourceToggleClicked);
 	sourceNewButton.addEventListener('click', addNewSourceToCurrentProject);
 
-	// sourceSearchInput.addEventListener('focus', searchSourceIn);
-	// sourceSearchInput.addEventListener('focusout', searchSourceOut);
 
-	// console.log('|||||||||||||||||||||||||||||||||||||||||||')
 
-	// keyDownDuringSearch();
-	console.log('extensionState.current_sourceObject.Uuid', extensionStateFront.current_sourceObject.Uuid)
 
-	dbisWe.Node_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid)
-		.then((data) => {
+	// console.log(JSON.stringify(extensionStateFront.current_sourceObject) == '{}')
+	// console.log(Object.keys(extensionStateFront.current_sourceObject).length === 0)
 
-			console.log(data)
-			populateSourceChildTable(data);
-			console.log('Updated source child table')
-		});
+	let sourceExistsInState = !(Object.keys(extensionStateFront.current_sourceObject).length === 0);
+
+	if (sourceExistsInState) {
+		// console.log('SOURCE DETECTED ON INIT, BUT NO LOAD IMPLEMENTED')
+		writeCurrentSourceObjectToDom();
+		populateSourceChildTableFromState();
+	}
 
 }
 
@@ -56,87 +54,119 @@ function initSource() {
 
 
 
-async function addNewSourceToCurrentProject() {
 
-	if (extensionStateFront.current_projectObject.Uuid == 0 || extensionStateFront.current_projectObject.Uuid === undefined) {
-		console.log('NO PROJECT SELECTED')
+/* 
+
+	DOM EVENTS
+
+*/
+
+
+
+async function editableSourcePropertyFocusOut() {
+
+	copySourcePropertiesFromDomToState()
+
+	await putCurrentSourceObject();
+
+	// console.log('editableSourcePRoperty - fcous out')
+
+}
+
+
+// function clickSourceChildRow(event) {
+
+// 	// console.log(event.target.dataset.Uuid)
+// 	if (event.target.dataset.node != '1') {
+// 		console.log('NOT ELEMENT WITH NODE OBJECT')
+
+// 		let nodeRow = document.getElementById('ae-sourceSearchNode-' + event.target.dataset.uuid)
+
+// 		// console.log(nodeRow.nodeObject)
+
+// 		// extensionStateFront.current_sourceUuid = nodeRow.dataset.Uuid;
+// 		extensionStateFront.current_sourceUuid = nodeRow.nodeObject.Uuid;
+// 		extensionStateFront.current_sourceObject = nodeRow.nodeObject;
+// 		document.getElementById('aa-sourceTitle').textContent = nodeRow.nodeObject.Title;
+// 		// extensionStateFront.current_sourceUuid = event.target.dataset.uuid;
+// 		console.log(extensionStateFront)
+// 		writeStateFromFront();
+
+// 		writeCurrentSourceObjectToDom();
+
+
+// 	}
+// 	else {
+// 		console.log('ELMENET CONTAINS NODEOBJECTSS')
+// 	}
+
+// }
+
+
+
+
+function sourceToggleClicked(event) {
+
+
+	sourcePropertiesButton.classList.remove('ae-sourceButtonOn');
+	sourceSearchButton.classList.remove('ae-sourceButtonOn');
+
+
+	sourceChildTable.classList.add('ae-displayNone');
+	sourcePropertiesTable.classList.add('ae-displayNone');
+
+
+	if (event.target.id === 'ae-sourceSearchButton') {
+
+		sourceSearchButton.classList.add('ae-sourceButtonOn');
+		sourceChildTable.classList.remove('ae-displayNone');
+
 	}
 	else {
-		console.log()
-		console.log('NEW SOURCE')
-		// console.log('Url:', window.location.href)
-		// console.log('Title:', document.title)
-		let newSourceObject = await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
 
-		newSourceObject.Content.Url = window.location.href;
-		newSourceObject.Content.Title = document.title;
-		// console.log('new source object: ', newSourceObject)
-
-		console.log(newSourceObject.Content)
-
-		extensionStateFront.current_sourceObject = newSourceObject.Content;
-
-		await putSourceProperties();
-
-		writeStateFromFront();
-
-		writeSourcePropertiesToDom();
-
-		// no chilren to fetch yet!
+		sourcePropertiesButton.classList.add('ae-sourceButtonOn');
+		sourcePropertiesTable.classList.remove('ae-displayNone');
 
 	}
 
 }
 
-// function searchSourceIn() {
-// 	focusSourceSearch = true;
-// 	if (sourceSearchInput.textContent == '') {
-// 		sourceSearchInput.innerHTML = '<br>';
-// 		// setInterval(() => { searchInput.innerHTML += '<br>' }, 50);
-// 	}
-// 	console.log('focus search ')
-// 	// sourceSearchInput.addEventListener('keypress', keyPressDuringSearch)
-// 	sourceSearchInput.addEventListener('keydown', keyDownDuringSearch)
-// 	keyDownDuringSearch();
-// }
 
-// function searchSourceOut() {
-// 	focusSourceSearch = false;
-// 	// console.log('focusout search ')
-// 	// sourceSearchInput.removeEventListener('keypress', keyPressDuringSearch)
-// 	sourceSearchInput.addEventListener('keydown', keyDownDuringSearch)
-// }
 
-// let lastSourceSearchString = '';
-// // Perform search with slight delay to make sure new input is written to contentEditanle input
-// function keyDownDuringSearch(keyEvent) {
-// 	// keyEvent.preventDefault();
-// 	setTimeout(() => {
 
-// 		// console.log()
-// 		lastSourceSearchString = sourceSearchInput.textContent;
-// 		dbisWe.Source_SelectLikeString(lastSourceSearchString)
-// 			.then((data) => {
-// 				// console.log(data)
-// 				populateSourceChildTable(data);
-// 			})
-// 	}, 100);
 
-// }
 
-function populateSourceChildTable(childObjects) {
+
+
+
+
+
+
+/* 
+
+	READ WRITE DOM
+
+*/
+
+
+
+function populateSourceChildTableFromState() {
 	// console.log('populate with children dones', childObjects)
 
-	console.log('childObjects', childObjects)
+	// console.log('childObjects', childObjects)
 
-	let tbody = document.getElementById('ae-sourceSearchTable-tbody');
+	let childObjects = extensionStateFront.current_sourceChildNodeEdges;
+
+
+	let tbody = document.getElementById('ae-sourceChildTable-tbody');
 	tbody.innerHTML = '';
 
 	for (let childObject of childObjects) {
 		let tableRowHtml = `
                 
-                <th data-Uuid="${childObject.Uuid}" class="ae-element">${childObject.Table}</th>
-                <td data-Uuid="${childObject.Uuid}" class="ae-element">${childObject.Title}</td>
+                <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childObject.Uuid}">${childObject.Table}</th>
+				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childObject.Uuid}">${childObject.Type}</td>
+                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childObject.Uuid}">${childObject.Title}</td>
 
             `;
 		let tr = document.createElement('tr');
@@ -148,7 +178,8 @@ function populateSourceChildTable(childObjects) {
 		tr.setAttribute('data-Uuid', childObject.Uuid);
 		tr.tabIndex = 0;
 		tr.innerHTML = tableRowHtml;
-		tr.addEventListener('click', clickSourceRow);
+		// tr.addEventListener('click', clickSourceChildRow);
+		tr.addEventListener('click', (event) => { console.log(event.target.parentNode.nodeObject) });
 		// tr.contentEditable = 'True';
 
 		tbody.append(tr);
@@ -158,39 +189,13 @@ function populateSourceChildTable(childObjects) {
 
 }
 
-function clickSourceRow(event) {
-	// console.log(event.target.dataset.Uuid)
-	if (event.target.dataset.node != '1') {
-		console.log('NOT ELEMENT WITH NODE OBJECT')
-
-		let nodeRow = document.getElementById('ae-sourceSearchNode-' + event.target.dataset.uuid)
-
-		// console.log(nodeRow.nodeObject)
-
-		// extensionStateFront.current_sourceUuid = nodeRow.dataset.Uuid;
-		extensionStateFront.current_sourceUuid = nodeRow.nodeObject.Uuid;
-		extensionStateFront.current_sourceObject = nodeRow.nodeObject;
-		document.getElementById('aa-sourceTitle').textContent = nodeRow.nodeObject.Title;
-		// extensionStateFront.current_sourceUuid = event.target.dataset.uuid;
-		console.log(extensionStateFront)
-		writeStateFromFront();
-
-		writeSourcePropertiesToDom();
-
-
-	}
-	else {
-		console.log('ELMENET CONTAINS NODEOBJECTSS')
-	}
 
 
 
-}
-
-function writeSourcePropertiesToDom() {
+function writeCurrentSourceObjectToDom() {
 
 	let sourceObject = extensionStateFront.current_sourceObject;
-	extensionStateFront.current_sourceUuid = sourceObject.Uuid;
+	// extensionStateFront.current_sourceUuid = sourceObject.Uuid;
 
 	document.getElementById('aa-sourceTitle').textContent = sourceObject.Title;
 
@@ -199,13 +204,13 @@ function writeSourcePropertiesToDom() {
 
 	for (const key in sourceObject) {
 		// console.log(`${key}: ${sourceObject[key]}`);
-		if (key === 'Type' || key === 'Title' || key === 'Goal') {
+		if (key === 'Type' || key === 'Title' || key === 'Url' || key === 'IAmSource') {
 
 			tbody.innerHTML += `
 		
 			<tr>
-				<th id=ae-projPropTable-${key}-key class="ae-element" >${key}</th>
-				<td id=ae-projPropTable-${key}-value class="ae-editableSourceProperty ae-element" contenteditable="true" >${sourceObject[key]}</td>
+				<th id=ae-sourcePropTable-${key}-key class="ae-element" >${key}</th>
+				<td id=ae-sourcePropTable-${key}-value class="ae-editableSourceProperty ae-element" contenteditable="true" >${sourceObject[key]}</td>
 			</tr>
 		
 		`;
@@ -215,8 +220,8 @@ function writeSourcePropertiesToDom() {
 			tbody.innerHTML += `
 		
 			<tr>
-				<th id=ae-projPropTable-${key}-key class="ae-element" >${key}</th>
-				<td id=ae-projPropTable-${key}-value class="ae-element">${sourceObject[key]}</td>
+				<th id=ae-sourcePropTable-${key}-key class="ae-element" >${key}</th>
+				<td id=ae-sourcePropTable-${key}-value class="ae-element">${sourceObject[key]}</td>
 			</tr>
 		
 		`;
@@ -228,95 +233,139 @@ function writeSourcePropertiesToDom() {
 	let editableSourcePropertyTds = document.querySelectorAll('.ae-editableSourceProperty');
 	// console.log(editableSourcePropertyTd)
 	for (let editableSourcePropertyTd of editableSourcePropertyTds) {
-		console.log(editableSourcePropertyTd.textContent);
+		// console.log(editableSourcePropertyTd.textContent);
 		// console.log(propertyRow.textContent.length)
-		editableSourcePropertyTd.addEventListener('focusout', readSourcePropertiesFromDomAndWritePut)
-		// editableSourcePropertyTd.addEventListener('focusout', postSourceProperties)
+		// editableSourcePropertyTd.addEventListener('focusout', readSourcePropertiesFromDomAndWritePut)
+		editableSourcePropertyTd.addEventListener('focusout', editableSourcePropertyFocusOut)
+
 	}
 
 }
 
-// extract values, update title, save to extensionStateFront, and then return the object
-function readSourcePropertiesFromDomAndWritePut() {
 
-	// let tbody = document.getElementById('ae-sourcePropertiesTable-tbody');
+function copySourcePropertiesFromDomToState() {
 
-	// let editableSourcePropertyTds = document.querySelectorAll('.ae-editableSourceProperty');
 
-	// for (let editableSourcePropertyTd of editableSourcePropertyTds) {
-	// 	console.log(editableSourcePropertyTd.textContent);
-	// 	// console.log(propertyRow.textContent.length)
-	// 	editableSourcePropertyTd.addEventListener('focusout', readSourcePropertiesFromDom)
-	// 	editableSourcePropertyTd.addEventListener('focusout', postSourceProperties)
-	// }
 
-	let newType = document.getElementById('ae-projPropTable-Type-value').textContent;
-	let newTitle = document.getElementById('ae-projPropTable-Title-value').textContent;
-	let newGoal = document.getElementById('ae-projPropTable-Goal-value').textContent;
-
-	// SET TITLE
-	document.getElementById('aa-sourceTitle').textContent = newTitle;
-
-	extensionStateFront.current_sourceObject.Type = newType;
-	extensionStateFront.current_sourceObject.Title = newTitle;
-	extensionStateFront.current_sourceObject.Goal = newGoal;
+	extensionStateFront.current_sourceObject.Uuid = document.getElementById('ae-sourcePropTable-Uuid-value').textContent;
+	extensionStateFront.current_sourceObject.Table = document.getElementById('ae-sourcePropTable-Table-value').textContent;
+	extensionStateFront.current_sourceObject.Type = document.getElementById('ae-sourcePropTable-Type-value').textContent;
+	extensionStateFront.current_sourceObject.Title = document.getElementById('ae-sourcePropTable-Title-value').textContent;
+	extensionStateFront.current_sourceObject.TimeCreated = document.getElementById('ae-sourcePropTable-TimeCreated-value').textContent;
+	extensionStateFront.current_sourceObject.TimeLastChange = document.getElementById('ae-sourcePropTable-TimeLastChange-value').textContent;
+	extensionStateFront.current_sourceObject.Url = document.getElementById('ae-sourcePropTable-Url-value').textContent;
+	extensionStateFront.current_sourceObject.IAmSource = document.getElementById('ae-sourcePropTable-IAmSource-value').textContent;
 
 	writeStateFromFront();
 
+
 	// console.log(extensionStateFront.current_sourceObject)
-
-	console.log(newType, newTitle, newGoal)
-
-	putSourceProperties();
-
-	return '';
-}
-
-
-
-async function putSourceProperties() {
-	// console.log('Posting current source properties', readSourcePropertiesFromDom())
-	console.log('PUT SourceObject: ', extensionStateFront.current_sourceObject)
-	await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_sourceObject);
-
-
 }
 
 
 
 
-function sourceToggleClicked(event) {
-	// sourcePropertiesButton.style.backgroundColor = 'rgba(26, 133, 180, 0.568)';
-	// sourceSearchButton.style.backgroundColor = 'rgba(26, 133, 180, 0.568)';
-
-	sourcePropertiesButton.classList.remove('ae-sourceButtonOff');
-	sourcePropertiesButton.classList.remove('ae-sourceButtonOn');
-	sourceSearchButton.classList.remove('ae-sourceButtonOff');
-	sourceSearchButton.classList.remove('ae-sourceButtonOn');
-
-
-	// sourceSearchInput.classList.add('ae-displayNone');
-	// sourceSearchInput.classList.remove('ae-centerWithFlex');
-	sourceSearchTable.classList.add('ae-displayNone');
-
-	sourcePropertiesTable.classList.add('ae-displayNone');
 
 
 
 
-	if (event.target.id === 'ae-sourceSearchButton') {
-		sourceSearchButton.classList.add('ae-sourceButtonOn');
-		sourcePropertiesButton.classList.add('ae-sourceButtonOff');
+/* 
 
-		// sourceSearchInput.classList.remove('ae-displayNone');
-		// sourceSearchInput.classList.add('ae-centerWithFlex');
-		sourceSearchTable.classList.remove('ae-displayNone');
+	ADD FUNCTIONS
+
+*/
+
+
+
+async function addNewSourceToCurrentProject() {
+
+	// if (extensionStateFront.current_projectObject.Uuid == 0 || extensionStateFront.current_projectObject.Uuid === undefined) {
+	if (extensionStateFront.current_projectObject.Uuid === undefined) {
+		console.log('NO PROJECT SELECTED')
 	}
 	else {
-		sourceSearchButton.classList.add('ae-sourceButtonOff');
-		sourcePropertiesButton.classList.add('ae-sourceButtonOn');
+		console.log()
+		console.log('NEW SOURCE')
+		// console.log('Url:', window.location.href)
+		// console.log('Title:', document.title)
+		let newSourceContentEdge = await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
 
-		sourcePropertiesTable.classList.remove('ae-displayNone');
+		let newSourceObject = newSourceContentEdge.Content;
+		newSourceObject.Url = window.location.href;
+		newSourceObject.Title = document.title;
+		// console.log('new source object: ', newSourceObject)
+
+		// console.log(newSourceObject)
+
+		extensionStateFront.current_sourceObject = newSourceObject;
+
+		// extensionStateFront.current_sourceObject = newSourceObject.Content;
+
+		await putCurrentSourceObject();
+
+		writeCurrentSourceObjectToDom();
+
+		await fetchCurrentProjectChildrenThenWriteToStates();
+
+
+		writeProjectChildrenFromStateToDom()
+
+
+		writeStateFromFront();
+
+
+
+		// writeCurrentSourceObjectToDom();
+
+		// no chilren to fetch yet!
+
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+/* 
+
+	FETCH FUNCTIONS
+
+*/
+
+async function fetchCurrentSourceChildrenThenWriteToStates() {
+
+
+	extensionStateFront.current_sourceChildNodeEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
+
+
+	writeStateFromFront();
+
+
+}
+
+async function putCurrentSourceObject() {
+	// console.log('Posting current source properties', readSourcePropertiesFromDom())
+	// console.log('PUT SourceObject: ', extensionStateFront.current_sourceObject)
+
+	console.log(extensionStateFront.current_sourceObject)
+	await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_sourceObject);
+
+}
+
+
+
+
+
+
+
+
+
+
+

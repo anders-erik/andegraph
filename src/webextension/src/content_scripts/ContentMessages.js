@@ -1,7 +1,7 @@
 
 // LISTEN FOR MESSAGES
 browser.runtime.onMessage.addListener((message) => {
-	console.log('evevev')
+	// console.log('evevev')
 
 	if (message.name === 'startExtension') {
 		// startExtension();
@@ -37,12 +37,14 @@ browser.runtime.onMessage.addListener((message) => {
 
 
 	if (message.name === 'responseBackStateOnFrontLoaded') {
-		console.log('STATE FROM BACK ON PAGE LOAD')
-		extensionStateFront = message.state;
-		console.log('new state', extensionStateFront)
+		console.log('State recieved from back on front load')
 
-		initProject();
-		initSource();
+		extensionStateFront = message.state;
+		// console.log('new state', extensionStateFront)
+
+		initExtension();
+		// initProject();
+		// initSource();
 
 		if (extensionStateFront.active) {
 			showOverlay();

@@ -29,11 +29,11 @@ async function Source_Update(sourceObject) {
         db.all(queryString,
             [sourceObject.Uuid, sourceObject.Table, sourceObject.Type, sourceObject.Title, sourceObject.TimeCreated, sourceObject.Url, sourceObject.IAmSource, sourceObject.Uuid],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               acc(1);
-               
-           });
+                acc(1);
+
+            });
 
     });
 }

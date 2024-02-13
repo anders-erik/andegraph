@@ -7,31 +7,65 @@ let extensionStateFront = {
 	current_tabId: 0,
 	current_tabUrl: '',
 	current_tabTitle: '',
-	current_projectUuid: 0,
+	// current_projectUuid: 0,
 	current_projectObject: {},
-	current_sourceUuid: 0,
+	current_projectSearchObjects: [],
+	current_projectChildNodeEdges: [],
+	// current_sourceUuid: 0,
 	current_sourceObject: {},
-	current_sourceChildNodes: [],
+	current_sourceChildNodeEdges: [],
+	projectSearchActive: false,
+	projectSearchString: '',
+	textConcatenationCapturing: false,
+	textConcatenationContent: '',
 }
 
 
+function initExtension() {
 
-function writeToState(propertiesToWriteObject) {
+	console.log("initExtension()")
 
-	// let entries = Object.entries(propertiesToWriteObject)
-	// let data = entries.map(([key, val] = entry) => {
-	// 	// return `The ${key} is ${val}`;
-	// 	console.log(`The ${key} is ${val}`)
-	// });
 
-	Object.keys(propertiesToWriteObject).forEach(key => {
-		console.log(key, ':', propertiesToWriteObject[key]);
+	initProject();
+	initSource();
+	initClipboard();
 
-	});
 
-	console.log(extensionStateFront)
+	if (extensionStateFront.active) {
+
+		showOverlay();
+		addExtensionActiveEventListener();
+
+	}
+	else {
+
+		hideOverlay();
+		removeExtensionActiveEventListener();
+
+	}
+
+
+
 
 }
+
+
+// function writeToState(propertiesToWriteObject) {
+
+// 	// let entries = Object.entries(propertiesToWriteObject)
+// 	// let data = entries.map(([key, val] = entry) => {
+// 	// 	// return `The ${key} is ${val}`;
+// 	// 	console.log(`The ${key} is ${val}`)
+// 	// });
+
+// 	Object.keys(propertiesToWriteObject).forEach(key => {
+// 		console.log(key, ':', propertiesToWriteObject[key]);
+
+// 	});
+
+// 	console.log(extensionStateFront)
+
+// }
 // writeToState({ active: 'true' });
 
 
@@ -50,7 +84,7 @@ function writeToState(propertiesToWriteObject) {
 // function updateFrontOnState() {
 
 // }
-console.log("Reload page update. ")
+console.log("index.js run.")
 browser.runtime.sendMessage({
 	name: "requestBackStateOnFrontLoaded",
 });
@@ -63,6 +97,31 @@ document.addEventListener("focus", function () {
 	});
 
 })
+
+
+
+
+function addExtensionActiveEventListener() {
+
+	document.addEventListener('copy', copyEvent)
+	document.addEventListener('cut', cutEvent)
+	document.addEventListener('paste', pasteEvent)
+	document.addEventListener('keydown', keydownActiveExtension)
+
+	console.log('event listerners for active extension added')
+}
+
+
+function removeExtensionActiveEventListener() {
+
+	document.removeEventListener('copy', copyEvent)
+	document.removeEventListener('cut', cutEvent)
+	document.removeEventListener('paste', pasteEvent)
+	document.removeEventListener('keydown', keydownActiveExtension)
+
+	console.log('event listerners for active extension removed')
+}
+
 
 
 

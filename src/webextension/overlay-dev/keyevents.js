@@ -7,73 +7,9 @@ let waitingSecondShift = 0;
 let waitingSecondCtrlShift = 0;
 
 
-function addExtensionActiveEventListener() {
-
-	document.addEventListener('copy', copyEvent)
-	document.addEventListener('cut', cutEvent)
-	document.addEventListener('paste', pasteEvent)
-	document.addEventListener('keydown', keydownActiveExtension)
-
-	console.log('event listerners for active extension added')
-}
-
-function removeExtensionActiveEventListener() {
-
-	document.removeEventListener('copy', copyEvent)
-	document.removeEventListener('cut', cutEvent)
-	document.removeEventListener('paste', pasteEvent)
-	document.removeEventListener('keydown', keydownActiveExtension)
-
-	console.log('event listerners for active extension removed')
-}
 
 
 
-
-
-
-
-
-function copyEvent(event) {
-
-	// console.log('copcop')
-	// console.log(event.clipboardData )
-	// let cbd = event.clipboardData || window.clipboardData
-	// let copiedData = cbd.getData('Text');
-	// console.log('copiedData', copiedData)
-
-	// browser.runtime.sendMessage( {
-	// 	command: "copycopy"
-	// });
-
-	console.log('COPYEVENT')
-
-
-	// navigator.clipboard
-	// 	.read()
-	// 	.then(
-	// 		(clipText) => (console.log(clipText)),
-	// 	);
-
-}
-
-function pasteEvent(event) {
-	// console.log('pastepaste')
-	console.log('PASTE EVENT')
-	console.log(event.clipboardData.files[0])
-	// let pastedData = event.clipboardData.getData('Text');
-	// console.log(pastedData)
-
-
-}
-// const paspas = new ClipboardEvent('paste');
-// document.dispatchEvent(paspas);
-
-
-
-function cutEvent(event) {
-	console.log('CUT EVENT')
-}
 
 
 
@@ -89,6 +25,10 @@ async function keydownActiveExtension(keyEvent) {
 	if (document.activeElement.isContentEditable) {
 		// console.log('EDITABLE')
 		return;
+	}
+
+	if (keyEvent.key === 'Escape') {
+		stopClipboardTextConcatenation();
 	}
 
 
@@ -131,9 +71,6 @@ async function keydownActiveExtension(keyEvent) {
 	if (keyEvent.ctrlKey) {
 
 		switch (keyEvent.key) {
-			case 'c':
-				console.log('Ctrl + c')
-				break;
 			case '`':
 				console.log('Ctrl + `')
 				break;
@@ -180,12 +117,44 @@ async function keydownActiveExtension(keyEvent) {
 				// console.log('Alt + p')
 				console.log(extensionStateFront);
 				break;
+
 			case '[':
-				console.log('Alt + [')
+				// console.log('Alt + [')
+				startClipboardTextConcatenation();
+
 				break;
+
+			case 'Enter':
+				// console.log('Alt + Enter')
+				// console.log('before: ', extensionStateFront.textConcatenationContent);
+				addNewLineToCaptureConcatenationContents()
+				// console.log('after: ', extensionStateFront.textConcatenationContent);
+				break;
+
+			case '-':
+				// console.log('Alt + Enter')
+				// console.log('before: ', extensionStateFront.textConcatenationContent);
+				addSpaceCharacterToCaptureConcatenationContents();
+				// console.log('after: ', extensionStateFront.textConcatenationContent);
+				break;
+
 			case ']':
-				console.log('Alt + ]')
+				// console.log('Alt + ]')
+				console.log('New text concatentation shard: ');
+				console.log(extensionStateFront.textConcatenationContent)
+
+				if (clipboardCodeCheckbox.checked) {
+					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardCodeSelect.value, extensionStateFront.textConcatenationContent)
+				}
+				else {
+					await postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(extensionStateFront.textConcatenationContent);
+				}
+
+
+
+				stopClipboardTextConcatenation();
 				break;
+
 
 
 			default:
