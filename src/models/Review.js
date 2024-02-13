@@ -1,8 +1,8 @@
 
-const {newUuid} = require('../utils/uuid-v0.2');
-const {currentUnixTime} = require('../utils/TimeDate');
+const { newUuid } = require('../utils/uuid-v0.2');
+const { currentUnixTime } = require('../utils/TimeDate');
 
-function emptyReview(){
+function emptyReview() {
 	return {
 		Uuid: newUuid(),
 		Table: 'Review',
@@ -18,6 +18,15 @@ function emptyReview(){
 	}
 }
 
-module.exports =  {
+
+let basicReviewSchedule = {
+	shortTermDayCount: 60,
+	shortTermReviewCount: 7,
+	longTermDayCount: 3650,
+	longTermReviewCount: 8,
+}
+
+module.exports = {
 	emptyReview,
+	basicReviewSchedule,
 }

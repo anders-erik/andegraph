@@ -1,19 +1,19 @@
 
-const {newUuid} = require('../utils/uuid-v0.2');
+const { newUuid } = require('../utils/uuid-v0.2');
 
-function emptyEdge(){
+function emptyEdge() {
 	return {
 		Uuid: newUuid(),
 		Node1Uuid: 0,
 		Node2Uuid: 0,
 		Directed: 0,
-		Type: 0,
+		Type: '',
 		Order: 0,
-		Path: 0,
+		Path: '/',
 
 	}
 }
 
-module.exports =  {
+module.exports = {
 	emptyEdge,
 }

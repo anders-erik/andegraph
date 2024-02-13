@@ -4,11 +4,11 @@ let dbi = require('../db-interface/DbInterface');
 
 
 module.exports = async (req, res) => {
-    //console.log(req.headers.id)
+	//console.log(req.headers.id)
 
 	// queries = require('../db-interface/Queries');
 
-    let functionstring = req.params.functionstring;
+	let functionstring = req.params.functionstring;
 	console.log(functionstring)
 	let bodyArray = req.body;
 	console.log(bodyArray)
@@ -27,8 +27,12 @@ module.exports = async (req, res) => {
 			returnArray = await dbi.procedures.Content_InsertOnTable(bodyArray[0]);
 			break;
 
-		
-			
+		case 'Review-InsertScheduleOnUuid':
+			console.log(functionstring, 'selected. ', bodyArray, ' as bodyArray.');
+			await dbi.procedures.Review_InsertScheduleOnUuid(bodyArray[0], bodyArray[1]);
+			break;
+
+
 		default:
 			res.status(400).send({});
 			return;

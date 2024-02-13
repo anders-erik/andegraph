@@ -1802,6 +1802,7 @@ class dbisWe {
 			// .then(file => URL.createObjectURL(file))
 			// .then(fileUrl => window.open(fileUrl, '_blank'))
 		} catch (error) {
+			console.log(response.status, url)
 			console.error(error);
 		}
 
@@ -1843,6 +1844,7 @@ class dbisWe {
 			}
 			// console.table(data);
 		} catch (error) {
+			console.log(response.status, url)
 			console.error(error);
 		}
 
@@ -1864,6 +1866,8 @@ class dbisWe {
 	static async Content_UpdateOnContentObject(contentObject) { return await contentPut('Content-UpdateOnContentObject', contentObject) };
 
 	static async Content_InsertOnTable(table) { return contentPost('Content-InsertOnTable', { 'Table': table }) };
+
+	static async Review_InsertScheduleOnUuid(Uuid, scheduleType) { return contentPost('Review-InsertScheduleOnUuid', { 'Uuid': Uuid, 'scheduleType': scheduleType }) };
 
 	static async Content_InsertChildUuidTable(Uuid, childTable) { return contentPost('Content-InsertChildUuidTable', { 'Uuid': Uuid, 'Table': childTable }) };
 }
@@ -1921,6 +1925,7 @@ async function contentGet(functionstring, paramObject) {
 		return data;
 		// console.table(data);
 	} catch (error) {
+		console.log(response.status, url)
 		console.error(error);
 	}
 
@@ -1947,6 +1952,7 @@ async function nodeGet(functionstring, paramObject) {
 		return data;
 		// console.table(data);
 	} catch (error) {
+		console.log(response.status, url)
 		console.error(error);
 	}
 
@@ -1987,6 +1993,7 @@ async function contentPost(functionstring, paramObject) {
 		}
 		// console.table(data);
 	} catch (error) {
+		console.log(response.status, url)
 		console.error(error);
 	}
 
@@ -2017,6 +2024,7 @@ async function contentPut(functionstring, putObject) {
 		}
 		// console.table(data);
 	} catch (error) {
+		console.log(response.status, url)
 		console.error(error);
 	}
 
@@ -2894,6 +2902,8 @@ async function addNewSourceToCurrentProject() {
 
 		writeCurrentSourceObjectToDom();
 
+		dbisWe.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '')
+
 		await fetchCurrentProjectChildrenThenWriteToStates();
 
 
@@ -2902,7 +2912,7 @@ async function addNewSourceToCurrentProject() {
 
 		writeStateFromFront();
 
-
+		// Review_InsertScheduleOnUuid(Uuid, scheduleType)
 
 		// writeCurrentSourceObjectToDom();
 

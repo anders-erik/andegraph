@@ -16,11 +16,13 @@ const { Content_InsertOnTable } = require('./procedures/Content_InsertOnTable');
 const { Content_DropFullOnUuid } = require('./procedures/Content_DropFullOnUuid');
 const { Content_UpdateOnContentObject } = require('./procedures/Content_UpdateOnContentObject');
 
+// REVIEWS
+const { Review_InsertScheduleOnUuid } = require('./procedures/Review_InsertScheduleOnUuid');
 
 
 
 module.exports = {
-	
+
 	Content_SelectFromNode,
 	Content_InsertObject,
 	Content_InsertChildUuidTable,
@@ -35,6 +37,9 @@ module.exports = {
 	Content_SelectOnUuid,
 	Content_DropFullOnUuid,
 	Content_UpdateOnContentObject,
+
+	// REVIEWS
+	Review_InsertScheduleOnUuid,
 
 }
 

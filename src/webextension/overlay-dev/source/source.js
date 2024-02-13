@@ -305,6 +305,8 @@ async function addNewSourceToCurrentProject() {
 
 		writeCurrentSourceObjectToDom();
 
+		dbisWe.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '')
+
 		await fetchCurrentProjectChildrenThenWriteToStates();
 
 
@@ -313,7 +315,7 @@ async function addNewSourceToCurrentProject() {
 
 		writeStateFromFront();
 
-
+		// Review_InsertScheduleOnUuid(Uuid, scheduleType)
 
 		// writeCurrentSourceObjectToDom();
 
