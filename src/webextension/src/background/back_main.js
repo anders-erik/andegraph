@@ -30,7 +30,6 @@ writeCurrentTabToState();
 
 
 
-
 // browser.tabs.sendMessage(extensionState.current_tabId, {
 // 	name: 'currentState',
 // 	state: extensionState

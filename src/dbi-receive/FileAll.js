@@ -28,14 +28,14 @@ module.exports = async (req, res) => {
 
 
 	switch (req.method) {
-		
+
 		case 'GET':
 
 
 			// console.log(fileObject)
 			// console.log(`/data/live/files-v0.2/${fileObject.Uuid}`)
 			// console.log(`${fileObject.Title}.${fileObject.Extension}`)
-			
+
 			res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
 			res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);
 			break;
@@ -54,11 +54,14 @@ module.exports = async (req, res) => {
 				// console.log('DOES NOT EXIST')
 				// Buffer.from(new Uint8Array(req.body))
 
+				// console.log(req.headers)
+				// console.log('TEST: ', filePath, req.body);
 				fs.writeFileSync(filePath, req.body);
-				
+
+
 
 				// console.log(fileQuery);
-				let newFileObject = {...fileObject}
+				let newFileObject = { ...fileObject }
 				newFileObject.Type = fileQuery.Type;
 				newFileObject.Title = fileQuery.Title;
 				newFileObject.Extension = fileQuery.Extension;
@@ -70,14 +73,15 @@ module.exports = async (req, res) => {
 				console.table([fileObject, newFileObject])
 
 				await dbi.queries.File_Update(newFileObject);
+				await dbi.queries.Node_Update(newFileObject);
 				// await dbi.queries.File_Update(fileObject);
 
 
 				// fs.linkSync(filePath, filePath + '-' + newFileObject.Title + '.' + newFileObject.Extension )
-				cp.execSync(`ln -s ${newFileObject.Uuid} ${filePath}-${newFileObject.Title}.${newFileObject.Extension}`);
+				cp.execSync(`ln -s ${newFileObject.Uuid} "${filePath}-${newFileObject.Title}.${newFileObject.Extension}"`);
 
 				// fs.writeFileSync(filePath + '.' + newFileObject.Extension,  Buffer.from(new Uint8Array(req.body)));
-				
+
 
 				// console.log('new file')
 				// console.log(fileObject)
@@ -122,18 +126,19 @@ module.exports = async (req, res) => {
 				console.table([fileObject, newFileObject])
 
 				await dbi.queries.File_Update(newFileObject);
+				await dbi.queries.Node_Update(newFileObject);
 				// await dbi.queries.File_Update(fileObject);
 
 
 				// fs.linkSync(filePath, filePath + '-' + newFileObject.Title + '.' + newFileObject.Extension )
 				//cp.execSync(`ln -s ${newFileObject.Uuid} ${filePath}-${newFileObject.Title}.${newFileObject.Extension}`);
-				try{
+				try {
 					cp.execSync(`rm ${filePath}-*`);
 				}
-				catch(error){
+				catch (error) {
 
 				}
-				
+
 				cp.execSync(`ln -s ${newFileObject.Uuid} ${filePath}-${newFileObject.Title}.${newFileObject.Extension}`);
 				// fs.writeFileSync(filePath + '.' + newFileObject.Extension,  Buffer.from(new Uint8Array(req.body)));
 
@@ -165,10 +170,10 @@ module.exports = async (req, res) => {
 
 				fs.unlinkSync(filePath);
 
-				try{
+				try {
 					cp.execSync(`rm ${filePath}-*`);
 				}
-				catch(error){
+				catch (error) {
 
 				}
 
@@ -193,6 +198,6 @@ module.exports = async (req, res) => {
 
 
 
-function getContentHeader(fileExtension){
+function getContentHeader(fileExtension) {
 
 }

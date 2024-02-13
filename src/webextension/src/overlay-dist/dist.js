@@ -975,7 +975,7 @@ styleSheet.innerText = `
 	background-color: rgba(77, 44, 44, 0.618);
 	height: 98%;
 	margin-right: 8px;
-	width: 300px;
+	width: 320px;
 	overflow-x: hidden;
 	box-shadow: 0 0 0 2px rgb(0, 0, 0);
 
@@ -1103,7 +1103,7 @@ function initClipboard() {
 	clipboardCodeCheckbox = document.getElementById('ae-clipboardCodeCheckbox');
 	clipboardCodeSelect = document.getElementById('ae-clipboardCodeSelect');
 
-	clipboardCodeCheckbox.addEventListener('click', toggleSelectCode);
+	clipboardCodeCheckbox.addEventListener('change', toggleSelectCode);
 
 	writeTextConcatenationContentToDom();
 
@@ -1199,7 +1199,7 @@ function toggleSelectCode() {
 
 }
 
-function pasteEvent(event) {
+async function pasteEvent(event) {
 	// console.log('pastepaste')
 	console.log('PASTE EVENT')
 	// console.log(event.clipboardData.files[0])
@@ -1258,9 +1258,28 @@ function pasteEvent(event) {
 	else if (clipboardContentType === 'file') {
 		console.log('deal with file')
 
+		let newFile = event.clipboardData.files[0];
 
-		let fileCategoryObject = determineFileCategories(event.clipboardData.files[0]);
-		console.log(fileCategoryObject)
+		let fileCategoryObject = determineFileCategories(newFile);
+		console.log('fileCategoryObject: ', fileCategoryObject)
+
+		if (fileCategoryObject.fileType === 'typetype') {
+			console.error('FILE EXTENSION HAD NO MATCHING CONTENT TYPE')
+			return;
+		}
+
+		let postFileQueryParameters = {
+			Type: fileCategoryObject.fileType,
+			Title: fileCategoryObject.baseFileName,
+			Extension: fileCategoryObject.fileExtension,
+			IAmAuthor: 0,
+		}
+
+		postNewFileToCurrentSourceAndFullReloadOfSourceChildren(newFile, postFileQueryParameters, fileCategoryObject.mimeType);
+
+		// console.log(newFile)
+
+		// console.log(await dbisWe.fileGet(121627279360));
 
 		// let sourceid = extractCurrentSourceId();
 
@@ -1314,6 +1333,109 @@ function copyEvent(event) {
 
 function cutEvent(event) {
 	console.log('CUT EVENT')
+}
+
+
+
+/* 
+
+	HELPER FUNCTIONS
+
+*/
+
+
+
+
+let determineClipboardContentType = function (eventClipboardData) {
+
+	if (typeof eventClipboardData.files[0] !== 'undefined') {
+		// postFile(dataClipboardEvent.files[0], sourceid, shardid);
+		return 'file';
+	}
+	else if ((eventClipboardData || window.clipboardData).getData("text") !== '') {
+		//console.log((event.clipboardData || window.clipboardData).getData("text"));
+
+		let clipboardText = (eventClipboardData || window.clipboardData).getData("text");
+		let blob = new Blob([clipboardText], { type: 'text/plain' });
+		let file = new File([blob], "clipboard.txt", { type: "text/plain" });
+
+		//postFile(file, sourceid, shardid);
+		return 'text';
+	}
+	else {
+		console.log('No file nor text detected.');
+		return 'empty';
+	}
+
+	//return 'clipboardContentType';
+}
+
+
+
+
+
+let extensionObject = {
+	// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
+	image: ['apng', 'avif', 'gif', 'bmp', 'jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg', 'webp'],
+	// https://www.canto.com/blog/audio-file-types/
+	audio: ['m4a', 'flac', 'mp3', 'wav', 'wma', 'aac'],
+	// https://www.adobe.com/creativecloud/video/discover/best-video-format.html
+	video: ['mp4', 'mov', 'wmv', 'avi', 'AVCHD', 'flv', 'f4v', 'swf', 'mkv', 'webm', 'mpg'],
+	pdf: ['pdf'],
+	data: ['json', 'csv', 'tsv', 'db', 'xlsx', 'ods', 'odb'],
+	// Textarea extension
+	text: ['txt', 'md'],
+	code: ['js', 'ts', 'css', 'html', 'cs'],
+}
+
+
+
+function determineFileCategories(selectedFile) {
+
+	let fileCategories = {
+		mimeType: selectedFile.type,
+		baseFileName: 'basename',
+		fileExtension: 'extext',
+		fileType: 'typetype'
+	}
+
+
+
+	fileCategories.fileExtension = determineFileExtension(selectedFile);
+	fileCategories.baseFileName = determineBaseFileName(selectedFile);
+
+	// fileCategories.fileType = determineFileType(fileCategories.mimeType, fileCategories.fileEnding);
+
+	// fileCategories.fileType = Object.entries(extensionObject).forEach(typeArray => typeArray.filter(extension => extension === fileCategories.fileExtension))
+	fileCategories.fileType = Object.keys(extensionObject).find(type => extensionObject[type].includes(fileCategories.fileExtension));
+	// console.log(fileCategories.fileType)
+	//console.log('file type determined here!');
+	// if (fileCategories.fileExtension === 'db') {
+	// 	// http://fileformats.archiveteam.org/wiki/DB_(SQLite)
+	// 	fileCategories.mimeType = 'application/vnd.sqlite3';
+	// }
+	console.log(fileCategories.mimeType)
+	if (fileCategories.mimeType == '') {
+		// fileCategories.mimeType == 'application/stream';
+		fileCategories.mimeType = 'application/octet-stream';
+	}
+
+	return fileCategories;
+}
+
+
+
+
+function determineFileExtension(selectedFile) {
+
+	return selectedFile.name.match(/\w+$/g)[0];
+
+}
+
+function determineBaseFileName(selectedFile) {
+
+	return selectedFile.name.match(/^.*(?=\.[^.]+$)/)[0];
+
 }
 
 
@@ -1386,207 +1508,42 @@ async function postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(Typ
 
 }
 
+async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, queryParams, mimeType) {
 
-// The Annunciation is an oil painting by the Early Netherlandish painter Hans Memling.It depicts the Annunciation, the archangel Gabriel's announcement to the Virgin Mary that she would conceive and become the mother of Jesus, described in the Gospel of Luke. 
+	let sourceUuid = extensionStateFront.current_sourceObject.Uuid;
+
+	console.log(sourceUuid)
+
+	// Content_InsertChildUuidTable(Uuid, childTable)
+	if (sourceUuid !== undefined) {
+
+		let newFileObject = (await dbisWe.Content_InsertChildUuidTable(sourceUuid, 'File')).Content;
+
+		// console.log(newTextObject)
+
+		// newFileObject.Title = CodeContent.substring(0, 25);
+		// newFileObject.Type = Type;
+		// newFileObject.CodeContent = CodeContent;
 
 
-let determineClipboardContentType = function (eventClipboardData) {
+		// await dbisWe.Content_UpdateOnContentObject(newFileObject);
+		await dbisWe.filePost(newFileObject.Uuid, file, queryParams, mimeType);
 
-	if (typeof eventClipboardData.files[0] !== 'undefined') {
-		// postFile(dataClipboardEvent.files[0], sourceid, shardid);
-		return 'file';
-	}
-	else if ((eventClipboardData || window.clipboardData).getData("text") !== '') {
-		//console.log((event.clipboardData || window.clipboardData).getData("text"));
 
-		let clipboardText = (eventClipboardData || window.clipboardData).getData("text");
-		let blob = new Blob([clipboardText], { type: 'text/plain' });
-		let file = new File([blob], "clipboard.txt", { type: "text/plain" });
 
-		//postFile(file, sourceid, shardid);
-		return 'text';
+		await fetchCurrentSourceChildrenThenWriteToStates();
+
+		populateSourceChildTableFromState();
+
 	}
 	else {
-		console.log('No file nor text detected.');
-		return 'empty';
+		console.log('No slected source. Couldn"t POST file.')
 	}
-
-	//return 'clipboardContentType';
-}
-
-
-
-
-
-let extensionObject = {
-	// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
-	image: ['apng', 'avif', 'gif', 'jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg', 'webp'],
-	// https://www.canto.com/blog/audio-file-types/
-	audio: ['m4a', 'flac', 'mp3', 'wav', 'wma', 'aac'],
-	// https://www.adobe.com/creativecloud/video/discover/best-video-format.html
-	video: ['mp4', 'mov', 'wmv', 'avi', 'AVCHD', 'flv', 'f4v', 'swf', 'mkv', 'webm', 'mpg'],
-	pdf: ['pdf'],
-	data: ['json', 'csv', 'tsv'],
-	// Textarea extension
-	text: ['txt', 'md'],
-	code: ['js', 'ts', 'css', 'html', 'cs'],
-}
-
-
-
-function determineFileCategories(selectedFile) {
-
-	let fileCategories = {
-		mimeType: selectedFile.type,
-		fileExtension: 'extext',
-		fileType: 'typetype'
-	}
-
-
-
-	fileCategories.fileExtension = determineFileExtension(selectedFile);
-
-	// fileCategories.fileType = determineFileType(fileCategories.mimeType, fileCategories.fileEnding);
-
-	// fileCategories.fileType = Object.entries(extensionObject).forEach(typeArray => typeArray.filter(extension => extension === fileCategories.fileExtension))
-	fileCategories.fileType = Object.keys(extensionObject).find(type => extensionObject[type].includes(fileCategories.fileExtension));
-	// console.log(fileCategories.fileType)
-	//console.log('file type determined here!');
-
-	return fileCategories;
-}
-
-
-
-
-function determineFileExtension(selectedFile) {
-
-	return selectedFile.name.match(/\w+$/g)[0];
 
 }
 
 
-
-
-
-
-
-
-
-
-
-function determineFileType(mimeType, fileExtension) {
-
-	let fileType = '';
-
-
-
-
-	// TEXTAREA
-	let textarea = text.concat(code);
-	//console.log(textarea);
-	textarea.forEach(textareaEnding => {
-
-		if (fileExtension == textareaEnding) {
-			//console.log('MATCH : ' + textareaEnding);
-
-			fileType = 'text';
-		}
-
-	});
-	if (fileType !== '') {
-		return fileType;
-	}
-
-
-
-	// PDF
-	pdf.forEach(pdfEnding => {
-
-		if (fileExtension == pdfEnding) {
-			//console.log('MATCH : ' + pdfEnding);
-
-			fileType = 'embed';
-		}
-
-	});
-	if (fileType !== '') {
-		return fileType;
-	}
-
-
-
-	// IMAGE
-	image.forEach(imageEnding => {
-
-		if (fileExtension == imageEnding) {
-			//console.log('MATCH : ' + imageEnding);
-
-			fileType = 'image';
-		}
-
-	});
-	if (fileType !== '') {
-		return fileType;
-	}
-
-
-
-	// VIDEO
-	video.forEach(videoEnding => {
-
-		if (fileExtension == videoEnding) {
-			//console.log('MATCH : ' + videoEnding);
-
-			fileType = 'video';
-		}
-
-	});
-	if (fileType !== '') {
-		return fileType;
-	}
-
-
-
-
-	// AUDIO
-	audio.forEach(audioEnding => {
-
-		if (fileExtension == audioEnding) {
-			//console.log('MATCH : ' + audioEnding);
-
-			fileType = 'audio';
-		}
-
-	});
-	if (fileType !== '') {
-		return fileType;
-	}
-
-
-
-
-	// DATA
-	data.forEach(dataEnding => {
-
-		if (fileExtension == dataEnding) {
-			//console.log('MATCH : ' + dataEnding);
-
-			fileType = 'table';
-		}
-
-	});
-	if (fileType !== '') {
-		return fileType;
-	}
-
-
-
-}
-
-
-
-
+// The Annunciation is an oil painting by the Early Netherlandish painter Hans Memling.It depicts the Annunciation, the archangel Gabriel's announcement to the Virgin Mary that she would conceive and become the mother of Jesus, described in the Gospel of Luke. 
 
 
 
@@ -1708,6 +1665,29 @@ async function keydownActiveExtension(keyEvent) {
 				console.log(extensionStateFront);
 				break;
 
+			case 'x':
+				// console.log('Alt + x')
+				let checked = clipboardCodeCheckbox.checked;
+				if (checked) {
+					clipboardCodeCheckbox.checked = false;
+				}
+				else {
+					clipboardCodeCheckbox.checked = true;
+				}
+				toggleSelectCode();
+				break;
+
+			case 'c':
+				/* CANNOT SEEM TO OPEN SELECT USING KEYBOARD..... */
+				// console.log('Alt + c')
+				// clipboardCodeSelect.click()
+				// clipboardCodeSelect.dispatchEvent(new Event('click'));
+				// clipboardCodeSelect.dispatchEvent(new Event('select'));
+				// let ev = document.createEvent('MouseEvents');
+				// ev.MouseEvent('mousedown', true, true, window);
+				// clipboardCodeSelect.dispatchEvent(ev);
+				break;
+
 			case '[':
 				// console.log('Alt + [')
 				startClipboardTextConcatenation();
@@ -1730,8 +1710,8 @@ async function keydownActiveExtension(keyEvent) {
 
 			case ']':
 				// console.log('Alt + ]')
-				console.log('New text concatentation shard: ');
-				console.log(extensionStateFront.textConcatenationContent)
+				// console.log('New text concatentation shard: ');
+				// console.log(extensionStateFront.textConcatenationContent)
 
 				if (clipboardCodeCheckbox.checked) {
 					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardCodeSelect.value, extensionStateFront.textConcatenationContent)
@@ -1799,6 +1779,75 @@ const basePath = '/api/v02'
 
 class dbisWe {
 
+
+
+	static async fileGet(Uuid) {
+
+		const url = baseUrl + basePath + `/file/` + Uuid;
+		const options = { method: 'GET' };
+
+		try {
+			const response = await fetch(url, options);
+			// const data = await response.json();
+			console.log(response.status, url)
+
+			// console.log(response.body)
+			let blob = await response.blob()
+			let file = await new File([blob], 'testFileName.file2')
+			return file;
+			// .then(blob => new File([blob], 'testfilename.file'))
+			// .then(file => file)
+			// .catch(error => console.error(error))
+			// .then(file => URL.createObjectURL(file))
+			// .then(file => URL.createObjectURL(file))
+			// .then(fileUrl => window.open(fileUrl, '_blank'))
+		} catch (error) {
+			console.error(error);
+		}
+
+	}
+
+	// static async FileGet(Uuid) {return fileGet(Uuid)}
+	static async filePost(Uuid, file, queryParams, mimeType) {
+
+		let url = baseUrl + basePath + `/file/${Uuid}?`;
+		// console.log(url)
+
+
+		for (const [key, value] of Object.entries(queryParams)) {
+			// console.log(`${key}: ${value}`);
+			url += `${key}=${value}&`;
+			// bodyArray.push(value);
+		}
+		url = url.slice(0, -1);
+
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-Type": mimeType,
+			},
+			body: file,
+		};
+		// console.log(options)
+		// console.log(url)
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			if (response.status == 200) {
+				return data;
+			}
+			else {
+				throw new Error('FAILED PUT FROM: contentPut in dbis-we')
+			}
+			// console.table(data);
+		} catch (error) {
+			console.error(error);
+		}
+
+	}
+
 	// static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', {'Uuid': Uuid}) };
 
 	static async Node_SelectChildOfUuid(Uuid) { return nodeGet('Node-SelectChildOfUuid', { 'Uuid': Uuid }) };
@@ -1819,6 +1868,36 @@ class dbisWe {
 	static async Content_InsertChildUuidTable(Uuid, childTable) { return contentPost('Content-InsertChildUuidTable', { 'Uuid': Uuid, 'Table': childTable }) };
 }
 
+async function filePost(Uuid, file, contentType, queryParams) {
+
+
+
+}
+
+
+
+// async function fileGet(Uuid) {
+
+// 	const url = baseUrl + basePath + `/file/` + Uuid;
+// 	const options = { method: 'GET' };
+
+// 	try {
+// 		const response = await fetch(url, options);
+// 		// const data = await response.json();
+// 		console.log(response.status, url)
+
+// 		// console.log(response.body)
+// 		response.blob()
+// 			.then(blob => new File([blob], 'testfilename.file'))
+// 			.catch(error => console.error(error))
+// 		// .then(file => URL.createObjectURL(file))
+// 		// .then(file => URL.createObjectURL(file))
+// 		// .then(fileUrl => window.open(fileUrl, '_blank'))
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+
+// }
 
 
 async function contentGet(functionstring, paramObject) {

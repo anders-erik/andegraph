@@ -24,6 +24,75 @@ const basePath = '/api/v02'
 
 class dbisWe {
 
+
+
+	static async fileGet(Uuid) {
+
+		const url = baseUrl + basePath + `/file/` + Uuid;
+		const options = { method: 'GET' };
+
+		try {
+			const response = await fetch(url, options);
+			// const data = await response.json();
+			console.log(response.status, url)
+
+			// console.log(response.body)
+			let blob = await response.blob()
+			let file = await new File([blob], 'testFileName.file2')
+			return file;
+			// .then(blob => new File([blob], 'testfilename.file'))
+			// .then(file => file)
+			// .catch(error => console.error(error))
+			// .then(file => URL.createObjectURL(file))
+			// .then(file => URL.createObjectURL(file))
+			// .then(fileUrl => window.open(fileUrl, '_blank'))
+		} catch (error) {
+			console.error(error);
+		}
+
+	}
+
+	// static async FileGet(Uuid) {return fileGet(Uuid)}
+	static async filePost(Uuid, file, queryParams, mimeType) {
+
+		let url = baseUrl + basePath + `/file/${Uuid}?`;
+		// console.log(url)
+
+
+		for (const [key, value] of Object.entries(queryParams)) {
+			// console.log(`${key}: ${value}`);
+			url += `${key}=${value}&`;
+			// bodyArray.push(value);
+		}
+		url = url.slice(0, -1);
+
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-Type": mimeType,
+			},
+			body: file,
+		};
+		// console.log(options)
+		// console.log(url)
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			if (response.status == 200) {
+				return data;
+			}
+			else {
+				throw new Error('FAILED PUT FROM: contentPut in dbis-we')
+			}
+			// console.table(data);
+		} catch (error) {
+			console.error(error);
+		}
+
+	}
+
 	// static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', {'Uuid': Uuid}) };
 
 	static async Node_SelectChildOfUuid(Uuid) { return nodeGet('Node-SelectChildOfUuid', { 'Uuid': Uuid }) };
@@ -44,6 +113,36 @@ class dbisWe {
 	static async Content_InsertChildUuidTable(Uuid, childTable) { return contentPost('Content-InsertChildUuidTable', { 'Uuid': Uuid, 'Table': childTable }) };
 }
 
+async function filePost(Uuid, file, contentType, queryParams) {
+
+
+
+}
+
+
+
+// async function fileGet(Uuid) {
+
+// 	const url = baseUrl + basePath + `/file/` + Uuid;
+// 	const options = { method: 'GET' };
+
+// 	try {
+// 		const response = await fetch(url, options);
+// 		// const data = await response.json();
+// 		console.log(response.status, url)
+
+// 		// console.log(response.body)
+// 		response.blob()
+// 			.then(blob => new File([blob], 'testfilename.file'))
+// 			.catch(error => console.error(error))
+// 		// .then(file => URL.createObjectURL(file))
+// 		// .then(file => URL.createObjectURL(file))
+// 		// .then(fileUrl => window.open(fileUrl, '_blank'))
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+
+// }
 
 
 async function contentGet(functionstring, paramObject) {

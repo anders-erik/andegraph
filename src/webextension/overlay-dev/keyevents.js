@@ -118,6 +118,29 @@ async function keydownActiveExtension(keyEvent) {
 				console.log(extensionStateFront);
 				break;
 
+			case 'x':
+				// console.log('Alt + x')
+				let checked = clipboardCodeCheckbox.checked;
+				if (checked) {
+					clipboardCodeCheckbox.checked = false;
+				}
+				else {
+					clipboardCodeCheckbox.checked = true;
+				}
+				toggleSelectCode();
+				break;
+
+			case 'c':
+				/* CANNOT SEEM TO OPEN SELECT USING KEYBOARD..... */
+				// console.log('Alt + c')
+				// clipboardCodeSelect.click()
+				// clipboardCodeSelect.dispatchEvent(new Event('click'));
+				// clipboardCodeSelect.dispatchEvent(new Event('select'));
+				// let ev = document.createEvent('MouseEvents');
+				// ev.MouseEvent('mousedown', true, true, window);
+				// clipboardCodeSelect.dispatchEvent(ev);
+				break;
+
 			case '[':
 				// console.log('Alt + [')
 				startClipboardTextConcatenation();
@@ -140,8 +163,8 @@ async function keydownActiveExtension(keyEvent) {
 
 			case ']':
 				// console.log('Alt + ]')
-				console.log('New text concatentation shard: ');
-				console.log(extensionStateFront.textConcatenationContent)
+				// console.log('New text concatentation shard: ');
+				// console.log(extensionStateFront.textConcatenationContent)
 
 				if (clipboardCodeCheckbox.checked) {
 					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardCodeSelect.value, extensionStateFront.textConcatenationContent)

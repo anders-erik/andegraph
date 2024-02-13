@@ -14,7 +14,7 @@ function initClipboard() {
 	clipboardCodeCheckbox = document.getElementById('ae-clipboardCodeCheckbox');
 	clipboardCodeSelect = document.getElementById('ae-clipboardCodeSelect');
 
-	clipboardCodeCheckbox.addEventListener('click', toggleSelectCode);
+	clipboardCodeCheckbox.addEventListener('change', toggleSelectCode);
 
 	writeTextConcatenationContentToDom();
 
@@ -110,7 +110,7 @@ function toggleSelectCode() {
 
 }
 
-function pasteEvent(event) {
+async function pasteEvent(event) {
 	// console.log('pastepaste')
 	console.log('PASTE EVENT')
 	// console.log(event.clipboardData.files[0])
@@ -169,9 +169,28 @@ function pasteEvent(event) {
 	else if (clipboardContentType === 'file') {
 		console.log('deal with file')
 
+		let newFile = event.clipboardData.files[0];
 
-		let fileCategoryObject = determineFileCategories(event.clipboardData.files[0]);
-		console.log(fileCategoryObject)
+		let fileCategoryObject = determineFileCategories(newFile);
+		console.log('fileCategoryObject: ', fileCategoryObject)
+
+		if (fileCategoryObject.fileType === 'typetype') {
+			console.error('FILE EXTENSION HAD NO MATCHING CONTENT TYPE')
+			return;
+		}
+
+		let postFileQueryParameters = {
+			Type: fileCategoryObject.fileType,
+			Title: fileCategoryObject.baseFileName,
+			Extension: fileCategoryObject.fileExtension,
+			IAmAuthor: 0,
+		}
+
+		postNewFileToCurrentSourceAndFullReloadOfSourceChildren(newFile, postFileQueryParameters, fileCategoryObject.mimeType);
+
+		// console.log(newFile)
+
+		// console.log(await dbisWe.fileGet(121627279360));
 
 		// let sourceid = extractCurrentSourceId();
 
@@ -225,6 +244,109 @@ function copyEvent(event) {
 
 function cutEvent(event) {
 	console.log('CUT EVENT')
+}
+
+
+
+/* 
+
+	HELPER FUNCTIONS
+
+*/
+
+
+
+
+let determineClipboardContentType = function (eventClipboardData) {
+
+	if (typeof eventClipboardData.files[0] !== 'undefined') {
+		// postFile(dataClipboardEvent.files[0], sourceid, shardid);
+		return 'file';
+	}
+	else if ((eventClipboardData || window.clipboardData).getData("text") !== '') {
+		//console.log((event.clipboardData || window.clipboardData).getData("text"));
+
+		let clipboardText = (eventClipboardData || window.clipboardData).getData("text");
+		let blob = new Blob([clipboardText], { type: 'text/plain' });
+		let file = new File([blob], "clipboard.txt", { type: "text/plain" });
+
+		//postFile(file, sourceid, shardid);
+		return 'text';
+	}
+	else {
+		console.log('No file nor text detected.');
+		return 'empty';
+	}
+
+	//return 'clipboardContentType';
+}
+
+
+
+
+
+let extensionObject = {
+	// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
+	image: ['apng', 'avif', 'gif', 'bmp', 'jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg', 'webp'],
+	// https://www.canto.com/blog/audio-file-types/
+	audio: ['m4a', 'flac', 'mp3', 'wav', 'wma', 'aac'],
+	// https://www.adobe.com/creativecloud/video/discover/best-video-format.html
+	video: ['mp4', 'mov', 'wmv', 'avi', 'AVCHD', 'flv', 'f4v', 'swf', 'mkv', 'webm', 'mpg'],
+	pdf: ['pdf'],
+	data: ['json', 'csv', 'tsv', 'db', 'xlsx', 'ods', 'odb'],
+	// Textarea extension
+	text: ['txt', 'md'],
+	code: ['js', 'ts', 'css', 'html', 'cs'],
+}
+
+
+
+function determineFileCategories(selectedFile) {
+
+	let fileCategories = {
+		mimeType: selectedFile.type,
+		baseFileName: 'basename',
+		fileExtension: 'extext',
+		fileType: 'typetype'
+	}
+
+
+
+	fileCategories.fileExtension = determineFileExtension(selectedFile);
+	fileCategories.baseFileName = determineBaseFileName(selectedFile);
+
+	// fileCategories.fileType = determineFileType(fileCategories.mimeType, fileCategories.fileEnding);
+
+	// fileCategories.fileType = Object.entries(extensionObject).forEach(typeArray => typeArray.filter(extension => extension === fileCategories.fileExtension))
+	fileCategories.fileType = Object.keys(extensionObject).find(type => extensionObject[type].includes(fileCategories.fileExtension));
+	// console.log(fileCategories.fileType)
+	//console.log('file type determined here!');
+	// if (fileCategories.fileExtension === 'db') {
+	// 	// http://fileformats.archiveteam.org/wiki/DB_(SQLite)
+	// 	fileCategories.mimeType = 'application/vnd.sqlite3';
+	// }
+	console.log(fileCategories.mimeType)
+	if (fileCategories.mimeType == '') {
+		// fileCategories.mimeType == 'application/stream';
+		fileCategories.mimeType = 'application/octet-stream';
+	}
+
+	return fileCategories;
+}
+
+
+
+
+function determineFileExtension(selectedFile) {
+
+	return selectedFile.name.match(/\w+$/g)[0];
+
+}
+
+function determineBaseFileName(selectedFile) {
+
+	return selectedFile.name.match(/^.*(?=\.[^.]+$)/)[0];
+
 }
 
 
@@ -293,6 +415,40 @@ async function postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(Typ
 
 		populateSourceChildTableFromState();
 
+	}
+
+}
+
+async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, queryParams, mimeType) {
+
+	let sourceUuid = extensionStateFront.current_sourceObject.Uuid;
+
+	console.log(sourceUuid)
+
+	// Content_InsertChildUuidTable(Uuid, childTable)
+	if (sourceUuid !== undefined) {
+
+		let newFileObject = (await dbisWe.Content_InsertChildUuidTable(sourceUuid, 'File')).Content;
+
+		// console.log(newTextObject)
+
+		// newFileObject.Title = CodeContent.substring(0, 25);
+		// newFileObject.Type = Type;
+		// newFileObject.CodeContent = CodeContent;
+
+
+		// await dbisWe.Content_UpdateOnContentObject(newFileObject);
+		await dbisWe.filePost(newFileObject.Uuid, file, queryParams, mimeType);
+
+
+
+		await fetchCurrentSourceChildrenThenWriteToStates();
+
+		populateSourceChildTableFromState();
+
+	}
+	else {
+		console.log('No slected source. Couldn"t POST file.')
 	}
 
 }
