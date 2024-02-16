@@ -17,12 +17,23 @@ module.exports = async (req, res) => {
 
 	switch (functionstring) {
 
+		case 'Review-SelectCurrentReview':
+			console.log(functionstring, 'selected. ');
+			returnArray = await dbi.queries.Review_SelectCurrentReview();
+			// res.set('Access-Control-Allow-Origin', `*`);
+			break;
+
 		case 'Project-SelectLikeString':
 			console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
 			returnArray = await dbi.queries.Project_SelectLikeString(queryObject.searchString);
-			res.set('Access-Control-Allow-Origin', `*`);
+			// res.set('Access-Control-Allow-Origin', `*`);
 			break;
 
+		case 'Source-SelectLikeString':
+			console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
+			returnArray = await dbi.queries.Source_SelectLikeString(queryObject.searchString);
+			// res.set('Access-Control-Allow-Origin', `*`);
+			break;
 
 		case 'Content-SelectOnUuid':
 			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
@@ -45,7 +56,7 @@ module.exports = async (req, res) => {
 	}
 
 
-
+	res.set('Access-Control-Allow-Origin', `*`);
 	res.status(200).send(returnArray);
 
 };

@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
 	}
 
 
-
+	res.set('Access-Control-Allow-Origin', `*`);
 	res.status(200).send(returnArray);
 
 };

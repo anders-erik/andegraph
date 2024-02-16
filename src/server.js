@@ -1,6 +1,6 @@
 
-const express = require('express'); 
-const app = express(); 
+const express = require('express');
+const app = express();
 //const sqlite = require('./persistence/sqlite');
 const connection = require('./sql/Connection'); // import AND init database
 const graphDb = require('./sql/GraphDb');
@@ -21,7 +21,7 @@ routes.initRoutes(app, express);
 
 
 
-const { db, initDB, dbTeardown} = require('./db/ErigraphDB');
+const { db, initDB, dbTeardown } = require('./db/ErigraphDB');
 let dbir;
 
 
@@ -30,22 +30,22 @@ let dbir;
 
 initDB().then((x) => {
     console.log('Connection to db was successful')
-    
+
     // start api
     dbir = require('./dbi-receive/Dbir');
     dbir.initDbir(app, express);
 
     dbTest();
-    
+
 }).catch((error) => {
     console.log(error)
 })
 // console.log('initDbResponse', initDbResponse) // couldn't add await to the function? or did i accidentally use asuync?? idfk...
 
-async function dbTest(){
+async function dbTest() {
 
-    
-    
+
+
 
     //const {Content_SelectFromNode, Node_InsertNode, Node_SelectChildOfUuid, NodeEdge_SelectChildOfUuid, Code_InsertEmpty} = require('./db-interface/DbInterface');
     const { queries, procedures, tests } = require('./db-interface/DbInterface');
@@ -76,7 +76,7 @@ async function dbTest(){
 
 
     //await tests.InsertChild();
-    
+
 
 
     // if(JSON.stringify(codeObject0) === JSON.stringify(codeObject01[0])){
@@ -116,8 +116,8 @@ setTimeout(() => {
 
     let uu = uuid.generate('edges');
     console.log(uu)
-    
-    uuid.extractUnixTime( uu );
+
+    uuid.extractUnixTime(uu);
     uuid.extractObjectType(uu);
 }, 1000);
 
@@ -186,10 +186,10 @@ app.get('/api/test', (req, res) => {
 
 // INIT
 // sqlite.init().then(() => {
-    
+
 
 //     console.log(sqlite.db);
-    
+
 // }).catch((err) => {
 //     console.error(err);
 //     process.exit(1);
@@ -202,19 +202,19 @@ app.listen(3000, () => console.log('Listening on port 3000'));
 // SHUTDOWN
 const gracefulShutdown1 = () => {
     connection.teardown()
-        .catch(() => {})
+        .catch(() => { })
         .then(() => gracefulShutdown());
 };
 
 const gracefulShutdown = () => {
     graphDb.teardown()
-        .catch(() => {})
+        .catch(() => { })
         .then(() => process.exit());
 };
 
 const gracefulShutdow2 = () => {
     dbTeardown()
-        .catch(() => {})
+        .catch(() => { })
         .then(() => process.exit());
 };
 

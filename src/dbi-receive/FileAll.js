@@ -10,6 +10,7 @@ let fileDir = `/data/live/files-v0.2/`;
 
 
 module.exports = async (req, res) => {
+	res.set('Access-Control-Allow-Origin', `*`);
 
 	// console.log('body: ', req.body)
 

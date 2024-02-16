@@ -1,26 +1,36 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0" />
 
     <link rel="stylesheet" href="/styles/styles.css" />
-    <script type="module" src="/main.js" defer></script>
+
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap -->
+    <script type="importmap">
+      {
+        "imports": {
+          "square": "./module/shapes/square.js"
+        }
+      }
+    </script>
+
     <title>SOURCES</title>
 </head>
+
 <body>
     <!-- https://stackoverflow.com/questions/21147149/flash-of-unstyled-content-fouc-in-firefox-only-is-ff-slow-renderer -->
     <script>0</script>
 
-    
+
     <div id="root">
-        
-    </div>
-    
-    <div id="asdf" class="a s d f">
-        
+
     </div>
 
+    <!-- SCRIPTS -->
+    <script type="module" src="/main.js" defer></script>
 </body>
+
 </html>

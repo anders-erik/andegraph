@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
 
 	// not working??
 	// res.status(200).send(returnArray);
-
+	res.set('Access-Control-Allow-Origin', `*`);
 	res.sendStatus(200);
 
 };

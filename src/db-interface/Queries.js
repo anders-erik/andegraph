@@ -34,11 +34,13 @@ const { Project_Update } = require("./queries/Project_Update");
 const { Review_DeleteOnUuid } = require("./queries/Review_DeleteOnUuid");
 const { Review_Insert } = require("./queries/Review_Insert");
 const { Review_SelectOnUuid } = require("./queries/Review_SelectOnUuid");
+const { Review_SelectCurrentReview } = require("./queries/Review_SelectCurrentReview");
 const { Review_Update } = require("./queries/Review_Update");
 
 const { Source_DeleteOnUuid } = require("./queries/Source_DeleteOnUuid");
 const { Source_Insert } = require("./queries/Source_Insert");
 const { Source_SelectOnUuid } = require("./queries/Source_SelectOnUuid");
+const { Source_SelectLikeString } = require("./queries/Source_SelectLikeString");
 const { Source_Update } = require("./queries/Source_Update");
 
 const { Text_DeleteOnUuid } = require("./queries/Text_DeleteOnUuid");
@@ -71,18 +73,18 @@ const { NodeEdge_SelectParentOfUuid } = require("./queries/NodeEdge_SelectParent
 
 
 module.exports = {
-	
+
 	Code_DeleteOnUuid,
 	Code_Insert,
 	Code_SelectOnUuid,
 	Code_Update,
-	
+
 	Edge_DeleteOnUuid,
 	Edge_DeleteOnNodeUuids,
 	Edge_Insert,
 	Edge_SelectOnUuid,
 	Edge_Update,
-	
+
 	Equation_DeleteOnUuid,
 	Equation_Insert,
 	Equation_SelectOnUuid,
@@ -107,11 +109,13 @@ module.exports = {
 	Review_DeleteOnUuid,
 	Review_Insert,
 	Review_SelectOnUuid,
+	Review_SelectCurrentReview,
 	Review_Update,
 
 	Source_DeleteOnUuid,
 	Source_Insert,
 	Source_SelectOnUuid,
+	Source_SelectLikeString,
 	Source_Update,
 
 	Text_DeleteOnUuid,
