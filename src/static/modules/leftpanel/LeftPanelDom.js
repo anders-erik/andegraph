@@ -55,7 +55,7 @@ class LeftPanelDom {
 		// console.log(projectObject)
 
 		this.projectTitle.textContent = projectObject.Title;
-		this.projectTitle.contentObject = projectObject;
+		this.projectTitle.nodeObject = projectObject;
 		// console.log(this.projectTableBody);
 		this.projectTableBody.innerHTML = ``;
 
@@ -65,6 +65,7 @@ class LeftPanelDom {
 		for (let childNodeEdge of childNodeEdges) {
 
 			let tableRow = document.createElement('tr');
+			tableRow.nodeObject = childNodeEdge;
 			tableRow.tabIndex = 0;
 
 			let rowTable = document.createElement('td');

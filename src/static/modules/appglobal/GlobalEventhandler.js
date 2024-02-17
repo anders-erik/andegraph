@@ -9,6 +9,7 @@ class GlobalEventHandler {
 		'chooseProject',
 		'chooseSelection',
 		'propertiesContext',
+		'hidePropertiesContext',
 		'parentContext',
 		'childContext',
 		'undirectedContext',
@@ -30,7 +31,7 @@ class GlobalEventHandler {
 			action: '',
 			element: event.target,
 		}
-		console.log('keyup: ', event.target);
+		// console.log('keyup: ', event.target);
 		// console.log(this)
 		// let rr;
 		if (event.target.contentEditable == 'true' || event.target.type == 'text') {
@@ -41,33 +42,58 @@ class GlobalEventHandler {
 		// console.log(event.key)
 		switch (event.key) {
 
-			case 'o':
-				actionObject.action = 'o';
+			case '1':
+				console.log('HOME SWEET HOME')
+				break;
+			case '2':
+				document.getElementById('leftPanel_projectButton').click()
+				console.log('P')
+				break;
+			case '3':
+				console.log('HOME SWEET HOME')
 				break;
 
-			case 'k':
-			case 'ArrowUp':
-				if (event.target.tabIndex == '0') {
+			case '2':
+				console.log(SEARCH);
+				break;
+
+			case 'o':
+				console.log('oooooooooo')
+				if (event.target.nodeObject) {
+					this.app.contextOverlay.togglePropertiesTable(event.target);
+				}
+				// actionObject.action = 'propertiesContext';
+				break;
+
+
+			case 'Escape':
+				if (this.app.contextOverlay.isDisplayingNodeContext()) {
+					this.app.contextOverlay.removeElementContexts();
+				}
+				else if (event.target.tabIndex == '0') {
 					this.focusFirstFocusableAncestor(event.target);
 				}
 				break;
 
-			case 'j':
-			case 'ArrowDown':
+			case 'Enter':
 				if (event.target.tabIndex == '0') {
 					this.focusFirstDescendant(event.target);
 				}
 				break;
 
 			case 'h':
+			case 'k':
 			case 'ArrowLeft':
+			case 'ArrowUp':
 				if (event.target.tabIndex == '0') {
 					this.focusPreviousSibling(event.target);
 				}
 				break;
 
 			case 'l':
+			case 'j':
 			case 'ArrowRight':
+			case 'ArrowDown':
 				if (event.target.tabIndex == '0') {
 					this.focusNextSibling(event.target)
 				}
@@ -105,8 +131,6 @@ class GlobalEventHandler {
 
 			currentelement = currentelement.parentElement;
 		}
-
-
 
 	}
 

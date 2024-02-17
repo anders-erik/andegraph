@@ -2,8 +2,7 @@
 
 
 
-class GlobalAction {
-
+class PropertiesMenu {
 
 	constructor() {
 
@@ -14,5 +13,5 @@ class GlobalAction {
 
 
 export {
-	GlobalAction,
+	PropertiesMenu,
 }

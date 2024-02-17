@@ -49,8 +49,8 @@ initGlobalListener();
  */
 
 import { LeftPanel } from './leftpanel/LeftPanel.js';
-import { GlobalEventHandler } from './globalevents/GlobalEventhandler.js';
-import { GlobalAction } from './globalevents/GlobalAction.js';
+import { GlobalEventHandler } from './appglobal/GlobalEventhandler.js';
+import { ContextOverlay } from './contextoverlay/ContextOverlay.js';
 
 
 
@@ -61,8 +61,15 @@ class App {
 	appElement;
 	mainContent;
 	globalEventHandler;
+	contextOverlay;
 	leftPanel;
 
+	projectUuid;
+	projectnodeObject;
+	selectedUuid;
+	selectedNodeUuid;
+	activeUuid;
+	activeNodeUuid;
 
 
 	constructor(rootElementId) {
@@ -71,36 +78,55 @@ class App {
 
 		this.appElement = document.createElement('div');
 		this.appElement.id = 'app';
+		this.appElement.tabIndex = 0;
 		this.rootElement.append(this.appElement);
 
-
-
-		this.leftPanel = new LeftPanel(this.appElement);
-		// leftPanel.LeftPanelDevTests();
-
-		// leftPanelTestFunction();
+		this.contextOverlay = new ContextOverlay();
+		this.appElement.append(this.contextOverlay.overlayElement);
 
 		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
 
 		// this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
 		this.appElement.addEventListener('click', this.appClick.bind(this));
 		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
-		this.appElement.addEventListener('keyup', this.appKeyup.bind(this))
+		this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
+		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
 
 
 		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
 
+
+		this.leftPanel = new LeftPanel(this.appElement);
+		// leftPanel.LeftPanelDevTests();
+
+		// leftPanelTestFunction();
 	}
 
 	appKeyup(event) {
 		let action = this.globalEventHandler.keyup(event);
-		console.log('ACTION ', action)
+		// console.log('ACTION ', action)
+		this.performAppAction(action);
 
 	}
 
 	appClick(event) {
 		let action = this.globalEventHandler.click(event);
 		console.log('ACTION ', action)
+
+	}
+
+	appFocusIn(event) {
+		// console.log('FOCUS CHANGE')
+		console.log('new focused elment', event.target)
+		if (event.target == document.body) {
+			console.log('bodbod')
+		}
+		else if (event.target.nodeObject) {
+			this.contextOverlay.updateElementContexts(event.target);
+		}
+		else {
+			this.contextOverlay.removeElementContexts();
+		}
 
 	}
 
@@ -117,10 +143,17 @@ class App {
 
 
 
-	globalActionListener(actionObject) {
-		if (actionObject.action == '') {
-			console.log('aaaaaaaaaaaaaaaaa');
+	performAppAction(actionObject) {
+		switch (actionObject.action) {
+			case 'propertiesContext':
+				this.contextOverlay.togglePropertiesTable(actionObject.element);
+				break;
+
+			default:
+				break;
 		}
+
+
 	}
 
 

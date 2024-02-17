@@ -1,6 +1,6 @@
 import * as AppFunctions from './modules/App.js';
 import { App } from './modules/App.js';
-import { GlobalEventHandler } from './modules/globalevents/GlobalEventhandler.js';
+import { GlobalEventHandler } from './modules/appglobal/GlobalEventhandler.js';
 
 let isDev = window.location.pathname.match(/development/);
 let app;
