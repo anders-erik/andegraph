@@ -1,14 +1,34 @@
+import * as AppFunctions from './modules/App.js';
+import { App } from './modules/App.js';
+import { GlobalEventHandler } from './modules/globalevents/GlobalEventhandler.js';
+
+let isDev = window.location.pathname.match(/development/);
+let app;
+// console.log(urlPathBase)
+
+if (isDev) {
+	console.log('DEV')
+
+	app = new App('root');
+	// app.initGlobalEventHandler(app);
+
+}
+else {
+	console.log('NOT DEV')
+
+	AppFunctions.initAppFunctions('root');
+}
 
 
-import * as App from './modules/App.js';
 
-App.initApp('root');
 
-//App.loadSourcing();
+
+//AppFunctions.loadSourcing();
 
 
 // API TESTER
 import * as apiTester from './modules/Fetches/apitester/ApiTester.js';
+// import { GlobalEventHandler } from './modules/globalevents/GlobalEventhandler.js';
 //apiTester.testTextFile();
 
 // MODELS

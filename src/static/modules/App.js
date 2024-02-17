@@ -48,6 +48,84 @@ import { initGlobalListener } from './globallistener/GlobalListener.js';
 initGlobalListener();
  */
 
+import { LeftPanel } from './leftpanel/LeftPanel.js';
+import { GlobalEventHandler } from './globalevents/GlobalEventhandler.js';
+import { GlobalAction } from './globalevents/GlobalAction.js';
+
+
+
+
+class App {
+
+	rootElement;
+	appElement;
+	mainContent;
+	globalEventHandler;
+	leftPanel;
+
+
+
+	constructor(rootElementId) {
+
+		this.rootElement = document.getElementById(rootElementId);
+
+		this.appElement = document.createElement('div');
+		this.appElement.id = 'app';
+		this.rootElement.append(this.appElement);
+
+
+
+		this.leftPanel = new LeftPanel(this.appElement);
+		// leftPanel.LeftPanelDevTests();
+
+		// leftPanelTestFunction();
+
+		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
+
+		// this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
+		this.appElement.addEventListener('click', this.appClick.bind(this));
+		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
+		this.appElement.addEventListener('keyup', this.appKeyup.bind(this))
+
+
+		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
+
+	}
+
+	appKeyup(event) {
+		let action = this.globalEventHandler.keyup(event);
+		console.log('ACTION ', action)
+
+	}
+
+	appClick(event) {
+		let action = this.globalEventHandler.click(event);
+		console.log('ACTION ', action)
+
+	}
+
+	initGlobalEventHandler(app) {
+
+	}
+
+	getLeftPanelId() {
+		console.log('PANPAN')
+		console.log(this.leftPanel)
+		console.log(this.leftPanel.getPanelId())
+	}
+
+
+
+
+	globalActionListener(actionObject) {
+		if (actionObject.action == '') {
+			console.log('aaaaaaaaaaaaaaaaa');
+		}
+	}
+
+
+}
+
 
 
 
@@ -109,6 +187,7 @@ let loadMainFromUrlPath = function (urlPath) {
 
 
 export {
+	App,
 	initApp,
 	loadMainFromUrlPath
 }

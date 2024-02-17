@@ -13,6 +13,7 @@ app.use(express.static(__dirname + '/static'));
 
 app.use('/sourcing/*', express.static(__dirname + '/static'));
 app.use('/source/*', express.static(__dirname + '/static'));
+app.use('/development*', express.static(__dirname + '/static'));
 
 // Make sure this is AFTER we add the json-middleware
 const routes = require('./routes/Routes');
