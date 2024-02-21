@@ -32,6 +32,8 @@ class LeftPanelDom {
 
 	}
 
+
+
 	toggleProject() {
 
 		if (this.leftPanelCurrentContent == 'project') {
@@ -103,26 +105,26 @@ class LeftPanelDom {
 
 		let leftPanelTopMenu = document.createElement('div');
 		leftPanelTopMenu.id = 'leftPanel_topMenu';
-		leftPanelTopMenu.tabIndex = '0';
+		// leftPanelTopMenu.tabIndex = '0';
 
 		this.homeButton = document.createElement('div');
 		this.homeButton.id = 'leftPanel_homeButton';
 		this.homeButton.className = 'leftPanel_button';
 		this.homeButton.textContent = 'H';
-		this.homeButton.tabIndex = '0';
+		// this.homeButton.tabIndex = '0';
 
 		this.projectButton = document.createElement('div');
 		this.projectButton.id = 'leftPanel_projectButton';
 		this.projectButton.className = 'leftPanel_button';
 		this.projectButton.textContent = 'P';
-		this.projectButton.tabIndex = '0';
+		// this.projectButton.tabIndex = '0';
 		// this.projectButton = projectButton;
 
 		this.searchButton = document.createElement('div');
 		this.searchButton.id = 'leftPanel_searchButton';
 		this.searchButton.className = 'leftPanel_button';
 		this.searchButton.textContent = 'Q';
-		this.searchButton.tabIndex = '0';
+		// this.searchButton.tabIndex = '0';
 
 		leftPanelTopMenu.appendChild(this.homeButton);
 		leftPanelTopMenu.appendChild(this.projectButton);

@@ -86,10 +86,10 @@ class App {
 
 		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
 
-		// this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
-		this.appElement.addEventListener('click', this.appClick.bind(this));
-		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
-		this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
+		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
+		// this.appElement.addEventListener('click', this.appClick.bind(this));
+		this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		// this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
 		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
 
 
@@ -100,20 +100,22 @@ class App {
 		// leftPanel.LeftPanelDevTests();
 
 		// leftPanelTestFunction();
+
+		this.appElement.focus();
 	}
 
-	appKeyup(event) {
-		let action = this.globalEventHandler.keyup(event);
-		// console.log('ACTION ', action)
-		this.performAppAction(action);
+	// appKeyup(event) {
+	// 	let action = this.globalEventHandler.keyup(event);
+	// 	// console.log('ACTION ', action)
+	// 	this.performAppAction(action);
 
-	}
+	// }
 
-	appClick(event) {
-		let action = this.globalEventHandler.click(event);
-		console.log('ACTION ', action)
+	// appClick(event) {
+	// 	let action = this.globalEventHandler.click(event);
+	// 	console.log('ACTION ', action)
 
-	}
+	// }
 
 	appFocusIn(event) {
 		// console.log('FOCUS CHANGE')

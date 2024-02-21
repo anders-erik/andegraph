@@ -26,7 +26,7 @@ class GlobalEventHandler {
 
 
 
-	keyup(event) {
+	keydown(event) {
 		let actionObject = {
 			action: '',
 			element: event.target,
@@ -109,12 +109,13 @@ class GlobalEventHandler {
 
 	click(event) {
 		// this.app.getLeftPanelId()
-		console.log('click: ', event.target);
+		// console.log('click: ', event.target);
+		console.log('activeElement on click', document.activeElement);
 		// console.log(this)
-		return {
-			action: 'clickAction',
-			event: event.target
-		};
+		// return {
+		// 	action: 'clickAction',
+		// 	event: event.target
+		// };
 	}
 
 	focusFirstFocusableAncestor(eventTarget) {
