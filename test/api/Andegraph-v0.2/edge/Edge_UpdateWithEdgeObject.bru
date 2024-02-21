@@ -5,7 +5,19 @@ meta {
 }
 
 put {
-  url: 
-  body: none
+  url: http://localhost:3000/api/v02/edge/Edge-UpdateWithEdgeObject
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "Uuid": 140029870080,
+    "Node1Uuid": "139980161024",
+    "Node2Uuid": "139918770176",
+    "Directed": "1",
+    "Type": "13",
+    "Order": 12,
+    "Path": "/13"
+  }
 }
