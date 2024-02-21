@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -20,10 +20,10 @@ async function Text_Insert(textObject) {
         db.all(queryString,
             [textObject.Uuid, textObject.Table, textObject.Type, textObject.Title, textObject.TimeCreated, textObject.TimeLastChange, textObject.TextContent, textObject.Language, textObject.IAmAuthor],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               acc(1);
-           });
+                acc(1);
+            });
 
     });
 }

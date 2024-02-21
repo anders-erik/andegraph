@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 
 let db = getDb();
 
@@ -22,10 +22,10 @@ async function Project_SelectLikeString(searchString) {
         db.all(queryString,
             [searchString],
             (err, rows) => {
-               if (err) return rej(err);
-               
-               acc(rows);
-           });
+                if (err) return rej(err);
+
+                acc(rows);
+            });
 
     });
 }

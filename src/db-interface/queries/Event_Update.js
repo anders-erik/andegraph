@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -31,11 +31,11 @@ async function Event_Update(eventObject) {
         db.all(queryString,
             [eventObject.Uuid, eventObject.Table, eventObject.Type, eventObject.Title, eventObject.TimeCreated, eventObject.StartTime, eventObject.EndTime, eventObject.EventDate, eventObject.Uuid],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               acc(1);
-               
-           });
+                acc(1);
+
+            });
 
     });
 }

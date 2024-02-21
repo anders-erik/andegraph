@@ -2,6 +2,7 @@
 console.log('import dbir');
 
 
+// 
 
 // NODE
 const nodeGet = require('./NodeGet');
@@ -19,7 +20,7 @@ const contentDelete = require('./ContentDelete');
 // FILE
 const fileAll = require('./FileAll');
 
-function initDbir(app, express){
+function initDbir(app, express) {
 	console.log('init dbir')
 
 	// NODE
@@ -29,7 +30,7 @@ function initDbir(app, express){
 	app.post('/api/v02/edge/:functionstring', edgeAll);
 	app.delete('/api/v02/edge/:functionstring', edgeAll);
 
-	
+
 	// CONTENT
 	app.get('/api/v02/content/:functionstring', contentGet);
 	app.post('/api/v02/content/:functionstring', contentPost);

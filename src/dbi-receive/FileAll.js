@@ -171,12 +171,9 @@ module.exports = async (req, res) => {
 
 				fs.unlinkSync(filePath);
 
-				try {
-					cp.execSync(`rm ${filePath}-*`);
-				}
-				catch (error) {
 
-				}
+				cp.execSync(`rm ${filePath}-*`);
+
 
 
 				console.log('FILE DELETED')

@@ -1,4 +1,4 @@
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -28,9 +28,9 @@ async function Node_SelectAdjacentOfUuid(Uuid) {
         db.all(queryString,
             [Uuid, Uuid],
             (err, rows) => {
-               if (err) return rej(err);
-               acc(rows);
-           });
+                if (err) return rej(err);
+                acc(rows);
+            });
 
     });
 }

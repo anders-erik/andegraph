@@ -30,7 +30,7 @@ const tableNames = [
     'Edge'
 ]
 
-function getDb(){
+function getDb() {
     return db;
 }
 
@@ -62,7 +62,7 @@ async function initDB() {
             // console.log('|||||||||||||||||||||||||||||||||||||||||')
             fs.unlinkSync(dbLocationTemp);
             return new Error('No db and failed to create new db.')
-            
+
         }
         console.log(4)
     }
@@ -79,7 +79,7 @@ async function initDB() {
     }
 
     console.log(6)
-    
+
     // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
     // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
     // https://github.com/TryGhost/node-sqlite3/issues/896

@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -20,10 +20,10 @@ async function Review_Insert(reviewObject) {
         db.all(queryString,
             [reviewObject.Uuid, reviewObject.Table, reviewObject.Type, reviewObject.Title, reviewObject.TimeCreated, reviewObject.TimeLastChange, reviewObject.ReviewDate, reviewObject.ReviewCompleted, reviewObject.ReviewCompletedOnDate, reviewObject.NodeToReviewUuid],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               acc(1);
-           });
+                acc(1);
+            });
 
     });
 }

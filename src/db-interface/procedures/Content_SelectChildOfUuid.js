@@ -2,7 +2,7 @@
 const queries = require("../Queries");
 const { Node_SelectChildOfUuid } = require('../queries/Node_SelectChildOfUuid')
 const { Content_SelectFromNode } = require('./Content_SelectFromNode');
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -15,13 +15,13 @@ async function Content_SelectChildOfUuid(Uuid) {
         let childNodeObjects = await Node_SelectChildOfUuid(Uuid);
         // console.table(childNodeObjects);
 
-        for(let childNodeObject of childNodeObjects){
+        for (let childNodeObject of childNodeObjects) {
             let childContentObject = await Content_SelectFromNode(childNodeObject);
             // console.table(childContentObject)
             contentObjects.push(childContentObject[0]);
         }
         // console.table(contentObjects);
-        
+
         acc(contentObjects);
 
     });

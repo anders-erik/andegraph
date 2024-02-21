@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -22,11 +22,11 @@ async function Edge_DeleteOnNodeUuids(Uuid1, Uuid2) {
         db.all(queryString,
             [Uuid1, Uuid2, Uuid1, Uuid2],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               acc(1);
+                acc(1);
 
-           });
+            });
 
     });
 }

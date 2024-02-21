@@ -21,8 +21,8 @@ routes.initRoutes(app, express);
 
 
 
-
-const { db, initDB, dbTeardown } = require('./db/ErigraphDB');
+// VERSION 0.2
+const { db, initDB, dbTeardown } = require('./db/Db-v0.2.js');
 let dbir;
 
 

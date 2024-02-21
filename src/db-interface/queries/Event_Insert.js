@@ -1,5 +1,5 @@
 const { newUuid } = require('../../utils/uuid-v0.2');
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -20,11 +20,11 @@ async function Event_Insert(eventObject) {
         db.all(queryString,
             [eventObject.Uuid, eventObject.Table, eventObject.Type, eventObject.Title, eventObject.TimeCreated, eventObject.TimeLastChange, eventObject.StartTime, eventObject.EndTime, eventObject.EventDate],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               // RETURN NEWLY CREATED OBJECT!
-               acc(1);
-           });
+                // RETURN NEWLY CREATED OBJECT!
+                acc(1);
+            });
 
     });
 }

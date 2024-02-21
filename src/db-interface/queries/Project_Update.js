@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -29,11 +29,11 @@ async function Project_Update(projectObject) {
         db.all(queryString,
             [projectObject.Uuid, projectObject.Table, projectObject.Type, projectObject.Title, projectObject.TimeCreated, projectObject.Goal, projectObject.Uuid],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               acc(1);
-               
-           });
+                acc(1);
+
+            });
 
     });
 }

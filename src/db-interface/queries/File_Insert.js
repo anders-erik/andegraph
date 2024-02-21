@@ -1,5 +1,5 @@
 
-const { getDb } = require('../../db/ErigraphDB');
+const { getDb } = require('../../db/Db-v0.2.js');
 let db = getDb();
 
 
@@ -20,11 +20,11 @@ async function File_Insert(fileObject) {
         db.all(queryString,
             [fileObject.Uuid, fileObject.Table, fileObject.Type, fileObject.Title, fileObject.TimeCreated, fileObject.TimeLastChange, fileObject.Extension, fileObject.SizeBytes, fileObject.IAmAuthor],
             (err, rows) => {
-               if (err) return rej(err);
+                if (err) return rej(err);
 
-               // RETURN NEWLY CREATED OBJECT!
-               acc(1);
-           });
+                // RETURN NEWLY CREATED OBJECT!
+                acc(1);
+            });
 
     });
 }

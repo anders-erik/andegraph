@@ -1,14 +1,14 @@
-const { getDb } = require('../../db/ErigraphDB');
-const {dbNodeEdgesToObjects} = require('../utils/dbNodeEdgeToObject');
+const { getDb } = require('../../db/Db-v0.2.js');
+const { dbNodeEdgesToObjects } = require('../utils/dbNodeEdgeToObject');
 let db = getDb();
 
 
 
 async function NodeEdge_SelectParentOfUuid(Uuid) {
-    return new Promise((acc, rej) => {
+	return new Promise((acc, rej) => {
 
-        // Insert table name here bacause query builder does not accept variables for table names
-        let queryString = `
+		// Insert table name here bacause query builder does not accept variables for table names
+		let queryString = `
 
 			SELECT 
 				"Node".*, 
@@ -29,21 +29,21 @@ async function NodeEdge_SelectParentOfUuid(Uuid) {
                     
         ;`;
 
-        db.all(queryString,
-            [Uuid],
-            (err, rows) => {
-               if (err) return rej(err);
-               
-			   let nodeEdgeObjectRows = dbNodeEdgesToObjects(rows);
+		db.all(queryString,
+			[Uuid],
+			(err, rows) => {
+				if (err) return rej(err);
 
-               acc(nodeEdgeObjectRows);
-           });
+				let nodeEdgeObjectRows = dbNodeEdgesToObjects(rows);
 
-    });
+				acc(nodeEdgeObjectRows);
+			});
+
+	});
 }
 
 module.exports = {
-    NodeEdge_SelectParentOfUuid,
+	NodeEdge_SelectParentOfUuid,
 }
 
 
