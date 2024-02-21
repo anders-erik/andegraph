@@ -4,30 +4,30 @@
 - [Overview](#overview)
 - [Example Data](#example-data)
 - [/content](#content)
-	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					Content-InsertOnTable					](#post---content-insertontable)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Content-SelectOnUuid					](#get---content-selectonuuid)x
-	- [PUT 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Content-UpdateWithContentObject			](#put---content-updatewithcontentobject)x
-	- [DELETE 	&nbsp;&nbsp;  									Content-DropFullOnUuid					](#delete---content-dropfullonuuid)x
+	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					Content-InsertOnTable						](#post---content-insertontable)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Content-SelectOnUuid						](#get---content-selectonuuid)xx
+	- [PUT 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Content-UpdateWithContentObject				](#put---content-updatewithcontentobject)xx
+	- [DELETE 	&nbsp;&nbsp;  									Content-DropFullOnUuid						](#delete---content-dropfullonuuid)xx
 	<br><br>
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Content-SelectOnTitleLikeString			](#get-content-selectontitlelikestring)x
-	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					Review-InsertScheduleOnUuid				](#post-review-insertscheduleonuuid)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Review-SelectCurrentReview				](#get-review-selectcurrentreview)x
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Content-SelectOnTitleLikeString				](#get-content-selectontitlelikestring)xx
+	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					Review-InsertScheduleOnUuid					](#post-review-insertscheduleonuuid)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Review-SelectCurrentReview					](#get-review-selectcurrentreview)xx
 - [/edge](#edge)
-	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					Edge-InsertUuidUuid						](#post---edge-insertuuiduuid)x
-	- [PUT 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Edge-UpdateWithEdgeObject				](#put---edge-updatewithedgeobject)x
-	- [DELETE 	&nbsp;&nbsp;  									Edge-DeleteOnEdgeUuid					](#delete---edge-deleteonedgeuuid)x
-	- [DELETE 	&nbsp;&nbsp;  									Edge-DeleteOnNodeUuids					](#delete---edge-deleteonnodeuuids)x
+	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					Edge-InsertUuidUuid							](#post---edge-insertuuiduuid)xx
+	- [PUT 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Edge-UpdateWithEdgeObject					](#put---edge-updatewithedgeobject)xx
+	- [DELETE 	&nbsp;&nbsp;  									Edge-DeleteOnEdgeUuid						](#delete---edge-deleteonedgeuuid)xx
+	- [DELETE 	&nbsp;&nbsp;  									Edge-DeleteOnNodeUuids						](#delete---edge-deleteonnodeuuids)xx
 - [/contentedge](#contentedge)
-	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		 			ContentEdge-InsertAdajacentToUuidToTable](#post---contentedge-insertadajacenttouuidoftable)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		ContentEdge-SelectChildOfUuid			](#get---contentedge)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 		ContentEdge-SelectParentOfUuid			](#get---contentedge)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 		ContentEdge-SelectUndirectedOfUuid		](#get---contentedge)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 		ContentEdge-SelectAdjacentOfUuid		](#get---contentedge)x
+	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		 			ContentEdge-InsertAdjacentToUuidIntoTable	](#post---contentedge-insertadjacenttouuidintotable)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		ContentEdge-SelectChildOfUuid				](#get---contentedge)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 		ContentEdge-SelectParentOfUuid				](#get---contentedge)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 		ContentEdge-SelectUndirectedOfUuid			](#get---contentedge)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 		ContentEdge-SelectAdjacentOfUuid			](#get---contentedge)xx
 - [/file](#file)
-	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					file									](#post-file)x
-	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		file									](#get-file)x
-	- [DELETE 	&nbsp;&nbsp; 									file									](#delete-file)x
-	- [PUT 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		file									](#put-file)x
+	- [POST 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;					file										](#post-file)xx
+	- [GET 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		file										](#get-file)xx
+	- [DELETE 	&nbsp;&nbsp; 									file										](#delete-file)xx
+	- [PUT 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		file										](#put-file)xx
 
 <br>
 <br>
@@ -263,16 +263,21 @@ Content-SelectOnTitleLikeString
 
 DESCRIPTION:
 Returns all content-objects with a title-substring matching the provided 'searchString'. Case is ignored. 
-
+'includeTable' is a comma-seperated list of 'Table' names for querying specific tables. If the list is empty or missing, then all tables will be queries. 
+Table limit restricts to maximum number of results per table to the specified value.
 
 EXAMPLE: 
-/api/v02/content/Content-SelectOnTitleLikeString?searchString=java
+/api/v02/content/Content-SelectOnTitleLikeString?searchString=java&tableLimit=50&includeTable=[Project,Source]
 
 
 QUERY PARAMS:
 {
-	"searchString": "java"
-}
+	"searchString": "java",
+	"tableLimit": "50",
+	"includeTable": "Project, Source",				// Will only query listed tables. If list is non-empty, the 'exclude'-list is ignored.
+	"orderColumn": "Uuid",							// Name of column to order by. Required to be part of Node interface column.
+	"desc": "0"										// Default is 0 (i.e. ascending)
+}	
 
 
 BODY:
@@ -567,12 +572,12 @@ NONE
 <br>
 <br>
 
-### POST - ContentEdge-InsertAdajacentToUuidOfTable
+### POST - ContentEdge-InsertAdjacentToUuidIntoTable
 
 ```
 
 DBI:
-/ContentEdge-InsertAdajacentToUuidOfTable
+/ContentEdge-InsertAdjacentToUuidIntoTable
 
 
 DESCRIPTION:
@@ -580,14 +585,17 @@ Post a new Content-row in specified table, and creating an edge connecting it to
 
 
 EXAMPLE: 
-/api/v02/contentedge/ContentEdge-InsertAdajacentToUuidOfTable?Uuid=251&Directed=0&Table=Source
+/api/v02/contentedge/ContentEdge-InsertAdjacentToUuidIntoTable?Uuid=251&Directed=0&Table=Source&Type=&Order=&Path=
 
 
 QUERY PARAMS:
 {
 	"Uuid": "251",
 	"Directed": "0", // optional. default=0.
-	"Table": "Source"
+	"Table": "Source",
+	"Type": "", 			// optional. default = ""
+	"Order": "2", 			// optional. default = 0 
+	"Path": "/apis/jsfetch"	// optional. default = "/"
 }
 
 

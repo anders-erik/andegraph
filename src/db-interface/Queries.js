@@ -5,10 +5,13 @@ const { Code_Update } = require("./queries/Code_Update");
 
 
 const { Edge_DeleteOnUuid } = require("./queries/Edge_DeleteOnUuid");
+const { Edge_DeleteOnEdgeUuid } = require("./queries/Edge_DeleteOnEdgeUuid");
 const { Edge_DeleteOnNodeUuids } = require("./queries/Edge_DeleteOnNodeUuids");
 const { Edge_Insert } = require("./queries/Edge_Insert");
 const { Edge_SelectOnUuid } = require("./queries/Edge_SelectOnUuid");
 const { Edge_Update } = require("./queries/Edge_Update");
+const { Edge_UpdateWithEdgeObject } = require("./queries/Edge_UpdateWithEdgeObject");
+
 
 const { Equation_DeleteOnUuid } = require("./queries/Equation_DeleteOnUuid");
 const { Equation_Insert } = require("./queries/Equation_Insert");
@@ -80,10 +83,12 @@ module.exports = {
 	Code_Update,
 
 	Edge_DeleteOnUuid,
+	Edge_DeleteOnEdgeUuid,
 	Edge_DeleteOnNodeUuids,
 	Edge_Insert,
 	Edge_SelectOnUuid,
 	Edge_Update,
+	Edge_UpdateWithEdgeObject,
 
 	Equation_DeleteOnUuid,
 	Equation_Insert,

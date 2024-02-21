@@ -2,7 +2,15 @@
 console.log('import dbir');
 
 
-// 
+// CONTENT
+
+const content = require('./Content.js')
+const edge = require('./Edge.js')
+const contentedge = require('./ContentEdge.js')
+// FILE
+const fileAll = require('./FileAll');
+
+
 
 // NODE
 const nodeGet = require('./NodeGet');
@@ -17,11 +25,27 @@ const contentPut = require('./ContentPut');
 // const contentPatch = require('./ContentPatch');
 const contentDelete = require('./ContentDelete');
 
-// FILE
-const fileAll = require('./FileAll');
 
 function initDbir(app, express) {
 	console.log('init dbir')
+
+
+	// CONTENT 
+	app.all('/api/v02/content/:functionstring', content);
+	// EDGE
+	app.all('/api/v02/edge/:functionstring', edge)
+	// CONTENT-EDGE
+	app.all('/api/v02/contentedge/:functionstring', contentedge)
+	// FILE
+	app.post('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), fileAll);
+	// app.post('/api/v02/file/:fileUuid', fileAll);
+	app.get('/api/v02/file/:fileUuid', fileAll);
+	app.put('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), fileAll);
+	app.delete('/api/v02/file/:fileUuid', fileAll);
+
+
+
+
 
 	// NODE
 	app.get('/api/v02/node/:functionstring', nodeGet);
@@ -38,12 +62,6 @@ function initDbir(app, express) {
 	app.put('/api/v02/content/:functionstring', contentPut);
 	app.delete('/api/v02/content/:functionstring', contentDelete);
 
-	// FILE
-	app.post('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), fileAll);
-	// app.post('/api/v02/file/:fileUuid', fileAll);
-	app.get('/api/v02/file/:fileUuid', fileAll);
-	app.put('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), fileAll);
-	app.delete('/api/v02/file/:fileUuid', fileAll);
 }
 
 

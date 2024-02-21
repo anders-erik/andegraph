@@ -37,6 +37,15 @@ module.exports = async (req, res) => {
 			// console.log(`/data/live/files-v0.2/${fileObject.Uuid}`)
 			// console.log(`${fileObject.Title}.${fileObject.Extension}`)
 
+			// THIS WORKS, BUT I WANT THE BREAKING ERROR FOR NOW!
+			// if (!fs.existsSync(filePath)) {
+
+			// 	console.log('FILE DOES NOT EXISTS')
+			// 	res.status(400).send(['File doesn`t exist. POST a new file first!']);
+			// 	return;
+
+			// }
+
 			res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
 			res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);
 			break;
@@ -170,10 +179,22 @@ module.exports = async (req, res) => {
 				// Buffer.from(new Uint8Array(req.body))
 
 				fs.unlinkSync(filePath);
-
-
 				cp.execSync(`rm ${filePath}-*`);
 
+
+				// update object
+				let newFileObject = { ...fileObject }
+				newFileObject.Type = '';
+				newFileObject.Title = '';
+				newFileObject.Extension = '';
+				newFileObject.IAmAuthor = 0;
+				newFileObject.SizeBytes = 0; // buffer object
+				// console.log(newFileObject)
+
+				await dbi.queries.File_Update(newFileObject);
+				// TODO : NODE IS _NOT_ GETTING THE NEWLY UPDATED 'TimeLastChange' !
+				// Probably not a big deal since I've moved to ContentEdge almost exclusively, but still be mindful of this! 
+				await dbi.queries.Node_Update(newFileObject);
 
 
 				console.log('FILE DELETED')

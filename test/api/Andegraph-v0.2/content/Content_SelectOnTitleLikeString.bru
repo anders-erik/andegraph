@@ -1,0 +1,19 @@
+meta {
+  name: Content_SelectOnTitleLikeString
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3000/api/v02/content/Content-SelectOnTitleLikeString?searchString=a&tableLimit=50&includeTable=Project,Source&orderColumn=Uuid&desc=1
+  body: none
+  auth: none
+}
+
+query {
+  searchString: a
+  tableLimit: 50
+  includeTable: Project,Source
+  orderColumn: Uuid
+  desc: 1
+}
