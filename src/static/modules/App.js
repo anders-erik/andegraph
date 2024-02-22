@@ -24,8 +24,11 @@ import * as Homedash from './homedash/homedash.js';
 
 import * as globalNodeContext from './globalnodecontext/GlobalNodeContext.js';
 
+
+import { dbis } from './dbi-send/dbi-send.js';
+let adj = await dbis.ContentEdge_SelectAdjacentOfUuid(372);
+console.log(adj)
 /* 
-import {dbis} from './dbi-send/dbi-send.js';
 // dbis.Content_SelectChildOfUuid(372);
 let childNodes = await dbis.Node_SelectChildOfUuid(369);
 // dbis.NodeEdge_SelectChildOfUuid(372);

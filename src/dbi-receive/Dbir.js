@@ -8,7 +8,7 @@ const content = require('./Content.js')
 const edge = require('./Edge.js')
 const contentedge = require('./ContentEdge.js')
 // FILE
-const fileAll = require('./FileAll');
+const file = require('./File');
 
 
 
@@ -37,11 +37,11 @@ function initDbir(app, express) {
 	// CONTENT-EDGE
 	app.all('/api/v02/contentedge/:functionstring', contentedge)
 	// FILE
-	app.post('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), fileAll);
-	// app.post('/api/v02/file/:fileUuid', fileAll);
-	app.get('/api/v02/file/:fileUuid', fileAll);
-	app.put('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), fileAll);
-	app.delete('/api/v02/file/:fileUuid', fileAll);
+	app.post('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), file);
+	// app.post('/api/v02/file/:fileUuid', file);
+	app.get('/api/v02/file/:fileUuid', file);
+	app.put('/api/v02/file/:fileUuid', express.raw({ limit: "200mb", type: "*/*" }), file);
+	app.delete('/api/v02/file/:fileUuid', file);
 
 
 

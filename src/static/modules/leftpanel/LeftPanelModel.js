@@ -18,7 +18,7 @@ class LeftPanelModel {
 
 	async updateModelOnNewProjectUuid(newUuid) {
 		this.projectUuid = newUuid;
-		this.projectContentObject = (await Content_SelectOnUuid(this.projectUuid))[0]
+		this.projectContentObject = await Content_SelectOnUuid(this.projectUuid)
 		this.projectNodeEdges = await NodeEdge_SelectChildOfUuid(this.projectUuid);
 	}
 
