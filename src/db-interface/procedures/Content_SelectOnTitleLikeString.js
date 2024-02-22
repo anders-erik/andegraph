@@ -1,13 +1,20 @@
 
 const { getDb } = require('../../db/Db-v0.2.js');
-
 let db = getDb();
 
+let contentTables = require('../../enums/contentTables.js');
 
 async function Content_SelectOnTitleLikeString(searchString, tableLimit, tableArrayString, orderColumn, desc) {
-
-    let tableArray = tableArrayString.split(',');
     // console.log(searchString, tableLimit, tableArray);
+
+    // extract table names
+    let tableArray = tableArrayString.split(',');
+    tableArray = tableArray.filter((tableString) => tableString != '')
+
+    // if no table is provided in the request parameters, all tables are searched!
+    if (tableArray.length == 0) {
+        tableArray = contentTables;
+    }
 
     let allTableRows = [];
 

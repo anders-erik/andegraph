@@ -83,7 +83,7 @@ export class dbis {
 		}
 	}
 	static async Content_SelectOnTitleLikeString(searchString, tableLimit, includeTable, orderColumn, desc) {
-		let url = apiUrl + `/content/Content-SelectOnUuid?searchString=${searchString}&tableLimit=${tableLimit}&includeTable=${includeTable}&orderColumn=${orderColumn}&desc=${desc}`;
+		let url = apiUrl + `/content/Content-SelectOnTitleLikeString?searchString=${searchString}&tableLimit=${tableLimit}&includeTable=${includeTable}&orderColumn=${orderColumn}&desc=${desc}`;
 		const options = {
 			method: 'GET',
 		};
@@ -99,7 +99,7 @@ export class dbis {
 		}
 	}
 	static async Review_InsertScheduleOnUuid(Uuid, scheduleType) {
-		const url = apiUrl + `/content/Content-InsertOnTable?Uuid=${Uuid}&scheduleType=${scheduleType}`;
+		const url = apiUrl + `/content/Review-InsertScheduleOnUuid?Uuid=${Uuid}&scheduleType=${scheduleType}`;
 		const options = {
 			method: 'POST'
 		};
@@ -115,7 +115,7 @@ export class dbis {
 		}
 	}
 	static async Review_SelectCurrentReview() {
-		let url = apiUrl + `/content/Content-SelectCurrentReview`;
+		let url = apiUrl + `/content/Review-SelectCurrentReview`;
 		const options = {
 			method: 'GET',
 		};
@@ -345,6 +345,9 @@ export class dbis {
 			console.error(error);
 		}
 	}
+
+
+
 	static async Get_File(Uuid) {
 
 		const url = apiUrl + `/file/` + Uuid;
@@ -370,6 +373,10 @@ export class dbis {
 			console.error(error);
 		}
 	}
+
+
+
+
 	static async Put_File(Uuid, file, queryParams, mimeType) {
 
 		let url = apiUrl + `/file/${Uuid}?`;
@@ -409,6 +416,9 @@ export class dbis {
 			console.error(error);
 		}
 	}
+
+
+
 	static async Delete_File(Uuid) {
 		let url = apiUrl + `/file/${Uuid}`;
 		const options = {

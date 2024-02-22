@@ -1,0 +1,21 @@
+#mainOverlay_state {
+	height: 100%;
+	width: 100%;
+
+	/* background-color: aliceblue; */
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+#mainOverlay_state>div {
+	height: 30%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* box-shadow: inset 0 0 0 1px black; */
+	border: solid black 1px;
+}

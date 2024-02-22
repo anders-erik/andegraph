@@ -25,9 +25,11 @@ import * as Homedash from './homedash/homedash.js';
 import * as globalNodeContext from './globalnodecontext/GlobalNodeContext.js';
 
 
+
 import { dbis } from './dbi-send/dbi-send.js';
 let adj = await dbis.ContentEdge_SelectAdjacentOfUuid(372);
 console.log(adj)
+
 /* 
 // dbis.Content_SelectChildOfUuid(372);
 let childNodes = await dbis.Node_SelectChildOfUuid(369);
@@ -51,7 +53,8 @@ import { initGlobalListener } from './globallistener/GlobalListener.js';
 initGlobalListener();
  */
 
-import { LeftPanel } from './leftpanel/LeftPanel.js';
+import { MainOverlay } from './mainoverlay/MainOverlay.js';
+// import { LeftPanel } from './leftpanel/LeftPanel.js';
 import { GlobalEventHandler } from './appglobal/GlobalEventhandler.js';
 import { ContextOverlay } from './contextoverlay/ContextOverlay.js';
 
@@ -62,10 +65,12 @@ class App {
 
 	rootElement;
 	appElement;
-	mainContent;
 	globalEventHandler;
+
+	mainContent;
+	mainOverlay;
 	contextOverlay;
-	leftPanel;
+	// leftPanel;
 
 	projectUuid;
 	projectnodeObject;
@@ -84,9 +89,6 @@ class App {
 		this.appElement.tabIndex = 0;
 		this.rootElement.append(this.appElement);
 
-		this.contextOverlay = new ContextOverlay();
-		this.appElement.append(this.contextOverlay.overlayElement);
-
 		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
 
 		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
@@ -98,8 +100,12 @@ class App {
 
 		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
 
+		this.mainOverlay = new MainOverlay(this.appElement);
+		// this.leftPanel = new LeftPanel(this.appElement);
 
-		this.leftPanel = new LeftPanel(this.appElement);
+		this.contextOverlay = new ContextOverlay();
+		this.appElement.append(this.contextOverlay.overlayElement);
+
 		// leftPanel.LeftPanelDevTests();
 
 		// leftPanelTestFunction();
@@ -126,8 +132,11 @@ class App {
 		if (event.target == document.body) {
 			console.log('bodbod')
 		}
-		else if (event.target.nodeObject) {
+		else if (event.target.contentObject) {
 			this.contextOverlay.updateElementContexts(event.target);
+		}
+		else if (event.target.classList.contains('contextElement')) {
+
 		}
 		else {
 			this.contextOverlay.removeElementContexts();
@@ -151,7 +160,7 @@ class App {
 	performAppAction(actionObject) {
 		switch (actionObject.action) {
 			case 'propertiesContext':
-				this.contextOverlay.togglePropertiesTable(actionObject.element);
+				this.contextOverlay.contentMenu.toggle(actionObject.element);
 				break;
 
 			default:

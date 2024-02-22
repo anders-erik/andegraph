@@ -39,28 +39,80 @@ class GlobalEventHandler {
 			return;
 		}
 
+		let isContentObject = event.target.contentObject;
+		let isEdgeObject = event.target.edgeObject;
+
 		// console.log(event.key)
+		// console.log('shiftKey: ', event.shiftKey)
+
 		switch (event.key) {
 
-			case '1':
-				console.log('HOME SWEET HOME')
+			case '!':
+				isContentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
 				break;
-			case '2':
-				document.getElementById('leftPanel_projectButton').click()
-				console.log('P')
+			case '@':
+				isContentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
 				break;
-			case '3':
-				console.log('HOME SWEET HOME')
+			case '#':
+				isContentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
 				break;
 
-			case '2':
-				console.log(SEARCH);
+			case '1':
+				if (event.altKey) {
+					document.getElementById('mainMenuHome').click()
+				}
+				else {
+					console.log('trying to connect')
+				}
 				break;
+			case '2':
+				if (event.altKey) {
+					document.getElementById('mainMenuState').click()
+				}
+				else {
+					console.log('trying to connect')
+				}
+				break;
+			case '3':
+				if (event.altKey) {
+					document.getElementById('mainMenuProject').click()
+				}
+				else {
+					console.log('trying to connect')
+				}
+				break;
+			case '4':
+				if (event.altKey) {
+					document.getElementById('mainMenuSearch').click()
+					this.app.mainOverlay.search.settings.reviewCheckbox.checked = true;
+					this.app.mainOverlay.search.settings.reviewCheckbox.click();
+				}
+				break;
+			case '5':
+				if (event.altKey) {
+					document.getElementById('mainMenuReview').click();
+					this.app.mainOverlay.search.settings.reviewCheckbox.checked = false;
+					this.app.mainOverlay.search.settings.reviewCheckbox.click();
+				}
+				break;
+
+			case 'G':
+				if (event.target.contentObject) {
+					console.log('GO TO CONTENT')
+				}
+				break;
+			case 'H':
+				console.log('HOME SWEET HOME')
+				break;
+			case 'R':
+				if (event.target.contentObject.Table == 'Review') {
+					console.log('GO TO LINKED CONTENT FOR REVIEW')
+				}
 
 			case 'o':
 				console.log('oooooooooo')
-				if (event.target.nodeObject) {
-					this.app.contextOverlay.togglePropertiesTable(event.target);
+				if (event.target.contentObject) {
+					this.app.contextOverlay.contentMenu.toggle(event.target);
 				}
 				// actionObject.action = 'propertiesContext';
 				break;
@@ -87,6 +139,7 @@ class GlobalEventHandler {
 			case 'ArrowUp':
 				if (event.target.tabIndex == '0') {
 					this.focusPreviousSibling(event.target);
+					event.preventDefault(); // prevent scrolling!
 				}
 				break;
 
@@ -95,7 +148,8 @@ class GlobalEventHandler {
 			case 'ArrowRight':
 			case 'ArrowDown':
 				if (event.target.tabIndex == '0') {
-					this.focusNextSibling(event.target)
+					this.focusNextSibling(event.target);
+					event.preventDefault(); // prevent scrolling!
 				}
 				break;
 
@@ -111,12 +165,41 @@ class GlobalEventHandler {
 		// this.app.getLeftPanelId()
 		// console.log('click: ', event.target);
 		console.log('activeElement on click', document.activeElement);
+		// console.log('clic event.target: ', event.target)
 		// console.log(this)
 		// return {
 		// 	action: 'clickAction',
 		// 	event: event.target
 		// };
+
+		switch (event.target.id) {
+			case 'mainMenuHome':
+				console.log('HOME SWEET HOME')
+				break;
+			case 'mainMenuState':
+				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
+				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+				break;
+			case 'mainMenuProject':
+				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
+				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+				break;
+			case 'mainMenuSearch':
+				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
+				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+				break;
+			case 'mainMenuReview':
+				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
+				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+				break;
+			default:
+				break;
+		}
+
 	}
+
+
+
 
 	focusFirstFocusableAncestor(eventTarget) {
 
