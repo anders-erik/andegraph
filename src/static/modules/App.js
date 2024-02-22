@@ -53,6 +53,7 @@ import { initGlobalListener } from './globallistener/GlobalListener.js';
 initGlobalListener();
  */
 
+import { MainContent } from './maincontent/MainContent.js';
 import { MainOverlay } from './mainoverlay/MainOverlay.js';
 // import { LeftPanel } from './leftpanel/LeftPanel.js';
 import { GlobalEventHandler } from './appglobal/GlobalEventhandler.js';
@@ -100,6 +101,7 @@ class App {
 
 		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
 
+		this.mainContent = new MainContent(this.appElement);
 		this.mainOverlay = new MainOverlay(this.appElement);
 		// this.leftPanel = new LeftPanel(this.appElement);
 

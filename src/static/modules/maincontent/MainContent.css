@@ -1,0 +1,40 @@
+@import './source/Source.css';
+
+#mainContentContainer {
+	position: fixed;
+
+	height: 100%;
+	width: 100%;
+
+	font-size: large;
+
+
+	background-color: rgba(159, 188, 214, 0.527);
+	box-shadow: inset 0 0 0 10px rgb(32, 161, 135);
+}
+
+#mainToolbarContainer {
+	position: fixed;
+
+	height: 50px;
+	width: 700px;
+
+	top: 0px;
+	left: calc(50% - 350px);
+
+	background-color: rgb(132, 155, 175);
+	box-shadow: inset 0 0 0 1px black;
+}
+
+#mainSidepanelContainer {
+	position: fixed;
+
+	height: 98%;
+	width: 398px;
+
+	top: 1%;
+	left: calc(100% - 400px);
+
+	background-color: rgb(32, 39, 45);
+	box-shadow: inset 0 0 0 1px black;
+}

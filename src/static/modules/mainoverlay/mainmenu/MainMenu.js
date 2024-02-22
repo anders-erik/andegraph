@@ -56,7 +56,7 @@ export class MainMenu {
 	
 <div id="mainMenuHome" class="mainMenuBtn">H</div>
 <div id="mainMenuState" class="mainMenuBtn">S</div>
-<div id="mainMenuProject" class="mainMenuBtn selected">P</div>
+<div id="mainMenuProject" class="mainMenuBtn">P</div>
 <div id="mainMenuSearch" class="mainMenuBtn">Q</div>
 <div id="mainMenuReview" class="mainMenuBtn">R</div>
 

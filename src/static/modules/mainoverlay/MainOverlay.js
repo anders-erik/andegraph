@@ -69,10 +69,10 @@ export class MainOverlay {
 
 
 	mainOverlayInnerHtml = `
-	<div id="mainMenuContainer"></div>
-	<div id="stateContainer" tabindex=0></div>
-	<div id="projectContainer" tabindex=0></div>
-	<div id="searchContainer" tabindex=0></div>
+	<div id="mainMenuContainer" ></div>
+	<div id="stateContainer" class="hide" tabindex=0></div>
+	<div id="projectContainer" class="hide" tabindex=0></div>
+	<div id="searchContainer" class="hide" tabindex=0></div>
 	
 	`
 }

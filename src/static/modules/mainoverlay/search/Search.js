@@ -48,7 +48,7 @@ export class Search {
 
 			this.tryFetch();
 
-		}, 300)
+		}, 400)
 	}
 	inputFocusOut(event) {
 		clearInterval(this.pollInputInterval);
@@ -71,12 +71,12 @@ export class Search {
 
 			let newSearchString = this.input.element.value;
 
-			if (newSearchString !== this.lastSearchString) {
-				console.log('SEARCH SEARCH: ', newSearchString)
-				this.lastSearchString = newSearchString;
+			// if (newSearchString !== this.lastSearchString) {
+			// console.log('SEARCH SEARCH: ', newSearchString)
+			this.lastSearchString = newSearchString;
 
-				await this.doSearch(newSearchString);
-			}
+			await this.doSearch(newSearchString);
+			// }
 
 		}
 
