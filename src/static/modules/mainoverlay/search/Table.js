@@ -13,6 +13,7 @@ export class Table {
 	constructor(parentElement) {
 		this.element = document.createElement('div');
 		this.element.id = 'searchTableDiv';
+		this.element.tabIndex = 0;
 		parentElement.append(this.element);
 
 		this.element.innerHTML = this.elementInnerHtml;
@@ -35,6 +36,13 @@ export class Table {
 			let tableRow = document.createElement('tr');
 			tableRow.tabIndex = 0;
 			tableRow.contentObject = reviewObject;
+			tableRow.dataset.uuid = reviewObject.Uuid;
+			tableRow.update = function () {
+				this.innerHTML = `
+				<td>${this.contentObject.ReviewDate}</td>
+				<td>${this.contentObject.NodeToReviewUuid}</td>
+			`
+			}
 			this.tableBody.append(tableRow);
 
 			tableRow.innerHTML += `
@@ -58,6 +66,17 @@ export class Table {
 			let tableRow = document.createElement('tr');
 			tableRow.tabIndex = 0;
 			tableRow.contentObject = contentObject;
+			tableRow.dataset.uuid = contentObject.Uuid;
+			tableRow.update = function () {
+				this.innerHTML = `
+				<td>${this.contentObject.Uuid}</td>
+				<td>${this.contentObject.Table}</td>
+				<td>${this.contentObject.Type}</td>
+				<td>${this.contentObject.Title}</td>
+				<td>${this.contentObject.TimeCreated}</td>
+				<td>${this.contentObject.TimeLastChange}</td>
+			`
+			}
 			this.tableBody.append(tableRow);
 
 			tableRow.innerHTML += `

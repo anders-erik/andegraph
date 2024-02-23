@@ -35,12 +35,25 @@ class GlobalEventHandler {
 		// console.log(this)
 		// let rr;
 		if (event.target.contentEditable == 'true' || event.target.type == 'text') {
-			console.log('CONTENT EDITABLE. NO SHORTCUT ACTION TAKEN')
+			console.log('TEXT INPUT ELEMENT')
+			if (event.key == 'Escape') {
+				if (event.target.type == 'text') {
+					this.focusNextSibling(event.target);
+				}
+				else if (event.target.classList.contains('contextElement')) {
+					this.focusFirstFocusableAncestor(event.target);
+				}
+
+			}
 			return;
 		}
 
 		let isContentObject = event.target.contentObject;
 		let isEdgeObject = event.target.edgeObject;
+
+		let contextMenuOpen;
+		let focusOnContextMenu;
+		let focusOnContentElement;
 
 		// console.log(event.key)
 		// console.log('shiftKey: ', event.shiftKey)
@@ -84,15 +97,15 @@ class GlobalEventHandler {
 			case '4':
 				if (event.altKey) {
 					document.getElementById('mainMenuSearch').click()
-					this.app.mainOverlay.search.settings.reviewCheckbox.checked = true;
-					this.app.mainOverlay.search.settings.reviewCheckbox.click();
+					// setting changed does NOT trigger the 'change' event! Therefore set checked to opposite of desired before synthetic click.
+					// this.app.mainOverlay.search.settings.reviewCheckbox.checked = true;
+					// this.app.mainOverlay.search.settings.reviewCheckbox.click();
 				}
 				break;
 			case '5':
 				if (event.altKey) {
 					document.getElementById('mainMenuReview').click();
-					this.app.mainOverlay.search.settings.reviewCheckbox.checked = false;
-					this.app.mainOverlay.search.settings.reviewCheckbox.click();
+
 				}
 				break;
 
@@ -110,16 +123,39 @@ class GlobalEventHandler {
 				}
 
 			case 'o':
-				console.log('oooooooooo')
+				contextMenuOpen = this.app.contextOverlay.contentMenu.active;
+				focusOnContextMenu = this.app.contextOverlay.contentMenu.element == document.activeElement;
 				if (event.target.contentObject) {
-					this.app.contextOverlay.contentMenu.toggle(event.target);
+					if (contextMenuOpen && focusOnContextMenu) {
+						this.app.contextOverlay.contentMenu.element.contentObjectElement.focus();
+					}
+					else {
+						this.app.contextOverlay.contentMenu.toggle(event.target);
+					}
 				}
-				// actionObject.action = 'propertiesContext';
+				break;
+			case 'O':
+				contextMenuOpen = this.app.contextOverlay.contentMenu.active;
+				focusOnContentElement = this.app.contextOverlay.contentMenu.element.contentObjectElement == document.activeElement;
+
+				if (event.target.contentObject) {
+					if (contextMenuOpen && focusOnContentElement) {
+						this.app.contextOverlay.contentMenu.element.focus();
+					}
+					else {
+						this.app.contextOverlay.contentMenu.toggle(event.target);
+						this.app.contextOverlay.contentMenu.element.focus();
+					}
+				}
 				break;
 
 
 			case 'Escape':
-				if (this.app.contextOverlay.isDisplayingNodeContext()) {
+				if (event.target.classList.contains('contextMenu')) {
+					console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
+					event.target.contentObjectElement.focus();
+				}
+				else if (this.app.contextOverlay.isDisplayingNodeContext()) {
 					this.app.contextOverlay.removeElementContexts();
 				}
 				else if (event.target.tabIndex == '0') {
@@ -187,10 +223,16 @@ class GlobalEventHandler {
 			case 'mainMenuSearch':
 				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
 				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+				// setting changed does NOT trigger the 'change' event! Therefore set checked to opposite of desired before synthetic click.
+				this.app.mainOverlay.search.settings.reviewCheckbox.checked = true;
+				this.app.mainOverlay.search.settings.reviewCheckbox.click();
 				break;
 			case 'mainMenuReview':
 				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
 				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+				// setting changed does NOT trigger the 'change' event! Therefore set checked to opposite of desired before synthetic click.
+				this.app.mainOverlay.search.settings.reviewCheckbox.checked = false;
+				this.app.mainOverlay.search.settings.reviewCheckbox.click();
 				break;
 			default:
 				break;
@@ -207,7 +249,7 @@ class GlobalEventHandler {
 		while (currentelement.parentElement) {
 
 
-			// console.log(currentelement, currentelement.tabIndex)
+			console.log(currentelement, currentelement.tabIndex)
 			if (currentelement.parentElement.tabIndex == 0) {
 				currentelement.parentElement.focus();
 				break;

@@ -36,7 +36,7 @@ class ContextOverlay {
 	}
 
 	updateElementContexts(contentObjectElement) {
-		this.contentMenu.populate(contentObjectElement.contentObject);
+		this.contentMenu.populate(contentObjectElement);
 		this.contentMenu.place(contentObjectElement);
 	}
 

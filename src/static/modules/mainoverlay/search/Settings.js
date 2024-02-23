@@ -23,6 +23,7 @@ export class Settings {
 	constructor(parentElement) {
 		this.element = document.createElement('div');
 		this.element.id = 'searchSettings';
+		this.element.tabIndex = 0;
 		parentElement.append(this.element);
 
 		this.element.innerHTML = this.elementInnerHtml;

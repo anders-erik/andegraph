@@ -53,7 +53,7 @@ export class dbis {
 		const options = {
 			method: 'PUT',
 			headers: { "Content-Type": "application/json", },
-			body: contentObject,
+			body: JSON.stringify(contentObject),
 		};
 
 		try {

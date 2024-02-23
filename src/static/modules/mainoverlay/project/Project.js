@@ -29,6 +29,10 @@ export class Project {
 
 		this.projectTitleElement.innerHTML = this.contentObject.Title;
 		this.projectTitleElement.contentObject = this.contentObject;
+		this.projectTitleElement.dataset.uuid = this.contentObject.Uuid;
+		this.projectTitleElement.update = function () {
+			this.innerHTML = this.contentObject.Title;
+		}
 
 		this.insertContentEdgesIntoDom();
 	}
@@ -42,6 +46,14 @@ export class Project {
 			tableRow.tabIndex = 0;
 			tableRow.contentObject = contentEdgeObject.content;
 			tableRow.edgeObject = contentEdgeObject.edge;
+			tableRow.dataset.uuid = contentEdgeObject.content.Uuid;
+			tableRow.update = function () {
+				this.innerHTML = `
+				<td>${this.contentObject.Table}</td>
+				<td>${this.contentObject.Title}</td>
+				<td>${this.edgeObject.Path}</td>
+			`
+			}
 			this.tableBody.append(tableRow);
 
 			tableRow.innerHTML += `

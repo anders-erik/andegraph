@@ -1,8 +1,13 @@
 #contextOverlay_contentMenu {
 	position: absolute;
 
-	height: 200px;
-	width: 200px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	overflow-wrap: break-word;
+	scrollbar-width: thin;
+
+	height: 250px;
+	width: 300px;
 
 	top: 400px;
 	left: 400px;
@@ -10,5 +15,53 @@
 	padding: 3px;
 	border: solid black 1px;
 
+	background-color: rgb(185, 184, 182);
+
 	pointer-events: all;
+}
+
+#contextOverlay_contentMenu table {
+	width: 280px;
+	max-width: 280px;
+	height: 234px;
+
+	margin: 5px;
+
+	border: solid gray 1px;
+}
+
+
+#contextOverlay_contentMenu table thead tr {
+	margin-bottom: 5px;
+
+	background-color: rgb(158, 158, 158);
+}
+
+
+#contextOverlay_contentMenu table tbody tr {
+	margin-bottom: 5px;
+
+	background-color: rgb(158, 158, 158);
+}
+
+#contextOverlay_contentMenu table tbody tr th {
+	width: 110px;
+	max-width: 110px;
+	min-width: 110px;
+
+
+}
+
+#contextOverlay_contentMenu table tbody tr td {
+	width: 154px;
+	max-width: 154px;
+	min-width: 154px;
+
+	background-color: rgb(190, 190, 190);
+}
+
+#contextOverlay_contentMenu table tbody tr td.editableContextElement {
+
+	border: solid gray 1px;
+	background-color: rgb(208, 202, 202);
 }
