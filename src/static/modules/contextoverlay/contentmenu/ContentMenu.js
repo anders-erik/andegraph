@@ -1,4 +1,5 @@
 import { dbis } from "../../dbi-send/dbi-send.js";
+import { showToast } from "../../log/toast.js";
 
 
 export class ContentMenu {
@@ -19,16 +20,16 @@ export class ContentMenu {
 		this.element.tabIndex = 0;
 		// parentElement.append(this.element);
 
-		this.element.addEventListener('focusout', this.focusOutOnEditableDataField)
+		this.element.addEventListener('focusout', this.focusOutOnEditableContentCell)
 
 		this.element.innerHTML = this.elementInnerHtml;
 	}
 
 	// NOT BOUND TO CLASS
-	async focusOutOnEditableDataField(event) {
+	async focusOutOnEditableContentCell(event) {
 		// console.log('TARGET> ', event.target.classList.cont)
 		if (event.target.classList.contains('contextElement')) {
-			console.log('FOCUS OUT ON CONTEXTDATA. PUT!')
+			// console.log('FOCUS OUT ON CONTEXTDATA. PUT!')
 
 			let newContentObject = {};
 
@@ -42,19 +43,28 @@ export class ContentMenu {
 
 			}
 
-			console.log(newContentObject)
-			await dbis.Content_UpdateWithContentObject(newContentObject);
+			// DEV TEST - make sure update fails
+			// newContentObject.Uuid = -123;
 
-			// https://stackoverflow.com/questions/7084557/select-all-elements-with-a-data-xxx-attribute-without-using-jquery
-			let contentElementsWithSameUuid = document.querySelectorAll(`[data-uuid='${newContentObject.Uuid}']`);
-			for (const element of contentElementsWithSameUuid) {
-				element.dataset.uuid = newContentObject.Uuid;
-				element.contentObject = newContentObject;
-				element.update();
+			// console.log(newContentObject)
+			try {
+
+				await dbis.Content_UpdateWithContentObject(newContentObject);
+
+				// https://stackoverflow.com/questions/7084557/select-all-elements-with-a-data-xxx-attribute-without-using-jquery
+				let contentElementsWithSameUuid = document.querySelectorAll(`[data-uuid='${newContentObject.Uuid}']`);
+				for (const element of contentElementsWithSameUuid) {
+					element.dataset.uuid = newContentObject.Uuid;
+					element.contentObject = newContentObject;
+					element.update();
+				}
+				// console.log('contentElementsWithSameUuid: ', contentElementsWithSameUuid)
+				// this.extractContentObjectFromDom()
+				// console.log('NEW FOCUS: ', document.activeElement)
+
+			} catch (error) {
+				showToast('Error PUT contentObject')
 			}
-			// console.log('contentElementsWithSameUuid: ', contentElementsWithSameUuid)
-			// this.extractContentObjectFromDom()
-			// console.log('NEW FOCUS: ', document.activeElement)
 		}
 	}
 
@@ -76,7 +86,7 @@ export class ContentMenu {
 	}
 
 	toggle(contentObjectElement) {
-		console.log('TOGGLE PROPERTIES TABLE')
+		// console.log('TOGGLE PROPERTIES TABLE')
 
 		if (this.active) {
 			this.parentElement.removeChild(this.element);
@@ -84,10 +94,13 @@ export class ContentMenu {
 		}
 		else {
 			// this.contentObjectElement = contentObjectElement;
+			this.parentElement.innerHTML = '';
+
 			this.element.contentObjectElement = contentObjectElement;
 			this.populate(contentObjectElement);
 			this.place(contentObjectElement);
 			this.parentElement.append(this.element);
+
 			this.active = true;
 		}
 	}
@@ -145,12 +158,40 @@ export class ContentMenu {
 	place(contentObjectElement) {
 		this.element.contentObjectElement = contentObjectElement;
 
-		let contentObjectElementClientRect = contentObjectElement.getBoundingClientRect();
+		let contentElementRect = contentObjectElement.getBoundingClientRect();
+		// console.log(contentElementRect)
+		let Xcenter = contentElementRect.left + (contentElementRect.width * 0.5);
+		let Ycenter = contentElementRect.top + (contentElementRect.height * 0.5);
 
-		this.element.style.left = contentObjectElementClientRect.right + 20 + 'px';
-		this.element.style.top = contentObjectElementClientRect.top + 'px';
-		console.log(this.element.left)
-		console.log(contentObjectElementClientRect)
+		let viewportHeight = window.innerHeight;
+		let viewportWidth = window.innerWidth;
+		// console.log(viewportHeight, viewportWidth)
+
+		// let documentBodyHeight = document.body.clientHeight;
+		// let documentBodyWidth = document.body.clientWidth;
+		// let documentElementHeight = document.documentElement.clientHeight;
+		// let documentElementWidth = document.documentElement.clientWidth;
+		// console.log(documentBodyHeight, documentBodyWidth)
+		// console.log(documentElementHeight, documentElementWidth)
+
+
+		if (Xcenter < viewportWidth * 0.5) {
+			this.element.style.left = contentElementRect.right + 20 + 'px';
+		}
+		else {
+			this.element.style.left = (contentElementRect.left - contentElementRect.width - 20) + 'px';
+		}
+
+		if (Ycenter < viewportHeight * 0.5) {
+			this.element.style.top = contentElementRect.top + 'px';
+		}
+		else {
+			this.element.style.top = contentElementRect.bottom - this.element.offsetHeight + 'px';
+		}
+
+
+		// console.log(this.element.left)
+
 		// let menuHeight = this.propertiesMenu.offsetHeight;
 		// let elementTopSpace = nodeObjectElement.offsetTop;
 		// console.log(menuHeight, elementTopSpace)

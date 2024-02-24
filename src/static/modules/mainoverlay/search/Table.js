@@ -108,7 +108,7 @@ export class Table {
 
 
 	elementInnerHtml = `
-<table id="searchTable" tabindex=0>
+<table id="searchTable">
 	<thead>
 		<tr id="searchTableHead">
 			<th class="searchTableElement">Uuid</th>

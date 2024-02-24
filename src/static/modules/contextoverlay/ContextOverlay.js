@@ -26,6 +26,7 @@ class ContextOverlay {
 
 
 
+
 	isDisplayingNodeContext() {
 		if (this.contentMenu.active) {
 			return true;

@@ -117,42 +117,45 @@ class GlobalEventHandler {
 			case 'H':
 				console.log('HOME SWEET HOME')
 				break;
+
+			// context menu focus
+			case 'm':
+				contextMenuOpen = this.app.contextOverlay.contentMenu.active;
+
+				if (event.target.contentObject) {
+					if (contextMenuOpen) {
+						this.app.contextOverlay.contentMenu.element.focus();
+					}
+				}
+				else if (event.target.classList.contains('contextMenu')) {
+					event.target.contentObjectElement.focus();
+				}
+				break;
+
 			case 'R':
 				if (event.target.contentObject.Table == 'Review') {
 					console.log('GO TO LINKED CONTENT FOR REVIEW')
 				}
 
-			case 'o':
-				contextMenuOpen = this.app.contextOverlay.contentMenu.active;
-				focusOnContextMenu = this.app.contextOverlay.contentMenu.element == document.activeElement;
-				if (event.target.contentObject) {
-					if (contextMenuOpen && focusOnContextMenu) {
-						this.app.contextOverlay.contentMenu.element.contentObjectElement.focus();
-					}
-					else {
-						this.app.contextOverlay.contentMenu.toggle(event.target);
-					}
-				}
-				break;
-			case 'O':
-				contextMenuOpen = this.app.contextOverlay.contentMenu.active;
-				focusOnContentElement = this.app.contextOverlay.contentMenu.element.contentObjectElement == document.activeElement;
 
+
+			// content context menu toggle
+			case 'o':
 				if (event.target.contentObject) {
-					if (contextMenuOpen && focusOnContentElement) {
-						this.app.contextOverlay.contentMenu.element.focus();
-					}
-					else {
-						this.app.contextOverlay.contentMenu.toggle(event.target);
-						this.app.contextOverlay.contentMenu.element.focus();
-					}
+					this.app.contextOverlay.contentMenu.toggle(event.target);
+					this.app.contextOverlay.updateElementContexts(event.target);
+				}
+				else if (event.target.classList.contains('contextMenu')) {
+					event.target.contentObjectElement.focus();
 				}
 				break;
+
+
 
 
 			case 'Escape':
 				if (event.target.classList.contains('contextMenu')) {
-					console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
+					// console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
 					event.target.contentObjectElement.focus();
 				}
 				else if (this.app.contextOverlay.isDisplayingNodeContext()) {
@@ -200,7 +203,7 @@ class GlobalEventHandler {
 	click(event) {
 		// this.app.getLeftPanelId()
 		// console.log('click: ', event.target);
-		console.log('activeElement on click', document.activeElement);
+		// console.log('activeElement on click', document.activeElement);
 		// console.log('clic event.target: ', event.target)
 		// console.log(this)
 		// return {
@@ -249,7 +252,7 @@ class GlobalEventHandler {
 		while (currentelement.parentElement) {
 
 
-			console.log(currentelement, currentelement.tabIndex)
+			// console.log(currentelement, currentelement.tabIndex)
 			if (currentelement.parentElement.tabIndex == 0) {
 				currentelement.parentElement.focus();
 				break;
