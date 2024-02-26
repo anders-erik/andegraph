@@ -1,12 +1,14 @@
 #mainOverlay_state {
-	height: 100%;
-	width: 100%;
+	height: calc(100% - 3px);
+	width: calc(100% - 3px);
 
 	/* background-color: aliceblue; */
 
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+
+	background-color: rgb(104, 130, 151);
 }
 
 #mainOverlay_state>div {

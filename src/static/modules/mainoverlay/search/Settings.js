@@ -8,7 +8,6 @@ export class Settings {
 
 	selectedTables;
 
-	reviewCheckbox;
 	descCheckbox;
 	tableLimitInput;
 	orderBySelect;
@@ -28,8 +27,6 @@ export class Settings {
 
 		this.element.innerHTML = this.elementInnerHtml;
 
-		this.reviewCheckbox = this.element.querySelector('#reviewSearchCheckbox');
-		this.reviewCheckbox.addEventListener('change', this.reviewBoxChange.bind(this));
 		this.descCheckbox = this.element.querySelector('#descSearchCheckbox');
 		this.tableLimitInput = this.element.querySelector('#tableLimitSearchInput');
 		this.orderBySelect = this.element.querySelector('#orderSearchBySelect');
@@ -44,30 +41,7 @@ export class Settings {
 	}
 
 
-	reviewBoxChange(event) {
-		if (this.reviewCheckbox.checked) {
-			this.disableTables();
-		}
-		else {
-			this.enableTables();
-		}
-	}
 
-	disableTables() {
-		this.fileCheckbox.disabled = true;
-		this.projectCheckbox.disabled = true;
-		this.sourceCheckbox.disabled = true;
-		this.textCheckbox.disabled = true;
-		this.searchSettingsTables.classList.add('dis')
-	}
-
-	enableTables() {
-		this.fileCheckbox.disabled = false;
-		this.projectCheckbox.disabled = false;
-		this.sourceCheckbox.disabled = false;
-		this.textCheckbox.disabled = false;
-		this.searchSettingsTables.classList.remove('dis')
-	}
 
 	getTableList() {
 		let listString = `
@@ -82,12 +56,7 @@ export class Settings {
 
 	elementInnerHtml = `
 <div id="searchSettings_options" class="search_subcontainer">
-	<div>
-		<label for="reviewSearchCheckbox">
-			<input type="checkbox" id="reviewSearchCheckbox" name="reviewSearchCheckbox"  />
-			Review
-		</label>
-	</div>
+
 	<div>
 		<label for="tableLimitSearchInput">
 			<input type="text" id="tableLimitSearchInput" name="tableLimitSearchInput" value=50>
@@ -101,7 +70,7 @@ export class Settings {
 		</label>
 	</div>
 	<div>
-		<label for="orderSearchBySelect">ORDER
+		<label for="orderSearchBySelect">
 			<select name="orderSearchBySelect" id="orderSearchBySelect">
 				<option value=""></option>
 				<option value="Uuid">Uuid</option>
@@ -110,12 +79,19 @@ export class Settings {
 				<option value="Title">Title</option>
 				<option value="TimeCreated">TimeCreated</option>
 				<option value="TimeLastChange">TimeLastChange</option>
-			</select>
+				</select>
+				ORDER
 		</label>
 	</div>
 </div>
 
 <div id="searchSettings_tables" class="search_subcontainer">
+	<div>
+		<label for="codeSearchCheckbox">
+			<input type="checkbox" id="codeSearchCheckbox" name="codeSearchCheckbox"  />
+			Code
+		</label>
+	</div>
 	<div>
 		<label for="fileSearchCheckbox">
 			<input type="checkbox" id="fileSearchCheckbox" name="fileSearchCheckbox"  />

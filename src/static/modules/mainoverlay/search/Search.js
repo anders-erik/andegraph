@@ -28,59 +28,39 @@ export class Search {
 		this.input.element.addEventListener('focusout', this.inputFocusOut.bind(this));
 
 		this.settings = new Settings(this.element);
-		this.settings.reviewCheckbox.addEventListener('change', this.reviewCheckboxChange.bind(this));
 
 		this.table = new Table(this.element);
 	}
 
 
-	reviewCheckboxChange(event) {
-		if (this.settings.reviewCheckbox.checked) {
-			this.tryFetch();
-		}
-		else {
-			this.doSearch(this.input.element.value)
-		}
-	}
 
 	inputFocusIn(event) {
+
 		this.pollInputInterval = setInterval(() => {
-
-			this.tryFetch();
-
-		}, 400)
-	}
-	inputFocusOut(event) {
-		clearInterval(this.pollInputInterval);
-	}
-
-
-
-
-
-
-	async tryFetch() {
-
-		if (this.settings.reviewCheckbox.checked) {
-			console.log('GET REVIEW!')
-			let reviewContentObjects = await dbis.Review_SelectCurrentReview();
-			this.table.insertReviewObjects(reviewContentObjects);
-			console.log(reviewContentObjects)
-		}
-		else {
 
 			let newSearchString = this.input.element.value;
 
-			// if (newSearchString !== this.lastSearchString) {
-			// console.log('SEARCH SEARCH: ', newSearchString)
-			this.lastSearchString = newSearchString;
+			if (this.lastSearchString !== newSearchString) {
+				this.lastSearchString = newSearchString;
 
-			await this.doSearch(newSearchString);
-			// }
+				this.doSearch(this.input.element.value)
+			}
 
-		}
+
+		}, 400)
+
+		this.doSearch(this.input.element.value)
+	}
+
+
+	inputFocusOut(event) {
+
+		clearInterval(this.pollInputInterval);
 
 	}
+
+
+
 
 	async doSearch(searchString) {
 
@@ -102,8 +82,6 @@ export class Search {
 		// console.log(searchRows);
 		this.table.insertContentObjects(searchRows)
 	}
-
-
 
 
 }

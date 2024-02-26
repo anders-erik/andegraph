@@ -1,0 +1,60 @@
+#review {
+	/* position: relative;
+	left: 5%; */
+	width: calc(100% - 6px);
+	height: calc(100% - 6px);
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	background-color: rgb(104, 130, 151);
+}
+
+#review h3 {
+	padding: 5px;
+	margin: 15px 0 15px 0;
+	text-align: center;
+}
+
+#reviewTableDiv {
+	flex-grow: 1;
+	width: 96%;
+
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
+
+	overflow-y: scroll;
+
+	background-color: rgba(82, 89, 95, 0.377);
+}
+
+#reviewTable {
+	width: 96%;
+
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
+
+	/* background-color: rgba(82, 89, 95, 0.377); */
+
+}
+
+#reviewTable thead tr th {
+	padding: 10px;
+	background-color: rgb(75, 90, 103);
+}
+
+#reviewTable tbody tr td {
+	border-top: solid rgb(86, 80, 80) 1px;
+
+	padding: 10px;
+	text-align: center;
+
+
+}

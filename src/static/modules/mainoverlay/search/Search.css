@@ -4,8 +4,8 @@
 
 
 #search {
-	height: 100%;
-	width: 100%;
+	height: calc(100% - 6px);
+	width: calc(100% - 6px);
 
 	display: flex;
 	flex-direction: column;
@@ -14,5 +14,5 @@
 
 	overflow: hidden;
 
-	background-color: rgba(240, 248, 255, 0.429);
+	background-color: rgb(104, 130, 151);
 }

@@ -3,8 +3,10 @@ import { LeftPanel } from "./leftpanel/LeftPanel.js";
 
 import { MainMenu } from "./mainmenu/MainMenu.js";
 import { Project } from "./project/Project.js";
+import { Review } from "./review/Review.js";
 import { Search } from "./search/Search.js";
 import { State } from "./state/State.js";
+
 
 export class MainOverlay {
 
@@ -20,6 +22,8 @@ export class MainOverlay {
 	project;
 	searchContainer;
 	search;
+	reviewContainer;
+	review;
 
 
 	constructor(appElement) {
@@ -47,6 +51,9 @@ export class MainOverlay {
 		this.searchContainer = this.element.querySelector('#searchContainer');
 		this.search = new Search(this.searchContainer);
 
+		this.reviewContainer = this.element.querySelector('#reviewContainer');
+		this.review = new Review(this.reviewContainer);
+
 		// console.log(this.mainMenuContainer)
 		// console.log(this.stateContainer)
 		// console.log(this.projectContainer)
@@ -63,7 +70,11 @@ export class MainOverlay {
 
 		this.mainMenu.projectBtn.classList.contains('selected') ? this.projectContainer.classList.remove('hide') : this.projectContainer.classList.add('hide');
 
-		(this.mainMenu.searchBtn.classList.contains('selected') || this.mainMenu.reviewBtn.classList.contains('selected')) ? this.searchContainer.classList.remove('hide') : this.searchContainer.classList.add('hide');
+		this.mainMenu.searchBtn.classList.contains('selected') ? this.searchContainer.classList.remove('hide') : this.searchContainer.classList.add('hide');
+
+		this.mainMenu.reviewBtn.classList.contains('selected') ? this.reviewContainer.classList.remove('hide') : this.reviewContainer.classList.add('hide');
+
+		// (this.mainMenu.searchBtn.classList.contains('selected') || this.mainMenu.reviewBtn.classList.contains('selected')) ? this.searchContainer.classList.remove('hide') : this.searchContainer.classList.add('hide');
 
 	}
 
@@ -73,6 +84,6 @@ export class MainOverlay {
 	<div id="stateContainer" class="hide" tabindex=0></div>
 	<div id="projectContainer" class="hide" tabindex=0></div>
 	<div id="searchContainer" class="hide" tabindex=0></div>
-	
+	<div id="reviewContainer" class="hide" tabindex=0></div>
 	`
 }

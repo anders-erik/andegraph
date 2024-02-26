@@ -133,7 +133,7 @@ class App {
 
 	appFocusIn(event) {
 		// console.log('FOCUS CHANGE')
-		// console.log('new focused elment', event.target)
+		console.log('new focused elment', event.target)
 		if (event.target == document.body) {
 			console.log('Body is currently in focus.')
 		}
