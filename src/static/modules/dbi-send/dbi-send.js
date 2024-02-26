@@ -163,7 +163,7 @@ export class dbis {
 		const options = {
 			method: 'PUT',
 			headers: { "Content-Type": "application/json", },
-			body: edgeObject,
+			body: JSON.stringify(edgeObject),
 		};
 
 		try {

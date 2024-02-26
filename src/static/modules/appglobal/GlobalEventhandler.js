@@ -5,6 +5,9 @@ class GlobalEventHandler {
 	app;
 	appElement;
 
+	listeningSecondShift = false;
+	listeningSecondCtrlShift = false;
+
 	actions = [
 		'chooseProject',
 		'chooseSelection',
@@ -24,13 +27,47 @@ class GlobalEventHandler {
 	}
 
 
+	keyup(event) {
+		if (event.key === 'Shift') {
+
+			if (event.ctrlKey) {
+				// console.log('Ctrl+shift')
+				this.listeningSecondCtrlShift = true;
+				setTimeout(() => { this.listeningSecondCtrlShift = false }, 300)
+			}
+			else {
+				// console.log('shift')
+				this.listeningSecondShift = true;
+				setTimeout(() => { this.listeningSecondShift = false }, 300)
+			}
+		}
+	}
 
 
-	keydown(event) {
+
+	async keydown(event) {
 		let actionObject = {
 			action: '',
 			element: event.target,
 		}
+
+		// DETECT DOUBLE SHIFT AFTER KEYUP KEYUP flag set
+		if (event.key === 'Shift') {
+			if (event.ctrlKey && this.listeningSecondCtrlShift) {
+				console.log('Ctrl+shift X 2')
+				document.getElementById('mainMenuSearch').click()
+				this.app.mainOverlay.search.input.element.focus()
+				this.listeningSecondCtrlShift = false;
+			}
+			else if (this.listeningSecondShift) {
+				console.log('shift X 2')
+				document.getElementById('mainMenuReview').click();
+				this.app.mainOverlay.search.table.element.focus()
+				this.listeningSecondShift = false;
+			}
+
+		}
+
 		// console.log('keyup: ', event.target);
 		// console.log(this)
 		// let rr;
@@ -60,6 +97,18 @@ class GlobalEventHandler {
 
 		switch (event.key) {
 
+
+			case '/':
+				document.getElementById('mainMenuReview').click();
+				this.app.mainOverlay.search.table.element.focus()
+				break;
+			case '?':
+				document.getElementById('mainMenuSearch').click()
+				this.app.mainOverlay.search.input.element.focus()
+				event.preventDefault()
+				break;
+
+
 			case '!':
 				isContentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
 				break;
@@ -72,103 +121,142 @@ class GlobalEventHandler {
 
 			case '1':
 				if (event.altKey) {
-					document.getElementById('mainMenuHome').click()
+					console.log('new content stored in slot 1')
 				}
 				else {
-					console.log('trying to connect')
+					console.log('trying to connect to state 1')
 				}
 				break;
 			case '2':
-				if (event.altKey) {
-					document.getElementById('mainMenuState').click()
-				}
-				else {
-					console.log('trying to connect')
-				}
+				console.log('trying to connect to state 2')
 				break;
 			case '3':
-				if (event.altKey) {
-					document.getElementById('mainMenuProject').click()
-				}
-				else {
-					console.log('trying to connect')
-				}
+				console.log('trying to connect to state 3')
 				break;
 			case '4':
-				if (event.altKey) {
-					document.getElementById('mainMenuSearch').click()
-					// setting changed does NOT trigger the 'change' event! Therefore set checked to opposite of desired before synthetic click.
-					// this.app.mainOverlay.search.settings.reviewCheckbox.checked = true;
-					// this.app.mainOverlay.search.settings.reviewCheckbox.click();
-				}
 				break;
 			case '5':
-				if (event.altKey) {
-					document.getElementById('mainMenuReview').click();
-
-				}
 				break;
 
-			case 'G':
+			case 'g':
 				if (event.target.contentObject) {
 					console.log('GO TO CONTENT')
 				}
 				break;
-			case 'H':
-				console.log('HOME SWEET HOME')
+			case 'h':
+				// console.log('HOME SWEET HOME')
+				this.app.mainOverlay.mainMenu.homeBtn.click();
 				break;
 
-			// context menu focus
-			case 'm':
-				contextMenuOpen = this.app.contextOverlay.contentMenu.active;
+			case 'i':
+				if (event.target.edgeObject) {
 
-				if (event.target.contentObject) {
-					if (contextMenuOpen) {
-						this.app.contextOverlay.contentMenu.element.focus();
+					if (!this.app.contextOverlay.contextMenuIsOpen()) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithEdgeElement(event.target)
 					}
+					else if (this.app.contextOverlay.getCurrentMenuClass() !== 'edge') {
+						this.app.contextOverlay.updateContextMenuWithEdgeElement(event.target)
+					}
+					else {
+						this.app.contextOverlay.hideContextMenu();
+					}
+
 				}
 				else if (event.target.classList.contains('contextMenu')) {
 					event.target.contentObjectElement.focus();
 				}
 				break;
 
-			case 'R':
+			// context menu focus
+			case 'm':
+				let contextMenuIsOpen = this.app.contextOverlay.contextMenuIsOpen();
+
+				if (event.target.contentObject && contextMenuIsOpen) {
+					this.app.contextOverlay.contextMenu.focus();
+				}
+				else if (event.target.classList.contains('contextMenu')) {
+					event.target.contentObjectElement.focus();
+				}
+				break;
+
+			case 'r':
 				if (event.target.contentObject.Table == 'Review') {
 					console.log('GO TO LINKED CONTENT FOR REVIEW')
 				}
-
+				break;
 
 
 			// content context menu toggle
 			case 'o':
 				if (event.target.contentObject) {
-					this.app.contextOverlay.contentMenu.toggle(event.target);
-					this.app.contextOverlay.updateElementContexts(event.target);
+
+					if (!this.app.contextOverlay.contextMenuIsOpen()) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithContentElement(event.target)
+					}
+					else if (this.app.contextOverlay.getCurrentMenuClass() !== 'content') {
+						this.app.contextOverlay.updateContextMenuWithContentElement(event.target)
+					}
+					else {
+						this.app.contextOverlay.hideContextMenu();
+					}
+
 				}
 				else if (event.target.classList.contains('contextMenu')) {
 					event.target.contentObjectElement.focus();
 				}
 				break;
 
+			case 'p':
+				if (event.altKey) {
+					if (event.target.contentObject && event.target.contentObject.Table == 'Project') {
+						this.app.mainOverlay.project.updateCurrentProjectOnUuid(event.target.contentObject.Uuid);
+					}
+				}
+				else {
+					if (!this.app.mainOverlay.mainMenu.projectBtn.classList.contains('selected')) {
+						this.app.mainOverlay.mainMenu.projectBtn.click();
+					}
+					this.app.mainOverlay.project.projectTitleElement.focus()
+				}
+				break;
+			case 'P':
+				this.app.mainOverlay.mainMenu.projectBtn.click();
+				break;
+
+			case 's':
+				if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
+					this.app.mainOverlay.mainMenu.stateBtn.click();
+				}
+				this.app.mainOverlay.state.element_1.focus();
+				break;
+			case 'S':
+				this.app.mainOverlay.mainMenu.stateBtn.click();
+				break;
 
 
-
+			case 'q':
 			case 'Escape':
 				if (event.target.classList.contains('contextMenu')) {
 					// console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
 					event.target.contentObjectElement.focus();
 				}
-				else if (this.app.contextOverlay.isDisplayingNodeContext()) {
-					this.app.contextOverlay.removeElementContexts();
+				else if (this.app.contextOverlay.contextMenuIsOpen()) {
+					// this.app.contextOverlay.removeElementContexts();
+					this.app.contextOverlay.hideContextMenu();
 				}
 				else if (event.target.tabIndex == '0') {
 					this.focusFirstFocusableAncestor(event.target);
 				}
 				break;
 
+
+			case 'l':
 			case 'Enter':
 				if (event.target.tabIndex == '0') {
 					this.focusFirstDescendant(event.target);
+					event.preventDefault()
 				}
 				break;
 

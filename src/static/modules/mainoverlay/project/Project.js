@@ -45,8 +45,9 @@ export class Project {
 			let tableRow = document.createElement('tr');
 			tableRow.tabIndex = 0;
 			tableRow.contentObject = contentEdgeObject.content;
-			tableRow.edgeObject = contentEdgeObject.edge;
 			tableRow.dataset.uuid = contentEdgeObject.content.Uuid;
+			tableRow.edgeObject = contentEdgeObject.edge;
+			tableRow.dataset.edgeuuid = contentEdgeObject.edge.Uuid;
 			tableRow.update = function () {
 				this.innerHTML = `
 				<td>${this.contentObject.Table}</td>

@@ -94,7 +94,10 @@ class App {
 
 		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
 		// this.appElement.addEventListener('click', this.appClick.bind(this));
-		this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		// this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
+		window.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		window.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
 		// this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
 		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
 
@@ -135,13 +138,13 @@ class App {
 			console.log('Body is currently in focus.')
 		}
 		else if (event.target.contentObject) {
-			this.contextOverlay.updateElementContexts(event.target);
+			this.contextOverlay.updateCurrentContextMenu(event.target);
 		}
 		else if (event.target.classList.contains('contextElement') || event.target.classList.contains('contextMenu')) {
 
 		}
 		else {
-			this.contextOverlay.removeElementContexts();
+			this.contextOverlay.hideContextMenu();
 		}
 
 	}

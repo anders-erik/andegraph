@@ -5,25 +5,28 @@ import { showToast } from "../../log/toast.js";
 export class ContentMenu {
 
 	parentElement;
+
 	element;
 
-	// contentObjectElement;
 
 	active = false;
 
 	constructor(parentElement) {
 		this.parentElement = parentElement;
+		// this.place = place;
 
 		this.element = document.createElement('div');
-		this.element.id = 'contextOverlay_contentMenu';
-		this.element.classList.add('contextMenu');
-		this.element.tabIndex = 0;
-		// parentElement.append(this.element);
+		this.element.id = 'contentMenu';
+
+		// this.element.tabIndex = 0;
+		parentElement.append(this.element);
 
 		this.element.addEventListener('focusout', this.focusOutOnEditableContentCell)
 
 		this.element.innerHTML = this.elementInnerHtml;
 	}
+
+
 
 	// NOT BOUND TO CLASS
 	async focusOutOnEditableContentCell(event) {
@@ -77,36 +80,12 @@ export class ContentMenu {
 	}
 
 
-	remove() {
-		if (this.active) {
-			this.parentElement.removeChild(this.element);
-			this.active = false;
-		}
-
-	}
-
-	toggle(contentObjectElement) {
-		// console.log('TOGGLE PROPERTIES TABLE')
-
-		if (this.active) {
-			this.parentElement.removeChild(this.element);
-			this.active = false;
-		}
-		else {
-			// this.contentObjectElement = contentObjectElement;
-			this.parentElement.innerHTML = '';
-
-			this.element.contentObjectElement = contentObjectElement;
-			this.populate(contentObjectElement);
-			this.place(contentObjectElement);
-			this.parentElement.append(this.element);
-
-			this.active = true;
-		}
-	}
 
 
 	populate(contentObjectElement) {
+		// console.log('POPULATE')
+		this.parentElement.append(this.element)
+
 		let contentObject = contentObjectElement.contentObject;
 
 		let editableContentColumns = ['Type', 'Title', 'Url', 'IAmSource', 'IAmAuthor', 'Goal', 'CodeContent', 'TextContent', 'Language', 'ReviewDate', 'ReviewCompleted', 'ReviewCompletedOnDate'];
@@ -155,47 +134,6 @@ export class ContentMenu {
 		}
 	}
 
-	place(contentObjectElement) {
-		this.element.contentObjectElement = contentObjectElement;
-
-		let contentElementRect = contentObjectElement.getBoundingClientRect();
-		// console.log(contentElementRect)
-		let Xcenter = contentElementRect.left + (contentElementRect.width * 0.5);
-		let Ycenter = contentElementRect.top + (contentElementRect.height * 0.5);
-
-		let viewportHeight = window.innerHeight;
-		let viewportWidth = window.innerWidth;
-		// console.log(viewportHeight, viewportWidth)
-
-		// let documentBodyHeight = document.body.clientHeight;
-		// let documentBodyWidth = document.body.clientWidth;
-		// let documentElementHeight = document.documentElement.clientHeight;
-		// let documentElementWidth = document.documentElement.clientWidth;
-		// console.log(documentBodyHeight, documentBodyWidth)
-		// console.log(documentElementHeight, documentElementWidth)
-
-
-		if (Xcenter < viewportWidth * 0.5) {
-			this.element.style.left = contentElementRect.right + 20 + 'px';
-		}
-		else {
-			this.element.style.left = (contentElementRect.left - contentElementRect.width - 20) + 'px';
-		}
-
-		if (Ycenter < viewportHeight * 0.5) {
-			this.element.style.top = contentElementRect.top + 'px';
-		}
-		else {
-			this.element.style.top = contentElementRect.bottom - this.element.offsetHeight + 'px';
-		}
-
-
-		// console.log(this.element.left)
-
-		// let menuHeight = this.propertiesMenu.offsetHeight;
-		// let elementTopSpace = nodeObjectElement.offsetTop;
-		// console.log(menuHeight, elementTopSpace)
-	}
 
 
 
