@@ -74,19 +74,20 @@ export class Project {
 
 <div id="mainOverlay_projectTitle" tabindex=0>PLACEHOLDER TITLE</div>
 
-<table id="mainOverlay_projectTable" tabindex=0>
-	<thead>
-		<tr id="mainOverlay_projectTableHead">
-			<th class="mainOverlay_tableElement">Table</th>
-			<th class="mainOverlay_tableElement">Title</th>
-			<th class="mainOverlay_tableElement">edge.Path</th>
-		</tr>
-	</thead>
-	<tbody id="mainOverlay_projectTableBody">
+<div id="mainOverlay_projectTableContainer" tabindex=0>
+	<table id="mainOverlay_projectTable">
+		<thead>
+			<tr id="mainOverlay_projectTableHead">
+				<th class="mainOverlay_tableElement">Table</th>
+				<th class="mainOverlay_tableElement">Title</th>
+				<th class="mainOverlay_tableElement">edge.Path</th>
+			</tr>
+		</thead>
+		<tbody id="mainOverlay_projectTableBody">
 
-	</tbody>
-</table>
-
+		</tbody>
+	</table>
+</div>
 `;
 
 	/* 

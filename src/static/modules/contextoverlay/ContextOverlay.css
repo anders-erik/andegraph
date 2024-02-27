@@ -1,6 +1,7 @@
 @import './contentmenu/ContentMenu.css';
 @import './edgemenu/EdgeMenu.css';
 @import './connectmenu/ConnectMenu.css';
+@import './newadjacentmenu/NewAdjacentMenu.css';
 
 #contextOverlay {
 	position: fixed;

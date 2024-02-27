@@ -33,7 +33,7 @@ class GlobalEventHandler {
 		if (event.key === 'Shift') {
 
 			this.listeningSecondShift = true;
-			setTimeout(() => { this.listeningSecondShift = false }, 300)
+			setTimeout(() => { this.listeningSecondShift = false }, 100)
 
 		}
 	}
@@ -41,6 +41,7 @@ class GlobalEventHandler {
 
 
 	async keydown(event) {
+		// console.log(event.keyCode)
 
 		// console.log('KEY: ', event.key)
 		let actionObject = {
@@ -100,6 +101,234 @@ class GlobalEventHandler {
 		// console.log('shiftKey: ', event.shiftKey)
 		// console.log('ctrlKey: ', event.ctrlKey)
 
+		switch (event.keyCode) {
+
+
+			/* 
+				NUMBER SHORTCUTS (rule of thmumbs, exceptions exist)
+
+				shift + alt : focus
+				shift 	 	: set state
+				alt			: add new
+				#			: connect
+
+				project		: 0
+				state 1		: 1, 4, 7
+				state 2		: 2, 5, 8
+				state 3		: 3, 6, 9
+
+			*/
+
+
+
+			case 48:
+				if (event.ctrlKey && event.shiftKey) {
+					if (!this.app.mainOverlay.mainMenu.projectBtn.classList.contains('selected')) {
+						this.app.mainOverlay.mainMenu.projectBtn.click();
+					}
+					this.app.mainOverlay.project.projectTitleElement.focus()
+				}
+				else if (event.altKey) {
+					console.log('NEW PROJECT and focus');
+				}
+				else if (event.shiftKey) {
+
+					if (event.target.contentObject && event.target.contentObject.Table == 'Project') {
+						this.app.mainOverlay.project.updateCurrentProjectOnUuid(event.target.contentObject.Uuid);
+					}
+				}
+				else {
+					this.app.mainOverlay.mainMenu.projectBtn.click();
+				}
+				break;
+
+
+
+			// key=1 , 11111111, state 1
+			case 49:
+				if (event.ctrlKey && event.shiftKey) {
+					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
+						this.app.mainOverlay.mainMenu.stateBtn.click();
+					}
+					this.app.mainOverlay.state.element_1.focus()
+				}
+				else if (event.shiftKey) {
+					event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
+				}
+				else if (event.altKey) {
+					console.log('new child to slot 1 object')
+				}
+				else {
+					if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithConnect(
+							event.target,
+							this.app.mainOverlay.state.element_1.contentObject,
+							event.target.contentObject,
+							1
+						);
+						this.app.contextOverlay.connectMenu.path.focus();
+					}
+				}
+				event.preventDefault();
+				break;
+
+			// key=2 , 222222, state 2
+			case 50:
+				if (event.ctrlKey && event.shiftKey) {
+					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
+						this.app.mainOverlay.mainMenu.stateBtn.click();
+					}
+					this.app.mainOverlay.state.element_2.focus()
+				}
+				else if (event.shiftKey) {
+					event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
+				}
+				else if (event.altKey) {
+					console.log('new child to slot 2 object')
+				}
+				else {
+					if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithConnect(
+							event.target,
+							this.app.mainOverlay.state.element_2.contentObject,
+							event.target.contentObject,
+							1
+						);
+						this.app.contextOverlay.connectMenu.path.focus();
+					}
+				}
+				event.preventDefault();
+				break;
+
+			// key=3 , 33333333, state 3
+			case 51:
+				if (event.ctrlKey && event.shiftKey) {
+					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
+						this.app.mainOverlay.mainMenu.stateBtn.click();
+					}
+					this.app.mainOverlay.state.element_3.focus()
+				}
+				else if (event.shiftKey) {
+					event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
+				}
+				else if (event.altKey) {
+					console.log('new child to slot 3 object')
+				}
+				else {
+					if (event.target.contentObject && this.app.mainOverlay.state.element_3.contentObject) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithConnect(
+							event.target,
+							this.app.mainOverlay.state.element_3.contentObject,
+							event.target.contentObject,
+							1
+						);
+						this.app.contextOverlay.connectMenu.path.focus();
+					}
+				}
+				event.preventDefault();
+				break;
+
+
+
+			// key=4 , 4444444, state 1
+			case 52:
+				if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithConnect(
+						event.target,
+						this.app.mainOverlay.state.element_1.contentObject,
+						event.target.contentObject,
+						0
+					);
+					this.app.contextOverlay.connectMenu.path.focus();
+					event.preventDefault();
+				}
+				break;
+			// key=5 , 5555555, state 2
+			case 53:
+				if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithConnect(
+						event.target,
+						this.app.mainOverlay.state.element_2.contentObject,
+						event.target.contentObject,
+						0
+					);
+					this.app.contextOverlay.connectMenu.path.focus();
+					event.preventDefault();
+				}
+				break;
+			// key=6 , 66666666, state 3
+			case 54:
+				if (event.target.contentObject && this.app.mainOverlay.state.element_3.contentObject) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithConnect(
+						event.target,
+						this.app.mainOverlay.state.element_3.contentObject,
+						event.target.contentObject,
+						0
+					);
+					this.app.contextOverlay.connectMenu.path.focus();
+					event.preventDefault();
+				}
+				break;
+
+
+
+
+			// key=7 , 77777777, state 1
+			case 55:
+				if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithConnect(
+						event.target,
+						event.target.contentObject,
+						this.app.mainOverlay.state.element_1.contentObject,
+						1
+					);
+					this.app.contextOverlay.connectMenu.path.focus();
+					event.preventDefault();
+				}
+				break;
+			// key=8 , 8888888, state 2
+			case 56:
+				if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithConnect(
+						event.target,
+						event.target.contentObject,
+						this.app.mainOverlay.state.element_2.contentObject,
+						1
+					);
+					this.app.contextOverlay.connectMenu.path.focus();
+					event.preventDefault();
+				}
+				break;
+			// key=9 , 9999999, state 3
+			case 57:
+				if (event.target.contentObject && this.app.mainOverlay.state.element_3.contentObject) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithConnect(
+						event.target,
+						event.target.contentObject,
+						this.app.mainOverlay.state.element_3.contentObject,
+						1
+					);
+					this.app.contextOverlay.connectMenu.path.focus();
+					event.preventDefault();
+				}
+				break;
+
+
+			default:
+				break;
+		}
+
+
+
 		switch (event.key) {
 
 
@@ -115,144 +344,15 @@ class GlobalEventHandler {
 
 
 
-
-
-			case '$':
-				break;
-			case '%':
-				break;
-			case '^':
-				break;
-			case '&':
-				break;
-			case '*':
-				break;
-			case '(':
-				break;
-
-
-
-			case '1':
-				if (event.altKey) {
-					console.log('new child to slot 1 object')
-				}
-				else {
-					console.log('connect new child of slot 1 object')
-					if (event.target.contentObject) {
-						this.app.contextOverlay.showContextMenu();
-						this.app.contextOverlay.updateContextMenuWithConnect(
-							event.target,
-							this.app.mainOverlay.state.element_1.contentObject,
-							event.target.contentObject,
-							1
-						);
-						this.app.contextOverlay.connectMenu.path.focus();
-					}
-				}
-				event.preventDefault();
-				break;
-			// Shift + 1
-			case '!':
-				// Ctrl + Shift + 1
-				if (event.ctrlKey) {
-					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.stateBtn.click();
-					}
-					this.app.mainOverlay.state.element_1.focus()
-				}
-				// Shift + 1
-				else {
-					event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
+			case 'c':
+				if (event.target.contentObject && event.altKey) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithNewAdjacent(event.target, 'child');
+					this.app.contextOverlay.contextMenu.focus();
+					// this.app.contextOverlay.connectMenu.path.focus();
 				}
 				break;
 
-
-			case '2':
-				console.log('trying to connect to state 2')
-				break;
-			// Shift + 2
-			case '@':
-				// Ctrl + Shift + 2
-				if (event.ctrlKey) {
-					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.stateBtn.click();
-					}
-					this.app.mainOverlay.state.element_2.focus()
-				}
-				// Shift + 2
-				else {
-					event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
-				}
-				break;
-
-
-			case '3':
-				console.log('trying to connect to state 3')
-				break;
-			// Shift + 3
-			case '#':
-				// Ctrl + Shift + 3
-				if (event.ctrlKey) {
-					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.stateBtn.click();
-					}
-					this.app.mainOverlay.state.element_3.focus()
-				}
-				// Shift + 3
-				else {
-					event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
-				}
-				break;
-
-			case '4':
-				if (event.altKey) {
-					console.log('new undirected to slot 1 object')
-				}
-				else {
-					console.log('connect new undirected to slot 1 object')
-				}
-				break;
-			case '5':
-				break;
-			case '6':
-				break;
-			case '7':
-				if (event.altKey) {
-					console.log('new parent to slot 1 object')
-				}
-				else {
-					console.log('connect new parent to slot 1 object')
-				}
-				break;
-			case '8':
-				break;
-			case '9':
-				break;
-
-			case '0':
-				if (event.altKey) {
-					console.log('NEW PROJECT and focus');
-				}
-				else {
-					this.app.mainOverlay.mainMenu.projectBtn.click();
-				}
-				break;
-			case ')':
-				// Ctrl + Shift + 0
-				if (event.ctrlKey) {
-					if (!this.app.mainOverlay.mainMenu.projectBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.projectBtn.click();
-					}
-					this.app.mainOverlay.project.projectTitleElement.focus()
-				}
-				// Shift + 0
-				else {
-
-					if (event.target.contentObject && event.target.contentObject.Table == 'Project') {
-						this.app.mainOverlay.project.updateCurrentProjectOnUuid(event.target.contentObject.Uuid);
-					}
-				}
-				break;
 
 
 			case 'g':
@@ -340,6 +440,7 @@ class GlobalEventHandler {
 			case 'Escape':
 				if (event.target.classList.contains('contextMenu')) {
 					// console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
+					console.log(event.target.contentObjectElement)
 					event.target.contentObjectElement.focus();
 				}
 				else if (this.app.contextOverlay.contextMenuIsOpen()) {
@@ -435,6 +536,9 @@ class GlobalEventHandler {
 	}
 
 
+	createConnectMenu() {
+
+	}
 
 
 	focusFirstFocusableAncestor(eventTarget) {

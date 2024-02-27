@@ -2,6 +2,7 @@
 import { ConnectMenu } from "./connectmenu/ConnectMenu.js";
 import { ContentMenu } from "./contentmenu/ContentMenu.js";
 import { EdgeMenu } from "./edgemenu/EdgeMenu.js";
+import { NewAdjacentMenu } from "./newadjacentmenu/NewAdjacentMenu.js";
 
 class ContextOverlay {
 
@@ -12,6 +13,7 @@ class ContextOverlay {
 	contentMenu;
 	edgeMenu;
 	connectMenu;
+	newAdjacentMenu;
 	contentObjectElement;
 
 
@@ -33,6 +35,7 @@ class ContextOverlay {
 		this.contentMenu = new ContentMenu(this.contextMenu);
 		this.edgeMenu = new EdgeMenu(this.contextMenu);
 		this.connectMenu = new ConnectMenu(this.contextMenu);
+		this.newAdjacentMenu = new NewAdjacentMenu(this.contextMenu);
 
 	}
 
@@ -78,18 +81,29 @@ class ContextOverlay {
 
 	}
 
-	updateContextMenuWithConnect(referenceElement, contentObject1, contentObject2, directed) {
+	updateContextMenuWithConnect(referenceElement, contentObject1, contentObject2, Directed) {
 		// this.contextMenu.
 		this.contextMenu.contentObjectElement = referenceElement;
 		this.setContextClass('connect');
 
 		// this.contentMenu.element.contentObjectElement = contentObjectElement;
 		this.contextMenu.innerHTML = '';
-		this.connectMenu.createForm(contentObject1, contentObject2, directed);
+		this.connectMenu.createForm(contentObject1, contentObject2, Directed);
 		this.place(referenceElement);
 
 	}
 
+	updateContextMenuWithNewAdjacent(contentObjectElement, Directed) {
+		// this.contextMenu.
+		this.contextMenu.contentObjectElement = contentObjectElement;
+		this.setContextClass('newAdjacent');
+
+		// this.contentMenu.element.contentObjectElement = contentObjectElement;
+		this.contextMenu.innerHTML = '';
+		this.newAdjacentMenu.createForm(contentObjectElement.contentObject, Directed);
+		this.place(contentObjectElement);
+
+	}
 
 
 

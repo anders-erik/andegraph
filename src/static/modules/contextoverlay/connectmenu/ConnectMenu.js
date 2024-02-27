@@ -69,6 +69,8 @@ export class ConnectMenu {
 
 		this.path.textContent = '';
 
+		this.button.style.backgroundColor = 'gray';
+
 
 		this.element.append(
 			this.node1Label,
@@ -132,6 +134,12 @@ export class ConnectMenu {
 		/* CHECK PROJECT CHILDREN AND UPDATE */
 		/* CHECK CURRENT PROJECT. IF ONE OF THE CONNECTED NODE, UPDATE ADJACENT TABLES */
 
+		setTimeout(() => {
+			this.parentElement.contentObjectElement.focus()
+			// document.getElementById('connectMenu_button').style.backgroundColor = 'none';
+
+		}, 1000)
+		this.button.style.backgroundColor = 'green';
 	}
 
 
