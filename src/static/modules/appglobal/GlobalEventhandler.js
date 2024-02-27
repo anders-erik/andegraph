@@ -138,7 +138,18 @@ class GlobalEventHandler {
 				}
 				else {
 					console.log('connect new child of slot 1 object')
+					if (event.target.contentObject) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithConnect(
+							event.target,
+							this.app.mainOverlay.state.element_1.contentObject,
+							event.target.contentObject,
+							1
+						);
+						this.app.contextOverlay.connectMenu.path.focus();
+					}
 				}
+				event.preventDefault();
 				break;
 			// Shift + 1
 			case '!':

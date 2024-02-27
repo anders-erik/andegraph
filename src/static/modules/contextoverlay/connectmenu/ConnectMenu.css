@@ -1,0 +1,48 @@
+#connectMenu {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+}
+
+#connectMenu * {
+	width: 90%;
+	height: 1.5rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+
+}
+
+#connectMenu label {
+	text-decoration: underline;
+	margin: 10px 0 0 0;
+}
+
+#connectMenu div {
+	font-size: medium;
+	font-weight: bold;
+	padding-top: 6px;
+	padding-top: 2px;
+}
+
+#connectMenu_node1 {}
+
+#connectMenu_node2 {}
+
+#connectMenu_directed {}
+
+#connectMenu_path {}
+
+#connectMenu_button {
+	width: 50%;
+	height: 2.5rem;
+	margin-top: 10px;
+	border-radius: 5px;
+	background-color: rgb(133, 155, 173);
+}

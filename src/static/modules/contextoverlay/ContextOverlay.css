@@ -1,5 +1,6 @@
 @import './contentmenu/ContentMenu.css';
 @import './edgemenu/EdgeMenu.css';
+@import './connectmenu/ConnectMenu.css';
 
 #contextOverlay {
 	position: fixed;
@@ -24,7 +25,7 @@
 	overflow-wrap: break-word;
 	scrollbar-width: thin;
 
-	height: 250px;
+	height: 270px;
 	width: 300px;
 
 	top: 400px;

@@ -133,15 +133,15 @@ class App {
 
 	appFocusIn(event) {
 		// console.log('FOCUS CHANGE')
-		console.log('new focused elment', event.target)
+		console.log('new focused element', event.target)
 		if (event.target == document.body) {
 			console.log('Body is currently in focus.')
 		}
-		else if (event.target.contentObject) {
-			this.contextOverlay.updateCurrentContextMenu(event.target);
-		}
 		else if (event.target.classList.contains('contextElement') || event.target.classList.contains('contextMenu')) {
 
+		}
+		else if (event.target.contentObject) {
+			this.contextOverlay.updateCurrentContextMenu(event.target);
 		}
 		else {
 			this.contextOverlay.hideContextMenu();

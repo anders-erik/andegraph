@@ -142,7 +142,7 @@ export class dbis {
 
 
 	// EDGE
-	static async Edge_InsertUuidUuid(Node1Uuid, Node2Uuid, Directed, Order, Path) {
+	static async Edge_InsertUuidUuid(Node1Uuid, Node2Uuid, Directed, Type, Order, Path) {
 		let url = apiUrl + `/edge/Edge-InsertUuidUuid?Node1Uuid=${Node1Uuid}&Node2Uuid=${Node2Uuid}&Directed=${Directed}&Type=${Type}&Order=${Order}&Path=${Path}`;
 		const options = {
 			method: 'POST',

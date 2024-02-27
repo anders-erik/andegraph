@@ -1,4 +1,5 @@
 
+import { ConnectMenu } from "./connectmenu/ConnectMenu.js";
 import { ContentMenu } from "./contentmenu/ContentMenu.js";
 import { EdgeMenu } from "./edgemenu/EdgeMenu.js";
 
@@ -10,6 +11,7 @@ class ContextOverlay {
 
 	contentMenu;
 	edgeMenu;
+	connectMenu;
 	contentObjectElement;
 
 
@@ -30,6 +32,7 @@ class ContextOverlay {
 
 		this.contentMenu = new ContentMenu(this.contextMenu);
 		this.edgeMenu = new EdgeMenu(this.contextMenu);
+		this.connectMenu = new ConnectMenu(this.contextMenu);
 
 	}
 
@@ -75,6 +78,18 @@ class ContextOverlay {
 
 	}
 
+	updateContextMenuWithConnect(referenceElement, contentObject1, contentObject2, directed) {
+		// this.contextMenu.
+		this.contextMenu.contentObjectElement = referenceElement;
+		this.setContextClass('connect');
+
+		// this.contentMenu.element.contentObjectElement = contentObjectElement;
+		this.contextMenu.innerHTML = '';
+		this.connectMenu.createForm(contentObject1, contentObject2, directed);
+		this.place(referenceElement);
+
+	}
+
 
 
 
@@ -117,11 +132,11 @@ class ContextOverlay {
 
 
 	// Place contextMenu next to a passed DOM-element
-	place(contentObjectElement) {
+	place(referenceElement) {
 		// console.log(this)
 		// this.element.contentObjectElement = contentObjectElement;
 
-		let contentElementRect = contentObjectElement.getBoundingClientRect();
+		let contentElementRect = referenceElement.getBoundingClientRect();
 		// console.log(contentElementRect)
 		let Xcenter = contentElementRect.left + (contentElementRect.width * 0.5);
 		let Ycenter = contentElementRect.top + (contentElementRect.height * 0.5);

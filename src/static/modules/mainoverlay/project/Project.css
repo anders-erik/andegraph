@@ -41,12 +41,51 @@
 
 #mainOverlay_projectTable {
 	width: calc(100% - 6px);
-	flex-grow: 1;
 	margin-top: 55px;
+	border-collapse: collapse;
 	/* margin-bottom: 200px; */
-	border: solid black 1px;
+	/* border: solid black 1px; */
+}
+
+#mainOverlay_projectTable * {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+:root {
+	--project-row-height: 15px;
+}
+
+#mainOverlay_projectTable tbody tr:hover {
+	cursor: pointer;
+	background-color: rgb(85, 108, 128);
+}
+
+#mainOverlay_projectTable tbody tr:focus {
+	background-color: rgb(126, 151, 172);
+}
+
+/* 
+	Spent a long time trying to fix the table rows. Unfortunately they seem to force-scale to fill table.
+	Solution was to set row properties and let table became whatever height it want, and then to adjust display using containing elments. 
+*/
+#mainOverlay_projectTable tbody tr {
+	/* border-collapse: collapse; */
+	/* min-height: var(--project-row-height); */
+	/* height: var(--project-row-height); */
+	/* max-height: var(--project-row-height); */
+	/* line-height: 1rem; */
 }
 
 #mainOverlay_projectTable tbody tr td {
-	height: 1rem;
+	/* border-collapse: collapse; */
+	/* min-height: var(--project-row-height); */
+	/* height: var(--project-row-height); */
+	padding: 3px 5px 3px 5px;
+	/* overflow: hidden; */
+
+	/* max-height: var(--project-row-height); */
+	/* line-height: 1rem; */
+	/* background-color: antiquewhite; */
 }
