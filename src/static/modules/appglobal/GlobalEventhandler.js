@@ -120,7 +120,7 @@ class GlobalEventHandler {
 			*/
 
 
-
+			// key=0, 00000000, state 0
 			case 48:
 				if (event.ctrlKey && event.shiftKey) {
 					if (!this.app.mainOverlay.mainMenu.projectBtn.classList.contains('selected')) {
@@ -263,7 +263,11 @@ class GlobalEventHandler {
 				break;
 			// key=6 , 66666666, state 3
 			case 54:
-				if (event.target.contentObject && this.app.mainOverlay.state.element_3.contentObject) {
+				// toggle mainContent toolbar
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_filePanel').click();
+				}
+				else if (event.target.contentObject && this.app.mainOverlay.state.element_3.contentObject) {
 					this.app.contextOverlay.showContextMenu();
 					this.app.contextOverlay.updateContextMenuWithConnect(
 						event.target,
@@ -281,7 +285,11 @@ class GlobalEventHandler {
 
 			// key=7 , 77777777, state 1
 			case 55:
-				if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
+				// toggle mainContent toolbar
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_shardPanel').click();
+				}
+				else if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
 					this.app.contextOverlay.showContextMenu();
 					this.app.contextOverlay.updateContextMenuWithConnect(
 						event.target,
@@ -295,7 +303,11 @@ class GlobalEventHandler {
 				break;
 			// key=8 , 8888888, state 2
 			case 56:
-				if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
+				// toggle mainContent toolbar
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_reviewPanel').click();
+				}
+				else if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
 					this.app.contextOverlay.showContextMenu();
 					this.app.contextOverlay.updateContextMenuWithConnect(
 						event.target,
@@ -321,6 +333,45 @@ class GlobalEventHandler {
 					event.preventDefault();
 				}
 				break;
+
+
+
+
+
+
+			// key=[ , [[[[[[,
+			case 219:
+				// toggle mainContentPanel tables
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_parentList').click();
+				}
+				break;
+
+			// key=] , ]]]]]],
+			case 221:
+				// toggle mainContentPanel tables
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_fileList').click();
+				}
+				break;
+
+			// key=' , ''''''',
+			case 220:
+				// toggle mainContentPanel tables
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_childList').click();
+				}
+				break;
+
+			// key=\ , \\\\\\\\,
+			case 222:
+				// toggle mainContentPanel tables
+				if (event.shiftKey && event.ctrlKey) {
+					document.getElementById('sourceToolbar_reviewList').click();
+				}
+				break;
+
+
 
 
 			default:
@@ -397,6 +448,7 @@ class GlobalEventHandler {
 				}
 				break;
 
+
 			case 'r':
 				if (event.target.contentObject.Table == 'Review') {
 					console.log('GO TO LINKED CONTENT FOR REVIEW')
@@ -454,6 +506,18 @@ class GlobalEventHandler {
 					this.focusFirstFocusableAncestor(event.target);
 				}
 				break;
+
+
+
+			case 'u':
+				if (event.target.contentObject && event.altKey) {
+					this.app.contextOverlay.showContextMenu();
+					this.app.contextOverlay.updateContextMenuWithNewAdjacent(event.target, 'undirected');
+					this.app.contextOverlay.contextMenu.focus();
+					// this.app.contextOverlay.connectMenu.path.focus();
+				}
+				break;
+
 
 
 			case 'l':

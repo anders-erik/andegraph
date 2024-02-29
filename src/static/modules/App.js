@@ -105,6 +105,18 @@ class App {
 		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
 
 		this.mainContent = new MainContent(this.appElement);
+
+		// DEVDEV
+		this.mainContent.loadSourceFromUuid(372);
+		// document.getElementById('sourceToolbar_filePanel').click();
+		// document.getElementById('sourceToolbar_shardPanel').click();
+		// document.getElementById('sourceToolbar_reviewPanel').click();
+		// document.getElementById('sourceToolbar_parentList').click();
+		// document.getElementById('sourceToolbar_fileList').click();
+		// document.getElementById('sourceToolbar_childList').click();
+		// document.getElementById('sourceToolbar_reviewList').click();
+
+
 		this.mainOverlay = new MainOverlay(this.appElement);
 		// this.leftPanel = new LeftPanel(this.appElement);
 

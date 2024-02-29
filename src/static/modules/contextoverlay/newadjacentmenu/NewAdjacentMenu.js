@@ -61,8 +61,7 @@ export class NewAdjacentMenu {
 	createForm(contentObject, directed) {
 
 
-
-		this.element.innerHTML = ` <h4>NEW CHILD</h4>`;
+		this.element.innerHTML = ` <h4>NEW ADJACENT</h4>`;
 
 
 		this.node.querySelector('div').textContent = contentObject.Title;
@@ -72,7 +71,7 @@ export class NewAdjacentMenu {
 
 		this.path.querySelector('div').textContent = '';
 
-		this.button.style.backgroundColor = 'gray';
+		this.button.style.backgroundColor = 'lightgray';
 
 
 		this.element.append(
