@@ -1,0 +1,14 @@
+.sourceContent {
+
+	margin: 20px;
+
+	padding-left: 50px;
+	padding-right: 50px;
+
+	margin: 2px;
+
+	/* caret-shape: block; */
+
+	background-color: rgba(129, 81, 19, 0.372);
+	border: solid black 1px;
+}

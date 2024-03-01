@@ -1,12 +1,14 @@
 import { determineClipboardContentType } from "../../../../../../filehandling/DetermineClipboardContents.js";
 
 
-export class TextContent {
+export class CodeContent {
 
 	shardcardElement;
 	contentContainer;
 
 	element;
+
+	codeHeader;
 
 	listeningSecondClick;
 
@@ -15,10 +17,17 @@ export class TextContent {
 		this.contentContainer = contentContainer;
 		this.contentContainer.innerHTML = ``;
 
+		this.codeHeader = this.shardcardElement.querySelector('.codeHeader');
+		if (this.codeHeader == null) {
+			this.codeHeader = document.createElement('div');
+			this.codeHeader.classList.add('codeHeader');
+		}
+		this.codeHeader.textContent = 'CODE : ' + shardcardElement.contentObject.Type;
+
 		this.element = document.createElement('div');
 		// this.element.tabIndex = 0;
 		// this.element.contentEditable = true;
-		this.element.classList.add('textContent');
+		this.element.classList.add('codeContent');
 
 
 
@@ -27,9 +36,10 @@ export class TextContent {
 		this.element.addEventListener('paste', this.pasteDuringFocus.bind(this));
 
 
-		this.insertTextContent(this.element, shardcardElement.contentObject.TextContent)
+		this.insertTextContent(this.element, shardcardElement.contentObject.CodeContent)
 
-		this.contentContainer.append(this.element);
+		this.contentContainer.append(this.codeHeader, this.element);
+		this.shardcardElement.append(this.codeHeader);
 	}
 
 

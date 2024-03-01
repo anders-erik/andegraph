@@ -1,4 +1,6 @@
 @import './textcontent/TextContent.css';
+@import './sourcecontent/SourceContent.css';
+@import './codecontent/CodeContent.css';
 
 .shardCard {
 	/* for abosulte position of overlay to apply */
@@ -44,5 +46,5 @@
 	align-items: center;
 
 	color: aliceblue;
-	/* background-color: rgb(6, 1, 1); */
+	background-color: rgba(6, 1, 1, 0.366);
 }
