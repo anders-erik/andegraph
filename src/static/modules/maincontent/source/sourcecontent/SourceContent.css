@@ -16,8 +16,8 @@
 	/* background-color: rgba(165, 109, 35, 0.372); */
 }
 
-#sourceContent * {
-	background-color: rgba(17, 48, 38, 0.492);
+#sourceContent>div {
+	background-color: rgba(17, 48, 38);
 }
 
 #sourceContent *.hidden {
@@ -34,6 +34,8 @@
 	width: 850px;
 	height: calc(100% - 60px);
 	top: 20px;
+
+	overflow-y: scroll;
 }
 
 #reviewlistContainer {

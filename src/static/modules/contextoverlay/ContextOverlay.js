@@ -3,6 +3,7 @@ import { ConnectMenu } from "./connectmenu/ConnectMenu.js";
 import { ContentMenu } from "./contentmenu/ContentMenu.js";
 import { EdgeMenu } from "./edgemenu/EdgeMenu.js";
 import { NewAdjacentMenu } from "./newadjacentmenu/NewAdjacentMenu.js";
+import { TitleMenu } from "./titlemenu/TitleMenu.js";
 
 class ContextOverlay {
 
@@ -11,6 +12,7 @@ class ContextOverlay {
 	contextMenu;
 
 	contentMenu;
+	titleMenu;
 	edgeMenu;
 	connectMenu;
 	newAdjacentMenu;
@@ -33,6 +35,7 @@ class ContextOverlay {
 		this.overlayElement.append(this.contextMenu);
 
 		this.contentMenu = new ContentMenu(this.contextMenu);
+		this.titleMenu = new TitleMenu(this.contextMenu);
 		this.edgeMenu = new EdgeMenu(this.contextMenu);
 		this.connectMenu = new ConnectMenu(this.contextMenu);
 		this.newAdjacentMenu = new NewAdjacentMenu(this.contextMenu);
@@ -67,6 +70,24 @@ class ContextOverlay {
 		this.contentMenu.populate(contentObjectElement);
 		this.place(contentObjectElement);
 
+	}
+
+	updateContextMenuWithTitleElement(contentObjectElement) {
+		// this.contextMenu.
+		this.contextMenu.contentObjectElement = contentObjectElement;
+		this.setContextClass('title');
+
+		// this.contentMenu.element.contentObjectElement = contentObjectElement;
+		this.contextMenu.innerHTML = '';
+		this.titleMenu.populate(contentObjectElement);
+		this.place(contentObjectElement);
+		this.titleMenu.element.focus();
+
+		// Set focus to end of title!
+		let selObj = window.getSelection();
+		// console.log('LENLEN: ', selObj.focusNode.length)
+		selObj.extend(selObj.focusNode, selObj.focusNode.length)
+		selObj.collapseToEnd();
 	}
 
 	updateContextMenuWithEdgeElement(edgeObjectElement) {
@@ -109,7 +130,10 @@ class ContextOverlay {
 
 	setContextClass(newContextClass) {
 		this.contextMenu.classList.remove('content');
+		this.contextMenu.classList.remove('title');
 		this.contextMenu.classList.remove('edge');
+		this.contextMenu.classList.remove('connect');
+		this.contextMenu.classList.remove('newAdjacent');
 
 		this.contextMenu.classList.add(newContextClass);
 	}
@@ -164,7 +188,7 @@ class ContextOverlay {
 			this.contextMenu.style.left = contentElementRect.right + 20 + 'px';
 		}
 		else {
-			this.contextMenu.style.left = (contentElementRect.left - contentElementRect.width - 20) + 'px';
+			this.contextMenu.style.left = (contentElementRect.left - this.contextMenu.offsetWidth - 20) + 'px';
 		}
 
 		if (Ycenter < viewportHeight * 0.5) {

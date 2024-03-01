@@ -1,0 +1,15 @@
+.textContent {
+
+	margin: 2px;
+
+	background-color: rgba(129, 81, 19, 0.372);
+	border: solid black 1px;
+}
+
+.textContent.editing {
+	background-color: rgba(105, 156, 62, 0.622)
+}
+
+/* .textContent:focus {
+	background-color: rgba(105, 156, 62, 0.622)
+} */

@@ -1,0 +1,48 @@
+@import './textcontent/TextContent.css';
+
+.shardCard {
+	/* for abosulte position of overlay to apply */
+	position: relative;
+
+	width: 700px;
+
+	/* 
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px; */
+
+	/* margin: 3px; */
+	/* background-color: rgba(165, 109, 35, 0.372); */
+	border: solid black 1px;
+}
+
+.shardCard a {
+	text-decoration: none;
+	color: black;
+}
+
+.shardCardContentContainer {
+	height: 100%;
+	width: 100%;
+
+	background-color: rgba(129, 81, 19, 0.372);
+	border: solid rgb(97, 30, 30) 1px;
+}
+
+.shardCardOverlay {
+	height: 100%;
+	width: 100%;
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: aliceblue;
+	/* background-color: rgb(6, 1, 1); */
+}

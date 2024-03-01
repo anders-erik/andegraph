@@ -1,3 +1,4 @@
+import { ShardCard } from "./shardcard/ShardCard.js";
 
 
 export class ShardList {
@@ -27,9 +28,19 @@ export class ShardList {
 
 		console.log('LOAD SHARD LIST ', shardContentEdges)
 
+		for (const contentEdge of shardContentEdges) {
+			console.log(contentEdge.content.Title)
+			let shardCard = new ShardCard(contentEdge);
+			this.element.append(shardCard)
+		}
+
 	}
 
 
+	insertShardCard(contentEdge) {
+
+
+	}
 
 
 

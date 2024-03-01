@@ -1,4 +1,5 @@
 @import './contentmenu/ContentMenu.css';
+@import './titlemenu/TitleMenu.css';
 @import './edgemenu/EdgeMenu.css';
 @import './connectmenu/ConnectMenu.css';
 @import './newadjacentmenu/NewAdjacentMenu.css';
@@ -38,6 +39,10 @@
 	background-color: rgb(185, 184, 182);
 
 	pointer-events: all;
+}
+
+#contextMenu.title {
+	height: 50px;
 }
 
 #contextMenu.hide {

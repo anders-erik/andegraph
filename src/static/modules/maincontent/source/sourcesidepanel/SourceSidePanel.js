@@ -49,6 +49,13 @@ export class SourceSidePanel {
 			tr.dataset.edgeuuid = contentEdge.edge.Uuid;
 			tr.tabIndex = 0;
 
+			tr.update = function () {
+				this.innerHTML = `
+					<td class="">${this.contentObject.Table}</td>
+					<td class="">${this.contentObject.Title}</td>
+				`;
+			}
+
 			tr.innerHTML = `
 				<td class="">${contentEdge.content.Table}</td>
 				<td class="">${contentEdge.content.Title}</td>
@@ -68,6 +75,13 @@ export class SourceSidePanel {
 			tr.dataset.uuid = contentEdge.content.Uuid;
 			tr.dataset.edgeuuid = contentEdge.edge.Uuid;
 			tr.tabIndex = 0;
+
+			tr.update = function () {
+				this.innerHTML = `
+					<td class="">${this.contentObject.Table}</td>
+					<td class="">${this.contentObject.Title}</td>
+				`;
+			}
 
 			tr.innerHTML = `
 				<td class="">${contentEdge.content.Table}</td>
@@ -90,8 +104,16 @@ export class SourceSidePanel {
 			tr.dataset.edgeuuid = contentEdge.edge.Uuid;
 			tr.tabIndex = 0;
 
-			let completedString = contentEdge.content.ReviewCompleted ? 'completed' : '';
 
+
+			tr.update = function () {
+				let completedString = this.contentObject.ReviewCompleted ? 'completed' : '';
+				this.innerHTML = `
+					<td class="${completedString}">${contentEdge.content.ReviewDate}</td>
+				`;
+			}
+
+			let completedString = contentEdge.content.ReviewCompleted ? 'completed' : '';
 			tr.innerHTML = `
 				<td class="${completedString}">${contentEdge.content.ReviewDate}</td>
 			`;

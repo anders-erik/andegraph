@@ -449,6 +449,26 @@ class GlobalEventHandler {
 				break;
 
 
+			case 'n':
+				if (event.target.contentObject) {
+
+					if (!this.app.contextOverlay.contextMenuIsOpen()) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithTitleElement(event.target)
+					}
+					else if (this.app.contextOverlay.getCurrentMenuClass() !== 'title') {
+						this.app.contextOverlay.updateContextMenuWithTitleElement(event.target)
+					}
+					else {
+						this.app.contextOverlay.hideContextMenu();
+					}
+					event.preventDefault()
+				}
+				else if (event.target.classList.contains('contextMenu')) {
+					event.target.contentObjectElement.focus();
+				}
+				break;
+
 			case 'r':
 				if (event.target.contentObject.Table == 'Review') {
 					console.log('GO TO LINKED CONTENT FOR REVIEW')
