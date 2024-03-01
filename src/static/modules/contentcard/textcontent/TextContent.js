@@ -1,17 +1,17 @@
-import { determineClipboardContentType } from "../../../../../../filehandling/DetermineClipboardContents.js";
+import { determineClipboardContentType } from "../../filehandling/DetermineClipboardContents.js";
 
 
 export class TextContent {
 
-	shardcardElement;
+	contentcardElement;
 	contentContainer;
 
 	element;
 
 	listeningSecondClick;
 
-	constructor(shardcardElement, contentContainer) {
-		this.shardcardElement = shardcardElement;
+	constructor(contentcardElement, contentContainer) {
+		this.contentcardElement = contentcardElement;
 		this.contentContainer = contentContainer;
 		this.contentContainer.innerHTML = ``;
 
@@ -27,7 +27,7 @@ export class TextContent {
 		this.element.addEventListener('paste', this.pasteDuringFocus.bind(this));
 
 
-		this.insertTextContent(this.element, shardcardElement.contentObject.TextContent)
+		this.insertTextContent(this.element, contentcardElement.contentObject.TextContent)
 
 		this.contentContainer.append(this.element);
 	}
@@ -51,7 +51,7 @@ export class TextContent {
 	disableEdit() {
 		this.element.contentEditable = "false";
 		this.element.classList.remove('editing');
-		// this.shardcardElement.focus();
+		// this.contentcardElement.focus();
 	}
 
 
@@ -76,7 +76,7 @@ export class TextContent {
 
 
 	/* 
-		From old sharding-shardcard
+		From old sharding-contentcard
 	 */
 
 	keydownDuringFocus(event) {
@@ -96,7 +96,7 @@ export class TextContent {
 					break;
 
 				case 'Escape':
-					this.shardcardElement.focus();
+					this.contentcardElement.focus();
 					break;
 
 				case 'Tab':
@@ -152,8 +152,8 @@ export class TextContent {
 		for (let i = 0; i < textArray.length; i++) {
 			let p = document.createElement('p');
 			// p.classList.add('shard-p');
-			// p.id = 'shard-p-' + shardcard.shard.id;
-			// p.dataset.nodeId = shardcard.shard.id;
+			// p.id = 'shard-p-' + contentcard.shard.id;
+			// p.dataset.nodeId = contentcard.shard.id;
 			// https://stackoverflow.com/questions/75397803/chrome-skips-over-empty-paragraphs-of-contenteditable-parent-when-moving-cursor/75397804
 			if (textArray[i] == '') {
 				p.innerHTML = `<br>`;
@@ -169,12 +169,12 @@ export class TextContent {
 
 	}
 
-	extractTextContent(shardcard) {
-		// console.log(shardcard)
+	extractTextContent(contentcard) {
+		// console.log(contentcard)
 
 		let stringArray = [];
 
-		for (const child of shardcard.children) {
+		for (const child of contentcard.children) {
 			//console.log(child.textContent);
 			stringArray.push(child.textContent);
 		}

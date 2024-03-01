@@ -1,16 +1,17 @@
-import { determineClipboardContentType } from "../../../../../filehandling/DetermineClipboardContents.js";
+import { determineClipboardContentType } from "../filehandling/DetermineClipboardContents.js";
 import { CodeContent } from "./codecontent/CodeContent.js";
+import { FileContent } from "./filecontent/FileContent.js";
 import { SourceContent } from "./sourcecontent/SourceContent.js";
 import { TextContent } from "./textcontent/TextContent.js";
 
 
-export class ShardCard {
+export class ContentCard {
 
 	element;
 	contentContainerElement;
 	overlayElement;
 
-	// Shardcard Content Class
+	// ContentCard Content Class
 	content;
 
 	listeningDoubleClick;
@@ -19,8 +20,8 @@ export class ShardCard {
 
 
 		this.element = document.createElement('div');
-		this.element.id = 'shardCard-' + contentEdgeObject.content.Uuid;
-		this.element.classList.add('shardCard');
+		this.element.id = 'contentCard-' + contentEdgeObject.content.Uuid;
+		this.element.classList.add('contentCard');
 
 
 		// this.element.textContent = this.element.id;
@@ -31,8 +32,8 @@ export class ShardCard {
 		this.element.dataset.uuid = this.element.contentObject.Uuid;
 		this.element.dataset.edgeuuid = this.element.edgeObject.Uuid;
 
-		this.element.addEventListener('focusin', this.focusinShardcard)
-		this.element.addEventListener('focusout', this.focusoutShardcard)
+		this.element.addEventListener('focusin', this.focusinContentCard)
+		this.element.addEventListener('focusout', this.focusoutContentCard)
 
 		this.element.addEventListener('keydown', this.keydown.bind(this))
 		this.element.addEventListener('click', this.click.bind(this))
@@ -40,7 +41,7 @@ export class ShardCard {
 
 
 
-		// this.insertShardcardContent(this.element);
+		// this.insertContentCardContent(this.element);
 
 		// this.element.update = function () {
 		// 	// console.log(this)
@@ -48,42 +49,42 @@ export class ShardCard {
 
 		// }
 		// this.element.update();
-		this.element.update = this.insertShardcardContent.bind(this)
+		this.element.update = this.insertContentCardContent.bind(this)
 
 		this.contentContainerElement = document.createElement('div');
 		// this.contentContainerElement.textContent = 'content';
-		this.contentContainerElement.classList.add('shardCardContentContainer');
+		this.contentContainerElement.classList.add('contentCardContentContainer');
 		this.element.append(this.contentContainerElement);
 
 
 
 		this.overlayElement = document.createElement('div');
 		this.overlayElement.textContent = 'overlay';
-		this.overlayElement.classList.add('shardCardOverlay');
+		this.overlayElement.classList.add('contentCardOverlay');
 		this.element.append(this.overlayElement);
 
 		this.overlayElement.textContent = this.element.contentObject.Title;
 
 
-		this.insertShardcardContent();
+		this.insertContentCardContent();
 
 		return this.element;
 
 	}
 
-	focusinShardcard(event) {
-		if (event.target.querySelector('.shardCardOverlay')) {
-			event.target.querySelector('.shardCardOverlay').classList.add('hidden')
+	focusinContentCard(event) {
+		if (event.target.querySelector('.contentCardOverlay')) {
+			event.target.querySelector('.contentCardOverlay').classList.add('hidden')
 			// event.target.focus();
 		}
 	}
 
-	focusoutShardcard(event) {
-		// event.target.querySelector('.shardCardOverlay').classList.remove('hidden')
+	focusoutContentCard(event) {
+		// event.target.querySelector('.contentCardOverlay').classList.remove('hidden')
 	}
 
 
-	insertShardcardContent() {
+	insertContentCardContent() {
 		console.log(this.element.contentObject.Table)
 
 		switch (this.element.contentObject.Table) {
@@ -92,7 +93,8 @@ export class ShardCard {
 				this.content = new CodeContent(this.element, this.contentContainerElement);
 				break;
 			case 'File':
-				this.contentContainerElement.textContent = 'FILE FILE FILE';
+				// this.contentContainerElement.textContent = 'FILE FILE FILE';
+				this.content = new FileContent(this.element, this.contentContainerElement);
 				break;
 			case 'Source':
 				// this.contentContainerElement.innerHTML = `<a href=${this.element.contentObject.Url}>${this.element.contentObject.Url} : LINK TO SOURCE URL</a>`;
@@ -203,7 +205,7 @@ export class ShardCard {
 
 			case 'Text':
 				if (!editing && isText && isEmpty) {
-					console.log('PASTE TEXT TO TEXT-SHARDCARD')
+					console.log('PASTE TEXT TO TEXT-CONTENTCARD')
 					let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
 					this.content.insertTextContent(this.content.element, clipboardText);
 				}

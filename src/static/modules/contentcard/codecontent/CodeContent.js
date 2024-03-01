@@ -1,9 +1,9 @@
-import { determineClipboardContentType } from "../../../../../../filehandling/DetermineClipboardContents.js";
+import { determineClipboardContentType } from "../../filehandling/DetermineClipboardContents.js";
 
 
 export class CodeContent {
 
-	shardcardElement;
+	contentcardElement;
 	contentContainer;
 
 	element;
@@ -12,17 +12,17 @@ export class CodeContent {
 
 	listeningSecondClick;
 
-	constructor(shardcardElement, contentContainer) {
-		this.shardcardElement = shardcardElement;
+	constructor(contentcardElement, contentContainer) {
+		this.contentcardElement = contentcardElement;
 		this.contentContainer = contentContainer;
 		this.contentContainer.innerHTML = ``;
 
-		this.codeHeader = this.shardcardElement.querySelector('.codeHeader');
+		this.codeHeader = this.contentcardElement.querySelector('.codeHeader');
 		if (this.codeHeader == null) {
 			this.codeHeader = document.createElement('div');
 			this.codeHeader.classList.add('codeHeader');
 		}
-		this.codeHeader.textContent = 'CODE : ' + shardcardElement.contentObject.Type;
+		this.codeHeader.textContent = 'CODE : ' + contentcardElement.contentObject.Type;
 
 		this.element = document.createElement('div');
 		// this.element.tabIndex = 0;
@@ -36,10 +36,10 @@ export class CodeContent {
 		this.element.addEventListener('paste', this.pasteDuringFocus.bind(this));
 
 
-		this.insertTextContent(this.element, shardcardElement.contentObject.CodeContent)
+		this.insertTextContent(this.element, contentcardElement.contentObject.CodeContent)
 
 		this.contentContainer.append(this.codeHeader, this.element);
-		this.shardcardElement.append(this.codeHeader);
+		this.contentcardElement.append(this.codeHeader);
 	}
 
 
@@ -61,7 +61,7 @@ export class CodeContent {
 	disableEdit() {
 		this.element.contentEditable = "false";
 		this.element.classList.remove('editing');
-		// this.shardcardElement.focus();
+		// this.contentcardElement.focus();
 	}
 
 
@@ -86,7 +86,7 @@ export class CodeContent {
 
 
 	/* 
-		From old sharding-shardcard
+		From old sharding-contentcard
 	 */
 
 	keydownDuringFocus(event) {
@@ -106,7 +106,7 @@ export class CodeContent {
 					break;
 
 				case 'Escape':
-					this.shardcardElement.focus();
+					this.contentcardElement.focus();
 					break;
 
 				case 'Tab':
@@ -162,8 +162,8 @@ export class CodeContent {
 		for (let i = 0; i < textArray.length; i++) {
 			let p = document.createElement('p');
 			// p.classList.add('shard-p');
-			// p.id = 'shard-p-' + shardcard.shard.id;
-			// p.dataset.nodeId = shardcard.shard.id;
+			// p.id = 'shard-p-' + contentcard.shard.id;
+			// p.dataset.nodeId = contentcard.shard.id;
 			// https://stackoverflow.com/questions/75397803/chrome-skips-over-empty-paragraphs-of-contenteditable-parent-when-moving-cursor/75397804
 			if (textArray[i] == '') {
 				p.innerHTML = `<br>`;
@@ -179,12 +179,12 @@ export class CodeContent {
 
 	}
 
-	extractTextContent(shardcard) {
-		// console.log(shardcard)
+	extractTextContent(contentcard) {
+		// console.log(contentcard)
 
 		let stringArray = [];
 
-		for (const child of shardcard.children) {
+		for (const child of contentcard.children) {
 			//console.log(child.textContent);
 			stringArray.push(child.textContent);
 		}

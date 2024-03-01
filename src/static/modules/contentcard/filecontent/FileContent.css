@@ -1,0 +1,23 @@
+.fileContent {
+	/* height: 100%; */
+	/* width: 100%; */
+	max-width: 700px;
+
+	margin: 10px;
+	padding: 10px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* caret-shape: block; */
+
+	user-select: none;
+
+	background-color: rgb(154, 40, 156);
+	border: solid black 1px;
+}
+
+.fileElement {
+	max-width: 100%;
+}

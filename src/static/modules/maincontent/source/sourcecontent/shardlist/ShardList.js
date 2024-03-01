@@ -1,4 +1,4 @@
-import { ShardCard } from "./shardcard/ShardCard.js";
+import { ContentCard } from "../../../../contentcard/ContentCard.js";
 
 
 export class ShardList {
@@ -25,12 +25,13 @@ export class ShardList {
 	load(shardContentEdges) {
 		this.shardListContainer.innerHTML = ``;
 		this.shardListContainer.append(this.element);
+		this.element.innerHTML = '';
 
 		console.log('LOAD SHARD LIST ', shardContentEdges)
 
 		for (const contentEdge of shardContentEdges) {
 			console.log(contentEdge.content.Title)
-			let shardCard = new ShardCard(contentEdge);
+			let shardCard = new ContentCard(contentEdge);
 			this.element.append(shardCard)
 		}
 

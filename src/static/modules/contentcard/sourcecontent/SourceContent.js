@@ -1,17 +1,16 @@
-import { determineClipboardContentType } from "../../../../../../filehandling/DetermineClipboardContents.js";
-import { animateToWidthPanel1 } from "../../../../../../uiskeleton/threepanels/threepanels.js";
+import { determineClipboardContentType } from "../../filehandling/DetermineClipboardContents.js";
 
 
 export class SourceContent {
 
-	shardcardElement;
+	contentcardElement;
 	contentContainer;
 
 	element;
 
 
-	constructor(shardcardElement, contentContainer) {
-		this.shardcardElement = shardcardElement;
+	constructor(contentcardElement, contentContainer) {
+		this.contentcardElement = contentcardElement;
 		this.contentContainer = contentContainer;
 		this.contentContainer.innerHTML = ``;
 
@@ -23,7 +22,7 @@ export class SourceContent {
 
 		// this.element.addEventListener('keydown', this.keydown.bind(this));
 
-		this.element.textContent = shardcardElement.contentObject.Url;
+		this.element.textContent = contentcardElement.contentObject.Url;
 
 		this.contentContainer.append(this.element);
 	}

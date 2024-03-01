@@ -1,8 +1,9 @@
 @import './textcontent/TextContent.css';
 @import './sourcecontent/SourceContent.css';
 @import './codecontent/CodeContent.css';
+@import './filecontent/FileContent.css';
 
-.shardCard {
+.contentCard {
 	/* for abosulte position of overlay to apply */
 	position: relative;
 
@@ -20,12 +21,12 @@
 	border: solid black 1px;
 }
 
-.shardCard a {
+.contentCard a {
 	text-decoration: none;
 	color: black;
 }
 
-.shardCardContentContainer {
+.contentCardContentContainer {
 	height: 100%;
 	width: 100%;
 
@@ -33,7 +34,7 @@
 	border: solid rgb(97, 30, 30) 1px;
 }
 
-.shardCardOverlay {
+.contentCardOverlay {
 	height: 100%;
 	width: 100%;
 

@@ -1,6 +1,7 @@
 
 
 
+
 class GlobalEventHandler {
 
 	app;
@@ -8,6 +9,8 @@ class GlobalEventHandler {
 
 	listeningSecondShift = false;
 	listeningSecondCtrlShift = false;
+
+	mode = '';
 
 	actions = [
 		'chooseProject',
@@ -36,6 +39,8 @@ class GlobalEventHandler {
 			setTimeout(() => { this.listeningSecondShift = false }, 100)
 
 		}
+
+
 	}
 
 
@@ -101,6 +106,272 @@ class GlobalEventHandler {
 		// console.log('shiftKey: ', event.shiftKey)
 		// console.log('ctrlKey: ', event.ctrlKey)
 
+
+		// case '/':
+		// document.getElementById('mainMenuReview').click();
+		// this.app.mainOverlay.review.tableBody.firstElementChild.focus();
+		// break;
+		// 	case '?':
+		// document.getElementById('mainMenuSearch').click()
+		// this.app.mainOverlay.search.input.element.focus()
+		// event.preventDefault()
+		// break;
+
+
+
+		/*
+			MODE SWITCHES
+		*/
+		// console.log(this)
+		if (this.mode === '') {
+
+			switch (event.key) {
+				case 't':
+					console.log('TOGGLE STATE')
+					this.mode = 't';
+					setTimeout(() => { this.mode = '' }, 500);
+					return;
+					break;
+
+				case 'f':
+					// console.log('TOGGLE STATE')
+					this.mode = 'f';
+					setTimeout(() => { this.mode = '' }, 500);
+					return;
+					break;
+
+				case 'g':
+					// console.log('TOGGLE STATE')
+					this.mode = 'g';
+					setTimeout(() => { this.mode = '' }, 500);
+					return;
+					break;
+
+				default:
+					break;
+			}
+
+		}
+
+		// console.log(this.mode)
+
+		let elem;
+		switch (this.mode) {
+
+
+
+			/*
+				GGGGGGG
+			*/
+			case 'g':
+
+				switch (event.key) {
+
+					case 'c':
+					case 't': // NEW TAB
+					case 'w': // NEW WINDOW 
+						// console.log("GO :", event.target)
+						let contentObject = event.target.contentObject;
+						// console.log('typeof contentObject: ', contentObject)
+						if (contentObject !== undefined) {
+							// console.log('GOGOGOGOGOGOGOGO')
+							switch (contentObject.Table) {
+								case 'Source':
+									this.app.mainContent.loadSourceFromUuid(372);
+									break;
+
+								default:
+									break;
+							}
+
+
+						}
+						else {
+							console.log(`No contentObject detected. Can't go. `)
+						}
+						break;
+
+					case 'r':
+						console.log('LOAD CONTENT TO REVIEW INTO MAIN')
+						break;
+
+					default:
+						break;
+				}
+				this.mode = '';
+				event.stopPropagation();
+				// event.preventDefault();
+				return;
+				break;
+
+
+
+			/*
+				FFFFFFF
+			*/
+			case 'f':
+
+				switch (event.key) {
+
+					case '1':
+						document.getElementById('mainMenuState').classList.remove('selected');
+						document.getElementById('mainMenuState').click();
+						this.app.mainOverlay.state.element_1.focus();
+						break;
+					case '2':
+						document.getElementById('mainMenuState').classList.remove('selected');
+						document.getElementById('mainMenuState').click();
+						this.app.mainOverlay.state.element_2.focus();
+						break;
+					case '3':
+						document.getElementById('mainMenuState').classList.remove('selected');
+						document.getElementById('mainMenuState').click();
+						this.app.mainOverlay.state.element_3.focus();
+						break;
+
+
+					case 'p':
+						document.getElementById('mainMenuProject').classList.remove('selected');
+						document.getElementById('mainMenuProject').click();
+						this.app.mainOverlay.project.projectTitleElement.focus();
+						break;
+					case 'r':
+						document.getElementById('mainMenuReview').classList.remove('selected');
+						document.getElementById('mainMenuReview').click();
+						this.app.mainOverlay.review.tableBody.firstElementChild.focus();
+						break;
+
+
+					// CURRENT SOURCE
+					case 'y':
+						document.getElementById('sourceToolbarTitle').focus();
+						break;
+					case 'u':
+						document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
+						document.getElementById('sourceToolbar_filePanel').click();
+						document.getElementById('filePanelContainer').focus();
+						break;
+					case 'i':
+						// document.getElementById('sourceToolbar_shardPanel').click();
+						document.getElementById('sourceToolbar_shardPanel').classList.remove('selected');
+						document.getElementById('sourceToolbar_shardPanel').click();
+						document.getElementById('shardlistContainer').focus();
+						break;
+					case 'o':
+						document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
+						document.getElementById('sourceToolbar_reviewPanel').click();
+						document.getElementById('reviewlistContainer').focus();
+						break;
+					case 'h':
+						document.getElementById('sourceToolbar_reviewStatus').focus();
+						break;
+
+
+					case '[':
+						elem = document.getElementById('sourceParentContainer');
+						elem.classList.remove('selected');
+						elem.click();
+						this.focusFirstDescendant(elem);
+						break;
+					case ']':
+						elem = document.getElementById('sourceFileContainer');
+						elem.classList.remove('selected');
+						elem.click();
+						this.focusFirstDescendant(elem);
+						break;
+					case '\'':
+						elem = document.getElementById('sourceReviewContainer');
+						elem.classList.remove('selected');
+						elem.click();
+						this.focusFirstDescendant(elem);
+						break;
+					case '\\':
+						elem = document.getElementById('sourceConnectedContainer');
+						elem.classList.remove('selected');
+						elem.click();
+						this.focusFirstDescendant(elem);
+						break;
+
+					default:
+						break;
+				}
+				this.mode = '';
+				event.stopPropagation();
+				// event.preventDefault();
+				return;
+				break;
+
+			/* 
+				TTTTTTT
+			*/
+			case 't':
+
+				switch (event.key) {
+
+					case 'f':
+						document.getElementById('mainMenuSearch').click()
+						this.app.mainOverlay.search.input.element.focus()
+						event.preventDefault()
+						break;
+					case 'p':
+						this.app.mainOverlay.mainMenu.projectBtn.click();
+						break;
+					case 'r':
+						console.log('RRRRRRRRR')
+						document.getElementById('mainMenuReview').click();
+						this.app.mainOverlay.review.tableBody.firstElementChild.focus();
+						break;
+					case 's':
+						this.app.mainOverlay.mainMenu.stateBtn.click();
+						break;
+
+
+
+					case 'y':
+						document.getElementById('sourceToolbar_filePanel').click();
+						break;
+					case 'u':
+						document.getElementById('sourceToolbar_shardPanel').click();
+						break;
+					case 'i':
+						document.getElementById('sourceToolbar_reviewPanel').click();
+						break;
+
+
+					case '[':
+						document.getElementById('sourceToolbar_parentList').click();
+						break;
+					case ']':
+						document.getElementById('sourceToolbar_fileList').click();
+						break;
+					case '\'':
+						document.getElementById('sourceToolbar_reviewList').click();
+						break;
+					case '\\':
+						document.getElementById('sourceToolbar_childList').click();
+						break;
+
+					default:
+						break;
+				}
+				this.mode = '';
+				event.stopPropagation();
+				// event.preventDefault();
+				return;
+				break;
+
+
+
+			default:
+				break;
+		}
+
+
+
+
+
+
+
 		switch (event.keyCode) {
 
 
@@ -136,9 +407,6 @@ class GlobalEventHandler {
 					if (event.target.contentObject && event.target.contentObject.Table == 'Project') {
 						this.app.mainOverlay.project.updateCurrentProjectOnUuid(event.target.contentObject.Uuid);
 					}
-				}
-				else {
-					this.app.mainOverlay.mainMenu.projectBtn.click();
 				}
 				break;
 
@@ -339,39 +607,6 @@ class GlobalEventHandler {
 
 
 
-			// key=[ , [[[[[[,
-			case 219:
-				// toggle mainContentPanel tables
-				if (event.shiftKey && event.ctrlKey) {
-					document.getElementById('sourceToolbar_parentList').click();
-				}
-				break;
-
-			// key=] , ]]]]]],
-			case 221:
-				// toggle mainContentPanel tables
-				if (event.shiftKey && event.ctrlKey) {
-					document.getElementById('sourceToolbar_fileList').click();
-				}
-				break;
-
-			// key=' , ''''''',
-			case 220:
-				// toggle mainContentPanel tables
-				if (event.shiftKey && event.ctrlKey) {
-					document.getElementById('sourceToolbar_childList').click();
-				}
-				break;
-
-			// key=\ , \\\\\\\\,
-			case 222:
-				// toggle mainContentPanel tables
-				if (event.shiftKey && event.ctrlKey) {
-					document.getElementById('sourceToolbar_reviewList').click();
-				}
-				break;
-
-
 
 
 			default:
@@ -383,15 +618,7 @@ class GlobalEventHandler {
 		switch (event.key) {
 
 
-			case '/':
-				document.getElementById('mainMenuReview').click();
-				this.app.mainOverlay.review.tableBody.firstElementChild.focus();
-				break;
-			case '?':
-				document.getElementById('mainMenuSearch').click()
-				this.app.mainOverlay.search.input.element.focus()
-				event.preventDefault()
-				break;
+
 
 
 
@@ -498,14 +725,7 @@ class GlobalEventHandler {
 				break;
 
 
-			case 's':
-				this.app.mainOverlay.mainMenu.stateBtn.click();
 
-				// if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-				// 	this.app.mainOverlay.mainMenu.stateBtn.click();
-				// }
-				// this.app.mainOverlay.state.element_1.focus();
-				break;
 
 
 			case 'q':
