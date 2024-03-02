@@ -45,6 +45,8 @@ module.exports = async (req, res) => {
 			// 	return;
 
 			// }
+			console.log('downloading ', filePath)
+
 
 			res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
 			res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);

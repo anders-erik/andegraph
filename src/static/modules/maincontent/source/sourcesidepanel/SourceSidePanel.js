@@ -39,6 +39,7 @@ export class SourceSidePanel {
 
 	loadParents(parentContentEdges) {
 		let tbody = this.parentContainer.querySelector('table tbody')
+		tbody.innerHTML = ``;
 		// console.log(tbody)
 		for (const contentEdge of parentContentEdges) {
 			// console.log(contentEdge)
@@ -66,6 +67,7 @@ export class SourceSidePanel {
 
 	loadFiles(fileContentEdges) {
 		let tbody = this.fileContainer.querySelector('table tbody')
+		tbody.innerHTML = ``;
 		// console.log(tbody)
 		for (const contentEdge of fileContentEdges) {
 			// console.log(contentEdge)
@@ -94,6 +96,7 @@ export class SourceSidePanel {
 
 	loadReviews(reviewContentEdges) {
 		let tbody = this.reviewContainer.querySelector('table tbody')
+		tbody.innerHTML = ``;
 		// console.log(tbody)
 		for (const contentEdge of reviewContentEdges) {
 			// console.log(contentEdge)

@@ -85,7 +85,7 @@ export class ContentCard {
 
 
 	insertContentCardContent() {
-		console.log(this.element.contentObject.Table)
+		// console.log(this.element.contentObject.Table)
 
 		switch (this.element.contentObject.Table) {
 			case 'Code':

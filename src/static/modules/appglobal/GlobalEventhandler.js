@@ -11,6 +11,7 @@ class GlobalEventHandler {
 	listeningSecondCtrlShift = false;
 
 	mode = '';
+	modeTimeout;
 
 	actions = [
 		'chooseProject',
@@ -122,6 +123,7 @@ class GlobalEventHandler {
 		/*
 			MODE SWITCHES
 		*/
+
 		// console.log(this)
 		if (this.mode === '') {
 
@@ -129,21 +131,27 @@ class GlobalEventHandler {
 				case 't':
 					console.log('TOGGLE STATE')
 					this.mode = 't';
-					setTimeout(() => { this.mode = '' }, 500);
+					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+					clearTimeout(this.modeTimeout);
+					this.modeTimeout = setTimeout(() => { this.mode = '' }, 1000);
 					return;
 					break;
 
 				case 'f':
 					// console.log('TOGGLE STATE')
 					this.mode = 'f';
-					setTimeout(() => { this.mode = '' }, 500);
+					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+					clearTimeout(this.modeTimeout);
+					setTimeout(() => { this.mode = '' }, 1000);
 					return;
 					break;
 
 				case 'g':
 					// console.log('TOGGLE STATE')
 					this.mode = 'g';
-					setTimeout(() => { this.mode = '' }, 500);
+					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+					clearTimeout(this.modeTimeout);
+					setTimeout(() => { this.mode = '' }, 1000);
 					return;
 					break;
 
@@ -153,7 +161,7 @@ class GlobalEventHandler {
 
 		}
 
-		// console.log(this.mode)
+		console.log(this.mode)
 
 		let elem;
 		switch (this.mode) {
@@ -174,15 +182,20 @@ class GlobalEventHandler {
 						let contentObject = event.target.contentObject;
 						// console.log('typeof contentObject: ', contentObject)
 						if (contentObject !== undefined) {
-							// console.log('GOGOGOGOGOGOGOGO')
-							switch (contentObject.Table) {
-								case 'Source':
-									this.app.mainContent.loadSourceFromUuid(372);
-									break;
 
-								default:
-									break;
-							}
+							history.pushState(null, `${contentObject.Table.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+
+							this.app.mainContent.loadFromUrl();
+
+							// console.log('GOGOGOGOGOGOGOGO')
+							// switch (contentObject.Table) {
+							// 	case 'Source':
+							// 		this.app.mainContent.loadSourceFromUuid(contentObject.Uuid);
+							// 		break;
+
+							// 	default:
+							// 		break;
+							// }
 
 
 						}
@@ -198,6 +211,8 @@ class GlobalEventHandler {
 					default:
 						break;
 				}
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
 				this.mode = '';
 				event.stopPropagation();
 				// event.preventDefault();
@@ -295,6 +310,8 @@ class GlobalEventHandler {
 					default:
 						break;
 				}
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
 				this.mode = '';
 				event.stopPropagation();
 				// event.preventDefault();
@@ -327,13 +344,13 @@ class GlobalEventHandler {
 
 
 
-					case 'y':
+					case 'u':
 						document.getElementById('sourceToolbar_filePanel').click();
 						break;
-					case 'u':
+					case 'i':
 						document.getElementById('sourceToolbar_shardPanel').click();
 						break;
-					case 'i':
+					case 'o':
 						document.getElementById('sourceToolbar_reviewPanel').click();
 						break;
 
@@ -352,8 +369,13 @@ class GlobalEventHandler {
 						break;
 
 					default:
+						console.log('not triggered')
+
 						break;
 				}
+				// clearTimeout(this.modeTimeout);
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
 				this.mode = '';
 				event.stopPropagation();
 				// event.preventDefault();

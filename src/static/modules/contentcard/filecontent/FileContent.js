@@ -43,8 +43,24 @@ export class FileContent {
 
 				switch (this.contentObject.Type) {
 
+					case 'audio':
+						this.loadAudio(fileSrc)
+						break;
+
+					case 'code':
+						this.loadText(file)
+						break;
+
 					case 'image':
 						this.loadImage(fileSrc)
+						break;
+
+					case 'pdf':
+						this.loadPdf(fileSrc)
+						break;
+
+					case 'text':
+						this.loadText(file)
 						break;
 
 					case 'video':
@@ -59,6 +75,18 @@ export class FileContent {
 			})
 	}
 
+	loadAudio(fileSrc) {
+		// file.name = this.contentObject.Uuid + "." + this.contentObject.Extension;
+		// console.log(file)
+		// console.log(this.contentObject);
+
+		this.fileElement = document.createElement('audio');
+		this.fileElement.classList.add('fileElement', 'audio');
+		fileViewer.setAttribute('controls', 'controls');
+
+		this.fileElement.src = fileSrc;
+		this.element.append(this.fileElement)
+	}
 
 	loadImage(fileSrc) {
 		// file.name = this.contentObject.Uuid + "." + this.contentObject.Extension;
@@ -66,8 +94,41 @@ export class FileContent {
 		// console.log(this.contentObject);
 
 		this.fileElement = document.createElement('img');
-		this.fileElement.classList.add('fileElement');
+		this.fileElement.classList.add('fileElement', 'image');
 		this.fileElement.src = fileSrc;
+		this.element.append(this.fileElement)
+	}
+
+	loadPdf(fileSrc) {
+		// file.name = this.contentObject.Uuid + "." + this.contentObject.Extension;
+		// console.log(file)
+		// console.log(this.contentObject);
+
+		this.fileElement = document.createElement('embed');
+		this.fileElement.classList.add('fileElement', 'pdf');
+		this.fileElement.src = fileSrc;
+		this.element.append(this.fileElement)
+	}
+
+	loadText(textFile) {
+		this.fileElement = document.createElement('textarea');
+		this.fileElement.classList.add('fileElement', 'text');
+		this.fileElement.setAttribute('readonly', 'true');
+		this.fileElement.setAttribute('disabled', 'true');
+
+		textFile.text()
+			.then((text) => {
+				this.fileElement.textContent = text;
+			})
+		// fileViewer.textContent = await fetchedBlob.text()
+
+		//console.log('text length: ', fetchedBlob.size)
+		let textareaRows = 5 + Math.floor(textFile.size / 30);
+		if (textareaRows > 20)
+			this.fileElement.setAttribute('rows', 20);
+		else
+			this.fileElement.setAttribute('rows', textareaRows);
+
 		this.element.append(this.fileElement)
 	}
 
@@ -77,7 +138,7 @@ export class FileContent {
 		// console.log(this.contentObject);
 
 		this.fileElement = document.createElement('video');
-		this.fileElement.classList.add('fileElement');
+		this.fileElement.classList.add('fileElement', 'video');
 		this.fileElement.setAttribute("controls", "controls");
 		this.fileElement.setAttribute("preload", "auto"); // this enabled they playback to work as expected!
 

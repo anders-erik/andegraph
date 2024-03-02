@@ -360,7 +360,10 @@ export class dbis {
 
 			// console.log(response.body)
 			let blob = await response.blob()
-			let file = await new File([blob], 'testFileName.file2')
+			let contentType = response.headers.get('content-type');
+			let extension = contentType.split('/')[1];
+			// console.log('FILEFILE:', response.headers.get('content-type'))
+			let file = await new File([blob], `${Uuid}.${extension}`)
 			return file;
 			// .then(blob => new File([blob], 'testfilename.file'))
 			// .then(file => file)

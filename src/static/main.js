@@ -1,6 +1,6 @@
 import * as AppFunctions from './modules/App.js';
 import { App } from './modules/App.js';
-import { GlobalEventHandler } from './modules/appglobal/GlobalEventhandler.js';
+// import { GlobalEventHandler } from './modules/appglobal/GlobalEventhandler.js';
 
 let isDev = window.location.pathname.match(/development/);
 let app;
@@ -15,10 +15,11 @@ if (isDev) {
 }
 else {
 	console.log('NOT DEV')
-
-	AppFunctions.initAppFunctions('root');
+	app = new App('root');
 }
 
+// // OLD
+// AppFunctions.initAppFunctions('root');
 
 
 

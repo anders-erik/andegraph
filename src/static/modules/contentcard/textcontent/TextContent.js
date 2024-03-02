@@ -8,6 +8,8 @@ export class TextContent {
 
 	element;
 
+	contentObject;
+
 	listeningSecondClick;
 
 	constructor(contentcardElement, contentContainer) {
@@ -20,14 +22,18 @@ export class TextContent {
 		// this.element.contentEditable = true;
 		this.element.classList.add('textContent');
 
-
+		this.contentObject = contentcardElement.contentObject;
 
 		this.element.addEventListener('focusout', this.focusout.bind(this));
 		this.element.addEventListener('keydown', this.keydownDuringFocus.bind(this));
 		this.element.addEventListener('paste', this.pasteDuringFocus.bind(this));
 
-
-		this.insertTextContent(this.element, contentcardElement.contentObject.TextContent)
+		if (this.contentObject.TextContent === '') {
+			this.element.innerHTML = `<p><br></p>`
+		}
+		else {
+			this.insertTextContent(this.element, this.contentObject.TextContent)
+		}
 
 		this.contentContainer.append(this.element);
 	}

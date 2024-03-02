@@ -32,10 +32,10 @@ export class Review {
 
 	async fetch() {
 
-		console.log('GET REVIEW!')
+		// console.log('GET REVIEW!')
 		let reviewContentObjects = await dbis.Review_SelectCurrentReview();
 		this.insertReviewObjects(reviewContentObjects);
-		console.log(reviewContentObjects)
+		// console.log(reviewContentObjects)
 
 	}
 

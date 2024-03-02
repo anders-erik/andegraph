@@ -21,3 +21,11 @@
 .fileElement {
 	max-width: 100%;
 }
+
+.fileElement.text {
+	width: 100%;
+}
+
+.fileElement.pdf {
+	width: 100%;
+}

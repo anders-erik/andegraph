@@ -36,7 +36,13 @@ export class CodeContent {
 		this.element.addEventListener('paste', this.pasteDuringFocus.bind(this));
 
 
-		this.insertTextContent(this.element, contentcardElement.contentObject.CodeContent)
+		if (contentcardElement.contentObject.CodeContent === '') {
+			this.element.innerHTML = `<p><br></p>`
+		}
+		else {
+			this.insertTextContent(this.element, contentcardElement.contentObject.CodeContent)
+		}
+
 
 		this.contentContainer.append(this.codeHeader, this.element);
 		this.contentcardElement.append(this.codeHeader);

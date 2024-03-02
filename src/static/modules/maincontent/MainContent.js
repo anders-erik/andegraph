@@ -39,12 +39,26 @@ export class MainContent {
 		// this.loadSourceFromUuid(372);
 	}
 
+	loadFromUrl() {
+		let urlState = new URL(window.location.href)
+		console.table(urlState)
+		let pathArray = urlState.pathname.split('/');
+		pathArray.pop();
+		pathArray.shift();
+		console.log(pathArray)
+
+		if (pathArray[0] === 'source') {
+			this.loadSourceFromUuid(pathArray[1]);
+		}
+	}
 
 	loadFromContentObject(contentObject) {
 
 	}
 
 	async loadSourceFromUuid(Uuid) {
+		// history.pushState(null, 'source', `http://localhost:3000/source/${Uuid}`);
+
 		let contentObject = await dbis.Content_SelectOnUuid(Uuid);
 		await this.source.load(contentObject)
 	}

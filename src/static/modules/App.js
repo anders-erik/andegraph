@@ -26,9 +26,9 @@ import * as globalNodeContext from './globalnodecontext/GlobalNodeContext.js';
 
 
 
-import { dbis } from './dbi-send/dbi-send.js';
-let adj = await dbis.ContentEdge_SelectAdjacentOfUuid(372);
-console.log(adj)
+// import { dbis } from './dbi-send/dbi-send.js';
+// let adj = await dbis.ContentEdge_SelectAdjacentOfUuid(372);
+// console.log(adj)
 
 /* 
 // dbis.Content_SelectChildOfUuid(372);
@@ -106,8 +106,22 @@ class App {
 
 		this.mainContent = new MainContent(this.appElement);
 
+
+		this.mainContent.loadFromUrl();
+		// let urlState = this.getUrlState();
+		// let urlState = new URL(window.location.href)
+		// console.table(urlState)
+		// let pathArray = urlState.pathname.split('/');
+		// pathArray.pop();
+		// pathArray.shift();
+		// console.log(pathArray)
+
+		// if (pathArray[0] === 'source') {
+		// 	this.mainContent.loadSourceFromUuid(pathArray[1]);
+		// }
+
 		// DEVDEV
-		this.mainContent.loadSourceFromUuid(330);
+		// this.mainContent.loadSourceFromUuid(330);
 		// this.mainContent.loadSourceFromUuid(372);
 		// this.mainContent.loadSourceFromUuid(106979190784);
 
@@ -131,6 +145,21 @@ class App {
 		// leftPanelTestFunction();
 
 		this.appElement.focus();
+	}
+
+
+	getUrlState() {
+		let url = window.location.href;
+		let urlState = {};
+
+		urlState.url = url;
+		urlState.base = 'base';
+		urlState.content = 'content';
+		urlState.Uuid = 'Uuid';
+
+		console.table(urlState)
+
+		console.log(new URL(url))
 	}
 
 	// appKeyup(event) {

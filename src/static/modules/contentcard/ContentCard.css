@@ -9,6 +9,11 @@
 
 	width: 700px;
 
+	/* max-height: 90vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	scrollbar-width: none; */
+
 	/* 
 	display: flex;
 	flex-direction: row;
