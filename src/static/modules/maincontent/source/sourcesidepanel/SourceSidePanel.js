@@ -112,13 +112,13 @@ export class SourceSidePanel {
 			tr.update = function () {
 				let completedString = this.contentObject.ReviewCompleted ? 'completed' : '';
 				this.innerHTML = `
-					<td class="${completedString}">${contentEdge.content.ReviewDate}</td>
+					<td class="${completedString} reviewDate">${contentEdge.content.ReviewDate}</td>
 				`;
 			}
 
 			let completedString = contentEdge.content.ReviewCompleted ? 'completed' : '';
 			tr.innerHTML = `
-				<td class="${completedString}">${contentEdge.content.ReviewDate}</td>
+				<td class="${completedString} reviewDate">${contentEdge.content.ReviewDate}</td>
 			`;
 			tbody.append(tr)
 		}

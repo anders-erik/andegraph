@@ -31,8 +31,8 @@ async function ContentEdge_InsertAdjacentToUuidIntoTable(parentUuid, Directed, c
             await queries.Edge_Insert(edgeObject);
 
             acc({
-                Content: newChildObject,
-                Edge: edgeObject
+                content: newChildObject,
+                edge: edgeObject
             });
 
         } else {

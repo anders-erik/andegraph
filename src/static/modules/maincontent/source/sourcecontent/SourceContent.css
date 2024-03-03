@@ -1,4 +1,5 @@
 @import './shardlist/ShardList.css';
+@import './reviewlist/ReviewList.css';
 
 #sourceContent {
 
@@ -42,7 +43,7 @@
 
 #reviewlistContainer {
 	position: relative;
-	width: 700px;
+	width: 750px;
 	height: 90%;
 	top: 20px;
 

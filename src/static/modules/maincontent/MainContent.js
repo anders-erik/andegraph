@@ -39,7 +39,7 @@ export class MainContent {
 		// this.loadSourceFromUuid(372);
 	}
 
-	loadFromUrl() {
+	async loadFromUrl() {
 		let urlState = new URL(window.location.href)
 		console.table(urlState)
 		let pathArray = urlState.pathname.split('/');
@@ -48,7 +48,7 @@ export class MainContent {
 		console.log(pathArray)
 
 		if (pathArray[0] === 'source') {
-			this.loadSourceFromUuid(pathArray[1]);
+			await this.loadSourceFromUuid(pathArray[1]);
 		}
 	}
 

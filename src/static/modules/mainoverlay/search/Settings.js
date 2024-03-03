@@ -73,7 +73,7 @@ export class Settings {
 		<label for="orderSearchBySelect">
 			<select name="orderSearchBySelect" id="orderSearchBySelect">
 				<option value=""></option>
-				<option value="Uuid">Uuid</option>
+				<option value="Uuid" selected="selected">Uuid</option>
 				<option value="Table">Table</option>
 				<option value="Type">Type</option>
 				<option value="Title">Title</option>

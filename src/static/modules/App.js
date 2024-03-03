@@ -90,16 +90,9 @@ class App {
 		this.appElement.tabIndex = 0;
 		this.rootElement.append(this.appElement);
 
-		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
 
-		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
-		// this.appElement.addEventListener('click', this.appClick.bind(this));
-		// this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
-		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
-		window.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
-		window.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
-		// this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
-		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
+
+
 
 
 		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
@@ -145,6 +138,18 @@ class App {
 		// leftPanelTestFunction();
 
 		this.appElement.focus();
+
+		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
+
+		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
+		// this.appElement.addEventListener('click', this.appClick.bind(this));
+		// this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
+		window.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		window.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
+		// this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
+		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
+		window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
 	}
 
 
@@ -222,6 +227,14 @@ class App {
 
 }
 
+
+
+
+// setInterval(() => {
+// 	console.log('')
+// 	console.log('Active Element: ', document.activeElement)
+// 	console.log('Selection Node: ', window.getSelection().focusNode)
+// }, 1500);
 
 
 

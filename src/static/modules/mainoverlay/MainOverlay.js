@@ -59,7 +59,32 @@ export class MainOverlay {
 		// console.log(this.projectContainer)
 		// console.log(this.searchContainer)
 
+		// localStorage.setItem('stateSelected', document.getElementById('mainMenuState').classList.contains('selected') ? '1' : '0');
+		// localStorage.setItem('projectSelected', document.getElementById('mainMenuProject').classList.contains('selected') ? '1' : '0');
+		let stateSelected = localStorage.getItem('stateSelected');
+		let projectSelected = localStorage.getItem('projectSelected');
+		console.log('stateSelected', stateSelected)
+		console.log('projectSelected', projectSelected)
 
+		if (stateSelected == '1') {
+			document.getElementById('mainMenuState').classList.add('selected');
+			this.stateContainer.classList.remove('hide')
+			// document.getElementById('mainMenuState').click();
+		}
+		else {
+			this.stateContainer.classList.add('hide')
+		}
+
+		if (projectSelected == '1') {
+			document.getElementById('mainMenuProject').classList.add('selected');
+			// document.getElementById('mainMenuProject').click();
+			this.projectContainer.classList.remove('hide')
+		}
+		else {
+			this.projectContainer.classList.add('hide')
+		}
+
+		// const value1 = localStorage.getItem('key1');
 
 	}
 

@@ -50,7 +50,6 @@ export class Source {
 		this.otherConnectedContentEdge = this.undirectedContentEdge.filter(contentEdge => !(contentEdge.content.Table === 'Review' || contentEdge.content.Table === 'File'));
 
 
-
 		this.toolbar.load(contentObject);
 		this.sourceContent.load(this.childrenContentEdge);
 		this.sidePanel.load();
@@ -59,6 +58,9 @@ export class Source {
 		this.sidePanel.loadFiles(this.filesContentEdge);
 		this.sidePanel.loadReviews(this.reviewContentEdge);
 
+
+
+		this.displayPanelsFromLocalStorage();
 	}
 
 
@@ -134,7 +136,7 @@ export class Source {
 					this.sidePanel.reviewContainer.classList.remove('hidden');
 				}
 				break;
-			case 'sourceToolbar_childList':
+			case 'sourceToolbar_connectedList':
 				if (containsSelected) {
 					event.target.classList.remove('selected')
 					this.sidePanel.connectedContainer.classList.add('hidden');
@@ -148,10 +150,108 @@ export class Source {
 			default:
 				break;
 		}
+
+		this.updateLocalStorage();
+
+	}
+
+	updateLocalStorage() {
+
+
+		localStorage.setItem('sourceToolbar_filePanel', document.getElementById('sourceToolbar_filePanel').classList.contains('selected') ? '1' : '0');
+		localStorage.setItem('sourceToolbar_shardPanel', document.getElementById('sourceToolbar_shardPanel').classList.contains('selected') ? '1' : '0');
+		localStorage.setItem('sourceToolbar_reviewPanel', document.getElementById('sourceToolbar_reviewPanel').classList.contains('selected') ? '1' : '0');
+
+		localStorage.setItem('sourceToolbar_parentList', document.getElementById('sourceToolbar_parentList').classList.contains('selected') ? '1' : '0');
+		localStorage.setItem('sourceToolbar_fileList', document.getElementById('sourceToolbar_fileList').classList.contains('selected') ? '1' : '0');
+		localStorage.setItem('sourceToolbar_reviewList', document.getElementById('sourceToolbar_reviewList').classList.contains('selected') ? '1' : '0');
+		localStorage.setItem('sourceToolbar_connectedList', document.getElementById('sourceToolbar_connectedList').classList.contains('selected') ? '1' : '0');
 	}
 
 
+	displayPanelsFromLocalStorage() {
+		// console.log('sourceToolbar_filePanel', sourceToolbar_filePanel)
+		// console.log('sourceToolbar_shardPanel', sourceToolbar_shardPanel)
 
 
+		let sourceToolbar_filePanel = localStorage.getItem('sourceToolbar_filePanel');
+		if (sourceToolbar_filePanel == '1') {
+			document.getElementById('sourceToolbar_filePanel').classList.add('selected')
+			this.sourceContent.filePanelContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_filePanel').classList.remove('selected')
+			this.sourceContent.filePanelContainer.classList.add('hidden');
+		}
+
+		let sourceToolbar_shardPanel = localStorage.getItem('sourceToolbar_shardPanel');
+		if (sourceToolbar_shardPanel == '1') {
+			document.getElementById('sourceToolbar_shardPanel').classList.add('selected')
+			this.sourceContent.shardlistContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_shardPanel').classList.remove('selected')
+			this.sourceContent.shardlistContainer.classList.add('hidden');
+		}
+
+		let sourceToolbar_reviewPanel = localStorage.getItem('sourceToolbar_reviewPanel');
+		if (sourceToolbar_reviewPanel == '1') {
+			document.getElementById('sourceToolbar_reviewPanel').classList.add('selected')
+			this.sourceContent.reviewlistContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected')
+			this.sourceContent.reviewlistContainer.classList.add('hidden');
+		}
+
+
+
+
+		let sourceToolbar_parentList = localStorage.getItem('sourceToolbar_parentList');
+		if (sourceToolbar_parentList == '1') {
+			document.getElementById('sourceToolbar_parentList').classList.add('selected')
+			this.sidePanel.parentContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_parentList').classList.remove('selected')
+			this.sidePanel.parentContainer.classList.add('hidden');
+		}
+
+
+		let sourceToolbar_fileList = localStorage.getItem('sourceToolbar_fileList');
+		if (sourceToolbar_fileList == '1') {
+			document.getElementById('sourceToolbar_fileList').classList.add('selected')
+			this.sidePanel.fileContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_fileList').classList.remove('selected')
+			this.sidePanel.fileContainer.classList.add('hidden');
+		}
+
+
+		let sourceToolbar_reviewList = localStorage.getItem('sourceToolbar_reviewList');
+		if (sourceToolbar_reviewList == '1') {
+			document.getElementById('sourceToolbar_reviewList').classList.add('selected')
+			this.sidePanel.reviewContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_reviewList').classList.remove('selected')
+			this.sidePanel.reviewContainer.classList.add('hidden');
+		}
+
+
+
+		let sourceToolbar_connectedList = localStorage.getItem('sourceToolbar_connectedList');
+		if (sourceToolbar_connectedList == '1') {
+			document.getElementById('sourceToolbar_connectedList').classList.add('selected')
+			this.sidePanel.connectedContainer.classList.remove('hidden');
+		}
+		else {
+			document.getElementById('sourceToolbar_connectedList').classList.remove('selected')
+			this.sidePanel.connectedContainer.classList.add('hidden');
+		}
+
+
+	}
 
 }

@@ -1,3 +1,4 @@
+import { ReviewList } from "./reviewlist/ReviewList.js";
 import { ShardList } from "./shardlist/ShardList.js";
 
 
@@ -11,6 +12,7 @@ export class SourceContent {
 	reviewlistContainer;
 
 	shardList;
+	reviewList;
 
 
 
@@ -27,6 +29,7 @@ export class SourceContent {
 		this.reviewlistContainer = this.element.querySelector('#reviewlistContainer');
 
 		this.shardList = new ShardList(this.shardlistContainer);
+		this.reviewList = new ReviewList(this.reviewlistContainer);
 
 	}
 
@@ -36,7 +39,7 @@ export class SourceContent {
 		this.contentContentContainer.append(this.element);
 
 		this.shardList.load(childrenContentEdge);
-
+		// this.reviewList.load([]);
 	}
 
 
@@ -45,7 +48,7 @@ export class SourceContent {
 	sourceContentInnerHtml = `
 
 
-<div id="filePanelContainer" class="" tabindex=0>
+<div id="filePanelContainer" class="hidden" tabindex=0>
 	file panel
 </div>
 
@@ -54,7 +57,7 @@ export class SourceContent {
 </div>
 
 <div id="reviewlistContainer" class="" tabindex=0>
-	reviewlist
+	
 </div>
 	`;
 

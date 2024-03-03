@@ -12,20 +12,63 @@
 
 	/* caret-shape: block; */
 
-	user-select: none;
+	/* REMOVED THIS TO ENABLE *SELECTION ON ELEMENT* => ENABLE PASTING ! ! */
+	/* user-select: none; */
 
 	background-color: rgb(154, 40, 156);
 	border: solid black 1px;
 }
 
+
+
+
 .fileElement {
+	/* user-select: none; */
 	max-width: 100%;
 }
 
-.fileElement.text {
-	width: 100%;
+.fileElement.noFile,
+.fileElement.other {
+
+	/* padding: 30px; */
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-.fileElement.pdf {
-	width: 100%;
+
+.fileElement.other div {
+	max-width: 700px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+
+	/* padding: 0 25px 0 25px;
+	margin: 0 25px 0 25px; */
+}
+
+.fileElement.other p {
+	margin: 5px;
+	padding: 5px;
+	padding-left: 50px;
+	width: 150px;
+}
+
+.fileElement.other a {
+	width: 500px;
+
+	align-content: center;
+
+	overflow: hidden;
+
+	margin: 5px;
+	padding: 5px;
+	margin-right: 50px;
+
+	border-radius: 5px;
+	border: solid black 1px;
 }

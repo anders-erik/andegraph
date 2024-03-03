@@ -1,3 +1,5 @@
+import { dbis } from "../dbi-send/dbi-send.js";
+import { determineClipboardContentType } from "../filehandling/DetermineClipboardContents.js";
 
 
 
@@ -12,6 +14,15 @@ class GlobalEventHandler {
 
 	mode = '';
 	modeTimeout;
+
+	// mainContentObjectElement;
+	// currentReviewObjectElement;
+	// currentProjectObjectElement;
+
+	/*  */
+	/*  */
+	/*  */
+
 
 	actions = [
 		'chooseProject',
@@ -32,6 +43,53 @@ class GlobalEventHandler {
 	}
 
 
+
+	paste(event) {
+		// console.log('GLOBAL PASTE TO :')
+		// console.log('ACTIVE', document.activeElement)
+		// console.log('TARGET ', event.target)
+
+		// let clipboardContentType = determineClipboardContentType(event.clipboardData);
+		// let isText = clipboardContentType === 'text' ? true : false;
+		// let isFile = clipboardContentType === 'file' ? true : false;
+		// let contentCard;
+		// let contentObject;
+
+		// if (document.activeElement.classList.contains('contentCard')) {
+		// 	console.log('paste to content card')
+		// 	contentCard = document.activeElement;
+		// 	contentObject = contentCard.contentObject;
+
+		// 	switch (contentObject.Table) {
+
+		// 		case 'Text':
+		// 			console.log('PASTE ON TEXT')
+
+		// 			editing = contentCard.classList.contains('editing');
+		// 			isEmpty = contentCard.textContent === '';
+
+		// 			if (!editing && isText && isEmpty) {
+		// 				console.log('PASTE TEXT TO TEXT-CONTENTCARD')
+		// 				let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
+		// 				this.content.insertTextContent(this.content.element, clipboardText);
+		// 			}
+		// 			else {
+		// 				console.log(`Can't paste to non-empty content`)
+		// 			}
+		// 			break;
+
+		// 		case 'File':
+		// 			console.log('PASTE ON FILE')
+		// 			break;
+
+		// 		default:
+		// 			break;
+		// 	}
+		// }
+
+	}
+
+
 	keyup(event) {
 
 		if (event.key === 'Shift') {
@@ -48,6 +106,32 @@ class GlobalEventHandler {
 
 	async keydown(event) {
 		// console.log(event.keyCode)
+
+		let contentObject = event.target.contentObject;
+		let targetingContentObject = event.target.contentObject ? 1 : 0;
+
+		// Create booleans to quickly check if im targeting key state objects
+		// the primary purpose is to enable dynamic updating when adding or removing adjacent content nodes
+		let mainContentElement = document.getElementById('mainContentTitle');
+		let mainReviewElement = document.getElementById('mainContentReview');
+		let loadedReviewElement = document.getElementById('mainOverlay_projectTitle');
+		let targetingMainContentObject = 0;
+		let targetingMainContentReview = 0;
+		let targetingLoadedProject = 0;
+		if (targetingContentObject) {
+			if (mainContentElement.contentObject)
+				targetingMainContentObject = contentObject.Uuid == mainContentElement.contentObject.Uuid ? 1 : 0;
+			if (mainReviewElement.contentObject)
+				targetingMainContentReview = contentObject.Uuid == mainReviewElement.contentObject.Uuid ? 1 : 0;
+			if (loadedReviewElement.contentObject)
+				targetingLoadedProject = contentObject.Uuid == loadedReviewElement.contentObject.Uuid ? 1 : 0;
+		}
+		// console.log('targetingMainContentObject? : ', targetingMainContentObject)
+		// console.log('targetingMainContentReview? : ', targetingMainContentReview)
+		// console.log('targetingLoadedProject? : ', targetingLoadedProject)
+
+
+
 
 		// console.log('KEY: ', event.key)
 		let actionObject = {
@@ -128,12 +212,13 @@ class GlobalEventHandler {
 		if (this.mode === '') {
 
 			switch (event.key) {
-				case 't':
-					console.log('TOGGLE STATE')
-					this.mode = 't';
+
+				case 'c':
+					// console.log('TOGGLE STATE')
+					this.mode = 'c';
 					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
 					clearTimeout(this.modeTimeout);
-					this.modeTimeout = setTimeout(() => { this.mode = '' }, 1000);
+					setTimeout(() => { this.mode = '' }, 1000);
 					return;
 					break;
 
@@ -155,16 +240,147 @@ class GlobalEventHandler {
 					return;
 					break;
 
+				case 't':
+					console.log('TOGGLE STATE')
+					this.mode = 't';
+					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+					clearTimeout(this.modeTimeout);
+					this.modeTimeout = setTimeout(() => { this.mode = '' }, 1000);
+					return;
+					break;
+
+				case 'v':
+					// console.log('TOGGLE STATE')
+					this.mode = 'v';
+					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+					clearTimeout(this.modeTimeout);
+					setTimeout(() => { this.mode = '' }, 1000);
+					return;
+					break;
+
 				default:
 					break;
 			}
 
 		}
+		// console.log(this.mode)
 
-		console.log(this.mode)
+
+
 
 		let elem;
 		switch (this.mode) {
+
+
+			/*
+				CCCCCCCCC
+			*/
+			case 'c':
+				let newContentEdge;
+				console.log('NEW CHILD')
+
+				let tableString;
+
+				switch (event.key) {
+					case 'c':
+						tableString = 'Code'
+						break;
+					case 'f':
+						tableString = 'File'
+						break;
+					case 's':
+						tableString = 'Source'
+						break;
+					case 't':
+						tableString = 'Text'
+						break;
+
+					default:
+						console.log('no valid child table. Returning.');
+						return;
+						break;
+				}
+
+				newContentEdge = await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(
+					contentObject.Uuid,
+					1,
+					tableString,
+					'',
+					0,
+					'/'
+				);
+
+				if (event.key === 's') {
+					dbis.Review_InsertScheduleOnUuid(newContentEdge.content.Uuid, '')
+				}
+
+				if (targetingMainContentObject) {
+					this.app.mainContent.source.sourceContent.shardList.insertContentEdge(newContentEdge);
+				}
+				if (targetingMainContentReview) {
+					this.app.mainContent.source.sourceContent.reviewList.insertContentEdge(newContentEdge);
+				}
+
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
+				this.mode = '';
+				event.stopPropagation();
+				// event.preventDefault();
+				return;
+				break;
+
+
+			/*
+				VVVVVVVVVVV
+			*/
+			case 'v':
+				let newContentEdge_v;
+				console.log('NEW ADJACENT')
+
+				let tableString_v;
+
+				switch (event.key) {
+					case 'c':
+						tableString_v = 'Code'
+						break;
+					case 'f':
+						tableString_v = 'File'
+						break;
+					case 's':
+						tableString_v = 'Source'
+						break;
+					case 't':
+						tableString_v = 'Text'
+						break;
+
+					default:
+						console.log('no valid child table. Returning.');
+						return;
+						break;
+				}
+
+				newContentEdge_v = await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(
+					contentObject.Uuid,
+					0,
+					tableString_v,
+					'',
+					0,
+					'/'
+				);
+
+				if (event.key === 's') {
+					dbis.Review_InsertScheduleOnUuid(newContentEdge_v.content.Uuid, '')
+				}
+
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
+				this.mode = '';
+				event.stopPropagation();
+				// event.preventDefault();
+				return;
+				break;
+
+
 
 
 
@@ -179,11 +395,11 @@ class GlobalEventHandler {
 					case 't': // NEW TAB
 					case 'w': // NEW WINDOW 
 						// console.log("GO :", event.target)
-						let contentObject = event.target.contentObject;
+						// let contentObject = event.target.contentObject;
 						// console.log('typeof contentObject: ', contentObject)
 						if (contentObject !== undefined) {
 
-							history.pushState(null, `${contentObject.Table.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
 
 							this.app.mainContent.loadFromUrl();
 
@@ -205,7 +421,29 @@ class GlobalEventHandler {
 						break;
 
 					case 'r':
-						console.log('LOAD CONTENT TO REVIEW INTO MAIN')
+						// console.log(event.target)
+
+						if (contentObject && contentObject.Table === 'Review') {
+							// console.log('LOAD CONTENT TO REVIEW INTO MAIN')
+							let objectToReview = await dbis.Content_SelectOnUuid(contentObject.NodeToReviewUuid);
+
+							history.pushState(null, `${objectToReview.Title.toLowerCase()}`, `/${objectToReview.Table.toLowerCase()}/${objectToReview.Uuid}/`);
+
+							await this.app.mainContent.loadFromUrl();
+
+							let reviewChildren = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
+
+							this.app.mainContent.source.sourceContent.reviewList.load(reviewChildren);
+
+							// SET REVIEW IN TOOLBAR
+							document.getElementById('mainContentReview').contentObject = contentObject;
+							document.getElementById('mainContentReview').dataset.uuid = contentObject.Uuid;
+							document.getElementById('mainContentReview').update();
+
+							document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
+							document.getElementById('sourceToolbar_reviewPanel').click();
+
+						}
 						break;
 
 					default:
@@ -259,7 +497,7 @@ class GlobalEventHandler {
 
 					// CURRENT SOURCE
 					case 'y':
-						document.getElementById('sourceToolbarTitle').focus();
+						document.getElementById('mainContentTitle').focus();
 						break;
 					case 'u':
 						document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
@@ -270,15 +508,16 @@ class GlobalEventHandler {
 						// document.getElementById('sourceToolbar_shardPanel').click();
 						document.getElementById('sourceToolbar_shardPanel').classList.remove('selected');
 						document.getElementById('sourceToolbar_shardPanel').click();
-						document.getElementById('shardlistContainer').focus();
+						this.focusFirstDescendant(document.getElementById('shardlistContainer'));//document.getElementById('shardlistContainer').focus();
 						break;
 					case 'o':
 						document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
 						document.getElementById('sourceToolbar_reviewPanel').click();
-						document.getElementById('reviewlistContainer').focus();
+						// document.getElementById('reviewlistContainer').focus();
+						// this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
 						break;
 					case 'h':
-						document.getElementById('sourceToolbar_reviewStatus').focus();
+						document.getElementById('mainContentReview').focus();
 						break;
 
 
@@ -399,17 +638,17 @@ class GlobalEventHandler {
 
 			/* 
 				NUMBER SHORTCUTS (rule of thmumbs, exceptions exist)
-
+			
 				shift + alt : focus
 				shift 	 	: set state
 				alt			: add new
 				#			: connect
-
+			
 				project		: 0
 				state 1		: 1, 4, 7
 				state 2		: 2, 5, 8
 				state 3		: 3, 6, 9
-
+			
 			*/
 
 
@@ -698,7 +937,7 @@ class GlobalEventHandler {
 				break;
 
 
-			case 'n':
+			case 'u':
 				if (event.target.contentObject) {
 
 					if (!this.app.contextOverlay.contextMenuIsOpen()) {
@@ -718,15 +957,10 @@ class GlobalEventHandler {
 				}
 				break;
 
-			case 'r':
-				if (event.target.contentObject.Table == 'Review') {
-					console.log('GO TO LINKED CONTENT FOR REVIEW')
-				}
-				break;
 
 
 			// content context menu toggle
-			case 'o':
+			case 'p':
 				if (event.target.contentObject) {
 
 					if (!this.app.contextOverlay.contextMenuIsOpen()) {
@@ -754,7 +988,7 @@ class GlobalEventHandler {
 			case 'Escape':
 				if (event.target.classList.contains('contextMenu')) {
 					// console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
-					console.log(event.target.contentObjectElement)
+					// console.log(event.target.contentObjectElement)
 					event.target.contentObjectElement.focus();
 				}
 				else if (this.app.contextOverlay.contextMenuIsOpen()) {
@@ -763,6 +997,9 @@ class GlobalEventHandler {
 				}
 				else if (document.getElementById('mainMenuSearch').classList.contains('selected')) {
 					document.getElementById('mainMenuSearch').click();
+				}
+				else if (document.getElementById('mainMenuReview').classList.contains('selected')) {
+					document.getElementById('mainMenuReview').click();
 				}
 				else if (event.target.tabIndex == '0') {
 					this.focusFirstFocusableAncestor(event.target);
@@ -859,6 +1096,10 @@ class GlobalEventHandler {
 				break;
 		}
 
+		localStorage.setItem('stateSelected', document.getElementById('mainMenuState').classList.contains('selected') ? '1' : '0');
+		localStorage.setItem('projectSelected', document.getElementById('mainMenuProject').classList.contains('selected') ? '1' : '0');
+
+		// const value1 = localStorage.getItem('key1');
 	}
 
 

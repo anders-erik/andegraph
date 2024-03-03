@@ -1,4 +1,6 @@
+import { dbis } from "../dbi-send/dbi-send.js";
 import { determineClipboardContentType } from "../filehandling/DetermineClipboardContents.js";
+import { determineFileCategories } from './DetermineFileCategories.js';
 import { CodeContent } from "./codecontent/CodeContent.js";
 import { FileContent } from "./filecontent/FileContent.js";
 import { SourceContent } from "./sourcecontent/SourceContent.js";
@@ -18,7 +20,6 @@ export class ContentCard {
 
 	constructor(contentEdgeObject) {
 
-
 		this.element = document.createElement('div');
 		this.element.id = 'contentCard-' + contentEdgeObject.content.Uuid;
 		this.element.classList.add('contentCard');
@@ -32,7 +33,7 @@ export class ContentCard {
 		this.element.dataset.uuid = this.element.contentObject.Uuid;
 		this.element.dataset.edgeuuid = this.element.edgeObject.Uuid;
 
-		this.element.addEventListener('focusin', this.focusinContentCard)
+		this.element.addEventListener('focusin', this.focusinContentCard.bind(this))
 		this.element.addEventListener('focusout', this.focusoutContentCard)
 
 		this.element.addEventListener('keydown', this.keydown.bind(this))
@@ -73,10 +74,67 @@ export class ContentCard {
 	}
 
 	focusinContentCard(event) {
+
 		if (event.target.querySelector('.contentCardOverlay')) {
 			event.target.querySelector('.contentCardOverlay').classList.add('hidden')
+
+
+			// event.target.focus();
+
+			// console.log('target', event.target)
+			// event.target.focus();
+			// setTimeout(() => {
+			// 	event.target.click();
+			// }, 1000);
 			// event.target.focus();
 		}
+
+		// Prevent selection from movfying away from content card, especially when hiding the overlay
+		// This is necessary for pasting as paste event occur at selection nodes/elements
+		if (this.element.contentObject.Table === 'Text' || this.element.contentObject.Table === 'Code') {
+			// this.content.setCaretEnd();
+		}
+		else {
+			//
+			this.setSelectionToContentCard();
+		}
+
+		// console.log('selection node: ', window.getSelection().focusNode)
+	}
+
+
+	setSelectionToContentCard() {
+		let sel = window.getSelection();
+		sel.removeAllRanges();
+
+		// TextContent > last paragraph > text of last paragraph
+		let ele = this.element;
+		let range = document.createRange();
+		range.setStart(ele, 0);
+		// range.collapse(true);
+
+		sel.addRange(range)
+		// console.log('sel.focusNode', sel.focusNode)
+		// ofucs end of selected node
+		// sel.extend(sel.focusNode, sel.focusNode.length)
+		sel.collapseToEnd()
+	}
+
+	setSelectionToContentCard() {
+		let sel = window.getSelection();
+		sel.removeAllRanges();
+
+		// TextContent > last paragraph > text of last paragraph
+		let ele = this.element;
+		let range = document.createRange();
+		range.setStart(ele, 0);
+		// range.collapse(true);
+
+		sel.addRange(range)
+		// console.log('sel.focusNode', sel.focusNode)
+		// ofucs end of selected node
+		// sel.extend(sel.focusNode, sel.focusNode.length)
+		sel.collapseToEnd()
 	}
 
 	focusoutContentCard(event) {
@@ -111,8 +169,26 @@ export class ContentCard {
 	}
 
 
-	keydown(event) {
-		console.log('event.key: ', event.key);
+	async keydown(event) {
+		// console.log('event.key: ', event.key);
+
+		if (event.key === 'D' && event.ctrlKey && event.shiftKey && event.altKey) {
+
+			let contentObject = this.element.contentObject;
+
+			if (contentObject.Table === 'File') {
+				console.log("Delete File")
+
+				await dbis.Delete_File(contentObject.Uuid);
+
+				let updatedFileContentObject = await dbis.Content_SelectOnUuid(contentObject.Uuid);
+
+				this.element.contentObject = updatedFileContentObject;
+				// this.element.dataset.uuid = contentObject.Uuid;
+				this.element.update();
+
+			}
+		}
 
 		switch (this.element.contentObject.Table) {
 
@@ -193,24 +269,88 @@ export class ContentCard {
 		}
 	}
 
-	paste(event) {
+	async paste(event) {
+		// console.log('PPPPPPPPPPPPPPPPPPPPPPPPP')
+
+
+		let pastedToContentCard = document.activeElement.classList.contains('contentCard');
+
+		if (!pastedToContentCard) {
+			console.log('Content Card not in focus during paste.');
+			return;
+		}
+
+
+		// console.log(event.target.classList.contains('contentCard'))
 
 		let clipboardContentType = determineClipboardContentType(event.clipboardData);
 
-		let editing = this.content.element.classList.contains('editing');
-		let isText = clipboardContentType === 'text' ? true : false;
-		let isEmpty = this.content.element.textContent === '';
+		let editing;
+		let cardIsEmpty;
+		let clipIsText = clipboardContentType === 'text' ? true : false;
+		let clipIsFile = clipboardContentType === 'file' ? true : false;
+		let text;
+		let file;
+		let contentObject = this.element.contentObject;
 
-		switch (this.element.contentObject.Table) {
+
+		switch (contentObject.Table) {
 
 			case 'Text':
-				if (!editing && isText && isEmpty) {
-					console.log('PASTE TEXT TO TEXT-CONTENTCARD')
+				// console.log('PASTE ON TEXT')
+				// editing = this.content.element.classList.contains('editing');
+				cardIsEmpty = this.content.element.textContent === '';
+
+				if (clipIsText && cardIsEmpty /* !editing &&  */) {
+
 					let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
 					this.content.insertTextContent(this.content.element, clipboardText);
+					console.log('pasted ', clipboardText)
 				}
 				else {
-					console.log(`Can't paste to non-empty content`)
+					console.log(`No paste. Either already contains text, or clipboard is not a string.`)
+				}
+				break;
+
+			case 'File':
+				// console.log('PASTE ON FILE')
+				if (clipIsFile && contentObject.Type === '') {
+					file = event.clipboardData.files[0];
+
+					let fileCategories = determineFileCategories(file)
+
+					console.log('pasted ', file)
+					console.log('fileCategories', fileCategories)
+
+					if (fileCategories.mimeType == '' || fileCategories.fileExtension == '') {
+						console.log('File is not supported. Made sure the file extension is correct. ')
+						return;
+					}
+
+					let queryParams = {
+						Type: fileCategories.fileType,
+						Title: fileCategories.baseFileName,
+						Extension: fileCategories.fileExtension,
+						IAmAuthor: '0',
+					};
+
+					let fileFromDb = await dbis.Post_File(
+						contentObject.Uuid,
+						file,
+						queryParams,
+						fileCategories.mimeType
+					);
+
+					let updatedFileContentObject = await dbis.Content_SelectOnUuid(contentObject.Uuid);
+
+					this.element.contentObject = updatedFileContentObject;
+					// this.element.dataset.uuid = this.element.contentObject.Uuid;
+					this.element.update();
+
+
+				}
+				else {
+					console.log('Already has contentObject.Type, or no clipboard file detected')
 				}
 				break;
 

@@ -11,7 +11,7 @@ let extensionObject = {
 	pdf: ['pdf'],
 	data: ['json', 'csv', 'tsv', 'db', 'xlsx', 'ods'],
 	// Textarea extension
-	text: ['txt', 'md'],
+	text: ['text', 'txt', 'md'],
 	code: ['js', 'ts', 'css', 'html', 'cs'],
 }
 
@@ -57,7 +57,9 @@ function determineBaseFileName(selectedFile) {
 }
 
 
-
+export {
+	determineFileCategories
+}
 
 
 
