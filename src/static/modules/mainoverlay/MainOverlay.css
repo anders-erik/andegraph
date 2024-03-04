@@ -1,10 +1,9 @@
-@import './leftpanel/LeftPanel.css';
-
 @import './mainmenu/MainMenu.css';
 @import './state/State.css';
 @import './project/Project.css';
 @import './search/Search.css';
 @import './review/Review.css';
+
 
 #mainOverlay {
 	height: 100%;

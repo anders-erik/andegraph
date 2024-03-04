@@ -1,5 +1,4 @@
 
-import { LeftPanel } from "./leftpanel/LeftPanel.js";
 
 import { MainMenu } from "./mainmenu/MainMenu.js";
 import { Project } from "./project/Project.js";
@@ -11,7 +10,6 @@ import { State } from "./state/State.js";
 export class MainOverlay {
 
 	element;
-	leftPanel;
 	searchPanel;
 
 	mainMenuContainer;
@@ -34,10 +32,7 @@ export class MainOverlay {
 		this.element.innerHTML = this.mainOverlayInnerHtml;
 		appElement.append(this.element)
 
-		// REMOVE
-		// this.leftPanel = new LeftPanel(this.element);
 
-		// console.log(this.mainOverlayElement.children);
 		this.mainMenuContainer = this.element.querySelector('#mainMenuContainer')
 		this.mainMenu = new MainMenu(this.mainMenuContainer);
 
