@@ -1,0 +1,31 @@
+.codeContent {
+
+	padding-left: 10px;
+	padding-right: 20px;
+
+	margin: 2px;
+	padding-top: 10px;
+
+	/* caret-shape: block; */
+
+	background-color: rgba(129, 81, 19, 0.372);
+	border: solid black 1px;
+}
+
+.codeHeader {
+	width: 90%;
+	position: absolute;
+	top: 0px;
+
+	margin: 5px 0 3px 7px;
+	color: aliceblue;
+	background-color: rgba(6, 13, 20, 0.764);
+}
+
+.codeContent.editing {
+	background-color: rgba(105, 156, 62, 0.622)
+}
+
+/* .textContent:focus {
+	background-color: rgba(105, 156, 62, 0.622)
+} */

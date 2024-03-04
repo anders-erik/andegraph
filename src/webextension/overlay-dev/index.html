@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Empty Page</title>
+	<link rel="stylesheet" href="globals.css">
+	<link rel="stylesheet" href="project/project.css">
+	<link rel="stylesheet" href="source/source.css">
+	<link rel="stylesheet" href="ContextOverlay.css">
+	<link rel="stylesheet" href="Clipboard.css">
+
+
+	<script src="Clipboard.js" defer></script>
+	<script src="keyevents.js" defer></script>
+	<script src="paste.js" defer></script>
+	<script src="dbis-we.js" defer></script>
+	<script src="dbi-send.js" defer></script>
+	<script src="project/project.js" defer></script>
+	<script src="source/source.js" defer></script>
+	<script src="ContextOverlay.js" defer></script>
+	<script src="index.js" defer></script>
+</head>
+
+<body>
+
+
+	<div id="ae-contextOverlay" class="ae-element">
+		<div id="ae-overlayRightPanel" class="ae-element">
+
+
+
+			<div id="ae-projectContainer" class="ae-panelContainer ae-element">
+
+				<div id="ae-projectOuter" class="ae-element">
+					<div id="ae-projectInner" class="ae-element">
+
+						<div id="aa-projectTitle" class="ae-element">Placeholder Project Title</div>
+
+						<div id="ae-projectButtonContainer" class="ae-element">
+							<div id="ae-projectSearchButton"
+								class="ae-projectButton ae-projectButtonOn ae-centerWithFlex ae-element">
+								Search</div>
+							<div id="ae-projectChildrenButton" class="ae-projectButton ae-centerWithFlex ae-element">
+								Children</div>
+							<div id="ae-projectPropertiesButton" class="ae-projectButton  ae-centerWithFlex ae-element">
+								Properties
+							</div>
+							<div id="ae-projectNewButton" class="ae-projectButton ae-centerWithFlex ae-element">
+								+
+							</div>
+						</div>
+
+						<div id="ae-projectTableContainer" class="ae-element">
+
+
+
+							<div id="ae-projectSearchInput" class="ae-centerWithFlex ae-element" contenteditable="true"
+								tabindex="0">
+								<div><br></div>
+							</div>
+
+							<table id="ae-projectSearchTable" class="ae-element">
+								<thead id="ae-projectSearchTable-thead" class="ae-element">
+									<tr id="ae-projectSearchTable-thead-tr" class="ae-element">
+										<th class="ae-element">Table</th>
+										<th class="ae-element">Title</th>
+									</tr>
+								</thead>
+								<tbody id="ae-projectSearchTable-tbody" class="ae-element">
+									<tr>
+										<th class="ae-element">Data 1</th>
+										<td class="ae-element">Data 2</td>
+									</tr>
+								</tbody>
+							</table>
+
+
+
+							<table id="ae-projectChildrenTable" class="ae-displayNone ae-element">
+								<thead id="ae-projectChildrenTable-thead" class="ae-element">
+									<tr id="ae-projectChildrenTable-thead-tr" class="ae-element">
+										<th class="ae-element">Table</th>
+										<th class="ae-element">Title</th>
+									</tr>
+								</thead>
+								<tbody id="ae-projectChildrenTable-tbody" class="ae-element">
+
+								</tbody>
+							</table>
+
+
+
+							<table id="ae-projectPropertiesTable" class="ae-displayNone ae-element">
+								<thead id="ae-projectPropertiesTable-thead" class="ae-element">
+									<tr id="ae-projectPropertiesTable-thead-tr" class="ae-element">
+										<th class="ae-element">Key</th>
+										<th class="ae-element">Value</th>
+									</tr>
+								</thead>
+								<tbody id="ae-projectPropertiesTable-tbody" class="ae-element">
+									<!-- <tr>
+										<th>Uuid</th>
+										<td>121404555264</td>
+									</tr>
+									<tr>
+										<th>Table</th>
+										<td>Project</td>
+									</tr>
+									<tr>
+										<th>Type</th>
+										<td></td>
+									</tr>
+									<tr>
+										<th>Title</th>
+										<td>projproj titletitle aaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa</td>
+									</tr>
+									<tr>
+										<th>TimeCreated</th>
+										<td>1707415749</td>
+									</tr>
+									<tr>
+										<th>TimeLastChange</th>
+										<td>1707415749</td>
+									</tr>
+									<tr>
+										<th>Goal</th>
+										<td></td>
+									</tr> -->
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+			<div id="ae-sourceContainer" class="ae-panelContainer ae-element">
+				<div id="ae-sourceOuter" class="ae-element">
+					<div id="ae-sourceInner" class="ae-element">
+
+						<div id="aa-sourceTitle" class="ae-element"></div>
+
+						<div id="ae-sourceButtonContainer" class="ae-element">
+							<div id="ae-sourceSearchButton"
+								class="ae-sourceButton ae-sourceButtonOn ae-centerWithFlex ae-element">
+								Children</div>
+							<div id="ae-sourcePropertiesButton"
+								class="ae-sourceButton ae-sourceButtonOff ae-centerWithFlex ae-element">
+								Properties
+							</div>
+							<div id="ae-sourceNewButton" class="ae-sourceButton ae-centerWithFlex ae-element">
+								N
+							</div>
+						</div>
+
+						<div id="ae-sourceTableContainer" class="ae-element">
+
+
+							<table id="ae-sourceChildTable" class="ae-element">
+								<thead id="ae-sourceChildTable-thead" class="ae-element">
+									<tr id="ae-sourceChildTable-thead-tr" class="ae-element">
+										<th class="ae-element">Table</th>
+										<th class="ae-element">Type</th>
+										<th class="ae-element">Title</th>
+									</tr>
+								</thead>
+								<tbody id="ae-sourceChildTable-tbody" class="ae-element">
+									<tr>
+									</tr>
+								</tbody>
+							</table>
+
+
+							<table id="ae-sourcePropertiesTable" class="ae-displayNone ae-element">
+								<thead id="ae-sourcePropertiesTable-thead" class="ae-element">
+									<tr id="ae-sourcePropertiesTable-thead-tr" class="ae-element">
+										<th class="ae-element">Key</th>
+										<th class="ae-element">Value</th>
+									</tr>
+								</thead>
+								<tbody id="ae-sourcePropertiesTable-tbody" class="ae-element">
+									<!-- <tr>
+														<th>Uuid</th>
+														<td>121404555264</td>
+													</tr>
+													<tr>
+														<th>Table</th>
+														<td>Source</td>
+													</tr>
+													<tr>
+														<th>Type</th>
+														<td></td>
+													</tr>
+													<tr>
+														<th>Title</th>
+														<td>projproj titletitle aaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa</td>
+													</tr>
+													<tr>
+														<th>TimeCreated</th>
+														<td>1707415749</td>
+													</tr>
+													<tr>
+														<th>TimeLastChange</th>
+														<td>1707415749</td>
+													</tr>
+													<tr>
+														<th>Goal</th>
+														<td></td>
+													</tr> -->
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+			<div id="ae-clipboardContainer" class="ae-panelContainer ae-element">
+
+				<div id="ae-clipboardInner">
+					<div id="ae-clipboardTitleContainer">
+						<h4 id="ae-clipboardTitle" class="ae-centerWithFlex">
+							Text Clipboard
+						</h4>
+
+						<div>
+							<input type="checkbox" id="ae-clipboardCodeCheckbox" name="codebox" />
+							<label for="ae-clipboardCodeCheckbox">Code</label>
+						</div>
+
+
+						<select name="codeselect" id="ae-clipboardCodeSelect" disabled>
+							<option value=""></option>
+							<option value="js">js</option>
+							<option value="css">css</option>
+							<option value="html">html</option>
+						</select>
+
+
+					</div>
+
+					<div id="ae-clipboardConcatContent">
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,51 @@
+@import './shardlist/ShardList.css';
+@import './reviewlist/ReviewList.css';
+
+#sourceContent {
+
+	height: 100%;
+	width: 100%;
+
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 25px;
+
+	/* margin: 3px; */
+	/* background-color: rgba(165, 109, 35, 0.372); */
+}
+
+#sourceContent>div {
+	background-color: rgba(17, 48, 38);
+}
+
+#sourceContent *.hidden {
+	display: none;
+}
+
+#filePanelContainer {
+	width: 300px;
+	height: 70%;
+}
+
+#shardlistContainer {
+	position: relative;
+	width: 750px;
+	height: calc(100% - 60px);
+	top: 20px;
+
+	/* padding-bottom: 50px; */
+
+	overflow-y: scroll;
+}
+
+#reviewlistContainer {
+	position: relative;
+	width: 750px;
+	height: 90%;
+	top: 20px;
+
+	overflow-y: scroll;
+}

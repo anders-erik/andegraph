@@ -1,0 +1,91 @@
+#sourceSidePanel {
+
+	min-height: 600px;
+	height: 100%;
+	width: 100%;
+
+	display: grid;
+	grid-template-rows: 19% 19% 29% 29%;
+	grid-template-columns: 100%;
+	/* gap: 10px; */
+
+	/* display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center; */
+
+	/* margin: 3px; */
+	/* background-color: rgba(165, 109, 35, 0.372); */
+}
+
+#sourceSidePanel *.hidden {
+	display: none;
+}
+
+#sourceParentContainer {
+	/* width: 96%;
+	height: 19%; */
+	grid-row: 1;
+	grid-column: 1;
+}
+
+#sourceFileContainer {
+	/* width: 96%;
+	height: 19%; */
+	grid-column: 1;
+	grid-row: 2;
+}
+
+#sourceReviewContainer {
+	/* width: 96%;
+	height: 29%; */
+	grid-row: 3;
+}
+
+#sourceConnectedContainer {
+	/* width: 96%;
+	height: 29%; */
+	grid-row: 4;
+}
+
+#sourceSidePanel>div {
+	width: 96%;
+	margin-top: 5px;
+	overflow-y: scroll;
+	scrollbar-width: none;
+
+	background-color: rgb(72, 94, 87);
+}
+
+#sourceSidePanel div table {
+	width: 100%;
+	background-color: rgba(40, 88, 73, 0.492);
+}
+
+#sourceSidePanel div table tbody tr {
+	border: solid rgba(0, 0, 0, 0.46) 2px;
+}
+
+#sourceSidePanel div table tbody tr td:first-child {
+	width: 100px;
+	max-width: 100px;
+	border-right: solid rgba(0, 0, 0, 0.46) 2px;
+}
+
+
+
+#sourceReviewContainer table tbody tr td.reviewDate {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+#sourceReviewContainer table tbody tr td.reviewDate {
+	background-color: rgba(113, 8, 11, 0.537);
+}
+
+#sourceReviewContainer table tbody tr td.completed {
+	background-color: rgba(51, 151, 51, 0.591);
+}

@@ -1,0 +1,18 @@
+
+
+CREATE TABLE IF NOT EXISTS Edge (
+	"Uuid" INTEGER PRIMARY KEY,
+	"Node1Uuid" INTEGER NOT NULL, 
+	"Node2Uuid" INTEGER NOT NULL, 
+	"Directed" INTEGER NOT NULL,
+	"Type" TEXT DEFAULT '' NOT NULL,
+	"Order" INTEGER DEFAULT 0 NOT NULL,
+	"Path" TEXT DEFAULT '/' NOT NULL,
+
+	FOREIGN KEY("Node1Uuid") REFERENCES Node("Uuid"),
+	FOREIGN KEY("Node2Uuid") REFERENCES Node("Uuid")	
+);
+
+CREATE INDEX "Index_Edge_Node1Uuid" ON Edge("Node1Uuid");
+CREATE INDEX "Index_Edge_Node2Uuid" ON Edge("Node2Uuid");
+

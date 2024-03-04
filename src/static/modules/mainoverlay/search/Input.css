@@ -1,0 +1,14 @@
+#searchInput {
+	height: 40px;
+	min-height: 40px;
+	width: 50%;
+
+	margin: 20px 10px 5px 10px;
+	text-align: center;
+	/* 	
+	display: flex;
+	justify-content: center;
+	align-items: center; */
+
+	background-color: rgba(96, 101, 106, 0.377);
+}

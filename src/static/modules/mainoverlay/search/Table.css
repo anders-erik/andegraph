@@ -1,0 +1,23 @@
+#searchTableDiv {
+	flex-grow: 1;
+	width: 96%;
+
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
+
+	overflow-y: scroll;
+
+	background-color: rgba(82, 89, 95, 0.377);
+}
+
+#searchTable {
+	width: 96%;
+
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
+
+	/* background-color: rgba(82, 89, 95, 0.377); */
+
+}

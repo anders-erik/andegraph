@@ -1,0 +1,70 @@
+@import './leftpanel/LeftPanel.css';
+
+@import './mainmenu/MainMenu.css';
+@import './state/State.css';
+@import './project/Project.css';
+@import './search/Search.css';
+@import './review/Review.css';
+
+#mainOverlay {
+	height: 100%;
+	width: 100%;
+
+	/* display: flex;
+	flex-direction: row;
+	justify-content: start; */
+	position: fixed;
+
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: 350px 300px 600px;
+	grid-template-rows: 60px 130px 1fr;
+
+	overflow: hidden;
+
+	pointer-events: none;
+}
+
+#mainOverlay * {
+	pointer-events: all;
+}
+
+#mainOverlay>div {
+	overflow: hidden;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* background-color: rgb(104, 130, 151); */
+	/* box-shadow: inset 0 0 0 1px black; */
+}
+
+#mainOverlay>div.hide {
+	display: none;
+}
+
+
+#mainMenuContainer {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+#stateContainer {
+	grid-column: 1;
+	grid-row: 2 / 3;
+}
+
+#projectContainer {
+	grid-column: 1;
+	grid-row: 3 / 4;
+}
+
+#searchContainer {
+	grid-column: 2 / 4;
+	grid-row: 1 / 4;
+}
+
+#reviewContainer {
+	grid-column: 2 / 3;
+	grid-row: 1 / 4;
+}

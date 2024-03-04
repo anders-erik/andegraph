@@ -1,0 +1,18 @@
+@import './Input.css';
+@import './Settings.css';
+@import './Table.css';
+
+
+#search {
+	height: calc(100% - 6px);
+	width: calc(100% - 6px);
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+
+	overflow: hidden;
+
+	background-color: rgb(104, 130, 151);
+}

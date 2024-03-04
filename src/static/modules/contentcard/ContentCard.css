@@ -1,0 +1,57 @@
+@import './textcontent/TextContent.css';
+@import './sourcecontent/SourceContent.css';
+@import './codecontent/CodeContent.css';
+@import './filecontent/FileContent.css';
+
+.contentCard {
+	/* for abosulte position of overlay to apply */
+	position: relative;
+
+	width: 700px;
+	max-width: 700px;
+
+	/* max-height: 90vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	scrollbar-width: none; */
+
+	/* 
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px; */
+
+	/* margin: 3px; */
+	/* background-color: rgba(165, 109, 35, 0.372); */
+	border: solid black 1px;
+}
+
+.contentCard a {
+	text-decoration: none;
+	color: black;
+}
+
+.contentCardContentContainer {
+	height: 100%;
+	width: 100%;
+
+	background-color: rgba(129, 81, 19, 0.372);
+	border: solid rgb(97, 30, 30) 1px;
+}
+
+.contentCardOverlay {
+	height: 100%;
+	width: 100%;
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: aliceblue;
+	background-color: rgba(6, 1, 1, 0.366);
+}

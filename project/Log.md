@@ -561,3 +561,74 @@ TODO:
 
 
 
+### 2024-01-29
+
+- STARTING UPGRADE TO v0.2!
+	- Updated and more robust database
+	- Add projects, event, etc.
+	- logging lib
+	- testing lib
+	- web extension!
+	- enable usage on smaller screens
+
+- As is usually the case, a few weeks pass from the point of realizing that I need to upgrade to software, to finilize the visiom of how that should happen
+	- A big part has simply been to figure out how to structure the database!
+	- I;ve considered different realitionshiups and table stuructures, and everytime you come up with a new idea, You have to live with it at least a few days until you can clearly see the implications of that change, and wether or not it will scale.
+	- A BIG realization was that I need to organize my sources and shards in logical units. Not taks, not difinitions, but for now it will be projects!
+	- Also I've thought a lot about categorizzation of information. These things will come later!
+
+- Done Today 
+	- Create base table classes
+	- Create table sub types tables for several tables
+		- Make sure foreign keys point to primary key!
+		- No traling commas on create table!
+	- Statring to export old data to new structure
+		- Files and sources pretty easy + done!
+			- NO ! Files ahave their own id!!!
+		- Shards are complicatied because they can pratiacelly be any of the new types
+			- files, text, code, etc.
+		- Also, shard information will becaome part of the edge!
+			- a directed edge from parent (source), but also edge type will be shard
+
+
+
+### 2024-01-30
+
+- Created bash script where I rename all old source and shard files
+	- xxx_so -> 50xxx
+	- xxx_sh -> 56xxx
+- Old sources
+	- TWO PARTS
+		- Moved source-node into new 'Source' table. 
+		- Created a new File-node-sibling and linked using edge for old source that had a built in file
+	- First step was not too bad
+	Second was a a bit more invloved in both theory and implmentation
+- Old Shards
+	- Checks:
+		- is file?
+		- is Code?
+		- is source?
+		- else is text
+	- One SQL script for each check
+	- At least one shard was incorectly categorized (use of curly braces, reddit package-handling discussion)
+		- Probably my exists.
+- Reviews
+	- Turned the old review dates into review objects with associated node
+	- Had to add edges to link the review dates to their associated object to be reviewed
+
+
+### 2024-02-05
+
+- Built the base queries for the new database
+	- still a few left
+		- 
+- Started buildning the comopsite 'procedures'
+- small unit testing
+- models and enums
+- errors:
+	- restarting within one second on tests will trigger unique Uuid constraint 
+		- The server obviously does not remember the previous sessions second-secific index...
+	- Recursive require-statements will cause some errors...
+
+
+

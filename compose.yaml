@@ -8,8 +8,3 @@ services:
     volumes:
       - ./:/app
       - ./data/live:/data/live
-
-
-
-
-

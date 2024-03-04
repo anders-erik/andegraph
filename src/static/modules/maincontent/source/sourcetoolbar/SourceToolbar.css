@@ -1,0 +1,40 @@
+#sourceToolbar {
+	height: calc(100% - 10px);
+	width: calc(100% - 10px);
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+
+	margin: 3px;
+	background-color: antiquewhite;
+}
+
+#sourceToolbar * {
+	display: flex;
+	flex-direction: row;
+
+
+	background-color: aquamarine;
+}
+
+#sourceToolbar *.button {
+	user-select: none;
+	cursor: pointer;
+}
+
+#sourceToolbar *.selected {
+	color: aliceblue;
+	background-color: rgb(22, 50, 41);
+}
+
+/* #sourceToolbarTitle {
+	width: 400px;
+
+} */
+
+#sourceToolbar * * {
+	margin: 3px;
+	background-color: rgb(113, 186, 162);
+}

@@ -32,7 +32,7 @@ function createToast() {
 	document.body.appendChild(toast);
 	document.body.appendChild(toastStyle);
 
-	
+
 }
 
 
@@ -49,8 +49,21 @@ function showToast(toastString) {
 
 }
 
+function showStoastSuccess(successString) {
+	let toast = document.getElementById('toast');
+	toast.textContent = successString;
+	toast.style.backgroundColor = 'green';
+	toast.style.display = 'inline';
+
+	// Hide the toast after 1 second
+	setTimeout(function () {
+		toast.style.display = 'none';
+	}, 3000);
+}
+
 
 export {
 	createToast,
-	showToast
+	showToast,
+	showStoastSuccess
 }

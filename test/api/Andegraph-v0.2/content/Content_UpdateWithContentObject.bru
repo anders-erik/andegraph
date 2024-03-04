@@ -1,0 +1,23 @@
+meta {
+  name: Content_UpdateWithContentObject
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:3000/api/v02/content/Content-UpdateWithContentObject
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Uuid": 139914297344,
+    "Table": "Project",
+    "Type": "",
+    "Title": "AAA 2",
+    "TimeCreated": 1708539691,
+    "TimeLastChange": 1708539691,
+    "Goal": ""
+  }
+}

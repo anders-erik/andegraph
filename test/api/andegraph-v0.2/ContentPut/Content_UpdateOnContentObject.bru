@@ -1,0 +1,26 @@
+meta {
+  name: Content_UpdateOnContentObject
+  type: http
+  seq: 1
+}
+
+put {
+  url: http://localhost:3000/api/v02/content/Content-UpdateOnContentObject
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "Uuid": 125793730560,
+      "Table": "Source",
+      "Type": "",
+      "Title": "Source tester - we",
+      "TimeCreated": 1707677840,
+      "TimeLastChange": 1707677840,
+      "Url": "https://www.wikipedia.org/",
+      "IAmSource": 0
+    }
+  ]
+}

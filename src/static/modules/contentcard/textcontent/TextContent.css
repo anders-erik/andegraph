@@ -1,0 +1,20 @@
+.textContent {
+
+	padding-left: 10px;
+	padding-right: 20px;
+
+	margin: 2px;
+
+	/* caret-shape: block; */
+
+	background-color: rgba(129, 81, 19, 0.372);
+	border: solid black 1px;
+}
+
+.textContent.editing {
+	background-color: rgba(105, 156, 62, 0.622)
+}
+
+/* .textContent:focus {
+	background-color: rgba(105, 156, 62, 0.622)
+} */

@@ -1,0 +1,50 @@
+#contentMenu {
+	height: 100%;
+	width: 100%;
+}
+
+#contentMenu table {
+	width: 280px;
+	max-width: 280px;
+	height: 234px;
+
+	margin: 5px;
+
+	border: solid gray 1px;
+}
+
+
+#contentMenu table thead tr {
+	margin-bottom: 5px;
+
+	background-color: rgb(158, 158, 158);
+}
+
+
+#contentMenu table tbody tr {
+	margin-bottom: 5px;
+
+	background-color: rgb(158, 158, 158);
+}
+
+#contentMenu table tbody tr th {
+	width: 110px;
+	max-width: 110px;
+	min-width: 110px;
+
+
+}
+
+#contentMenu table tbody tr td {
+	width: 154px;
+	max-width: 154px;
+	min-width: 154px;
+
+	background-color: rgb(190, 190, 190);
+}
+
+#contentMenu table tbody tr td.editableContextElement {
+
+	border: solid gray 1px;
+	background-color: rgb(208, 202, 202);
+}
