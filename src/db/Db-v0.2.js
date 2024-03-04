@@ -6,7 +6,7 @@ const dbLocationLegacy = process.env.GRAPH_DB_LOCATION;
 const dbLocation = '/data/live/graph-v0.2-test.db';
 const dbLocationTemp = '/data/live/graph-v0.2-temp.db';
 let db = {};
-let r = 0;
+// let r = 0;
 
 
 
@@ -35,15 +35,15 @@ function getDb() {
 }
 
 async function initDB() {
-    r = Math.random();
-    console.log(r)
+    // r = Math.random();
+    // console.log(r)
 
     // Legacy check
     if (process.env.NODE_ENV !== 'test') {
         //console.log(`Using sqlite database at ${dbLocation}`);
     }
 
-    console.log(1)
+    // console.log(1)
     // If the db-file does not exist, create new db
     if (!fs.existsSync(dbLocation)) {
 
@@ -54,20 +54,20 @@ async function initDB() {
         // Remove temporary db-file on error
         // NOT WOKRING. SE NOTE ABOVE!
         try {
-            console.log(2)
+            // console.log(2)
             console.log('No database found. Creating new.')
             await newDatabase();
-            console.log(3)
+            // console.log(3)
         } catch (error) {
             // console.log('|||||||||||||||||||||||||||||||||||||||||')
             fs.unlinkSync(dbLocationTemp);
             return new Error('No db and failed to create new db.')
 
         }
-        console.log(4)
+        // console.log(4)
     }
 
-    console.log(5)
+    // console.log(5)
     // Connect to Database
     try {
         console.log('Connecting to database at', dbLocation)
@@ -78,7 +78,7 @@ async function initDB() {
         throw error;
     }
 
-    console.log(6)
+    // console.log(6)
 
     // https://stackoverflow.com/questions/9937713/does-sqlite3-not-support-foreign-key-constraints
     // You need to enable foreign key ON EVERY QUERY, in order to fulfill backwards compatibility with sqlite 2.x
@@ -382,8 +382,7 @@ module.exports = {
     db,
     initDB,
     dbTeardown,
-    getDb,
-    r
+    getDb
 }
 
 

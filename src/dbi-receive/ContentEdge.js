@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
 
 
 		case 'ContentEdge-InsertAdjacentToUuidIntoTable':
-			console.log('ra', returnArray)
+			// console.log('ra', returnArray)
 			console.log(functionstring, 'selected. ', queryObject, ' as query value.');
 			returnArray = await dbi.procedures.ContentEdge_InsertAdjacentToUuidIntoTable(queryObject.Uuid, queryObject.Directed, queryObject.Table, queryObject.Type, queryObject.Order, queryObject.Path);
-			console.log('ra', returnArray)
+			// console.log('ra', returnArray)
 			break;
 
 		case 'ContentEdge-SelectChildOfUuid':

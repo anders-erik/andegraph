@@ -1,35 +1,24 @@
-@import 'element-styles.css';
-/* @import 'sourcefind-styles.css'; */
-@import '../modules/sourcing/sourcefind/Sourcefind.css';
-/* @import 'sourceview-styles.css'; */
-@import '../modules/sourcing/sourceview/Sourceview.css';
-
-@import '../modules/sourcing/sharding/sharding.css';
-
-@import '../modules/mainMenu/mainMenu.css';
-
-@import '../modules/homedash/homedash.css';
-
-@import '../modules/uiskeleton/threepanels/threepanels.css';
-
-@import '../modules/globalnodecontext/GlobalNodeContext.css';
-
-@import '../modules/components/childtable/ChildTable.css';
-
-@import '../modules/components/statustable/StatusTable.css';
-
-@import '../modules/components/nodeproperties/NodeProperties.css';
-
-
-
-
-/* V0.2 */
-
 @import '../modules/maincontent/MainContent.css';
 
 @import '../modules/mainoverlay/MainOverlay.css';
 
 @import '../modules/contextoverlay/ContextOverlay.css';
+
+
+:root {
+	--light-1: #afeef5;
+	--light-2: #c2c2c2;
+	--dark-1: #00373d;
+	--dark-2: #122b2e;
+	--margin: 8px;
+	--shadow-0: rgb(51, 51, 51) 0px 0px 40px 3px;
+	--shadow-1: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	--shadow-2: rgb(51, 51, 51) 0px 0px 1px 2px;
+	--shadow-all: rgb(51, 51, 51) 0px 0px 2000px 300px;
+
+	--main-menu-width: 50px;
+}
+
 
 
 body {
@@ -66,85 +55,4 @@ body {
 
 .hidden {
 	display: none;
-}
-
-
-
-/* END V0.2 */
-
-
-:root {
-	--light-1: #afeef5;
-	--light-2: #c2c2c2;
-	--dark-1: #00373d;
-	--dark-2: #122b2e;
-	--margin: 8px;
-	--shadow-0: rgb(51, 51, 51) 0px 0px 40px 3px;
-	--shadow-1: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-	--shadow-2: rgb(51, 51, 51) 0px 0px 1px 2px;
-	--shadow-all: rgb(51, 51, 51) 0px 0px 2000px 300px;
-
-	--main-menu-width: 50px;
-}
-
-
-
-
-
-
-
-
-.shadow-all {
-	box-shadow: var(--shadow-all);
-}
-
-
-.primary-panel {
-	background-color: beige;
-	margin: 1px;
-
-}
-
-.sub-panel {
-	border: solid black 1px;
-	border-radius: 10px;
-	background-color: rgb(220, 255, 243);
-	margin: 10px;
-
-	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
-
-
-
-
-
-
-
-
-/* NEW 2023-12-03  */
-
-
-.panel {
-	background-color: rgb(126, 130, 134);
-	display: flex;
-	flex-direction: column;
-	min-height: 35em;
-}
-
-/* .panel:focus-within {
-	border: solid black 1px;
-} */
-
-
-.seperation-panel {
-	background-color: goldenrod;
-	width: 10px;
-	height: 100%;
-}
-
-
-.card {
-	background-color: rgb(49, 55, 79);
-	margin: 10px;
-	padding: 10px;
 }

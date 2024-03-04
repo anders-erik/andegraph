@@ -13,7 +13,7 @@ let newUuid = function () {
 
 	secondsSince17b = Math.floor(Date.now() / 1000) - 1700000000;
 
-	if(secondsSince17b != prevCallSecondsSince17b){
+	if (secondsSince17b != prevCallSecondsSince17b) {
 		low14 = 0;
 	}
 	prevCallSecondsSince17b = secondsSince17b;

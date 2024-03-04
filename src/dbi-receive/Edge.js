@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
 
 		case 'Edge-InsertUuidUuid':
 			console.log(functionstring, 'selected. ', queryObject, ' as query object.');
-			returnArray = await dbi.procedures.Edge_InsertUuidUuidDir(queryObject.Node1Uuid, queryObject.Node2Uuid, queryObject.Directed, queryObject.Order, queryObject.Path);
+			returnArray = await dbi.procedures.Edge_InsertUuidUuid(queryObject.Node1Uuid, queryObject.Node2Uuid, queryObject.Directed, queryObject.Order, queryObject.Path);
 			break;
 
 		case 'Edge-UpdateWithEdgeObject':

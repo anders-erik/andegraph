@@ -1,16 +1,16 @@
 
 
 const models = require('../../models/models');
-const { insertNode } = require('../../sql/graphQueries/NodeQueries');
+// const { insertNode } = require('../../sql/graphQueries/NodeQueries');
 
 // https://stackoverflow.com/questions/53780447/nodejs-imported-module-is-undefined-but-works-when-checked-with-if-statement-or 
 // const { queries } = require('../DbInterface'); // Cannot use because DbInterface depends on 'tests'
 const queries = require('../Queries')
 
 
-async function runEdgeCrud(){
+async function runEdgeCrud() {
 
-	console.log(`
+    console.log(`
     
 ===========================================
         
@@ -42,7 +42,7 @@ async function runEdgeCrud(){
     await queries.Node_DeleteOnUuid(node1.Uuid)
     await queries.Node_DeleteOnUuid(node2.Uuid)
 
-	console.log(`
+    console.log(`
 	END EDGE CRUD TEST
 
 ===========================================
@@ -55,5 +55,5 @@ async function runEdgeCrud(){
 
 
 module.exports = {
-	runEdgeCrud,
+    runEdgeCrud,
 }

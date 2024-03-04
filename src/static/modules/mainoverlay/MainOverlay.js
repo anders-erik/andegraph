@@ -63,8 +63,8 @@ export class MainOverlay {
 		// localStorage.setItem('projectSelected', document.getElementById('mainMenuProject').classList.contains('selected') ? '1' : '0');
 		let stateSelected = localStorage.getItem('stateSelected');
 		let projectSelected = localStorage.getItem('projectSelected');
-		console.log('stateSelected', stateSelected)
-		console.log('projectSelected', projectSelected)
+		// console.log('stateSelected', stateSelected)
+		// console.log('projectSelected', projectSelected)
 
 		if (stateSelected == '1') {
 			document.getElementById('mainMenuState').classList.add('selected');

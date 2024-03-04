@@ -1,12 +1,12 @@
 
 
 // const models = require('../../models/models');
-const { Content_InsertChild, Content_DeleteFromGraph } = require('../Procedures')
+const { Content_InsertChild, Content_DropFullOnUuid } = require('../Procedures')
 const queries = require('../Queries');
 
 
 
-async function InsertChild(){
+async function InsertChild() {
 
 	console.log(`
     
@@ -21,11 +21,11 @@ async function InsertChild(){
 	let edgeContentObject = await Content_InsertChild(372, 'Code');
 
 	console.log('\n----------------------\n\tINSERT\n----------------------\n')
-	
+
 	childObjects = await queries.Node_SelectChildOfUuid(372);
 	console.table(childObjects);
 
-	await Content_DeleteFromGraph(edgeContentObject.Content);
+	await Content_DropFullOnUuid(edgeContentObject.content.Uuid);
 
 	console.log('\n----------------------\n\tDELETE\n----------------------\n')
 

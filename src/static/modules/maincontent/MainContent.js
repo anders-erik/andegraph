@@ -41,7 +41,7 @@ export class MainContent {
 
 	async loadFromUrl() {
 		let urlState = new URL(window.location.href)
-		console.table(urlState)
+		// console.table(urlState)
 		let pathArray = urlState.pathname.split('/');
 		pathArray.pop();
 		pathArray.shift();

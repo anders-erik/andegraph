@@ -12,9 +12,9 @@ module.exports = async (req, res) => {
 	let queryObject = req.query;
 	let body = req.body;
 
-	console.log(functionstring)
-	console.log(queryObject)
-	console.log(body)
+	// console.log(functionstring)
+	// console.log(queryObject)
+	// console.log(body)
 
 	let returnArray = [];
 
@@ -50,7 +50,6 @@ module.exports = async (req, res) => {
 
 
 		case 'Content-SelectOnTitleLikeString':
-			console.log('AAA')
 			console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
 			returnArray = await dbi.procedures.Content_SelectOnTitleLikeString(queryObject.searchString, queryObject.tableLimit, queryObject.includeTable, queryObject.orderColumn, queryObject.desc);
 			// res.set('Access-Control-Allow-Origin', `*`);
@@ -77,39 +76,7 @@ module.exports = async (req, res) => {
 
 
 
-
-
-	/* 
-			case 'Content-InsertChildUuidTable':
-				console.log(functionstring, 'selected. ', body, ' as body.');
-				returnArray = await dbi.procedures.Content_InsertChildUuidTable(body[0], body[1]);
-				break;
-	
-			case 'Source-SelectLikeString':
-				console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
-				returnArray = await dbi.queries.Source_SelectLikeString(queryObject.searchString);
-				// res.set('Access-Control-Allow-Origin', `*`);
-				break;
-	
-	
-			case 'Content-SelectChildOfUuid':
-				console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
-				returnArray = await dbi.procedures.Content_SelectChildOfUuid(queryObject.Uuid);
-				break;
-	
-	
-	 */
-
-
-
-
-
-
-
-	// not working??
-	// res.status(200).send(returnArray);
 	res.set('Access-Control-Allow-Origin', `*`);
-	// res.sendStatus(200);
 	res.status(200).send(returnArray);
 
 };
