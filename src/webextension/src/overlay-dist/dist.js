@@ -234,6 +234,7 @@ document.body.innerHTML += `
 
 
 						<select name="codeselect" id="ae-clipboardCodeSelect" disabled>
+							<option value=""></option>
 							<option value="js">js</option>
 							<option value="css">css</option>
 							<option value="html">html</option>
@@ -297,6 +298,7 @@ styleSheet.innerText = `
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	color: rgb(23, 19, 19);
 	font-weight: 400;
+	font-size: x-small;
 
 }
 #ae-projectOuter {
@@ -1464,15 +1466,17 @@ async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(TextC
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (extensionStateFront.current_sourceObject.Uuid !== undefined) {
 
-		let newTextObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Text')).Content;
+		// let newTextObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Text')).Content;
+		let newTextContentObject = (await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_sourceObject.Uuid, 1, 'Text', '', '', '/')).content;
 
 		// console.log(newTextObject)
 
-		newTextObject.Title = TextContent.substring(0, 25);
-		newTextObject.TextContent = TextContent;
+		newTextContentObject.Title = TextContent.substring(0, 25);
+		newTextContentObject.TextContent = TextContent;
 
 
-		await dbisWe.Content_UpdateOnContentObject(newTextObject);
+		// await dbisWe.Content_UpdateOnContentObject(newTextContentObject);
+		await dbis.Content_UpdateWithContentObject(newTextContentObject);
 
 		await fetchCurrentSourceChildrenThenWriteToStates();
 
@@ -1489,16 +1493,18 @@ async function postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(Typ
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (extensionStateFront.current_sourceObject.Uuid !== undefined) {
 
-		let newCodeObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Code')).Content;
+		// let newCodeObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Code')).Content;
+		let newCodeContentObject = (await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_sourceObject.Uuid, 1, 'Code', '', '', '/')).content;
 
 		// console.log(newTextObject)
 
-		newCodeObject.Title = CodeContent.substring(0, 25);
-		newCodeObject.Type = Type;
-		newCodeObject.CodeContent = CodeContent;
+		newCodeContentObject.Title = CodeContent.substring(0, 25);
+		newCodeContentObject.Type = Type;
+		newCodeContentObject.CodeContent = CodeContent;
 
 
-		await dbisWe.Content_UpdateOnContentObject(newCodeObject);
+		// await dbisWe.Content_UpdateOnContentObject(newCodeContentObject);
+		await dbis.Content_UpdateWithContentObject(newCodeContentObject);
 
 		await fetchCurrentSourceChildrenThenWriteToStates();
 
@@ -1517,7 +1523,8 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, que
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (sourceUuid !== undefined) {
 
-		let newFileObject = (await dbisWe.Content_InsertChildUuidTable(sourceUuid, 'File')).Content;
+		// let newFileObject = (await dbisWe.Content_InsertChildUuidTable(sourceUuid, 'File')).Content;
+		let newFileContentObject = (await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(sourceUuid, 1, 'File', '', '', '/')).content;
 
 		// console.log(newTextObject)
 
@@ -1527,7 +1534,8 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, que
 
 
 		// await dbisWe.Content_UpdateOnContentObject(newFileObject);
-		await dbisWe.filePost(newFileObject.Uuid, file, queryParams, mimeType);
+		// await dbisWe.filePost(newFileContentObject.Uuid, file, queryParams, mimeType);
+		await dbis.Post_File(newFileContentObject.Uuid, file, queryParams, mimeType);
 
 
 
@@ -2038,6 +2046,507 @@ async function contentPut(functionstring, putObject) {
 
 
 
+// const apiBaseUrl = 'http://localhost:3000';
+// const basePath = '/api/v02'
+const apiUrl = 'http://localhost:3000/api/v02';
+
+
+
+class dbis {
+
+
+
+
+
+	/* 
+			CONTENT
+	 */
+
+	static async Content_InsertOnTable(TableName) {
+		const url = apiUrl + `/content/Content-InsertOnTable?Table=${TableName}`;
+		const options = {
+			method: 'POST'
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Content_SelectOnUuid(Uuid) {
+		let url = apiUrl + `/content/Content-SelectOnUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Content_UpdateWithContentObject(contentObject) {
+		let url = apiUrl + `/content/Content-UpdateWithContentObject`;
+		const options = {
+			method: 'PUT',
+			headers: { "Content-Type": "application/json", },
+			body: JSON.stringify(contentObject),
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Content_DropFullOnUuid(Uuid) {
+		let url = apiUrl + `/content/Content-DropFullOnUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'DELETE',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Content_SelectOnTitleLikeString(searchString, tableLimit, includeTable, orderColumn, desc) {
+		let url = apiUrl + `/content/Content-SelectOnTitleLikeString?searchString=${searchString}&tableLimit=${tableLimit}&includeTable=${includeTable}&orderColumn=${orderColumn}&desc=${desc}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Review_InsertScheduleOnUuid(Uuid, scheduleType) {
+		const url = apiUrl + `/content/Review-InsertScheduleOnUuid?Uuid=${Uuid}&scheduleType=${scheduleType}`;
+		const options = {
+			method: 'POST'
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Review_SelectCurrentReview() {
+		let url = apiUrl + `/content/Review-SelectCurrentReview`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+	// EDGE
+	static async Edge_InsertUuidUuid(Node1Uuid, Node2Uuid, Directed, Type, Order, Path) {
+		let url = apiUrl + `/edge/Edge-InsertUuidUuid?Node1Uuid=${Node1Uuid}&Node2Uuid=${Node2Uuid}&Directed=${Directed}&Type=${Type}&Order=${Order}&Path=${Path}`;
+		const options = {
+			method: 'POST',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Edge_UpdateWithEdgeObject(edgeObject) {
+		let url = apiUrl + `/edge/Edge-UpdateWithEdgeObject`;
+		const options = {
+			method: 'PUT',
+			headers: { "Content-Type": "application/json", },
+			body: JSON.stringify(edgeObject),
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Edge_DeleteOnEdgeUuid(edgeUuid) {
+		let url = apiUrl + `/edge/Edge-DeleteOnEdgeUuid?edgeUuid=${edgeUuid}`;
+		const options = {
+			method: 'DELETE',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Edge_DeleteOnNodeUuids(Uuid1, Uuid2) {
+		let url = apiUrl + `/edge/Edge-DeleteOnNodeUuids?Uuid1=${Uuid1}&Uuid2=${Uuid2}`;
+		const options = {
+			method: 'DELETE',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+
+
+	// CONTENT-EDGE
+	static async ContentEdge_InsertAdjacentToUuidIntoTable(Uuid, Directed, Table, Type, Order, Path) {
+		let url = apiUrl + `/contentedge/ContentEdge-InsertAdjacentToUuidIntoTable?Uuid=${Uuid}&Directed=${Directed}&Table=${Table}&Type=${Type}&Order=${Order}&Path=${Path}`;
+		const options = {
+			method: 'POST',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async ContentEdge_SelectChildOfUuid(Uuid) {
+		let url = apiUrl + `/contentedge/ContentEdge-SelectChildOfUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async ContentEdge_SelectParentOfUuid(Uuid) {
+		let url = apiUrl + `/contentedge/ContentEdge-SelectParentOfUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async ContentEdge_SelectUndirectedOfUuid(Uuid) {
+		let url = apiUrl + `/contentedge/ContentEdge-SelectUndirectedOfUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async ContentEdge_SelectAdjacentOfUuid(Uuid) {
+		let url = apiUrl + `/contentedge/ContentEdge-SelectAdjacentOfUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+	// FILE (From dbis-we)
+	static async Post_File(Uuid, file, queryParams, mimeType) {
+
+		let url = apiUrl + `/file/${Uuid}?`;
+		// console.log(url)
+
+
+		for (const [key, value] of Object.entries(queryParams)) {
+			// console.log(`${key}: ${value}`);
+			url += `${key}=${value}&`;
+			// bodyArray.push(value);
+		}
+		url = url.slice(0, -1);
+
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-Type": mimeType,
+			},
+			body: file,
+		};
+		// console.log(options)
+		// console.log(url)
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			if (response.status == 200) {
+				return data;
+			}
+			else {
+				throw new Error('FAILED POST FROM: Post_File in dbis')
+			}
+			// console.table(data);
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+	static async Get_File(Uuid) {
+
+		const url = apiUrl + `/file/` + Uuid;
+		const options = { method: 'GET' };
+
+		try {
+			const response = await fetch(url, options);
+			// const data = await response.json();
+			console.log(response.status, url)
+
+			// console.log(response.body)
+			let blob = await response.blob()
+			let contentType = response.headers.get('content-type');
+			let extension = contentType.split('/')[1];
+			// console.log('FILEFILE:', response.headers.get('content-type'))
+			let file = await new File([blob], `${Uuid}.${extension}`)
+			return file;
+			// .then(blob => new File([blob], 'testfilename.file'))
+			// .then(file => file)
+			// .catch(error => console.error(error))
+			// .then(file => URL.createObjectURL(file))
+			// .then(file => URL.createObjectURL(file))
+			// .then(fileUrl => window.open(fileUrl, '_blank'))
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+
+	static async Put_File(Uuid, file, queryParams, mimeType) {
+
+		let url = apiUrl + `/file/${Uuid}?`;
+		// console.log(url)
+
+
+		for (const [key, value] of Object.entries(queryParams)) {
+			// console.log(`${key}: ${value}`);
+			url += `${key}=${value}&`;
+			// bodyArray.push(value);
+		}
+		url = url.slice(0, -1);
+
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-Type": mimeType,
+			},
+			body: file,
+		};
+		// console.log(options)
+		// console.log(url)
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			if (response.status == 200) {
+				return data;
+			}
+			else {
+				throw new Error('FAILED PUT FROM: Put_File in dbis')
+			}
+			// console.table(data);
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+	static async Delete_File(Uuid) {
+		let url = apiUrl + `/file/${Uuid}`;
+		const options = {
+			method: 'DELETE',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.log(response.status, url)
+			console.error(error);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', { 'Uuid': Uuid }) };
+
+	static async Node_SelectChildOfUuid(Uuid) { return contentGet('Node-SelectChildOfUuid', { 'Uuid': Uuid }) };
+	static async NodeEdge_SelectChildOfUuid(Uuid) { return contentGet('NodeEdge-SelectChildOfUuid', { 'Uuid': Uuid }) };
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// async function contentGet(functionstring, paramObject) {
+// 	let url = basePath + `content//${functionstring}?`;
+
+// 	for (const [key, value] of Object.entries(paramObject)) {
+// 		console.log(`${key}: ${value}`);
+// 		url += `${key}=${value}`;
+// 	}
+
+// 	// console.log(url)
+
+// 	const options = { method: 'GET', body: undefined };
+
+// 	try {
+// 		const response = await fetch(url, options);
+// 		const data = await response.json();
+// 		return data;
+// 		// console.table(data);
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+
+
+// }
+
+
+
+
 let projectSearchButton;
 let projectChildrenButton;
 let projectPropertiesButton;
@@ -2231,7 +2740,7 @@ async function projectSearchRowClicked(event) {
 
 	await fetchCurrentProjectChildrenThenWriteToStates();
 
-	// console.log(extensionStateFront.current_projectChildNodeEdges)
+	// console.log(extensionStateFront.current_projectChildContentEdges)
 
 	writeProjectChildrenFromStateToDom();
 
@@ -2249,9 +2758,9 @@ async function projectChildRowClicked(event) {
 	// console.log(event.target.dataset.uuid)
 	let projectChildUuid = event.target.dataset.uuid;
 
-	let projectChildNodeEdge = extensionStateFront.current_projectChildNodeEdges.find(obj => obj.Uuid == projectChildUuid);
+	let projectChildContentEdge = extensionStateFront.current_projectChildContentEdges.find(obj => obj.content.Uuid == projectChildUuid);
 
-	if (projectChildNodeEdge.Table === 'Source') {
+	if (projectChildContentEdge.content.Table === 'Source') {
 		// console.log('Source clicked')
 
 		await fetchSourceOnUuidThenWriteToStates(projectChildUuid);
@@ -2401,7 +2910,7 @@ function copyProjectPropertiesFromDomToState() {
 
 function writeProjectChildrenFromStateToDom() {
 
-	let projectChildNodeEdges = extensionStateFront.current_projectChildNodeEdges;
+	let projectChildContentEdges = extensionStateFront.current_projectChildContentEdges;
 
 	// extensionStateFront.current_projectUuid = projectObject.Uuid;
 
@@ -2411,17 +2920,17 @@ function writeProjectChildrenFromStateToDom() {
 
 	tbody.innerHTML = '';
 
-	for (const nodeEdge of projectChildNodeEdges) {
+	for (const contentEdge of projectChildContentEdges) {
 
 		let newProjectChildRow = document.createElement('tr');
 
-		newProjectChildRow.id = `ae-projchildTableRow-${nodeEdge.Uuid}`;
-		newProjectChildRow.nodeEdgeObject = nodeEdge;
+		newProjectChildRow.id = `ae-projchildTableRow-${contentEdge.Uuid}`;
+		newProjectChildRow.ContentEdgeObject = contentEdge;
 
 		newProjectChildRow.innerHTML += `
 		
-				<th id=ae-projchildTable-Table-${nodeEdge.Uuid} class="ae-element" data-Uuid=${nodeEdge.Uuid}>${nodeEdge.Table}</th>
-				<td id=ae-projchildTable-Title-${nodeEdge.Uuid} class="ae-element" data-Uuid=${nodeEdge.Uuid}>${nodeEdge.Title}</td>
+				<th id=ae-projchildTable-Table-${contentEdge.content.Uuid} class="ae-element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Table}</th>
+				<td id=ae-projchildTable-Title-${contentEdge.content.Uuid} class="ae-element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Title}</td>
 			
 		`;
 
@@ -2514,7 +3023,8 @@ async function fetchProjectSearchThenWriteToStates() {
 	extensionStateFront.projectSearchString = projectSearchInput.textContent.trim();
 
 
-	extensionStateFront.current_projectSearchObjects = await dbisWe.Project_SelectLikeString(extensionStateFront.projectSearchString);
+	// extensionStateFront.current_projectSearchObjects = await dbisWe.Project_SelectLikeString(extensionStateFront.projectSearchString);
+	extensionStateFront.current_projectSearchObjects = await dbis.Content_SelectOnTitleLikeString(extensionStateFront.projectSearchString, 50, 'Project', 'Title', 0)
 
 
 	writeStateFromFront();
@@ -2529,7 +3039,8 @@ async function fetchProjectSearchThenWriteToStates() {
 async function fetchCurrentProjectChildrenThenWriteToStates() {
 
 
-	extensionStateFront.current_projectChildNodeEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
+	// extensionStateFront.current_projectChildContentEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
+	extensionStateFront.current_projectChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
 
 
 	writeStateFromFront();
@@ -2539,7 +3050,9 @@ async function fetchCurrentProjectChildrenThenWriteToStates() {
 
 async function fetchSourceOnUuidThenWriteToStates(sourceUuid) {
 
-	let selectedSourceObject = (await dbisWe.Content_SelectOnUuid(sourceUuid))[0];
+	// let selectedSourceObject = (await dbisWe.Content_SelectOnUuid(sourceUuid))[0];
+	let selectedSourceObject = await dbis.Content_SelectOnUuid(sourceUuid);
+
 	// console.table(selectedSourceObject)
 
 	extensionStateFront.current_sourceObject = selectedSourceObject;
@@ -2555,7 +3068,8 @@ async function fetchSourceOnUuidThenWriteToStates(sourceUuid) {
 
 async function postNewProject() {
 
-	return await dbisWe.Content_InsertOnTable('Project');
+	// return await dbisWe.Content_InsertOnTable('Project');
+	return await dbis.Content_InsertOnTable('Project');
 
 }
 
@@ -2571,7 +3085,8 @@ function addSourceToCurrentProject() {
 		console.log('NO PROJECT SELECTED')
 	}
 	else {
-		dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		// dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_projectObject.Uuid, 1, 'Source', '', '', '/');
 	}
 
 }
@@ -2584,7 +3099,9 @@ function addSourceToCurrentProject() {
 async function putCurrentProjectObject() {
 	// console.log('Posting current project properties', readProjectPropertiesFromDom())
 	// console.log('PUT ProjectObject: ', extensionStateFront.current_projectObject)
-	await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_projectObject);
+
+	// await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_projectObject);
+	await dbis.Content_UpdateWithContentObject(extensionStateFront.current_projectObject);
 }
 
 
@@ -2752,27 +3269,27 @@ function populateSourceChildTableFromState() {
 
 	// console.log('childObjects', childObjects)
 
-	let childObjects = extensionStateFront.current_sourceChildNodeEdges;
+	let childContentEdgeObjects = extensionStateFront.current_sourceChildContentEdges;
 
 
 	let tbody = document.getElementById('ae-sourceChildTable-tbody');
 	tbody.innerHTML = '';
 
-	for (let childObject of childObjects) {
+	for (let childContentEdgeObject of childContentEdgeObjects) {
 		let tableRowHtml = `
                 
-                <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childObject.Uuid}">${childObject.Table}</th>
-				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childObject.Uuid}">${childObject.Type}</td>
-                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childObject.Uuid}">${childObject.Title}</td>
+                <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Table}</th>
+				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Type}</td>
+                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Title}</td>
 
             `;
 		let tr = document.createElement('tr');
-		tr.id = 'ae-sourceSearchNode-' + childObject.Uuid;
-		tr.nodeObject = childObject;
+		tr.id = 'ae-sourceSearchNode-' + childContentEdgeObject.content.Uuid;
+		tr.nodeObject = childContentEdgeObject;
 		// tr.dataset.Node = 1;
 		// tr.dataset.Uuid = childObject.Uuid;
 		tr.setAttribute('data-Node', '1');
-		tr.setAttribute('data-Uuid', childObject.Uuid);
+		tr.setAttribute('data-Uuid', childContentEdgeObject.content.Uuid);
 		tr.tabIndex = 0;
 		tr.innerHTML = tableRowHtml;
 		// tr.addEventListener('click', clickSourceChildRow);
@@ -2885,9 +3402,10 @@ async function addNewSourceToCurrentProject() {
 		console.log('NEW SOURCE')
 		// console.log('Url:', window.location.href)
 		// console.log('Title:', document.title)
-		let newSourceContentEdge = await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		// let newSourceContentEdge = await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		let newSourceContentEdge = await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_projectObject.Uuid, 1, 'Source', '', '', '/');
 
-		let newSourceObject = newSourceContentEdge.Content;
+		let newSourceObject = newSourceContentEdge.content;
 		newSourceObject.Url = window.location.href;
 		newSourceObject.Title = document.title;
 		// console.log('new source object: ', newSourceObject)
@@ -2902,7 +3420,8 @@ async function addNewSourceToCurrentProject() {
 
 		writeCurrentSourceObjectToDom();
 
-		dbisWe.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '')
+		// dbisWe.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '')
+		dbis.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '');
 
 		await fetchCurrentProjectChildrenThenWriteToStates();
 
@@ -2941,7 +3460,8 @@ async function addNewSourceToCurrentProject() {
 async function fetchCurrentSourceChildrenThenWriteToStates() {
 
 
-	extensionStateFront.current_sourceChildNodeEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
+	// extensionStateFront.current_sourceChildContentEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
+	extensionStateFront.current_sourceChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
 
 
 	writeStateFromFront();
@@ -2954,7 +3474,8 @@ async function putCurrentSourceObject() {
 	// console.log('PUT SourceObject: ', extensionStateFront.current_sourceObject)
 
 	console.log(extensionStateFront.current_sourceObject)
-	await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_sourceObject);
+	// await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_sourceObject);
+	await dbis.Content_UpdateWithContentObject(extensionStateFront.current_sourceObject);
 
 }
 
@@ -3023,10 +3544,10 @@ let extensionStateFront = {
 	// current_projectUuid: 0,
 	current_projectObject: {},
 	current_projectSearchObjects: [],
-	current_projectChildNodeEdges: [],
+	current_projectChildContentEdges: [],
 	// current_sourceUuid: 0,
 	current_sourceObject: {},
-	current_sourceChildNodeEdges: [],
+	current_sourceChildContentEdges: [],
 	projectSearchActive: false,
 	projectSearchString: '',
 	textConcatenationCapturing: false,

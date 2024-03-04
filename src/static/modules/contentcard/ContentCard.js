@@ -212,7 +212,15 @@ export class ContentCard {
 					default:
 						break;
 				}
+				break;
 
+			case 'File':
+				// console.log('')
+				if (event.key === ' ') {
+					document.activeElement.click();
+					event.preventDefault();
+
+				}
 				break;
 
 			case 'Source':

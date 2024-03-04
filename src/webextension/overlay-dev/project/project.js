@@ -193,7 +193,7 @@ async function projectSearchRowClicked(event) {
 
 	await fetchCurrentProjectChildrenThenWriteToStates();
 
-	// console.log(extensionStateFront.current_projectChildNodeEdges)
+	// console.log(extensionStateFront.current_projectChildContentEdges)
 
 	writeProjectChildrenFromStateToDom();
 
@@ -211,9 +211,9 @@ async function projectChildRowClicked(event) {
 	// console.log(event.target.dataset.uuid)
 	let projectChildUuid = event.target.dataset.uuid;
 
-	let projectChildNodeEdge = extensionStateFront.current_projectChildNodeEdges.find(obj => obj.Uuid == projectChildUuid);
+	let projectChildContentEdge = extensionStateFront.current_projectChildContentEdges.find(obj => obj.content.Uuid == projectChildUuid);
 
-	if (projectChildNodeEdge.Table === 'Source') {
+	if (projectChildContentEdge.content.Table === 'Source') {
 		// console.log('Source clicked')
 
 		await fetchSourceOnUuidThenWriteToStates(projectChildUuid);
@@ -363,7 +363,7 @@ function copyProjectPropertiesFromDomToState() {
 
 function writeProjectChildrenFromStateToDom() {
 
-	let projectChildNodeEdges = extensionStateFront.current_projectChildNodeEdges;
+	let projectChildContentEdges = extensionStateFront.current_projectChildContentEdges;
 
 	// extensionStateFront.current_projectUuid = projectObject.Uuid;
 
@@ -373,17 +373,17 @@ function writeProjectChildrenFromStateToDom() {
 
 	tbody.innerHTML = '';
 
-	for (const nodeEdge of projectChildNodeEdges) {
+	for (const contentEdge of projectChildContentEdges) {
 
 		let newProjectChildRow = document.createElement('tr');
 
-		newProjectChildRow.id = `ae-projchildTableRow-${nodeEdge.Uuid}`;
-		newProjectChildRow.nodeEdgeObject = nodeEdge;
+		newProjectChildRow.id = `ae-projchildTableRow-${contentEdge.Uuid}`;
+		newProjectChildRow.ContentEdgeObject = contentEdge;
 
 		newProjectChildRow.innerHTML += `
 		
-				<th id=ae-projchildTable-Table-${nodeEdge.Uuid} class="ae-element" data-Uuid=${nodeEdge.Uuid}>${nodeEdge.Table}</th>
-				<td id=ae-projchildTable-Title-${nodeEdge.Uuid} class="ae-element" data-Uuid=${nodeEdge.Uuid}>${nodeEdge.Title}</td>
+				<th id=ae-projchildTable-Table-${contentEdge.content.Uuid} class="ae-element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Table}</th>
+				<td id=ae-projchildTable-Title-${contentEdge.content.Uuid} class="ae-element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Title}</td>
 			
 		`;
 
@@ -476,7 +476,8 @@ async function fetchProjectSearchThenWriteToStates() {
 	extensionStateFront.projectSearchString = projectSearchInput.textContent.trim();
 
 
-	extensionStateFront.current_projectSearchObjects = await dbisWe.Project_SelectLikeString(extensionStateFront.projectSearchString);
+	// extensionStateFront.current_projectSearchObjects = await dbisWe.Project_SelectLikeString(extensionStateFront.projectSearchString);
+	extensionStateFront.current_projectSearchObjects = await dbis.Content_SelectOnTitleLikeString(extensionStateFront.projectSearchString, 50, 'Project', 'Title', 0)
 
 
 	writeStateFromFront();
@@ -491,7 +492,8 @@ async function fetchProjectSearchThenWriteToStates() {
 async function fetchCurrentProjectChildrenThenWriteToStates() {
 
 
-	extensionStateFront.current_projectChildNodeEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
+	// extensionStateFront.current_projectChildContentEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
+	extensionStateFront.current_projectChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
 
 
 	writeStateFromFront();
@@ -501,7 +503,9 @@ async function fetchCurrentProjectChildrenThenWriteToStates() {
 
 async function fetchSourceOnUuidThenWriteToStates(sourceUuid) {
 
-	let selectedSourceObject = (await dbisWe.Content_SelectOnUuid(sourceUuid))[0];
+	// let selectedSourceObject = (await dbisWe.Content_SelectOnUuid(sourceUuid))[0];
+	let selectedSourceObject = await dbis.Content_SelectOnUuid(sourceUuid);
+
 	// console.table(selectedSourceObject)
 
 	extensionStateFront.current_sourceObject = selectedSourceObject;
@@ -517,7 +521,8 @@ async function fetchSourceOnUuidThenWriteToStates(sourceUuid) {
 
 async function postNewProject() {
 
-	return await dbisWe.Content_InsertOnTable('Project');
+	// return await dbisWe.Content_InsertOnTable('Project');
+	return await dbis.Content_InsertOnTable('Project');
 
 }
 
@@ -533,7 +538,8 @@ function addSourceToCurrentProject() {
 		console.log('NO PROJECT SELECTED')
 	}
 	else {
-		dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		// dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_projectObject.Uuid, 1, 'Source', '', '', '/');
 	}
 
 }
@@ -546,7 +552,9 @@ function addSourceToCurrentProject() {
 async function putCurrentProjectObject() {
 	// console.log('Posting current project properties', readProjectPropertiesFromDom())
 	// console.log('PUT ProjectObject: ', extensionStateFront.current_projectObject)
-	await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_projectObject);
+
+	// await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_projectObject);
+	await dbis.Content_UpdateWithContentObject(extensionStateFront.current_projectObject);
 }
 
 

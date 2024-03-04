@@ -46,12 +46,12 @@ browser.runtime.onMessage.addListener((message) => {
 		// initProject();
 		// initSource();
 
-		if (extensionStateFront.active) {
-			showOverlay();
-		}
-		else {
-			hideOverlay();
-		}
+		// if (extensionStateFront.active) {
+		// 	showOverlay();
+		// }
+		// else {
+		// 	hideOverlay();
+		// }
 
 	}
 

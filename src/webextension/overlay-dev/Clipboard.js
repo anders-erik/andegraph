@@ -375,15 +375,17 @@ async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(TextC
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (extensionStateFront.current_sourceObject.Uuid !== undefined) {
 
-		let newTextObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Text')).Content;
+		// let newTextObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Text')).Content;
+		let newTextContentObject = (await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_sourceObject.Uuid, 1, 'Text', '', '', '/')).content;
 
 		// console.log(newTextObject)
 
-		newTextObject.Title = TextContent.substring(0, 25);
-		newTextObject.TextContent = TextContent;
+		newTextContentObject.Title = TextContent.substring(0, 25);
+		newTextContentObject.TextContent = TextContent;
 
 
-		await dbisWe.Content_UpdateOnContentObject(newTextObject);
+		// await dbisWe.Content_UpdateOnContentObject(newTextContentObject);
+		await dbis.Content_UpdateWithContentObject(newTextContentObject);
 
 		await fetchCurrentSourceChildrenThenWriteToStates();
 
@@ -400,16 +402,18 @@ async function postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(Typ
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (extensionStateFront.current_sourceObject.Uuid !== undefined) {
 
-		let newCodeObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Code')).Content;
+		// let newCodeObject = (await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_sourceObject.Uuid, 'Code')).Content;
+		let newCodeContentObject = (await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_sourceObject.Uuid, 1, 'Code', '', '', '/')).content;
 
 		// console.log(newTextObject)
 
-		newCodeObject.Title = CodeContent.substring(0, 25);
-		newCodeObject.Type = Type;
-		newCodeObject.CodeContent = CodeContent;
+		newCodeContentObject.Title = CodeContent.substring(0, 25);
+		newCodeContentObject.Type = Type;
+		newCodeContentObject.CodeContent = CodeContent;
 
 
-		await dbisWe.Content_UpdateOnContentObject(newCodeObject);
+		// await dbisWe.Content_UpdateOnContentObject(newCodeContentObject);
+		await dbis.Content_UpdateWithContentObject(newCodeContentObject);
 
 		await fetchCurrentSourceChildrenThenWriteToStates();
 
@@ -428,7 +432,8 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, que
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (sourceUuid !== undefined) {
 
-		let newFileObject = (await dbisWe.Content_InsertChildUuidTable(sourceUuid, 'File')).Content;
+		// let newFileObject = (await dbisWe.Content_InsertChildUuidTable(sourceUuid, 'File')).Content;
+		let newFileContentObject = (await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(sourceUuid, 1, 'File', '', '', '/')).content;
 
 		// console.log(newTextObject)
 
@@ -438,7 +443,8 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, que
 
 
 		// await dbisWe.Content_UpdateOnContentObject(newFileObject);
-		await dbisWe.filePost(newFileObject.Uuid, file, queryParams, mimeType);
+		// await dbisWe.filePost(newFileContentObject.Uuid, file, queryParams, mimeType);
+		await dbis.Post_File(newFileContentObject.Uuid, file, queryParams, mimeType);
 
 
 

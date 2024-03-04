@@ -155,27 +155,27 @@ function populateSourceChildTableFromState() {
 
 	// console.log('childObjects', childObjects)
 
-	let childObjects = extensionStateFront.current_sourceChildNodeEdges;
+	let childContentEdgeObjects = extensionStateFront.current_sourceChildContentEdges;
 
 
 	let tbody = document.getElementById('ae-sourceChildTable-tbody');
 	tbody.innerHTML = '';
 
-	for (let childObject of childObjects) {
+	for (let childContentEdgeObject of childContentEdgeObjects) {
 		let tableRowHtml = `
                 
-                <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childObject.Uuid}">${childObject.Table}</th>
-				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childObject.Uuid}">${childObject.Type}</td>
-                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childObject.Uuid}">${childObject.Title}</td>
+                <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Table}</th>
+				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Type}</td>
+                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Title}</td>
 
             `;
 		let tr = document.createElement('tr');
-		tr.id = 'ae-sourceSearchNode-' + childObject.Uuid;
-		tr.nodeObject = childObject;
+		tr.id = 'ae-sourceSearchNode-' + childContentEdgeObject.content.Uuid;
+		tr.nodeObject = childContentEdgeObject;
 		// tr.dataset.Node = 1;
 		// tr.dataset.Uuid = childObject.Uuid;
 		tr.setAttribute('data-Node', '1');
-		tr.setAttribute('data-Uuid', childObject.Uuid);
+		tr.setAttribute('data-Uuid', childContentEdgeObject.content.Uuid);
 		tr.tabIndex = 0;
 		tr.innerHTML = tableRowHtml;
 		// tr.addEventListener('click', clickSourceChildRow);
@@ -288,9 +288,10 @@ async function addNewSourceToCurrentProject() {
 		console.log('NEW SOURCE')
 		// console.log('Url:', window.location.href)
 		// console.log('Title:', document.title)
-		let newSourceContentEdge = await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		// let newSourceContentEdge = await dbisWe.Content_InsertChildUuidTable(extensionStateFront.current_projectObject.Uuid, 'Source')
+		let newSourceContentEdge = await dbis.ContentEdge_InsertAdjacentToUuidIntoTable(extensionStateFront.current_projectObject.Uuid, 1, 'Source', '', '', '/');
 
-		let newSourceObject = newSourceContentEdge.Content;
+		let newSourceObject = newSourceContentEdge.content;
 		newSourceObject.Url = window.location.href;
 		newSourceObject.Title = document.title;
 		// console.log('new source object: ', newSourceObject)
@@ -305,7 +306,8 @@ async function addNewSourceToCurrentProject() {
 
 		writeCurrentSourceObjectToDom();
 
-		dbisWe.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '')
+		// dbisWe.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '')
+		dbis.Review_InsertScheduleOnUuid(newSourceObject.Uuid, '');
 
 		await fetchCurrentProjectChildrenThenWriteToStates();
 
@@ -344,7 +346,8 @@ async function addNewSourceToCurrentProject() {
 async function fetchCurrentSourceChildrenThenWriteToStates() {
 
 
-	extensionStateFront.current_sourceChildNodeEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
+	// extensionStateFront.current_sourceChildContentEdges = await dbisWe.NodeEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
+	extensionStateFront.current_sourceChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
 
 
 	writeStateFromFront();
@@ -357,7 +360,8 @@ async function putCurrentSourceObject() {
 	// console.log('PUT SourceObject: ', extensionStateFront.current_sourceObject)
 
 	console.log(extensionStateFront.current_sourceObject)
-	await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_sourceObject);
+	// await dbisWe.Content_UpdateOnContentObject(extensionStateFront.current_sourceObject);
+	await dbis.Content_UpdateWithContentObject(extensionStateFront.current_sourceObject);
 
 }
 
