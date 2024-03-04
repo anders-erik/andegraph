@@ -31,7 +31,10 @@ export class ReviewList {
 
 		for (const contentEdge of reviewChildContentEdges) {
 
-			let contentCard = new ContentCard(contentEdge);
+			let contentCard = new ContentCard(contentEdge.content);
+			contentCard.edgeObject = contentEdge.edge;
+			contentCard.dataset.edgeuuid = contentEdge.edge.Uuid;
+
 
 			this.element.append(contentCard)
 		}
@@ -41,7 +44,9 @@ export class ReviewList {
 
 	insertContentEdge(contentEdge) {
 
-		let contentCard = new ContentCard(contentEdge);
+		let contentCard = new ContentCard(contentEdge.content);
+		contentCard.edgeObject = contentEdge.edge;
+		contentCard.dataset.edgeuuid = contentEdge.edge.Uuid;
 
 		this.element.appendChild(contentCard);
 		contentCard.scrollIntoView({ behavior: 'instant', block: 'center' });

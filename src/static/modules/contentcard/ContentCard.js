@@ -18,20 +18,20 @@ export class ContentCard {
 
 	listeningDoubleClick;
 
-	constructor(contentEdgeObject) {
+	constructor(contentObject) {
 
 		this.element = document.createElement('div');
-		this.element.id = 'contentCard-' + contentEdgeObject.content.Uuid;
+		this.element.id = 'contentCard-' + contentObject.Uuid;
 		this.element.classList.add('contentCard');
 
 
 		// this.element.textContent = this.element.id;
 		this.element.tabIndex = 0;
 
-		this.element.contentObject = contentEdgeObject.content;
-		this.element.edgeObject = contentEdgeObject.edge;
+		this.element.contentObject = contentObject;
+		// this.element.edgeObject = contentEdgeObject.edge;
 		this.element.dataset.uuid = this.element.contentObject.Uuid;
-		this.element.dataset.edgeuuid = this.element.edgeObject.Uuid;
+		// this.element.dataset.edgeuuid = this.element.edgeObject.Uuid;
 
 		this.element.addEventListener('focusin', this.focusinContentCard.bind(this))
 		this.element.addEventListener('focusout', this.focusoutContentCard)
@@ -72,6 +72,11 @@ export class ContentCard {
 		return this.element;
 
 	}
+
+	// setEdge(edgeObject) {
+	// 	this.element.edgeObject = edgeObject;
+	// 	this.element.dataset.edgeuuid = edgeObject.Uuid;
+	// }
 
 	focusinContentCard(event) {
 
@@ -172,7 +177,9 @@ export class ContentCard {
 	async keydown(event) {
 		// console.log('event.key: ', event.key);
 
-		if (event.key === 'D' && event.ctrlKey && event.shiftKey && event.altKey) {
+
+		// DELETE FILE
+		if (event.key === 'F' && event.ctrlKey && event.shiftKey && event.altKey) {
 
 			let contentObject = this.element.contentObject;
 
@@ -211,7 +218,8 @@ export class ContentCard {
 			case 'Source':
 				// console.log('')
 				if (event.key === ' ') {
-					console.log('GOGO SOURCE');
+					// console.log('GOGO SOURCE');
+					document.activeElement.click();
 					event.preventDefault();
 
 				}
@@ -295,6 +303,22 @@ export class ContentCard {
 
 
 		switch (contentObject.Table) {
+
+			case 'Code':
+				// console.log('PASTE ON TEXT')
+				// editing = this.content.element.classList.contains('editing');
+				cardIsEmpty = this.content.element.textContent === '';
+
+				if (clipIsText && cardIsEmpty /* !editing &&  */) {
+
+					let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
+					this.content.insertTextContent(this.content.element, clipboardText);
+					console.log('pasted ', clipboardText)
+				}
+				else {
+					console.log(`No paste. Either already contains text, or clipboard is not a string.`)
+				}
+				break;
 
 			case 'Text':
 				// console.log('PASTE ON TEXT')

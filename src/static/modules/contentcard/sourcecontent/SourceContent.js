@@ -23,6 +23,22 @@ export class SourceContent {
 		// this.element.addEventListener('keydown', this.keydown.bind(this));
 
 		this.element.textContent = contentcardElement.contentObject.Url;
+		this.element.innerHTML = `
+			<p>SOURCE</p>
+			
+		`;
+
+
+		if (contentcardElement.contentObject.Url != '') {
+			this.element.innerHTML += `
+			<div>
+				<p>OPEN</p>
+				<a href="${contentcardElement.contentObject.Url}" target="_blank">
+					${contentcardElement.contentObject.Url}
+				</a>
+			</div>
+			`;
+		}
 
 		this.contentContainer.append(this.element);
 	}

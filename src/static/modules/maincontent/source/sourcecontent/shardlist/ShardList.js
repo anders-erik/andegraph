@@ -33,7 +33,10 @@ export class ShardList {
 
 		for (const contentEdge of shardContentEdges) {
 			// console.log(contentEdge.content.Title)
-			let shardCard = new ContentCard(contentEdge);
+			let shardCard = new ContentCard(contentEdge.content);
+			shardCard.edgeObject = contentEdge.edge;
+			shardCard.dataset.edgeuuid = contentEdge.edge.Uuid;
+
 			if (hideContentCheckboxChecked) {
 				// shardCard.overlayElement.classList.add('hidden');
 				shardCard.querySelector('.contentCardOverlay').classList.add('hidden')
@@ -52,7 +55,9 @@ export class ShardList {
 
 		// console.log('LOAD SHARD LIST ', shardContentEdges)
 
-		let shardCard = new ContentCard(contentEdge);
+		let shardCard = new ContentCard(contentEdge.content);
+		shardCard.edgeObject = contentEdge.edge;
+		shardCard.dataset.edgeuuid = contentEdge.edge.Uuid;
 
 		if (hideContentCheckboxChecked) {
 			// shardCard.overlayElement.classList.add('hidden');

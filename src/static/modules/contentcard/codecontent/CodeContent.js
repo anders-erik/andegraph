@@ -1,3 +1,4 @@
+import { dbis } from "../../dbi-send/dbi-send.js";
 import { determineClipboardContentType } from "../../filehandling/DetermineClipboardContents.js";
 
 
@@ -49,13 +50,32 @@ export class CodeContent {
 	}
 
 
-	focusout(event) {
+	async focusout(event) {
 
 		this.disableEdit();
 
+		// console.log('event.target', event.target)
+
 		let newTextContent = this.extractTextContent(event.target);
 
-		console.log('TODO: PUT UPDATED TEXT :', newTextContent)
+		// console.log('TODO: PUT UPDATED TEXT :', newTextContent)
+		let newContentObject = this.contentcardElement.contentObject;
+
+		newContentObject.CodeContent = newTextContent;
+
+		let contentObjectFromDb = dbis.Content_UpdateWithContentObject(newContentObject)
+
+		// https://stackoverflow.com/questions/7084557/select-all-elements-with-a-data-xxx-attribute-without-using-jquery
+		let contentElementsWithSameUuid = document.querySelectorAll(`[data-uuid='${newContentObject.Uuid}']`);
+		for (const element of contentElementsWithSameUuid) {
+			element.dataset.uuid = newContentObject.Uuid;
+			element.contentObject = newContentObject;
+			element.update();
+		}
+		// console.table(contentObjectFromDb)
+
+		// console.table(newContentObject)
+		// console.table(this.contentcardElement.contentObject);
 	}
 
 	enableEdit() {

@@ -1,5 +1,6 @@
 
 import { ConnectMenu } from "./connectmenu/ConnectMenu.js";
+import { ContentCardMenu } from "./contentcardmenu/ContentCardMenu.js";
 import { ContentMenu } from "./contentmenu/ContentMenu.js";
 import { EdgeMenu } from "./edgemenu/EdgeMenu.js";
 import { NewAdjacentMenu } from "./newadjacentmenu/NewAdjacentMenu.js";
@@ -12,6 +13,7 @@ class ContextOverlay {
 	contextMenu;
 
 	contentMenu;
+	contentCardMenu;
 	titleMenu;
 	edgeMenu;
 	connectMenu;
@@ -35,6 +37,7 @@ class ContextOverlay {
 		this.overlayElement.append(this.contextMenu);
 
 		this.contentMenu = new ContentMenu(this.contextMenu);
+		this.contentCardMenu = new ContentCardMenu(this.contextMenu);
 		this.titleMenu = new TitleMenu(this.contextMenu);
 		this.edgeMenu = new EdgeMenu(this.contextMenu);
 		this.connectMenu = new ConnectMenu(this.contextMenu);
@@ -53,6 +56,9 @@ class ContextOverlay {
 		else if (classlist.contains('edge') && currentObjectElement.edgeObject) {
 			this.updateContextMenuWithEdgeElement(currentObjectElement);
 		}
+		else if (classlist.contains('contentCard') && currentObjectElement.contentObject) {
+			this.updateContextMenuWithContentCardElement(currentObjectElement);
+		}
 		else {
 			this.hideContextMenu();
 		}
@@ -68,6 +74,18 @@ class ContextOverlay {
 		// this.contentMenu.element.contentObjectElement = contentObjectElement;
 		this.contextMenu.innerHTML = '';
 		this.contentMenu.populate(contentObjectElement);
+		this.place(contentObjectElement);
+
+	}
+
+	updateContextMenuWithContentCardElement(contentObjectElement) {
+		// this.contextMenu.
+		this.contextMenu.contentObjectElement = contentObjectElement;
+		this.setContextClass('contentCard');
+
+		// this.contentMenu.element.contentObjectElement = contentObjectElement;
+		this.contextMenu.innerHTML = '';
+		this.contentCardMenu.populate(contentObjectElement);
 		this.place(contentObjectElement);
 
 	}
@@ -130,6 +148,7 @@ class ContextOverlay {
 
 	setContextClass(newContextClass) {
 		this.contextMenu.classList.remove('content');
+		this.contextMenu.classList.remove('contentCard');
 		this.contextMenu.classList.remove('title');
 		this.contextMenu.classList.remove('edge');
 		this.contextMenu.classList.remove('connect');

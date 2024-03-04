@@ -522,28 +522,29 @@ class GlobalEventHandler {
 
 
 					case '[':
-						elem = document.getElementById('sourceParentContainer');
+
+						elem = document.getElementById('sourceToolbar_parentList');
 						elem.classList.remove('selected');
 						elem.click();
-						this.focusFirstDescendant(elem);
+						this.focusFirstDescendant(document.getElementById('sourceParentContainer'));
 						break;
 					case ']':
-						elem = document.getElementById('sourceFileContainer');
+						elem = document.getElementById('sourceToolbar_fileList');
 						elem.classList.remove('selected');
 						elem.click();
-						this.focusFirstDescendant(elem);
+						this.focusFirstDescendant(document.getElementById('sourceFileContainer'));
 						break;
 					case '\'':
-						elem = document.getElementById('sourceReviewContainer');
+						elem = document.getElementById('sourceToolbar_reviewList');
 						elem.classList.remove('selected');
 						elem.click();
-						this.focusFirstDescendant(elem);
+						this.focusFirstDescendant(document.getElementById('sourceReviewContainer'));
 						break;
 					case '\\':
-						elem = document.getElementById('sourceConnectedContainer');
+						elem = document.getElementById('sourceToolbar_connectedList');
 						elem.classList.remove('selected');
 						elem.click();
-						this.focusFirstDescendant(elem);
+						this.focusFirstDescendant(document.getElementById('sourceConnectedContainer'));
 						break;
 
 					default:
@@ -604,7 +605,7 @@ class GlobalEventHandler {
 						document.getElementById('sourceToolbar_reviewList').click();
 						break;
 					case '\\':
-						document.getElementById('sourceToolbar_childList').click();
+						document.getElementById('sourceToolbar_connectedList').click();
 						break;
 
 					default:
@@ -937,6 +938,8 @@ class GlobalEventHandler {
 				break;
 
 
+
+
 			case 'u':
 				if (event.target.contentObject) {
 
@@ -946,6 +949,27 @@ class GlobalEventHandler {
 					}
 					else if (this.app.contextOverlay.getCurrentMenuClass() !== 'title') {
 						this.app.contextOverlay.updateContextMenuWithTitleElement(event.target)
+					}
+					else {
+						this.app.contextOverlay.hideContextMenu();
+					}
+					event.preventDefault()
+				}
+				else if (event.target.classList.contains('contextMenu')) {
+					event.target.contentObjectElement.focus();
+				}
+				break;
+
+
+			case 'o':
+				if (event.target.contentObject) {
+
+					if (!this.app.contextOverlay.contextMenuIsOpen()) {
+						this.app.contextOverlay.showContextMenu();
+						this.app.contextOverlay.updateContextMenuWithContentCardElement(event.target)
+					}
+					else if (this.app.contextOverlay.getCurrentMenuClass() !== 'contentCard') {
+						this.app.contextOverlay.updateContextMenuWithContentCardElement(event.target)
 					}
 					else {
 						this.app.contextOverlay.hideContextMenu();
@@ -993,6 +1017,7 @@ class GlobalEventHandler {
 				}
 				else if (this.app.contextOverlay.contextMenuIsOpen()) {
 					// this.app.contextOverlay.removeElementContexts();
+					console.log('HIDEHIDE')
 					this.app.contextOverlay.hideContextMenu();
 				}
 				else if (document.getElementById('mainMenuSearch').classList.contains('selected')) {

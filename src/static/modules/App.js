@@ -182,11 +182,26 @@ class App {
 
 	appFocusIn(event) {
 		// console.log('FOCUS CHANGE')
+
+		let isContextMenuDescendant = false;
+		let contextMenu = document.getElementById('contextMenu');
+		for (const element of contextMenu.querySelectorAll('*')) {
+			if (event.target == element) {
+				// console.log('IS CONTEXT MENU DESCENDANT')
+				isContextMenuDescendant = true;
+			}
+		}
+
+
+
 		console.log('new focused element', event.target)
 		if (event.target == document.body) {
 			console.log('Body is currently in focus.')
 		}
 		else if (event.target.classList.contains('contextElement') || event.target.classList.contains('contextMenu')) {
+
+		}
+		else if (isContextMenuDescendant) {
 
 		}
 		else if (event.target.contentObject) {
