@@ -6,7 +6,9 @@ let dbi = require('../db-interface/DbInterface');
 
 let fileDir = `/data/live/files-v0.2/`;
 
-
+if (!fs.existsSync(fileDir)) {
+	cp.execSync(`mkdir ${fileDir}`);
+}
 
 
 module.exports = async (req, res) => {

@@ -39,7 +39,9 @@ export class Project {
 
 		this.contentObject = contentObject;
 
-		this.childrenContentEdgeObject = await dbis.ContentEdge_SelectChildOfUuid(projectUuid);
+		let childContentEdges = await dbis.ContentEdge_SelectChildOfUuid(projectUuid);
+		this.childrenContentEdgeObject = this.sortContentEdgesByTitle(childContentEdges);
+		// this.childrenContentEdgeObject = this.sortContentEdgesByPath(childContentEdges);
 
 		this.projectTitleElement.innerHTML = this.contentObject.Title;
 		this.projectTitleElement.contentObject = this.contentObject;
@@ -82,7 +84,39 @@ export class Project {
 		}
 	}
 
+	sortContentEdgesByTitle(contentEdges) {
+		// return contentEdges.so
+		return contentEdges.sort((contentEdge1, contentEdge2) => {
 
+			let title1 = contentEdge1.content.Title.toLowerCase();
+			let title2 = contentEdge2.content.Title.toLowerCase();
+
+			if (title1 < title2) {
+				return -1;
+			}
+			if (title1 > title2) {
+				return 1;
+			}
+			return 0;
+		});
+	}
+
+	sortContentEdgesByPath(contentEdges) {
+		// return contentEdges.so
+		return contentEdges.sort((contentEdge1, contentEdge2) => {
+
+			let path1 = contentEdge1.edge.Path.toLowerCase();
+			let path2 = contentEdge2.edge.Path.toLowerCase();
+
+			if (path1 < path2) {
+				return -1;
+			}
+			if (path1 > path2) {
+				return 1;
+			}
+			return 0;
+		});
+	}
 
 
 

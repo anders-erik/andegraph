@@ -124,6 +124,37 @@ export class SourceSidePanel {
 		}
 	}
 
+
+	loadConnected(connectedContentEdges) {
+		let tbody = this.connectedContainer.querySelector('table tbody')
+		tbody.innerHTML = ``;
+		// console.log(tbody)
+		for (const contentEdge of connectedContentEdges) {
+			// console.log(contentEdge)
+			let tr = document.createElement('tr');
+			tr.contentObject = contentEdge.content;
+			tr.edgeObject = contentEdge.edge;
+			tr.dataset.uuid = contentEdge.content.Uuid;
+			tr.dataset.edgeuuid = contentEdge.edge.Uuid;
+			tr.tabIndex = 0;
+
+			tr.update = function () {
+				this.innerHTML = `
+					<td class="">${this.contentObject.Table}</td>
+					<td class="">${this.contentObject.Title}</td>
+				`;
+			}
+
+			tr.innerHTML = `
+				<td class="">${contentEdge.content.Table}</td>
+				<td class="">${contentEdge.content.Title}</td>
+			`;
+			tbody.append(tr)
+		}
+	}
+
+
+
 	sidePanelInnerHtml = `
 
 
@@ -169,7 +200,17 @@ export class SourceSidePanel {
 </div>
 
 <div id="sourceConnectedContainer" class="" tabindex=0>
-	other connections
+	<div>OTHER</div>
+	<table>
+		<thead>
+			<tr>
+				<th>Table</th>
+				<th>Title</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 </div>
 
 	`;

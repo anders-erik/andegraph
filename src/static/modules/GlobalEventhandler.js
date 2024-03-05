@@ -210,7 +210,7 @@ class GlobalEventHandler {
 			MODE SWITCHES
 		*/
 
-		// console.log(this)
+		// console.log('this.mode', this.mode)
 		if (this.mode === '') {
 
 			switch (event.key) {
@@ -250,19 +250,22 @@ class GlobalEventHandler {
 			}
 
 			if (this.mode !== '') {
-				console.log('TOGGLED TO ', this.mode)
+				// console.log('TOGGLED TO ', this.mode)
 
 				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
 				clearTimeout(this.modeTimeout);
 
-				setTimeout(() => { this.mode = '' }, 1000);
+				this.modeTimeout = setTimeout(() => {
+					this.mode = '';
+					clearTimeout(this.modeTimeout);
+				}, 1000);
 				return;
 			}
 
 		}
 		// console.log(this.mode)
 
-
+		// console.log('BYPASSED MODE TOGGLE WITH : ', this.mode)
 
 
 		let elem;
@@ -304,16 +307,9 @@ class GlobalEventHandler {
 						break;
 				}
 
+				// toggle the element
 				if (searchTypeCheckboxId) {
-
-					let searchCheckbox = document.getElementById(searchTypeCheckboxId);
-
-					if (searchCheckbox.checked) {
-						searchCheckbox.checked = false;
-					}
-					else {
-						searchCheckbox.checked = true;
-					}
+					document.getElementById(searchTypeCheckboxId).click();
 
 				}
 
@@ -446,6 +442,10 @@ class GlobalEventHandler {
 			case 'g':
 
 				switch (event.key) {
+
+					case 'h':
+						this.app.mainOverlay.mainMenu.homeBtn.click();
+						break;
 
 					case 'c':
 					case 't': // NEW TAB
@@ -711,13 +711,7 @@ class GlobalEventHandler {
 
 			// key=0, 00000000, state 0
 			case 48:
-				if (event.ctrlKey && event.shiftKey) {
-					if (!this.app.mainOverlay.mainMenu.projectBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.projectBtn.click();
-					}
-					this.app.mainOverlay.project.projectTitleElement.focus()
-				}
-				else if (event.altKey) {
+				if (event.altKey) {
 					console.log('NEW PROJECT and focus');
 					let newProjectObject = await dbis.Content_InsertOnTable('Project');
 					this.app.mainOverlay.project.updateCurrentProjectOnUuid(newProjectObject.Uuid);
@@ -735,13 +729,7 @@ class GlobalEventHandler {
 
 			// key=1 , 11111111, state 1
 			case 49:
-				if (event.ctrlKey && event.shiftKey) {
-					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.stateBtn.click();
-					}
-					this.app.mainOverlay.state.element_1.focus()
-				}
-				else if (event.shiftKey) {
+				if (event.shiftKey) {
 					event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
 					localStorage.setItem('state1Uuid', `${event.target.contentObject.Uuid}`);
 				}
@@ -765,13 +753,7 @@ class GlobalEventHandler {
 
 			// key=2 , 222222, state 2
 			case 50:
-				if (event.ctrlKey && event.shiftKey) {
-					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.stateBtn.click();
-					}
-					this.app.mainOverlay.state.element_2.focus()
-				}
-				else if (event.shiftKey) {
+				if (event.shiftKey) {
 					event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
 					localStorage.setItem('state2Uuid', `${event.target.contentObject.Uuid}`);
 				}
@@ -795,13 +777,7 @@ class GlobalEventHandler {
 
 			// key=3 , 33333333, state 3
 			case 51:
-				if (event.ctrlKey && event.shiftKey) {
-					if (!this.app.mainOverlay.mainMenu.stateBtn.classList.contains('selected')) {
-						this.app.mainOverlay.mainMenu.stateBtn.click();
-					}
-					this.app.mainOverlay.state.element_3.focus()
-				}
-				else if (event.shiftKey) {
+				if (event.shiftKey) {
 					event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
 					localStorage.setItem('state3Uuid', `${event.target.contentObject.Uuid}`);
 				}
@@ -877,11 +853,7 @@ class GlobalEventHandler {
 
 			// key=7 , 77777777, state 1
 			case 55:
-				// toggle mainContent toolbar
-				if (event.shiftKey && event.ctrlKey) {
-					document.getElementById('sourceToolbar_shardPanel').click();
-				}
-				else if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
+				if (event.target.contentObject && this.app.mainOverlay.state.element_1.contentObject) {
 					this.app.contextOverlay.showContextMenu();
 					this.app.contextOverlay.updateContextMenuWithConnect(
 						event.target,
@@ -895,11 +867,7 @@ class GlobalEventHandler {
 				break;
 			// key=8 , 8888888, state 2
 			case 56:
-				// toggle mainContent toolbar
-				if (event.shiftKey && event.ctrlKey) {
-					document.getElementById('sourceToolbar_reviewPanel').click();
-				}
-				else if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
+				if (event.target.contentObject && this.app.mainOverlay.state.element_2.contentObject) {
 					this.app.contextOverlay.showContextMenu();
 					this.app.contextOverlay.updateContextMenuWithConnect(
 						event.target,
@@ -928,24 +896,20 @@ class GlobalEventHandler {
 
 
 
-
-
-
-
-
 			default:
 				break;
 		}
 
 
 
+
+		/* 
+			CONTEXT MENUS AND BASIC NAVIGATION WITH RIGHT KEYBOARD HAND
+
+		*/
 		switch (event.key) {
 
-
-
-
-
-
+			// CURRENLTY UNREACHABLE
 			case 'c':
 				if (event.target.contentObject && event.altKey) {
 					this.app.contextOverlay.showContextMenu();
@@ -954,19 +918,18 @@ class GlobalEventHandler {
 					// this.app.contextOverlay.connectMenu.path.focus();
 				}
 				break;
+			// case 'u':
+			// 	if (event.target.contentObject && event.altKey) {
+			// 		this.app.contextOverlay.showContextMenu();
+			// 		this.app.contextOverlay.updateContextMenuWithNewAdjacent(event.target, 'undirected');
+			// 		this.app.contextOverlay.contextMenu.focus();
+			// 		// this.app.contextOverlay.connectMenu.path.focus();
+			// 	}
+			// 	break;
 
 
 
-			case 'g':
-				if (event.target.contentObject) {
-					console.log('GO TO CONTENT')
-				}
-				break;
-			case 'h':
-				// console.log('HOME SWEET HOME')
-				this.app.mainOverlay.mainMenu.homeBtn.click();
-				break;
-
+			// Attached edge context menu
 			case 'i':
 				if (event.target.edgeObject) {
 
@@ -987,7 +950,8 @@ class GlobalEventHandler {
 				}
 				break;
 
-			// context menu focus
+
+			// focus context menu
 			case 'm':
 				let contextMenuIsOpen = this.app.contextOverlay.contextMenuIsOpen();
 
@@ -1001,7 +965,7 @@ class GlobalEventHandler {
 
 
 
-
+			// Title context menu
 			case 'u':
 				if (event.target.contentObject) {
 
@@ -1022,7 +986,7 @@ class GlobalEventHandler {
 				}
 				break;
 
-
+			// Content Card context menu
 			case 'o':
 				if (event.target.contentObject) {
 
@@ -1045,7 +1009,7 @@ class GlobalEventHandler {
 
 
 
-			// content context menu toggle
+			// Attached ContentObject Properties menu
 			case 'p':
 				if (event.target.contentObject) {
 
@@ -1069,7 +1033,7 @@ class GlobalEventHandler {
 
 
 
-
+			// exit menus and navigate focusable elements
 			case 'q':
 			case 'Escape':
 				// console.log('document.activeElement', document.activeElement)
@@ -1102,14 +1066,7 @@ class GlobalEventHandler {
 
 
 
-			case 'u':
-				if (event.target.contentObject && event.altKey) {
-					this.app.contextOverlay.showContextMenu();
-					this.app.contextOverlay.updateContextMenuWithNewAdjacent(event.target, 'undirected');
-					this.app.contextOverlay.contextMenu.focus();
-					// this.app.contextOverlay.connectMenu.path.focus();
-				}
-				break;
+
 
 
 

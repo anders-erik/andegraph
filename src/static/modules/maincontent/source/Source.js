@@ -57,7 +57,8 @@ export class Source {
 		this.sidePanel.loadParents(this.parentContentEdge);
 		this.sidePanel.loadFiles(this.filesContentEdge);
 		this.sidePanel.loadReviews(this.reviewContentEdge);
-
+		// this.sidePanel.loadConnected(this.otherConnectedContentEdge);
+		this.sidePanel.loadConnected(this.undirectedContentEdge);
 
 
 		this.displayPanelsFromLocalStorage();
