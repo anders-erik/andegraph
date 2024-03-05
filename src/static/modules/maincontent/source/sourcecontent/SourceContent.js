@@ -39,7 +39,8 @@ export class SourceContent {
 		this.contentContentContainer.append(this.element);
 
 		this.shardList.load(childrenContentEdge);
-		// this.reviewList.load([]);
+
+		this.reviewList.load([]);
 	}
 
 

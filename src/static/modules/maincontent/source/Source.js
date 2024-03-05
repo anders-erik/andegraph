@@ -43,12 +43,45 @@ export class Source {
 	async load(contentObject) {
 
 		this.parentContentEdge = await dbis.ContentEdge_SelectParentOfUuid(contentObject.Uuid);
-		this.undirectedContentEdge = await dbis.ContentEdge_SelectUndirectedOfUuid(contentObject.Uuid);
-		this.childrenContentEdge = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
-		this.filesContentEdge = this.undirectedContentEdge.filter(contentEdge => contentEdge.content.Table === 'File');
-		this.reviewContentEdge = this.undirectedContentEdge.filter(contentEdge => contentEdge.content.Table === 'Review');
-		this.otherConnectedContentEdge = this.undirectedContentEdge.filter(contentEdge => !(contentEdge.content.Table === 'Review' || contentEdge.content.Table === 'File'));
+		this.parentContentEdge.sort((a, b) => {
+			if (a.content.Title.toLowerCase() < b.content.Title.toLowerCase()) { return -1; }
+			if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
+			return 0;
+		})
 
+		this.undirectedContentEdge = await dbis.ContentEdge_SelectUndirectedOfUuid(contentObject.Uuid);
+
+		this.childrenContentEdge = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
+		this.childrenContentEdge.sort((a, b) => {
+			// sort by edge age
+			let aUuid = a.edge.Uuid;
+			let bUuid = b.edge.Uuid;
+			if (parseInt(aUuid) < parseInt(bUuid)) { return -1; }
+			if (parseInt(aUuid) > parseInt(bUuid)) { return 1; }
+			return 0;
+		})
+
+
+		this.filesContentEdge = this.undirectedContentEdge.filter(contentEdge => contentEdge.content.Table === 'File');
+		this.filesContentEdge.sort((a, b) => {
+			if (a.content.Title.toLowerCase() < b.content.Title.toLowerCase()) { return -1; }
+			if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
+			return 0;
+		})
+
+		this.reviewContentEdge = this.undirectedContentEdge.filter(contentEdge => contentEdge.content.Table === 'Review');
+		this.reviewContentEdge.sort((a, b) => {
+			if (a.content.ReviewDate < b.content.ReviewDate) { return -1; }
+			if (a.content.ReviewDate > b.content.ReviewDate) { return 1; }
+			return 0;
+		})
+
+		this.otherConnectedContentEdge = this.undirectedContentEdge.filter(contentEdge => !(contentEdge.content.Table === 'Review' || contentEdge.content.Table === 'File'));
+		this.otherConnectedContentEdge.sort((a, b) => {
+			if (a.content.Title.toLowerCase() < b.content.Title.toLowerCase()) { return -1; }
+			if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
+			return 0;
+		})
 
 		this.toolbar.load(contentObject);
 		this.sourceContent.load(this.childrenContentEdge);
@@ -57,8 +90,8 @@ export class Source {
 		this.sidePanel.loadParents(this.parentContentEdge);
 		this.sidePanel.loadFiles(this.filesContentEdge);
 		this.sidePanel.loadReviews(this.reviewContentEdge);
-		// this.sidePanel.loadConnected(this.otherConnectedContentEdge);
-		this.sidePanel.loadConnected(this.undirectedContentEdge);
+		this.sidePanel.loadConnected(this.otherConnectedContentEdge);
+		// this.sidePanel.loadConnected(this.undirectedContentEdge);
 
 
 		this.displayPanelsFromLocalStorage();

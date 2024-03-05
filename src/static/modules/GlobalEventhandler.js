@@ -487,7 +487,16 @@ class GlobalEventHandler {
 
 							await this.app.mainContent.loadFromUrl();
 
+
 							let reviewChildren = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
+							reviewChildren.sort((a, b) => {
+								// sort by edge age
+								let aUuid = a.edge.Uuid;
+								let bUuid = b.edge.Uuid;
+								if (parseInt(aUuid) < parseInt(bUuid)) { return -1; }
+								if (parseInt(aUuid) > parseInt(bUuid)) { return 1; }
+								return 0;
+							})
 
 							this.app.mainContent.source.sourceContent.reviewList.load(reviewChildren);
 
@@ -551,10 +560,16 @@ class GlobalEventHandler {
 						break;
 
 
+
 					// CURRENT SOURCE
 					case 'y':
 						document.getElementById('mainContentTitle').focus();
 						break;
+					case 'h':
+						document.getElementById('mainContentReview').focus();
+						break;
+
+
 					case 'u':
 						document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
 						document.getElementById('sourceToolbar_filePanel').click();
@@ -569,12 +584,11 @@ class GlobalEventHandler {
 					case 'o':
 						document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
 						document.getElementById('sourceToolbar_reviewPanel').click();
+						this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
 						// document.getElementById('reviewlistContainer').focus();
 						// this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
 						break;
-					case 'h':
-						document.getElementById('mainContentReview').focus();
-						break;
+
 
 
 					case '[':
@@ -908,6 +922,15 @@ class GlobalEventHandler {
 
 		*/
 		switch (event.key) {
+
+			// THE SAME AS FOCUS SHORTCUTS, BUT ENABLE WITHOUT HAVING TO PRESS 'F' BEFORE
+			case 'y':
+				document.getElementById('mainContentTitle').focus();
+				break;
+			case 'h':
+				document.getElementById('mainContentReview').focus();
+				break;
+
 
 			// CURRENLTY UNREACHABLE
 			case 'c':
