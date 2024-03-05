@@ -1,3 +1,4 @@
+import { dbis } from "../../dbi-send/dbi-send.js";
 
 
 
@@ -18,6 +19,30 @@ export class State {
 		this.element_1 = this.element.querySelector('#contentState_1');
 		this.element_2 = this.element.querySelector('#contentState_2');
 		this.element_3 = this.element.querySelector('#contentState_3');
+
+		let lastState1Uuid = localStorage.getItem('state1Uuid');
+		let lastState2Uuid = localStorage.getItem('state2Uuid');
+		let lastState3Uuid = localStorage.getItem('state3Uuid');
+
+		// console.log('lastState1Uuid', lastState1Uuid)
+		if (lastState1Uuid) {
+			dbis.Content_SelectOnUuid(lastState1Uuid)
+				.then((state1ContentObject) => {
+					this.setState1(state1ContentObject);
+				});
+		}
+		if (lastState2Uuid) {
+			dbis.Content_SelectOnUuid(lastState2Uuid)
+				.then((state2ContentObject) => {
+					this.setState2(state2ContentObject);
+				});
+		}
+		if (lastState3Uuid) {
+			dbis.Content_SelectOnUuid(lastState3Uuid)
+				.then((state3ContentObject) => {
+					this.setState3(state3ContentObject);
+				});
+		}
 
 	}
 

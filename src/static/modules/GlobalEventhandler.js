@@ -119,11 +119,12 @@ class GlobalEventHandler {
 		let targetingMainContentReview = 0;
 		let targetingLoadedProject = 0;
 		if (targetingContentObject) {
-			if (mainContentElement.contentObject)
+			// first check if exists, then if contentobject. Otherwide error will be thrown if elements not loaded
+			if (mainContentElement && mainContentElement.contentObject)
 				targetingMainContentObject = contentObject.Uuid == mainContentElement.contentObject.Uuid ? 1 : 0;
-			if (mainReviewElement.contentObject)
+			if (mainReviewElement && mainReviewElement.contentObject)
 				targetingMainContentReview = contentObject.Uuid == mainReviewElement.contentObject.Uuid ? 1 : 0;
-			if (loadedReviewElement.contentObject)
+			if (loadedReviewElement && loadedReviewElement.contentObject)
 				targetingLoadedProject = contentObject.Uuid == loadedReviewElement.contentObject.Uuid ? 1 : 0;
 		}
 		// console.log('targetingMainContentObject? : ', targetingMainContentObject)
@@ -169,7 +170,8 @@ class GlobalEventHandler {
 			}
 			else if (event.target.id === 'searchInput' && event.key == 'Escape') {
 
-				document.getElementById('mainMenuSearch').click();
+				document.getElementById('searchContainer').focus()
+				// document.getElementById('mainMenuSearch').click();
 
 			}
 			if (event.key === 'Escape' && event.target.classList.contains('contextElement')) {
@@ -213,53 +215,48 @@ class GlobalEventHandler {
 
 			switch (event.key) {
 
+				// Search
+				case '/':
+					this.mode = '/';
+					break;
+
+				// Child
 				case 'c':
-					// console.log('TOGGLE STATE')
 					this.mode = 'c';
-					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
-					clearTimeout(this.modeTimeout);
-					setTimeout(() => { this.mode = '' }, 1000);
-					return;
 					break;
 
+				// Focus
 				case 'f':
-					// console.log('TOGGLE STATE')
 					this.mode = 'f';
-					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
-					clearTimeout(this.modeTimeout);
-					setTimeout(() => { this.mode = '' }, 1000);
-					return;
 					break;
 
+				// Go
 				case 'g':
-					// console.log('TOGGLE STATE')
 					this.mode = 'g';
-					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
-					clearTimeout(this.modeTimeout);
-					setTimeout(() => { this.mode = '' }, 1000);
-					return;
 					break;
 
+				// Toggle
 				case 't':
-					console.log('TOGGLE STATE')
 					this.mode = 't';
-					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
-					clearTimeout(this.modeTimeout);
-					this.modeTimeout = setTimeout(() => { this.mode = '' }, 1000);
-					return;
 					break;
 
+				// Undirected
 				case 'v':
-					// console.log('TOGGLE STATE')
 					this.mode = 'v';
-					// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
-					clearTimeout(this.modeTimeout);
-					setTimeout(() => { this.mode = '' }, 1000);
-					return;
 					break;
 
 				default:
 					break;
+			}
+
+			if (this.mode !== '') {
+				console.log('TOGGLED TO ', this.mode)
+
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
+
+				setTimeout(() => { this.mode = '' }, 1000);
+				return;
 			}
 
 		}
@@ -270,6 +267,65 @@ class GlobalEventHandler {
 
 		let elem;
 		switch (this.mode) {
+
+
+
+			/*
+				/////////////////
+			*/
+			case '/':
+
+				let searchType = '';
+				let searchTypeCheckboxId = undefined;
+
+				switch (event.key) {
+
+					case 'c':
+						searchTypeCheckboxId = 'codeSearchCheckbox';
+						break;
+
+					case 'f':
+						searchTypeCheckboxId = 'fileSearchCheckbox';
+						break;
+
+					case 'p':
+						searchTypeCheckboxId = 'projectSearchCheckbox';
+						break;
+
+					case 's':
+						searchTypeCheckboxId = 'sourceSearchCheckbox';
+						break;
+
+					case 't':
+						searchTypeCheckboxId = 'textSearchCheckbox';
+						break;
+
+					default:
+						break;
+				}
+
+				if (searchTypeCheckboxId) {
+
+					let searchCheckbox = document.getElementById(searchTypeCheckboxId);
+
+					if (searchCheckbox.checked) {
+						searchCheckbox.checked = false;
+					}
+					else {
+						searchCheckbox.checked = true;
+					}
+
+				}
+
+				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
+				clearTimeout(this.modeTimeout);
+				this.mode = '';
+				event.stopPropagation();
+				// event.preventDefault();
+				return;
+				break;
+
+
 
 
 			/*
@@ -663,6 +719,9 @@ class GlobalEventHandler {
 				}
 				else if (event.altKey) {
 					console.log('NEW PROJECT and focus');
+					let newProjectObject = await dbis.Content_InsertOnTable('Project');
+					this.app.mainOverlay.project.updateCurrentProjectOnUuid(newProjectObject.Uuid);
+					document.getElementById('mainOverlay_projectTitle').focus();
 				}
 				else if (event.shiftKey) {
 
@@ -684,6 +743,7 @@ class GlobalEventHandler {
 				}
 				else if (event.shiftKey) {
 					event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
+					localStorage.setItem('state1Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
 					console.log('new child to slot 1 object')
@@ -713,6 +773,7 @@ class GlobalEventHandler {
 				}
 				else if (event.shiftKey) {
 					event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
+					localStorage.setItem('state2Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
 					console.log('new child to slot 2 object')
@@ -742,6 +803,7 @@ class GlobalEventHandler {
 				}
 				else if (event.shiftKey) {
 					event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
+					localStorage.setItem('state3Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
 					console.log('new child to slot 3 object')
@@ -1010,6 +1072,7 @@ class GlobalEventHandler {
 
 			case 'q':
 			case 'Escape':
+				// console.log('document.activeElement', document.activeElement)
 				if (event.target.classList.contains('contextMenu')) {
 					// console.log('TTTTTTTTTTTT', event.target.contentObjectElement)
 					// console.log(event.target.contentObjectElement)
@@ -1021,7 +1084,13 @@ class GlobalEventHandler {
 					this.app.contextOverlay.hideContextMenu();
 				}
 				else if (document.getElementById('mainMenuSearch').classList.contains('selected')) {
+
+					// if (document.activeElement == document.getElementById('searchInput')) {
+					// 	document.getElementById('search').focus()
+					// }
+					// else {
 					document.getElementById('mainMenuSearch').click();
+					// }
 				}
 				else if (document.getElementById('mainMenuReview').classList.contains('selected')) {
 					document.getElementById('mainMenuReview').click();

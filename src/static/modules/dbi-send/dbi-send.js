@@ -22,8 +22,10 @@ export class dbis {
 			method: 'POST'
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -38,8 +40,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -56,8 +60,10 @@ export class dbis {
 			body: JSON.stringify(contentObject),
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -72,8 +78,10 @@ export class dbis {
 			method: 'DELETE',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -88,8 +96,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -104,8 +114,10 @@ export class dbis {
 			method: 'POST'
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -120,8 +132,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -148,8 +162,10 @@ export class dbis {
 			method: 'POST',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -166,8 +182,10 @@ export class dbis {
 			body: JSON.stringify(edgeObject),
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -182,8 +200,10 @@ export class dbis {
 			method: 'DELETE',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -198,8 +218,10 @@ export class dbis {
 			method: 'DELETE',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -220,8 +242,10 @@ export class dbis {
 			method: 'POST',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -236,8 +260,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -252,8 +278,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -268,8 +296,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -284,8 +314,10 @@ export class dbis {
 			method: 'GET',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -329,8 +361,10 @@ export class dbis {
 		// console.log(options)
 		// console.log(url)
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			if (response.status == 200) {
@@ -353,8 +387,10 @@ export class dbis {
 		const url = apiUrl + `/file/` + Uuid;
 		const options = { method: 'GET' };
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			// const data = await response.json();
 			console.log(response.status, url)
 
@@ -403,8 +439,10 @@ export class dbis {
 		// console.log(options)
 		// console.log(url)
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			if (response.status == 200) {
@@ -428,8 +466,10 @@ export class dbis {
 			method: 'DELETE',
 		};
 
+		let response;
+
 		try {
-			const response = await fetch(url, options);
+			response = await fetch(url, options);
 			const data = await response.json();
 			console.log(response.status, url)
 			return data;
@@ -445,18 +485,6 @@ export class dbis {
 
 
 
-
-
-
-
-
-
-
-	static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', { 'Uuid': Uuid }) };
-
-	static async Node_SelectChildOfUuid(Uuid) { return contentGet('Node-SelectChildOfUuid', { 'Uuid': Uuid }) };
-	static async NodeEdge_SelectChildOfUuid(Uuid) { return contentGet('NodeEdge-SelectChildOfUuid', { 'Uuid': Uuid }) };
-
 }
 
 
@@ -467,34 +495,4 @@ export class dbis {
 
 
 
-
-
-
-
-
-
-
-// async function contentGet(functionstring, paramObject) {
-// 	let url = basePath + `content//${functionstring}?`;
-
-// 	for (const [key, value] of Object.entries(paramObject)) {
-// 		console.log(`${key}: ${value}`);
-// 		url += `${key}=${value}`;
-// 	}
-
-// 	// console.log(url)
-
-// 	const options = { method: 'GET', body: undefined };
-
-// 	try {
-// 		const response = await fetch(url, options);
-// 		const data = await response.json();
-// 		return data;
-// 		// console.table(data);
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-
-
-// }
 

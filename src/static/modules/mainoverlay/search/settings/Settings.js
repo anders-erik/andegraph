@@ -13,6 +13,7 @@ export class Settings {
 	orderBySelect;
 
 	searchSettingsTables;
+	codeCheckbox;
 	fileCheckbox;
 	projectCheckbox;
 	sourceCheckbox;
@@ -33,6 +34,7 @@ export class Settings {
 
 
 		this.searchSettingsTables = this.element.querySelector('#searchSettings_tables')
+		this.codeCheckbox = this.element.querySelector('#codeSearchCheckbox');
 		this.fileCheckbox = this.element.querySelector('#fileSearchCheckbox');
 		this.projectCheckbox = this.element.querySelector('#projectSearchCheckbox');
 		this.sourceCheckbox = this.element.querySelector('#sourceSearchCheckbox');
@@ -43,8 +45,10 @@ export class Settings {
 
 
 
+
 	getTableList() {
 		let listString = `
+		${this.codeCheckbox.checked ? 'Code,' : ''}
 		${this.fileCheckbox.checked ? 'File,' : ''}
 		${this.projectCheckbox.checked ? 'Project,' : ''}
 		${this.sourceCheckbox.checked ? 'Source,' : ''}

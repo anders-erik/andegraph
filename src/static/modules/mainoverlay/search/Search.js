@@ -1,8 +1,8 @@
 
 import { dbis } from "../../dbi-send/dbi-send.js";
-import { Input } from "./Input.js";
-import { Settings } from "./Settings.js";
-import { Table } from "./Table.js";
+import { Input } from "./input/Input.js";
+import { Settings } from "./settings/Settings.js";
+import { Table } from "./table/Table.js";
 
 
 export class Search {
@@ -28,10 +28,28 @@ export class Search {
 		this.input.element.addEventListener('focusout', this.inputFocusOut.bind(this));
 
 		this.settings = new Settings(this.element);
+		this.subscribeToSettingsChange();
 
 		this.table = new Table(this.element);
 	}
 
+
+	subscribeToSettingsChange() {
+		this.settings.descCheckbox.addEventListener('change', this.searchOnSettingsChange.bind(this))
+		this.settings.tableLimitInput.addEventListener('change', this.searchOnSettingsChange.bind(this))
+		this.settings.orderBySelect.addEventListener('change', this.searchOnSettingsChange.bind(this))
+
+		this.settings.codeCheckbox.addEventListener('change', this.searchOnSettingsChange.bind(this))
+		this.settings.fileCheckbox.addEventListener('change', this.searchOnSettingsChange.bind(this))
+		this.settings.projectCheckbox.addEventListener('change', this.searchOnSettingsChange.bind(this))
+		this.settings.sourceCheckbox.addEventListener('change', this.searchOnSettingsChange.bind(this))
+		this.settings.textCheckbox.addEventListener('change', this.searchOnSettingsChange.bind(this))
+	}
+
+
+	searchOnSettingsChange() {
+		this.doSearch(this.input.element.value);
+	}
 
 
 	inputFocusIn(event) {

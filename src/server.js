@@ -8,6 +8,7 @@ app.use(express.json());
 // https://stackoverflow.com/questions/10434001/static-files-with-express-js
 app.use(express.static(__dirname + '/static'));
 
+app.use('/', express.static(__dirname + '/static'));
 app.use('/source/*', express.static(__dirname + '/static'));
 app.use('/development*', express.static(__dirname + '/static'));
 

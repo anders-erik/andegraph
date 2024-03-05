@@ -41,7 +41,7 @@ export class MainOverlay {
 
 		this.projectContainer = this.element.querySelector('#projectContainer')
 		this.project = new Project(this.projectContainer);
-		this.project.updateCurrentProjectOnUuid(121264848896);
+		// this.project.updateCurrentProjectOnUuid(157237673984);
 
 		this.searchContainer = this.element.querySelector('#searchContainer');
 		this.search = new Search(this.searchContainer);

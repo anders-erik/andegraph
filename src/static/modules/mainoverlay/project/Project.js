@@ -19,11 +19,25 @@ export class Project {
 		this.element.innerHTML = this.projectInnerHtml;
 		this.projectTitleElement = this.element.querySelector('#mainOverlay_projectTitle');
 		this.tableBody = this.element.querySelector('#mainOverlay_projectTableBody')
+
+
+		let lastLoadedProjectUuid = localStorage.getItem('projectUuid');
+		this.updateCurrentProjectOnUuid(lastLoadedProjectUuid);
 	}
+
+
 
 	async updateCurrentProjectOnUuid(projectUuid) {
 
-		this.contentObject = await dbis.Content_SelectOnUuid(projectUuid);
+		let contentObject = await dbis.Content_SelectOnUuid(projectUuid);
+
+		// check if backend returned an actual content object
+		if (!contentObject.Uuid) {
+			console.log(`Couldn't load project.`);
+			return;
+		}
+
+		this.contentObject = contentObject;
 
 		this.childrenContentEdgeObject = await dbis.ContentEdge_SelectChildOfUuid(projectUuid);
 
@@ -35,6 +49,8 @@ export class Project {
 		}
 
 		this.insertContentEdgesIntoDom();
+
+		localStorage.setItem('projectUuid', `${projectUuid}`);
 	}
 
 	insertContentEdgesIntoDom() {
@@ -72,7 +88,7 @@ export class Project {
 
 	projectInnerHtml = `
 
-<div id="mainOverlay_projectTitle" tabindex=0>PLACEHOLDER TITLE</div>
+<div id="mainOverlay_projectTitle" tabindex=0> - </div>
 
 <div id="mainOverlay_projectTableContainer" tabindex=0>
 	<table id="mainOverlay_projectTable">

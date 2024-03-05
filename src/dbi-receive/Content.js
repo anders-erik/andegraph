@@ -32,6 +32,12 @@ module.exports = async (req, res) => {
 		case 'Content-SelectOnUuid':
 			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
 			returnArray = (await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid))[0];
+			// console.log('JSON.stringify(returnArray)', JSON.stringify(returnArray))
+			if (returnArray === undefined) {
+				console.log('No content found on Uuid.');
+				res.status(404).send({});
+				return;
+			}
 			break;
 
 		case 'Content-UpdateWithContentObject':

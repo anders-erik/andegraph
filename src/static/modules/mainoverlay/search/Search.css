@@ -1,6 +1,6 @@
-@import './Input.css';
-@import './Settings.css';
-@import './Table.css';
+@import './input/Input.css';
+@import './settings/Settings.css';
+@import './table/Table.css';
 
 
 #search {
