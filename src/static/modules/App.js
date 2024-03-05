@@ -20,6 +20,8 @@ class App {
 	contextOverlay;
 	// leftPanel;
 
+	focusOverlayElement;
+
 	projectUuid;
 	projectnodeObject;
 	selectedUuid;
@@ -38,7 +40,7 @@ class App {
 		this.rootElement.append(this.appElement);
 
 
-
+		// this.createFocusOverlayElement();
 
 
 
@@ -98,6 +100,8 @@ class App {
 	appFocusIn(event) {
 		// console.log('FOCUS CHANGE')
 
+		// this.moveFocusOverlay();
+
 		let isContextMenuDescendant = false;
 		let contextMenu = document.getElementById('contextMenu');
 		for (const element of contextMenu.querySelectorAll('*')) {
@@ -129,7 +133,34 @@ class App {
 	}
 
 
+	createFocusOverlayElement() {
+		this.focusOverlayElement = document.createElement('div');
+		this.focusOverlayElement.id = 'focusOverlayElement';
+		this.focusOverlayElement.textContent = "FFFFFF";
+		this.appElement.append(this.focusOverlayElement);
+	}
 
+	moveFocusOverlay() {
+
+		let activeElement = document.activeElement;
+
+		if (activeElement.id === 'app') {
+			this.focusOverlayElement.classList.add('hidden');
+		}
+		else {
+			this.focusOverlayElement.classList.remove('hidden');
+
+			let activeClientRec = activeElement.getBoundingClientRect();
+			console.log(activeClientRec)
+
+			this.focusOverlayElement.style.width = activeClientRec.width + 'px';
+			this.focusOverlayElement.style.height = activeClientRec.height + 'px';
+
+			this.focusOverlayElement.style.top = activeClientRec.top + 'px';
+			this.focusOverlayElement.style.left = activeClientRec.left + 'px';
+		}
+
+	}
 
 }
 

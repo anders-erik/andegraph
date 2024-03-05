@@ -36,6 +36,8 @@ export class ReviewList {
 			contentCard.dataset.edgeuuid = contentEdge.edge.Uuid;
 
 
+			contentCard.querySelector('.contentCardOverlay').classList.add('hidden');
+
 			this.element.append(contentCard)
 		}
 
