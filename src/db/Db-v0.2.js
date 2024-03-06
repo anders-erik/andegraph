@@ -3,7 +3,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const dbLocationLegacy = process.env.GRAPH_DB_LOCATION;
-const dbLocation = '/data/live/graph-v0.2-0.db';
+const dbLocation = '/data/live/graph-v0.2-1.db';
 const dbLocationTemp = '/data/live/graph-v0.2-temp.db';
 let db = {};
 // let r = 0;
@@ -11,13 +11,10 @@ let db = {};
 
 
 const tableNames = [
-    'CodeType',
     'Code',
     'FileType',
     'File',
-    'SourceType',
     'Source',
-    'TextType',
     'Text',
 
     'Event',
@@ -43,7 +40,7 @@ async function initDB() {
         //console.log(`Using sqlite database at ${dbLocation}`);
     }
 
-    // console.log(1)
+    console.log(1)
     // If the db-file does not exist, create new db
     if (!fs.existsSync(dbLocation)) {
 
@@ -54,10 +51,10 @@ async function initDB() {
         // Remove temporary db-file on error
         // NOT WOKRING. SE NOTE ABOVE!
         try {
-            // console.log(2)
+            console.log(2)
             console.log('No database found. Creating new.')
             await newDatabase();
-            // console.log(3)
+            console.log(3)
         } catch (error) {
             // console.log('|||||||||||||||||||||||||||||||||||||||||')
             fs.unlinkSync(dbLocationTemp);
@@ -67,7 +64,7 @@ async function initDB() {
         // console.log(4)
     }
 
-    // console.log(5)
+    console.log(5)
     // Connect to Database
     try {
         console.log('Connecting to database at', dbLocation)
@@ -111,7 +108,7 @@ async function newDatabase() {
         // console.log('1')
         try {
             let connectionPromise = await connectDB(dbLocationTemp);
-            console.log(connectionPromise)
+            console.log('connectionPromise', connectionPromise)
         } catch (error) {
             return error;
         }
@@ -138,6 +135,7 @@ async function newDatabase() {
         } catch (error) {
             console.log('createTables error')
             reject('error at create table call')
+            return error;
         }
 
         console.log(24)

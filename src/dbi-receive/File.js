@@ -4,7 +4,7 @@ const cp = require('child_process');
 
 let dbi = require('../db-interface/DbInterface');
 
-let fileDir = `/data/live/files-v0.2.0/`;
+let fileDir = `/data/live/files-v0.2.1/`;
 
 if (!fs.existsSync(fileDir)) {
 	cp.execSync(`mkdir ${fileDir}`);
