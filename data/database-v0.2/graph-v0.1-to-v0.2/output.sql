@@ -4042,9 +4042,9 @@ INSERT INTO reviewDates VALUES(106979188882,'2028-12-25',0,106979190784);
 INSERT INTO reviewDates VALUES(106979188898,'2033-11-21',0,106979190784);
 CREATE TABLE Node (
 	"Uuid" INTEGER PRIMARY KEY, 
-	"Table" TEXT DEFAULT '' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER DEFAULT 0 NOT NULL, 
 	"TimeLastChange" INTEGER DEFAULT 0 NOT NULL,
 
@@ -7185,26 +7185,25 @@ INSERT INTO Node VALUES(106979192898,'Review','','title',1701388800,1701388800);
 INSERT INTO Node VALUES(106979192914,'Review','','title',1701388800,1701388800);
 INSERT INTO Node VALUES(106979195954,'Review','','title',1701388800,1701388800);
 INSERT INTO Node VALUES(106979526656,'Code','','',1706486400,1706486400);
-CREATE TABLE IF NOT EXISTS "NodeTable" (
+CREATE TABLE NodeTable (
 	"Table" TEXT PRIMARY KEY
 );
-INSERT INTO NodeTable VALUES('');
-INSERT INTO NodeTable VALUES('Project');
-INSERT INTO NodeTable VALUES('Source');
-INSERT INTO NodeTable VALUES('File');
-INSERT INTO NodeTable VALUES('Review');
-INSERT INTO NodeTable VALUES('Text');
 INSERT INTO NodeTable VALUES('Code');
 INSERT INTO NodeTable VALUES('Equation');
 INSERT INTO NodeTable VALUES('Event');
+INSERT INTO NodeTable VALUES('File');
+INSERT INTO NodeTable VALUES('Project');
+INSERT INTO NodeTable VALUES('Review');
+INSERT INTO NodeTable VALUES('Source');
+INSERT INTO NodeTable VALUES('Text');
 CREATE TABLE Edge (
 	"Uuid" INTEGER PRIMARY KEY,
 	"Node1Uuid" INTEGER NOT NULL, 
 	"Node2Uuid" INTEGER NOT NULL, 
 	"Directed" INTEGER NOT NULL,
-	"Type" TEXT DEFAULT '' NOT NULL,
+	"Type" TEXT DEFAULT "" NOT NULL,
 	"Order" INTEGER DEFAULT 0 NOT NULL,
-	"Path" TEXT DEFAULT '/' NOT NULL,
+	"Path" TEXT DEFAULT "/" NOT NULL,
 
 	FOREIGN KEY("Node1Uuid") REFERENCES Node("Uuid"),
 	FOREIGN KEY("Node2Uuid") REFERENCES Node("Uuid")	
@@ -10148,7 +10147,6 @@ INSERT INTO Edge VALUES(106980195954,106979190784,106979195954,0,'',0,'/');
 CREATE TABLE FileType (
 	"Type" TEXT PRIMARY KEY
 );
-INSERT INTO FileType VALUES('');
 INSERT INTO FileType VALUES('image');
 INSERT INTO FileType VALUES('audio');
 INSERT INTO FileType VALUES('video');
@@ -10159,9 +10157,9 @@ INSERT INTO FileType VALUES('3d');
 INSERT INTO FileType VALUES('pdf');
 CREATE TABLE File (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'File' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "File" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 
@@ -10587,29 +10585,17 @@ INSERT INTO File VALUES(93397040131,'File','image','',1705622400,1705622400,'png
 INSERT INTO File VALUES(93398210563,'File','image','',1705622400,1705622400,'png',0,0);
 INSERT INTO File VALUES(93398493187,'File','image','',1705622400,1705622400,'png',0,0);
 INSERT INTO File VALUES(93399565315,'File','image','',1705622400,1705622400,'png',0,0);
-CREATE TABLE SourceType (
-	"Type" TEXT PRIMARY KEY
-);
-INSERT INTO SourceType VALUES('');
-INSERT INTO SourceType VALUES('article');
-INSERT INTO SourceType VALUES('paper');
-INSERT INTO SourceType VALUES('book');
-INSERT INTO SourceType VALUES('forum');
-INSERT INTO SourceType VALUES('video');
-INSERT INTO SourceType VALUES('movie');
-INSERT INTO SourceType VALUES('life');
 CREATE TABLE Source (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Source' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Source" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
-	"Url" TEXT DEFAULT '' NOT NULL,
-	"IAmSource" INTEGER DEFAULT 0 NOT NULL,
+	"Url" TEXT DEFAULT "" NOT NULL,
+	"IAmSource" INTEGER DEFAULT 0 NOT NULL
 
-	FOREIGN KEY("Type") REFERENCES SourceType("Type")
 );
 INSERT INTO Source VALUES(1,'Source','','Vem i helvete tror du att du ''r? L[ngben?',1701475200,1701475200,'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date',0);
 INSERT INTO Source VALUES(28,'Source','','aaaaab',1701561600,1701561600,'aaaaa.aaax',0);
@@ -10951,28 +10937,18 @@ INSERT INTO Source VALUES(94331210752,'Source','','Thats how she died - toni and
 INSERT INTO Source VALUES(94331715584,'Source','','Tennis - slog idolen',1705708800,1705708800,'https://www.svt.se/sport/tennis/barnet-mirra-andreeva-tappade-bara-tva-games-mot-barndomsidolen',0);
 INSERT INTO Source VALUES(102930540544,'Source','','',1706227200,1706227200,'',0);
 INSERT INTO Source VALUES(106979190784,'Source','','Crazy js statement from production?',1706486400,1706486400,'https://www.reddit.com/r/webdev/comments/19fm2x6/found_this_in_the_codebase_at_work_today_on_a/',0);
-CREATE TABLE TextType (
-	"Type" TEXT PRIMARY KEY
-);
-INSERT INTO TextType VALUES('');
-INSERT INTO TextType VALUES('funny');
-INSERT INTO TextType VALUES('comment');
-INSERT INTO TextType VALUES('poem');
-INSERT INTO TextType VALUES('lyric');
-INSERT INTO TextType VALUES('word');
 CREATE TABLE Text (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Text' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Text" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
 	"TextContent" TEXT NOT NULL,
 	"Language" TEXT NOT NULL,
-	"IAmAuthor" INTEGER DEFAULT 0 NOT NULL,
+	"IAmAuthor" INTEGER DEFAULT 0 NOT NULL
 
-	FOREIGN KEY("Type") REFERENCES TextType("Type")
 );
 INSERT INTO Text VALUES(9001,'Text','','Javascript Inheritance',1702512000,1702512000,'In programming, inheritance refers to passing down characteristics from a parent to a child so that a new piece of code can reuse and build upon the features of an existing one. JavaScript implements inheritance by using objects. Each object has an internal link to another object called its prototype. That prototype object has a prototype of its own, and so on until an object is reached with null as its prototype. By definition, null has no prototype and acts as the final link in this prototype chain. It is possible to mutate any member of the prototype chain or even swap out the prototype at runtime, so concepts like static dispatching do not exist in JavaScript.','',0);
 INSERT INTO Text VALUES(9002,'Text','','How this guide references an object prototype',1702512000,1702512000,'Note: Following the ECMAScript standard, the notation someObject.[[Prototype]] is used to designate the prototype of someObject. The [[Prototype]] internal slot can be accessed and modified with the Object.getPrototypeOf() and Object.setPrototypeOf() functions respectively. This is equivalent to the JavaScript accessor __proto__ which is non-standard but de-facto implemented by many JavaScript engines. To prevent confusion while keeping it succinct, in our notation we will avoid using obj.__proto__ but use obj.[[Prototype]] instead. This corresponds to Object.getPrototypeOf(obj).','',0);
@@ -11384,31 +11360,16 @@ INSERT INTO Text VALUES(94138765312,'Text','','',1705708800,1705708800,'','',0);
 INSERT INTO Text VALUES(96965716992,'Text','','',1705881600,1705881600,'','',0);
 INSERT INTO Text VALUES(99785216000,'Text','','',1706054400,1706054400,'','',0);
 INSERT INTO Text VALUES(101541494784,'Text','','',1706140800,1706140800,'','',0);
-CREATE TABLE IF NOT EXISTS "CodeType" (
-	"Type" TEXT PRIMARY KEY
-);
-INSERT INTO CodeType VALUES('');
-INSERT INTO CodeType VALUES('js');
-INSERT INTO CodeType VALUES('html');
-INSERT INTO CodeType VALUES('css');
-INSERT INTO CodeType VALUES('bash');
-INSERT INTO CodeType VALUES('docker');
-INSERT INTO CodeType VALUES('python');
-INSERT INTO CodeType VALUES('c');
-INSERT INTO CodeType VALUES('c++');
-INSERT INTO CodeType VALUES('c#');
-INSERT INTO CodeType VALUES('x86');
-CREATE TABLE IF NOT EXISTS "Code" (
+CREATE TABLE Code (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Code' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Code" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
-	"CodeContent" TEXT NOT NULL,
+	"CodeContent" TEXT NOT NULL
 	
-	FOREIGN KEY("Type") REFERENCES CodeType("Type")
 );
 INSERT INTO Code VALUES(9004,'Code','','Object literal example',1702512000,1702512000,'In an object literal like { a: 1, b: 2, __proto__: c }, the value c (which has to be either null or another object) will become the [[Prototype]] of the object represented by the literal, while the other keys like a and b will become the own properties of the object. This syntax reads very naturally, since [[Prototype]] is just an "internal property" of the object.');
 INSERT INTO Code VALUES(9005,'Code','','Object literal and accessing properties',1702512000,1702512000,replace('// Here is what happens when trying to access a property:\n\nconst o = {\n  a: 1,\n  b: 2,\n  // __proto__ sets the [[Prototype]]. It''s specified here\n  // as another object literal.\n  __proto__: {\n    b: 3,\n    c: 4,\n  },\n};\n\n// o.[[Prototype]] has properties b and c.\n// o.[[Prototype]].[[Prototype]] is Object.prototype (we will explain\n// what that means later).\n// Finally, o.[[Prototype]].[[Prototype]].[[Prototype]] is null.\n// This is the end of the prototype chain, as null,\n// by definition, has no [[Prototype]].\n// Thus, the full prototype chain looks like:\n// { a: 1, b: 2 } ---> { b: 3, c: 4 } ---> Object.prototype ---> null\n\nconsole.log(o.a); // 1\n// Is there an ''a'' own property on o? Yes, and its value is 1.\n\nconsole.log(o.b); // 2\n// Is there a ''b'' own property on o? Yes, and its value is 2.\n// The prototype also has a ''b'' property, but it''s not visited.\n// This is called Property Shadowing\n\nconsole.log(o.c); // 4\n// Is there a ''c'' own property on o? No, check its prototype.\n// Is there a ''c'' own property on o.[[Prototype]]? Yes, its value is 4.\n\nconsole.log(o.d); // undefined\n// Is there a ''d'' own property on o? No, check its prototype.\n// Is there a ''d'' own property on o.[[Prototype]]? No, check its prototype.\n// o.[[Prototype]].[[Prototype]] is Object.prototype and\n// there is no ''d'' property by default, check its prototype.\n// o.[[Prototype]].[[Prototype]].[[Prototype]] is null, stop searching,\n// no property found, return undefined.\n','\n',char(10)));
@@ -11445,9 +11406,9 @@ INSERT INTO Code VALUES(92950856704,'Code','','',1705622400,1705622400,replace('
 INSERT INTO Code VALUES(106979526656,'Code','','',1706486400,1706486400,replace('const filteredDrafts = userActivities.value?.awards?.filter((award) => award.isDraft && award.skills.some((skill) => userSkills.value.map((userSkill) => userSkill.skillId).includes(skill.skillId))).map((filteredAward) => filteredAward.uniqueId);\n','\n',char(10)));
 CREATE TABLE Project (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Project' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Project" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
@@ -11456,9 +11417,9 @@ CREATE TABLE Project (
 );
 CREATE TABLE Review (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Review' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Review" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
@@ -13406,9 +13367,9 @@ INSERT INTO Review VALUES(106979192914,'Review','','title',1701388800,1701388800
 INSERT INTO Review VALUES(106979195954,'Review','','title',1701388800,1701388800,'2024-02-26',0,'',106979190784);
 CREATE TABLE Event (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Event' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Event" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
@@ -13419,9 +13380,9 @@ CREATE TABLE Event (
 );
 CREATE TABLE Equation (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Text' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Text" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
@@ -13434,5 +13395,4 @@ CREATE INDEX "Index_Node_Table" ON Node("Table");
 CREATE INDEX "Index_Node_Type" ON Node("Type");
 CREATE INDEX "Index_Edge_Node1Uuid" ON Edge("Node1Uuid");
 CREATE INDEX "Index_Edge_Node2Uuid" ON Edge("Node2Uuid");
-CREATE INDEX "Index_Source_Url" ON Source("Url");
 COMMIT;

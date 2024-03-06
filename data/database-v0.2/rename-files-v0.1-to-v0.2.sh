@@ -61,7 +61,7 @@ rename_files() {
 
 
 # Specify the directory containing the files
-directory_path="../live/files-v0.2"
+directory_path="../live/files-v0.2.0"
 
 
 # Call the function to rename files in the directory

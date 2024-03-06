@@ -1,5 +1,6 @@
 
-CREATE TABLE IF NOT EXISTS Project (
+
+CREATE TABLE IF NOT EXISTS Cluster (
 	"Uuid" INTEGER PRIMARY KEY,
 	"Table" TEXT DEFAULT "Project" NOT NULL, 
 	"Type" TEXT DEFAULT "" NOT NULL, 
@@ -7,7 +8,5 @@ CREATE TABLE IF NOT EXISTS Project (
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
-	"Goal" TEXT NOT NULL
-
+	"Description" TEXT NOT NULL
 );
-

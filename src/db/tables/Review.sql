@@ -2,9 +2,9 @@
 
 CREATE TABLE IF NOT EXISTS Review (
 	"Uuid" INTEGER PRIMARY KEY,
-	"Table" TEXT DEFAULT 'Review' NOT NULL, 
-	"Type" TEXT DEFAULT '' NOT NULL, 
-	"Title" TEXT DEFAULT '' NOT NULL,
+	"Table" TEXT DEFAULT "Review" NOT NULL, 
+	"Type" TEXT DEFAULT "" NOT NULL, 
+	"Title" TEXT DEFAULT "" NOT NULL,
 	"TimeCreated" INTEGER NOT NULL, 
 	"TimeLastChange" INTEGER NOT NULL,
 	
