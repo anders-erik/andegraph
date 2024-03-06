@@ -46,6 +46,8 @@ export class ContentCardMenu {
 		this.contentCard = new ContentCard(contentObject);
 		this.contentCard.classList.add('contextElement');
 
+		this.contentCard.querySelector('.contentCardOverlay').classList.add('hidden');
+
 		// NOTE: Applied a more general solution during activeElement change
 		//
 		// add contextmenu to all descendants

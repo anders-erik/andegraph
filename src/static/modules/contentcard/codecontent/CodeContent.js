@@ -46,7 +46,7 @@ export class CodeContent {
 
 
 		this.contentContainer.append(this.codeHeader, this.element);
-		this.contentcardElement.append(this.codeHeader);
+		// this.contentcardElement.append(this.codeHeader);
 	}
 
 

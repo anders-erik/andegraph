@@ -15,8 +15,8 @@
 
 	/* caret-shape: block; */
 
-	background-color: rgba(129, 81, 19, 0.372);
-	border: solid black 1px;
+	/* background-color: rgba(129, 81, 19, 0.372); */
+	/* border: solid black 1px; */
 }
 
 .sourceContent>div {
@@ -32,7 +32,7 @@
 	justify-content: start;
 	align-items: center;
 
-	border: solid black 1px;
+	border: solid var(--dark-border-1) 1px;
 }
 
 .sourceContent>div>p {
@@ -50,6 +50,8 @@
 .sourceContent>div>a {
 	overflow-x: scroll;
 	scrollbar-width: none;
+
+	min-width: 70%;
 
 	padding: 4px;
 

@@ -15,10 +15,13 @@
 	--dark-bg-2: #030306;
 	--dark-bg-3: #0a0a13;
 	--dark-bg-4: #0e0e1b;
-	--dark-bg-5: #1a1a31;
+	--dark-bg-5: #1b1b2d;
 
 	--light-border-1: #eff8ff;
 	--light-border-2: #656565;
+
+	--dark-border-1: #202428;
+	--dark-border-2: #0d0b0b;
 
 	--light-scrollbar-1: #eff8ff81;
 
@@ -69,7 +72,7 @@ body {
 }
 
 *:focus {
-	box-shadow: inset 0 0 0 2px rgb(255, 220, 246);
+	box-shadow: 0 0 0 2px rgb(255, 220, 246);
 	outline: none;
 }
 
