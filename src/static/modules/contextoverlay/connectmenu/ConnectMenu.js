@@ -1,5 +1,5 @@
 import { dbis } from "../../dbi-send/dbi-send.js";
-import { showStoastSuccess, showToast } from "../../log/toast.js";
+import { showStoastSuccess, showToast } from "../../log/log.js";
 
 
 export class ConnectMenu {
@@ -89,7 +89,7 @@ export class ConnectMenu {
 
 
 	async testButtonClick(event) {
-		console.log('BUTTON FORM CLICK!')
+		// console.log('BUTTON FORM CLICK!')
 
 		let newEdgeObject = {};
 
@@ -117,7 +117,7 @@ export class ConnectMenu {
 
 
 
-		console.table(newEdgeObject);
+		// console.table(newEdgeObject);
 
 		let newEdgeFromDb = await dbis.Edge_InsertUuidUuid(
 			newEdgeObject.Node1Uuid,
@@ -143,79 +143,6 @@ export class ConnectMenu {
 
 		showStoastSuccess('New Edge! ')
 	}
-
-
-
-	/* 
-		BELOW IS NOT YET IMPLEMENTED !
-	*/
-
-
-
-
-
-
-	// // NOT BOUND TO CLASS
-	// async sendForm(event) {
-	// 	// console.log('TARGET> ', event.target.classList.cont)
-	// 	if (event.target.classList.contains('contextElement')) {
-	// 		// console.log('FOCUS OUT ON CONTEXTDATA. PUT!')
-
-	// 		let newContentObject = {};
-
-	// 		let tableRows = document.querySelectorAll('#contextOverlay_contentTableBody tr');
-	// 		console.log('EXTRACT: ', tableRows)
-	// 		for (const tableRow of tableRows) {
-	// 			let key = tableRow.children[0].textContent;
-	// 			let content = tableRow.children[1].textContent;
-	// 			// console.log(JSON.stringify(key), JSON.stringify(content))
-	// 			newContentObject[key] = content;
-
-	// 		}
-
-
-	// 		// DEV TEST - make sure update fails
-	// 		// newContentObject.Uuid = -123;
-
-	// 		// console.log(newContentObject)
-
-	// 	}
-	// }
-
-	// extractContentObjectFromDom() {
-
-	// }
-
-	// async postEdge() {
-
-	// 	try {
-
-	// 		await dbis.Content_UpdateWithContentObject(newContentObject);
-
-	// 		// https://stackoverflow.com/questions/7084557/select-all-elements-with-a-data-xxx-attribute-without-using-jquery
-	// 		let contentElementsWithSameUuid = document.querySelectorAll(`[data-uuid='${newContentObject.Uuid}']`);
-	// 		for (const element of contentElementsWithSameUuid) {
-	// 			element.dataset.uuid = newContentObject.Uuid;
-	// 			element.contentObject = newContentObject;
-	// 			element.update();
-	// 		}
-	// 		// console.log('contentElementsWithSameUuid: ', contentElementsWithSameUuid)
-	// 		// this.extractContentObjectFromDom()
-	// 		// console.log('NEW FOCUS: ', document.activeElement)
-	// 		
-
-	// 	} catch (error) {
-	// 		showToast('Error PUT contentObject')
-	// 	}
-
-	// }
-
-
-
-
-	// populate(contentObject1, contentObject2) {
-
-	// }
 
 
 

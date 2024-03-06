@@ -1,15 +1,16 @@
 
-import { createToast, showToast }  from './toast.js';
+import { createToast, showToast, showStoastSuccess } from './toast.js';
 
 
 // Global log functions
 window.showToast = showToast;
 
 
-(function initLog(){
+(function initLog() {
 	createToast();
 })();
 
 export {
-	showToast
+	showToast,
+	showStoastSuccess
 }

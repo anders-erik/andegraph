@@ -20,3 +20,5 @@
 	- A lot of unused code in the extension has been removed, and all unnecessary communication has been eliminated, resulting in a smaller size and enabling easier future changes.
 
 - main content toolbar got two updates: firstly, it is now fixed to the right viewport border, enabling ok behavior down to viewport widths of ~1400px. In addition it got a dark themed makeover, making it slightly easier on the eye. 
+
+- fixed broken toast notification when new edges are created. Also added a couple of QOL improvements, such as only create toast element on first log-import and text centering. 
