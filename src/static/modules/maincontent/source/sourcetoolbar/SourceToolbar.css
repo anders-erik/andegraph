@@ -7,8 +7,10 @@
 	justify-content: space-evenly;
 	align-items: center;
 
+	color: var(--light-text-1);
+
 	margin: 3px;
-	background-color: antiquewhite;
+	/* background-color: antiquewhite; */
 }
 
 #sourceToolbar * {
@@ -16,17 +18,23 @@
 	flex-direction: row;
 
 
-	background-color: aquamarine;
+	background-color: var(--dark-bg-2);
 }
 
 #sourceToolbar *.button {
 	user-select: none;
 	cursor: pointer;
+
+	padding: 3px;
+	border: solid var(--light-border-2) 1px;
+	border-radius: 3px;
+
+	background-color: var(--dark-bg-4);
 }
 
 #sourceToolbar *.selected {
-	color: aliceblue;
-	background-color: rgb(22, 50, 41);
+	color: var(--dark-text-1);
+	background-color: var(--light-1);
 }
 
 /* #sourceToolbarTitle {
@@ -36,5 +44,5 @@
 
 #sourceToolbar * * {
 	margin: 3px;
-	background-color: rgb(113, 186, 162);
+	/* background-color: rgb(113, 186, 162); */
 }
