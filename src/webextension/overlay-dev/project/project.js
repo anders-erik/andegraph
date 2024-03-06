@@ -19,11 +19,7 @@ let focusProjectSearch = false;
 
 function initProject() {
 
-	// if (!extensionStateFront.active) {
-	// 	console.log('STATE INACTIVE')
-
-	// 	document.getElementById('contextOverlay').style.display = 'none';
-	// }
+	// console.log('project init')
 
 
 
@@ -51,29 +47,10 @@ function initProject() {
 
 
 
-	// THIS DOESN'T WORK BECAUSE I LOOSE FOCUS ON SEARCH BAR WHEN SWITCHING TABS ETC.
-	// if (extensionStateFront.projectSearchActive) {
-	// 	projectSearchInput.focus();
-
-	// }
-
-	// document.body.focus();
-
-	// projectSearchInput.blur()
-
 	projectSearchInput.innerHTML = `<div>${extensionStateFront.projectSearchString}<br></div>`;
 
 	// make sure an empty search is loaded into search table on load
 	keyDownDuringSearch();
-
-	// setTimeout(() => {
-
-	// 	projectSearchInput.textContent = `<div>${extensionStateFront.projectSearchString}<br></div>`;
-
-	// 	// make sure an empty search is loaded into search table on load
-	// 	keyDownDuringSearch();
-
-	// }, 100)
 
 
 }
@@ -99,7 +76,7 @@ async function newProjectButtonClicked() {
 
 	writeProjectFromStateToDom();
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -112,7 +89,7 @@ async function editableProjectPropertyFocusOut() {
 	// update title, etc.
 	writeProjectFromStateToDom();
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 	await putCurrentProjectObject();
 
@@ -124,7 +101,7 @@ async function editableProjectPropertyFocusOut() {
 function searchProjectIn() {
 	// focusProjectSearch = true;
 	extensionStateFront.projectSearchActive = true;
-	writeStateFromFront();
+	//writeStateFromFront();
 
 	if (projectSearchInput.textContent == '') {
 		projectSearchInput.innerHTML = '<div><br></div>'; // default content on 'contenteditable' elements 
@@ -139,7 +116,7 @@ function searchProjectIn() {
 
 function searchProjectOut() {
 	extensionStateFront.projectSearchActive = false;
-	writeStateFromFront();
+	//writeStateFromFront();
 	// focusProjectSearch = false;
 	// console.log('focusout search ')
 	// projectSearchInput.removeEventListener('keypress', keyPressDuringSearch)
@@ -200,7 +177,7 @@ async function projectSearchRowClicked(event) {
 
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -355,7 +332,7 @@ function copyProjectPropertiesFromDomToState() {
 
 	extensionStateFront.current_projectObject = tempProjectObjectFromDom;
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -480,7 +457,7 @@ async function fetchProjectSearchThenWriteToStates() {
 	extensionStateFront.current_projectSearchObjects = await dbis.Content_SelectOnTitleLikeString(extensionStateFront.projectSearchString, 50, 'Project', 'Title', 0)
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 	// populateProjectSearchTableFromState();
@@ -496,7 +473,7 @@ async function fetchCurrentProjectChildrenThenWriteToStates() {
 	extensionStateFront.current_projectChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 }
@@ -513,7 +490,7 @@ async function fetchSourceOnUuidThenWriteToStates(sourceUuid) {
 	console.log('New current source object: ', extensionStateFront.current_sourceObject)
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 

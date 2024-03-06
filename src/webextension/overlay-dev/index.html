@@ -8,18 +8,14 @@
 	<link rel="stylesheet" href="globals.css">
 	<link rel="stylesheet" href="project/project.css">
 	<link rel="stylesheet" href="source/source.css">
-	<link rel="stylesheet" href="ContextOverlay.css">
-	<link rel="stylesheet" href="Clipboard.css">
+	<link rel="stylesheet" href="clipboard/Clipboard.css">
 
 
-	<script src="Clipboard.js" defer></script>
+	<script src="clipboard/Clipboard.js" defer></script>
 	<script src="keyevents.js" defer></script>
-	<script src="paste.js" defer></script>
-	<script src="dbis-we.js" defer></script>
 	<script src="dbi-send.js" defer></script>
 	<script src="project/project.js" defer></script>
 	<script src="source/source.js" defer></script>
-	<script src="ContextOverlay.js" defer></script>
 	<script src="index.js" defer></script>
 </head>
 
@@ -243,14 +239,24 @@
 							<label for="ae-clipboardCodeCheckbox">Code</label>
 						</div>
 
-
-						<select name="codeselect" id="ae-clipboardCodeSelect" disabled>
-							<option value=""></option>
-							<option value="js">js</option>
-							<option value="css">css</option>
-							<option value="html">html</option>
-						</select>
-
+						<div>
+							<input id="ae-clipboardTextTypeInput" type="text" list="ae-textTypeList" />
+							<datalist id="ae-textTypeList">
+								<option></option>
+								<option>js</option>
+								<option>css</option>
+								<option>html</option>
+								<option>bash</option>
+								<option>cpp</option>
+								<option>x86</option>
+								<option>py</option>
+								<option>cs</option>
+								<option>comment</option>
+								<option>joke</option>
+								<option>chain</option>
+							</datalist>
+							<label for="ae-clipboardTextTypeInput">Type</label>
+						</div>
 
 					</div>
 

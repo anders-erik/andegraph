@@ -259,15 +259,26 @@ function htmlBodyContents() {
 	}
 
 
-
+	// Make sure that the extension container is not injected using innerhtml, which broke MANY pages!
+	// Also wrap injection with a function for added control
+	// 2024-03-06
 	let innerHtmlString = `\n\n
 
-document.body.innerHTML += \`
+function appendOverlay() {
+
+let ae_container = document.createElement('div');
+ae_container.id = 'ae-container';
+
+ae_container.innerHTML += \`
 
 ${bodyContent}
 
 		\`
-	`
+
+document.body.append(ae_container);
+
+}
+`;
 
 
 	return innerHtmlString;

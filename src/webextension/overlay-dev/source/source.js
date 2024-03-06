@@ -90,7 +90,7 @@ async function editableSourcePropertyFocusOut() {
 // 		document.getElementById('aa-sourceTitle').textContent = nodeRow.nodeObject.Title;
 // 		// extensionStateFront.current_sourceUuid = event.target.dataset.uuid;
 // 		console.log(extensionStateFront)
-// 		writeStateFromFront();
+// 		//writeStateFromFront();
 
 // 		writeCurrentSourceObjectToDom();
 
@@ -256,7 +256,7 @@ function copySourcePropertiesFromDomToState() {
 	extensionStateFront.current_sourceObject.Url = document.getElementById('ae-sourcePropTable-Url-value').textContent;
 	extensionStateFront.current_sourceObject.IAmSource = document.getElementById('ae-sourcePropTable-IAmSource-value').textContent;
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 	// console.log(extensionStateFront.current_sourceObject)
@@ -315,7 +315,7 @@ async function addNewSourceToCurrentProject() {
 		writeProjectChildrenFromStateToDom()
 
 
-		writeStateFromFront();
+		//writeStateFromFront();
 
 		// Review_InsertScheduleOnUuid(Uuid, scheduleType)
 
@@ -350,7 +350,7 @@ async function fetchCurrentSourceChildrenThenWriteToStates() {
 	extensionStateFront.current_sourceChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 }
