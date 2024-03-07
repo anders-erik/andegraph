@@ -10,6 +10,19 @@
 	width: 700px;
 	max-width: 700px;
 
+	color: var(--light-text-1);
+	background-color: var(--dark-bg-1);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	letter-spacing: 0.5px;
+
+	border: solid var(--dark-border-2);
+	border-radius: 7px;
+	/* overflow: hidden; */
+
 	/* max-height: 90vh;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -24,20 +37,21 @@
 
 	/* margin: 3px; */
 	/* background-color: rgba(165, 109, 35, 0.372); */
-	border: solid black 1px;
+	/* border: solid black 1px; */
 }
 
 .contentCard a {
 	text-decoration: none;
-	color: black;
+	color: var(--light-text-1);
 }
 
 .contentCardContentContainer {
 	height: 100%;
 	width: 100%;
 
-	background-color: rgba(129, 81, 19, 0.372);
-	border: solid rgb(97, 30, 30) 1px;
+
+	background-color: var(--dark-bg-4);
+	/* border: solid var(--dark-border-2) 1px; */
 }
 
 .contentCardOverlay {
@@ -53,5 +67,6 @@
 	align-items: center;
 
 	color: aliceblue;
-	background-color: rgba(6, 1, 1, 0.366);
+	/* background-color: rgba(6, 1, 1, 0.366); */
+	background-color: var(--dark-bg-5);
 }

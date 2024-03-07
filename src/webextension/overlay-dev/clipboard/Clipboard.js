@@ -3,7 +3,7 @@
 let clipboardInner;
 
 let clipboardCodeCheckbox;
-let clipboardCodeSelect;
+let clipboardTextTypeInput;
 
 let clipboardConcatContents;
 
@@ -12,9 +12,9 @@ function initClipboard() {
 	clipboardConcatContents = document.getElementById('ae-clipboardConcatContent');
 	clipboardInner = document.getElementById('ae-clipboardInner');
 	clipboardCodeCheckbox = document.getElementById('ae-clipboardCodeCheckbox');
-	clipboardCodeSelect = document.getElementById('ae-clipboardCodeSelect');
+	clipboardTextTypeInput = document.getElementById('ae-clipboardTextTypeInput');
 
-	clipboardCodeCheckbox.addEventListener('change', toggleSelectCode);
+	// clipboardCodeCheckbox.addEventListener('change', toggleSelectCode);
 
 	writeTextConcatenationContentToDom();
 
@@ -52,7 +52,7 @@ function startClipboardTextConcatenation() {
 	extensionStateFront.textConcatenationCapturing = true;
 	// extensionStateFront.textConcatenationContent = '';
 	// writeTextConcatenationContentToDom();
-	writeStateFromFront();
+	//writeStateFromFront();
 	// document.getElementById('ae-clipboardContainer').classList.remove('ae-displayNone');
 	clipboardInner.classList.add('ae-activeClipboard');
 	console.log('start text concatentation capture');
@@ -63,7 +63,7 @@ function addSpaceCharacterToCaptureConcatenationContents() {
 	console.log('added new space')
 	if (extensionStateFront.textConcatenationCapturing) {
 		extensionStateFront.textConcatenationContent += ' ';
-		writeStateFromFront();
+		//writeStateFromFront();
 	}
 
 }
@@ -72,7 +72,7 @@ function addNewLineToCaptureConcatenationContents() {
 	console.log('added new line')
 	if (extensionStateFront.textConcatenationCapturing) {
 		extensionStateFront.textConcatenationContent += '\n';
-		writeStateFromFront();
+		//writeStateFromFront();
 	}
 
 }
@@ -85,7 +85,7 @@ function stopClipboardTextConcatenation() {
 	extensionStateFront.textConcatenationContent = '';
 	writeTextConcatenationContentToDom();
 	clipboardInner.classList.remove('ae-activeClipboard');
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -100,15 +100,15 @@ function stopClipboardTextConcatenation() {
 
 */
 
-function toggleSelectCode() {
-	if (clipboardCodeCheckbox.checked) {
-		clipboardCodeSelect.disabled = false;
-	}
-	else {
-		clipboardCodeSelect.disabled = true;
-	}
+// function toggleSelectCode() {
+// 	if (clipboardCodeCheckbox.checked) {
+// 		clipboardTextTypeInput.disabled = false;
+// 	}
+// 	else {
+// 		clipboardTextTypeInput.disabled = true;
+// 	}
 
-}
+// }
 
 async function pasteEvent(event) {
 	// console.log('pastepaste')
@@ -131,7 +131,7 @@ async function pasteEvent(event) {
 
 			writeTextConcatenationContentToDom()
 
-			writeStateFromFront();
+			//writeStateFromFront();
 			// console.log(extensionStateFront.textConcatenationContent);
 
 		}
@@ -141,10 +141,10 @@ async function pasteEvent(event) {
 			// console.log(clipboardCodeCheckbox.checked)
 
 			if (clipboardCodeCheckbox.checked) {
-				postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardCodeSelect.value, clipboardText)
+				postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, clipboardText)
 			}
 			else {
-				postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardText);
+				postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, clipboardText);
 			}
 
 		}
@@ -368,7 +368,7 @@ function determineBaseFileName(selectedFile) {
 */
 
 
-async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(TextContent) {
+async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(textType, TextContent) {
 
 	console.log(extensionStateFront.current_sourceObject.Uuid)
 
@@ -382,6 +382,7 @@ async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(TextC
 
 		newTextContentObject.Title = TextContent.substring(0, 25);
 		newTextContentObject.TextContent = TextContent;
+		newTextContentObject.Type = textType;
 
 
 		// await dbisWe.Content_UpdateOnContentObject(newTextContentObject);

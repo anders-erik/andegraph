@@ -33,3 +33,96 @@
 	font-size: x-small;
 
 }
+
+
+
+
+
+/* 
+	CONTEXT OVERLAY
+*/
+
+#ae-container {
+	width: calc(100%);
+	height: calc(100%);
+	/* background-color: rgba(0, 0, 0, 0.4); */
+	/* border: solid green 3px; */
+	box-shadow: inset 0 0 0 4px rgb(20, 194, 20);
+	/* margin: 1px; */
+	/* padding-right: 5px; */
+
+	/* otherwise clicks won't register on page */
+	pointer-events: none;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
+
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	z-index: 100000000;
+}
+
+#ae-contextOverlay {
+	width: calc(100%);
+	height: calc(100%);
+	/* background-color: rgba(0, 0, 0, 0.4); */
+	/* border: solid green 3px; */
+	box-shadow: inset 0 0 0 4px rgb(20, 194, 20);
+	/* margin: 1px; */
+	/* padding-right: 5px; */
+
+	/* otherwise clicks won't register on page */
+	pointer-events: none;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
+
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	z-index: 100000000;
+}
+
+#ae-overlayRightPanel {
+	background-color: rgba(77, 44, 44, 0.618);
+	height: 98%;
+	margin-right: 8px;
+	width: 320px;
+	overflow-x: hidden;
+	box-shadow: 0 0 0 2px rgb(0, 0, 0);
+
+	pointer-events: all;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	gap: 10px;
+}
+
+.ae-panelContainer {
+	width: 100%;
+	min-width: 250px;
+
+	overflow-x: hidden;
+	/*  */
+
+	border-radius: 3px;
+	background-color: rgb(109, 129, 146);
+}
+
+#ae-sourceContainer {
+	height: 35%;
+}
+
+#ae-projectContainer {
+	height: 35%;
+}
+
+#ae-clipboardContainer {
+	height: 26%;
+}

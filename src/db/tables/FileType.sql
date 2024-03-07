@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS FileType (
 	"Type" TEXT PRIMARY KEY
 );
+INSERT INTO "FileType" (Type) VALUES ("");
 INSERT INTO "FileType" (Type) VALUES ("image");
 INSERT INTO "FileType" (Type) VALUES ("audio");
 INSERT INTO "FileType" (Type) VALUES ("video");

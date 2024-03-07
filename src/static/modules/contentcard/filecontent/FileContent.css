@@ -15,7 +15,7 @@
 	/* REMOVED THIS TO ENABLE *SELECTION ON ELEMENT* => ENABLE PASTING ! ! */
 	/* user-select: none; */
 
-	background-color: rgb(154, 40, 156);
+	/* background-color: rgb(154, 40, 156); */
 	border: solid black 1px;
 }
 

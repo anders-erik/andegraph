@@ -10,7 +10,12 @@
 
 
 
-document.body.innerHTML += `
+function appendOverlay() {
+
+let ae_container = document.createElement('div');
+ae_container.id = 'ae-container';
+
+ae_container.innerHTML += `
 
 
 
@@ -232,14 +237,24 @@ document.body.innerHTML += `
 							<label for="ae-clipboardCodeCheckbox">Code</label>
 						</div>
 
-
-						<select name="codeselect" id="ae-clipboardCodeSelect" disabled>
-							<option value=""></option>
-							<option value="js">js</option>
-							<option value="css">css</option>
-							<option value="html">html</option>
-						</select>
-
+						<div>
+							<input id="ae-clipboardTextTypeInput" type="text" list="ae-textTypeList" />
+							<datalist id="ae-textTypeList">
+								<option></option>
+								<option>js</option>
+								<option>css</option>
+								<option>html</option>
+								<option>bash</option>
+								<option>cpp</option>
+								<option>x86</option>
+								<option>py</option>
+								<option>cs</option>
+								<option>comment</option>
+								<option>joke</option>
+								<option>chain</option>
+							</datalist>
+							<label for="ae-clipboardTextTypeInput">Type</label>
+						</div>
 
 					</div>
 
@@ -259,7 +274,11 @@ document.body.innerHTML += `
 
 
 		`
-	
+
+document.body.append(ae_container);
+
+}
+
 
 
 
@@ -300,6 +319,99 @@ styleSheet.innerText = `
 	font-weight: 400;
 	font-size: x-small;
 
+}
+
+
+
+
+
+/* 
+	CONTEXT OVERLAY
+*/
+
+#ae-container {
+	width: calc(100%);
+	height: calc(100%);
+	/* background-color: rgba(0, 0, 0, 0.4); */
+	/* border: solid green 3px; */
+	box-shadow: inset 0 0 0 4px rgb(20, 194, 20);
+	/* margin: 1px; */
+	/* padding-right: 5px; */
+
+	/* otherwise clicks won't register on page */
+	pointer-events: none;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
+
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	z-index: 100000000;
+}
+
+#ae-contextOverlay {
+	width: calc(100%);
+	height: calc(100%);
+	/* background-color: rgba(0, 0, 0, 0.4); */
+	/* border: solid green 3px; */
+	box-shadow: inset 0 0 0 4px rgb(20, 194, 20);
+	/* margin: 1px; */
+	/* padding-right: 5px; */
+
+	/* otherwise clicks won't register on page */
+	pointer-events: none;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
+
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	z-index: 100000000;
+}
+
+#ae-overlayRightPanel {
+	background-color: rgba(77, 44, 44, 0.618);
+	height: 98%;
+	margin-right: 8px;
+	width: 320px;
+	overflow-x: hidden;
+	box-shadow: 0 0 0 2px rgb(0, 0, 0);
+
+	pointer-events: all;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	gap: 10px;
+}
+
+.ae-panelContainer {
+	width: 100%;
+	min-width: 250px;
+
+	overflow-x: hidden;
+	/*  */
+
+	border-radius: 3px;
+	background-color: rgb(109, 129, 146);
+}
+
+#ae-sourceContainer {
+	height: 35%;
+}
+
+#ae-projectContainer {
+	height: 35%;
+}
+
+#ae-clipboardContainer {
+	height: 26%;
 }
 #ae-projectOuter {
 	height: 100%;
@@ -950,66 +1062,6 @@ styleSheet.innerText = `
 	background-color: rgb(140, 166, 205);
 	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.408);
 }
-#ae-contextOverlay {
-	width: calc(100%);
-	height: calc(100%);
-	/* background-color: rgba(0, 0, 0, 0.4); */
-	/* border: solid green 3px; */
-	box-shadow: inset 0 0 0 4px rgb(20, 194, 20);
-	/* margin: 1px; */
-	/* padding-right: 5px; */
-
-	/* otherwise clicks won't register on page */
-	pointer-events: none;
-
-	display: flex;
-	flex-direction: row;
-	justify-content: end;
-	align-items: center;
-
-	top: 0px;
-	left: 0px;
-	position: fixed;
-	z-index: 100000000;
-}
-
-#ae-overlayRightPanel {
-	background-color: rgba(77, 44, 44, 0.618);
-	height: 98%;
-	margin-right: 8px;
-	width: 320px;
-	overflow-x: hidden;
-	box-shadow: 0 0 0 2px rgb(0, 0, 0);
-
-	pointer-events: all;
-
-	display: flex;
-	flex-direction: column;
-	justify-content: start;
-	gap: 10px;
-}
-
-.ae-panelContainer {
-	width: 100%;
-	min-width: 250px;
-
-	overflow-x: hidden;
-
-	border-radius: 3px;
-	background-color: rgb(109, 129, 146);
-}
-
-#ae-sourceContainer {
-	height: 35%;
-}
-
-#ae-projectContainer {
-	height: 35%;
-}
-
-#ae-clipboardContainer {
-	height: 26%;
-}
 #ae-clipboardInner {
 	width: 100%;
 	height: 100%;
@@ -1057,8 +1109,8 @@ styleSheet.innerText = `
 }
 
 
-#ae-clipboardCodeSelect {
-	background-color: rgb(172, 195, 215);
+#ae-clipboardTextTypeInput {
+	background-color: rgb(204, 215, 225);
 	color: rgb(13, 2, 2);
 	border-radius: 3px;
 	width: 70px;
@@ -1069,13 +1121,12 @@ styleSheet.innerText = `
 	box-shadow: inset 0 0 0 1px black;
 }
 
-#ae-clipboardCodeSelect:disabled {
-	background-color: rgb(99, 101, 102);
-}
 
 
 #ae-clipboardConcatContent {
 	background-color: rgb(131, 170, 204);
+
+	white-space: pre-wrap;
 
 	margin: 10px;
 	padding: 10px;
@@ -1094,7 +1145,7 @@ document.head.appendChild(styleSheet);
 let clipboardInner;
 
 let clipboardCodeCheckbox;
-let clipboardCodeSelect;
+let clipboardTextTypeInput;
 
 let clipboardConcatContents;
 
@@ -1103,9 +1154,9 @@ function initClipboard() {
 	clipboardConcatContents = document.getElementById('ae-clipboardConcatContent');
 	clipboardInner = document.getElementById('ae-clipboardInner');
 	clipboardCodeCheckbox = document.getElementById('ae-clipboardCodeCheckbox');
-	clipboardCodeSelect = document.getElementById('ae-clipboardCodeSelect');
+	clipboardTextTypeInput = document.getElementById('ae-clipboardTextTypeInput');
 
-	clipboardCodeCheckbox.addEventListener('change', toggleSelectCode);
+	// clipboardCodeCheckbox.addEventListener('change', toggleSelectCode);
 
 	writeTextConcatenationContentToDom();
 
@@ -1143,7 +1194,7 @@ function startClipboardTextConcatenation() {
 	extensionStateFront.textConcatenationCapturing = true;
 	// extensionStateFront.textConcatenationContent = '';
 	// writeTextConcatenationContentToDom();
-	writeStateFromFront();
+	//writeStateFromFront();
 	// document.getElementById('ae-clipboardContainer').classList.remove('ae-displayNone');
 	clipboardInner.classList.add('ae-activeClipboard');
 	console.log('start text concatentation capture');
@@ -1154,7 +1205,7 @@ function addSpaceCharacterToCaptureConcatenationContents() {
 	console.log('added new space')
 	if (extensionStateFront.textConcatenationCapturing) {
 		extensionStateFront.textConcatenationContent += ' ';
-		writeStateFromFront();
+		//writeStateFromFront();
 	}
 
 }
@@ -1163,7 +1214,7 @@ function addNewLineToCaptureConcatenationContents() {
 	console.log('added new line')
 	if (extensionStateFront.textConcatenationCapturing) {
 		extensionStateFront.textConcatenationContent += '\n';
-		writeStateFromFront();
+		//writeStateFromFront();
 	}
 
 }
@@ -1176,7 +1227,7 @@ function stopClipboardTextConcatenation() {
 	extensionStateFront.textConcatenationContent = '';
 	writeTextConcatenationContentToDom();
 	clipboardInner.classList.remove('ae-activeClipboard');
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -1191,15 +1242,15 @@ function stopClipboardTextConcatenation() {
 
 */
 
-function toggleSelectCode() {
-	if (clipboardCodeCheckbox.checked) {
-		clipboardCodeSelect.disabled = false;
-	}
-	else {
-		clipboardCodeSelect.disabled = true;
-	}
+// function toggleSelectCode() {
+// 	if (clipboardCodeCheckbox.checked) {
+// 		clipboardTextTypeInput.disabled = false;
+// 	}
+// 	else {
+// 		clipboardTextTypeInput.disabled = true;
+// 	}
 
-}
+// }
 
 async function pasteEvent(event) {
 	// console.log('pastepaste')
@@ -1222,7 +1273,7 @@ async function pasteEvent(event) {
 
 			writeTextConcatenationContentToDom()
 
-			writeStateFromFront();
+			//writeStateFromFront();
 			// console.log(extensionStateFront.textConcatenationContent);
 
 		}
@@ -1232,10 +1283,10 @@ async function pasteEvent(event) {
 			// console.log(clipboardCodeCheckbox.checked)
 
 			if (clipboardCodeCheckbox.checked) {
-				postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardCodeSelect.value, clipboardText)
+				postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, clipboardText)
 			}
 			else {
-				postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardText);
+				postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, clipboardText);
 			}
 
 		}
@@ -1459,7 +1510,7 @@ function determineBaseFileName(selectedFile) {
 */
 
 
-async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(TextContent) {
+async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(textType, TextContent) {
 
 	console.log(extensionStateFront.current_sourceObject.Uuid)
 
@@ -1473,6 +1524,7 @@ async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(TextC
 
 		newTextContentObject.Title = TextContent.substring(0, 25);
 		newTextContentObject.TextContent = TextContent;
+		newTextContentObject.Type = textType;
 
 
 		// await dbisWe.Content_UpdateOnContentObject(newTextContentObject);
@@ -1555,8 +1607,6 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, que
 
 
 
-
-
 // VARS
 let waitingSecondShift = 0;
 let waitingSecondCtrlShift = 0;
@@ -1564,13 +1614,6 @@ let waitingSecondCtrlShift = 0;
 
 
 
-
-
-
-
-
-
-// document.execCommand('paste')
 
 
 async function keydownActiveExtension(keyEvent) {
@@ -1587,40 +1630,63 @@ async function keydownActiveExtension(keyEvent) {
 	}
 
 
-	if (keyEvent.key == 'Shift') {
 
-		if (keyEvent.ctrlKey) {
+	if (keyEvent.altKey) {
 
-			if (waitingSecondCtrlShift == 1) {
+		switch (keyEvent.key) {
+			case 'p':
+				// console.log('Alt + p')
+				console.log(extensionStateFront);
+				break;
 
-				console.log('ctrlshift ctrlshift')
-				waitingSecondCtrlShift = 0;
+			case 'x':
+				// console.log('Alt + x')
+				let checked = clipboardCodeCheckbox.checked;
+				if (checked) {
+					clipboardCodeCheckbox.checked = false;
+				}
+				else {
+					clipboardCodeCheckbox.checked = true;
+				}
+				toggleSelectCode();
+				break;
 
-			}
-			else {
-				waitingSecondCtrlShift = 1;
-				setTimeout(() => { waitingSecondCtrlShift = 0 }, 300);
-			}
+			case '[':
+				// console.log('Alt + [')
+				startClipboardTextConcatenation();
 
+				break;
+
+			case 'Enter':
+				// console.log('Alt + Enter')
+				addNewLineToCaptureConcatenationContents()
+				break;
+
+			case '-':
+				// console.log('Alt + Enter')
+				addSpaceCharacterToCaptureConcatenationContents();
+				break;
+
+			case ']':
+				// console.log('Alt + ]')
+				if (clipboardCodeCheckbox.checked) {
+					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, extensionStateFront.textConcatenationContent)
+				}
+				else {
+					await postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, extensionStateFront.textConcatenationContent);
+				}
+
+				stopClipboardTextConcatenation();
+				break;
+
+			default:
+				break;
 		}
-		else {
-
-			if (waitingSecondShift == 1) {
-
-				console.log('shiftshift')
-				waitingSecondShift = 0;
-				// showOverlay()
-
-			}
-			else {
-				waitingSecondShift = 1;
-				setTimeout(() => { waitingSecondShift = 0 }, 300);
-			}
-
-
-		}
-
 	}
+
+
+
+
 
 
 	if (keyEvent.ctrlKey) {
@@ -1665,84 +1731,6 @@ async function keydownActiveExtension(keyEvent) {
 
 
 
-	if (keyEvent.altKey) {
-
-		switch (keyEvent.key) {
-			case 'p':
-				// console.log('Alt + p')
-				console.log(extensionStateFront);
-				break;
-
-			case 'x':
-				// console.log('Alt + x')
-				let checked = clipboardCodeCheckbox.checked;
-				if (checked) {
-					clipboardCodeCheckbox.checked = false;
-				}
-				else {
-					clipboardCodeCheckbox.checked = true;
-				}
-				toggleSelectCode();
-				break;
-
-			case 'c':
-				/* CANNOT SEEM TO OPEN SELECT USING KEYBOARD..... */
-				// console.log('Alt + c')
-				// clipboardCodeSelect.click()
-				// clipboardCodeSelect.dispatchEvent(new Event('click'));
-				// clipboardCodeSelect.dispatchEvent(new Event('select'));
-				// let ev = document.createEvent('MouseEvents');
-				// ev.MouseEvent('mousedown', true, true, window);
-				// clipboardCodeSelect.dispatchEvent(ev);
-				break;
-
-			case '[':
-				// console.log('Alt + [')
-				startClipboardTextConcatenation();
-
-				break;
-
-			case 'Enter':
-				// console.log('Alt + Enter')
-				// console.log('before: ', extensionStateFront.textConcatenationContent);
-				addNewLineToCaptureConcatenationContents()
-				// console.log('after: ', extensionStateFront.textConcatenationContent);
-				break;
-
-			case '-':
-				// console.log('Alt + Enter')
-				// console.log('before: ', extensionStateFront.textConcatenationContent);
-				addSpaceCharacterToCaptureConcatenationContents();
-				// console.log('after: ', extensionStateFront.textConcatenationContent);
-				break;
-
-			case ']':
-				// console.log('Alt + ]')
-				// console.log('New text concatentation shard: ');
-				// console.log(extensionStateFront.textConcatenationContent)
-
-				if (clipboardCodeCheckbox.checked) {
-					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardCodeSelect.value, extensionStateFront.textConcatenationContent)
-				}
-				else {
-					await postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(extensionStateFront.textConcatenationContent);
-				}
-
-
-
-				stopClipboardTextConcatenation();
-				break;
-
-
-
-			default:
-				break;
-		}
-	}
-
-
-
-
 }
 
 
@@ -1755,294 +1743,6 @@ async function keydownActiveExtension(keyEvent) {
 
 
 
-
-
-
-
-
-
-
-// console.log('dbis-we')
-
-
-
-// function fetchData(url) {
-// 	return fetch(url)
-// 		.then(response => {
-// 			if (!response.ok) {
-// 				throw new Error('Network response was not ok');
-// 			}
-// 			return response.json();
-// 		})
-// 		.catch(error => {
-// 			console.error('There was a problem with the fetch operation:', error);
-// 		});
-// }
-
-
-
-const baseUrl = 'http://localhost:3000';
-const basePath = '/api/v02'
-
-
-class dbisWe {
-
-
-
-	static async fileGet(Uuid) {
-
-		const url = baseUrl + basePath + `/file/` + Uuid;
-		const options = { method: 'GET' };
-
-		try {
-			const response = await fetch(url, options);
-			// const data = await response.json();
-			console.log(response.status, url)
-
-			// console.log(response.body)
-			let blob = await response.blob()
-			let file = await new File([blob], 'testFileName.file2')
-			return file;
-			// .then(blob => new File([blob], 'testfilename.file'))
-			// .then(file => file)
-			// .catch(error => console.error(error))
-			// .then(file => URL.createObjectURL(file))
-			// .then(file => URL.createObjectURL(file))
-			// .then(fileUrl => window.open(fileUrl, '_blank'))
-		} catch (error) {
-			console.log(response.status, url)
-			console.error(error);
-		}
-
-	}
-
-	// static async FileGet(Uuid) {return fileGet(Uuid)}
-	static async filePost(Uuid, file, queryParams, mimeType) {
-
-		let url = baseUrl + basePath + `/file/${Uuid}?`;
-		// console.log(url)
-
-
-		for (const [key, value] of Object.entries(queryParams)) {
-			// console.log(`${key}: ${value}`);
-			url += `${key}=${value}&`;
-			// bodyArray.push(value);
-		}
-		url = url.slice(0, -1);
-
-		const options = {
-			method: 'POST',
-			headers: {
-				"Content-Type": mimeType,
-			},
-			body: file,
-		};
-		// console.log(options)
-		// console.log(url)
-
-		try {
-			const response = await fetch(url, options);
-			const data = await response.json();
-			console.log(response.status, url)
-			if (response.status == 200) {
-				return data;
-			}
-			else {
-				throw new Error('FAILED PUT FROM: contentPut in dbis-we')
-			}
-			// console.table(data);
-		} catch (error) {
-			console.log(response.status, url)
-			console.error(error);
-		}
-
-	}
-
-	// static async Content_SelectChildOfUuid(Uuid) { return contentGet('Content-SelectChildOfUuid', {'Uuid': Uuid}) };
-
-	static async Node_SelectChildOfUuid(Uuid) { return nodeGet('Node-SelectChildOfUuid', { 'Uuid': Uuid }) };
-	static async NodeEdge_SelectChildOfUuid(Uuid) { return nodeGet('NodeEdge-SelectChildOfUuid', { 'Uuid': Uuid }) };
-	// static async NodeEdge_SelectChildOfUuid(Uuid) { return contentGet('NodeEdge-SelectChildOfUuid', {'Uuid': Uuid}) };
-
-	static async Project_SelectLikeString(searchString) { return await contentGet('Project-SelectLikeString', { 'searchString': searchString }) };
-
-
-
-	static async Content_SelectOnUuid(Uuid) { return await contentGet('Content-SelectOnUuid', { 'Uuid': Uuid }) };
-
-
-	static async Content_UpdateOnContentObject(contentObject) { return await contentPut('Content-UpdateOnContentObject', contentObject) };
-
-	static async Content_InsertOnTable(table) { return contentPost('Content-InsertOnTable', { 'Table': table }) };
-
-	static async Review_InsertScheduleOnUuid(Uuid, scheduleType) { return contentPost('Review-InsertScheduleOnUuid', { 'Uuid': Uuid, 'scheduleType': scheduleType }) };
-
-	static async Content_InsertChildUuidTable(Uuid, childTable) { return contentPost('Content-InsertChildUuidTable', { 'Uuid': Uuid, 'Table': childTable }) };
-}
-
-async function filePost(Uuid, file, contentType, queryParams) {
-
-
-
-}
-
-
-
-// async function fileGet(Uuid) {
-
-// 	const url = baseUrl + basePath + `/file/` + Uuid;
-// 	const options = { method: 'GET' };
-
-// 	try {
-// 		const response = await fetch(url, options);
-// 		// const data = await response.json();
-// 		console.log(response.status, url)
-
-// 		// console.log(response.body)
-// 		response.blob()
-// 			.then(blob => new File([blob], 'testfilename.file'))
-// 			.catch(error => console.error(error))
-// 		// .then(file => URL.createObjectURL(file))
-// 		// .then(file => URL.createObjectURL(file))
-// 		// .then(fileUrl => window.open(fileUrl, '_blank'))
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-
-// }
-
-
-async function contentGet(functionstring, paramObject) {
-	let url = baseUrl + basePath + `/content/${functionstring}?`;
-
-	for (const [key, value] of Object.entries(paramObject)) {
-		// console.log(`${key}: ${value}`);
-		url += `${key}=${value}`;
-	}
-
-	// console.log(url)
-
-	const options = { method: 'GET', body: undefined };
-	// console.log(url)
-	try {
-		const response = await fetch(url, options);
-		const data = await response.json();
-		console.log(response.status, url)
-		// console.log(url)
-		// console.log(data)
-		return data;
-		// console.table(data);
-	} catch (error) {
-		console.log(response.status, url)
-		console.error(error);
-	}
-
-
-}
-
-async function nodeGet(functionstring, paramObject) {
-	let url = baseUrl + basePath + `/node/${functionstring}?`;
-
-	for (const [key, value] of Object.entries(paramObject)) {
-		// console.log(`${key}: ${value}`);
-		url += `${key}=${value}`;
-	}
-
-	// console.log(url)
-
-	const options = { method: 'GET', body: undefined };
-	// console.log(url)
-	try {
-		const response = await fetch(url, options);
-		const data = await response.json();
-		console.log(response.status, url)
-		// console.log(data)
-		return data;
-		// console.table(data);
-	} catch (error) {
-		console.log(response.status, url)
-		console.error(error);
-	}
-
-
-}
-
-async function contentPost(functionstring, paramObject) {
-
-	let url = baseUrl + basePath + `/content/${functionstring}`;
-	// console.log(url)
-
-	let bodyArray = [];
-
-	for (const [key, value] of Object.entries(paramObject)) {
-		// console.log(`${key}: ${value}`);
-		// url += `${key}=${value}`;
-		bodyArray.push(value);
-	}
-
-	const options = {
-		method: 'POST',
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(bodyArray),
-	};
-	// console.log(options)
-
-	try {
-		const response = await fetch(url, options);
-		const data = await response.json();
-		console.log(response.status, url)
-		if (response.status == 200) {
-			return data;
-		}
-		else {
-			throw new Error('FAILED PUT FROM: contentPut in dbis-we')
-		}
-		// console.table(data);
-	} catch (error) {
-		console.log(response.status, url)
-		console.error(error);
-	}
-
-
-}
-
-async function contentPut(functionstring, putObject) {
-	let url = baseUrl + basePath + `/content/${functionstring}`;
-	// console.log(url)
-
-	const options = {
-		method: 'PUT',
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify([putObject]),
-	};
-	// console.log(options)
-	try {
-		const response = await fetch(url, options);
-		// const data = await response.json();
-		console.log(response.status, url)
-		if (response.status == 200) {
-			return;
-		}
-		else {
-			throw new Error('FAILED PUT FROM: contentPut in dbis-we')
-		}
-		// console.table(data);
-	} catch (error) {
-		console.log(response.status, url)
-		console.error(error);
-	}
-
-
-}
-
-// dbisWe.Project_SelectLikeString('')
-// 	.then((data) => {
-// 		// console.log(data)
-// 	})
 
 
 
@@ -2566,11 +2266,7 @@ let focusProjectSearch = false;
 
 function initProject() {
 
-	// if (!extensionStateFront.active) {
-	// 	console.log('STATE INACTIVE')
-
-	// 	document.getElementById('contextOverlay').style.display = 'none';
-	// }
+	// console.log('project init')
 
 
 
@@ -2598,29 +2294,10 @@ function initProject() {
 
 
 
-	// THIS DOESN'T WORK BECAUSE I LOOSE FOCUS ON SEARCH BAR WHEN SWITCHING TABS ETC.
-	// if (extensionStateFront.projectSearchActive) {
-	// 	projectSearchInput.focus();
-
-	// }
-
-	// document.body.focus();
-
-	// projectSearchInput.blur()
-
 	projectSearchInput.innerHTML = `<div>${extensionStateFront.projectSearchString}<br></div>`;
 
 	// make sure an empty search is loaded into search table on load
 	keyDownDuringSearch();
-
-	// setTimeout(() => {
-
-	// 	projectSearchInput.textContent = `<div>${extensionStateFront.projectSearchString}<br></div>`;
-
-	// 	// make sure an empty search is loaded into search table on load
-	// 	keyDownDuringSearch();
-
-	// }, 100)
 
 
 }
@@ -2646,7 +2323,7 @@ async function newProjectButtonClicked() {
 
 	writeProjectFromStateToDom();
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -2659,7 +2336,7 @@ async function editableProjectPropertyFocusOut() {
 	// update title, etc.
 	writeProjectFromStateToDom();
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 	await putCurrentProjectObject();
 
@@ -2671,7 +2348,7 @@ async function editableProjectPropertyFocusOut() {
 function searchProjectIn() {
 	// focusProjectSearch = true;
 	extensionStateFront.projectSearchActive = true;
-	writeStateFromFront();
+	//writeStateFromFront();
 
 	if (projectSearchInput.textContent == '') {
 		projectSearchInput.innerHTML = '<div><br></div>'; // default content on 'contenteditable' elements 
@@ -2686,7 +2363,7 @@ function searchProjectIn() {
 
 function searchProjectOut() {
 	extensionStateFront.projectSearchActive = false;
-	writeStateFromFront();
+	//writeStateFromFront();
 	// focusProjectSearch = false;
 	// console.log('focusout search ')
 	// projectSearchInput.removeEventListener('keypress', keyPressDuringSearch)
@@ -2747,7 +2424,7 @@ async function projectSearchRowClicked(event) {
 
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -2902,7 +2579,7 @@ function copyProjectPropertiesFromDomToState() {
 
 	extensionStateFront.current_projectObject = tempProjectObjectFromDom;
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -3027,7 +2704,7 @@ async function fetchProjectSearchThenWriteToStates() {
 	extensionStateFront.current_projectSearchObjects = await dbis.Content_SelectOnTitleLikeString(extensionStateFront.projectSearchString, 50, 'Project', 'Title', 0)
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 	// populateProjectSearchTableFromState();
@@ -3043,7 +2720,7 @@ async function fetchCurrentProjectChildrenThenWriteToStates() {
 	extensionStateFront.current_projectChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_projectObject.Uuid);
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 }
@@ -3060,7 +2737,7 @@ async function fetchSourceOnUuidThenWriteToStates(sourceUuid) {
 	console.log('New current source object: ', extensionStateFront.current_sourceObject)
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 }
 
@@ -3204,7 +2881,7 @@ async function editableSourcePropertyFocusOut() {
 // 		document.getElementById('aa-sourceTitle').textContent = nodeRow.nodeObject.Title;
 // 		// extensionStateFront.current_sourceUuid = event.target.dataset.uuid;
 // 		console.log(extensionStateFront)
-// 		writeStateFromFront();
+// 		//writeStateFromFront();
 
 // 		writeCurrentSourceObjectToDom();
 
@@ -3370,7 +3047,7 @@ function copySourcePropertiesFromDomToState() {
 	extensionStateFront.current_sourceObject.Url = document.getElementById('ae-sourcePropTable-Url-value').textContent;
 	extensionStateFront.current_sourceObject.IAmSource = document.getElementById('ae-sourcePropTable-IAmSource-value').textContent;
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 	// console.log(extensionStateFront.current_sourceObject)
@@ -3429,7 +3106,7 @@ async function addNewSourceToCurrentProject() {
 		writeProjectChildrenFromStateToDom()
 
 
-		writeStateFromFront();
+		//writeStateFromFront();
 
 		// Review_InsertScheduleOnUuid(Uuid, scheduleType)
 
@@ -3464,7 +3141,7 @@ async function fetchCurrentSourceChildrenThenWriteToStates() {
 	extensionStateFront.current_sourceChildContentEdges = await dbis.ContentEdge_SelectChildOfUuid(extensionStateFront.current_sourceObject.Uuid);
 
 
-	writeStateFromFront();
+	//writeStateFromFront();
 
 
 }
@@ -3491,7 +3168,9 @@ async function putCurrentSourceObject() {
 
 
 
+// ELEMENTS
 
+let overlayContainer;
 let overlayElement;
 let overlayRightPanel;
 let projectContainer;
@@ -3501,58 +3180,25 @@ let clipboardContainer;
 
 
 
-
-
-
-function showOverlay() {
-	document.getElementById('ae-contextOverlay').style.display = 'flex';
-	// overlayElement.style.display = 'flex';
-}
-
-
-function hideOverlay() {
-	document.getElementById('ae-contextOverlay').style.display = 'none';
-	// overlayElement.style.display = 'none';
-}
-
-
-
-
-
-
-
-
-function showState() {
-
-	let overlayElement = document.getElementById('ae-andegraph-overlay');
-
-
-}
-
-
-
-
-
-
-
 let extensionStateFront = {
+
 	active: false,
-	capturing: false,
-	current_tabId: 0,
-	current_tabUrl: '',
-	current_tabTitle: '',
-	// current_projectUuid: 0,
+
 	current_projectObject: {},
 	current_projectSearchObjects: [],
 	current_projectChildContentEdges: [],
-	// current_sourceUuid: 0,
+
 	current_sourceObject: {},
 	current_sourceChildContentEdges: [],
+
 	projectSearchActive: false,
 	projectSearchString: '',
+
 	textConcatenationCapturing: false,
 	textConcatenationContent: '',
+
 }
+
 
 
 function initExtension() {
@@ -3565,72 +3211,11 @@ function initExtension() {
 	initClipboard();
 
 
-	if (extensionStateFront.active) {
-
-		showOverlay();
-		addExtensionActiveEventListener();
-
-	}
-	else {
-
-		hideOverlay();
-		removeExtensionActiveEventListener();
-
-	}
-
-
-
 
 }
 
 
-// function writeToState(propertiesToWriteObject) {
 
-// 	// let entries = Object.entries(propertiesToWriteObject)
-// 	// let data = entries.map(([key, val] = entry) => {
-// 	// 	// return `The ${key} is ${val}`;
-// 	// 	console.log(`The ${key} is ${val}`)
-// 	// });
-
-// 	Object.keys(propertiesToWriteObject).forEach(key => {
-// 		console.log(key, ':', propertiesToWriteObject[key]);
-
-// 	});
-
-// 	console.log(extensionStateFront)
-
-// }
-// writeToState({ active: 'true' });
-
-
-// createOverlay();
-
-// getCurrentState();
-
-// browser.runtime.sendMessage({
-// 	name: "requestBackStateOnFrontLoaded",
-// });
-
-
-// initProject();
-
-
-// function updateFrontOnState() {
-
-// }
-console.log("index.js run.")
-browser.runtime.sendMessage({
-	name: "requestBackStateOnFrontLoaded",
-});
-
-
-document.addEventListener("focus", function () {
-	console.log("Page in focus")
-	browser.runtime.sendMessage({
-		name: "requestBackStateOnFrontLoaded",
-	});
-
-})
 
 
 
@@ -3643,7 +3228,10 @@ function addExtensionActiveEventListener() {
 	document.addEventListener('keydown', keydownActiveExtension)
 
 	console.log('event listerners for active extension added')
+
 }
+
+
 
 
 function removeExtensionActiveEventListener() {
@@ -3654,21 +3242,8 @@ function removeExtensionActiveEventListener() {
 	document.removeEventListener('keydown', keydownActiveExtension)
 
 	console.log('event listerners for active extension removed')
+
 }
 
 
-
-
-// initProject();
-// initProject();
-
-
-
-// hideOverlay();
-// showOverlay()
-
-
-// setInterval(() => {
-// 	console.log(document.activeElement)
-// }, 1000);
 

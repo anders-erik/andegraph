@@ -23,11 +23,10 @@
 				"size": 32
 			}
 		],
-		"default_title": "Beastify",
+		"default_title": "sources",
 		"default_popup": "popup/choose_beast.html"
 	},
 	"web_accessible_resources": [
-		"beasts/*.jpg",
 		"content_scripts/*"
 	],
 	"content_scripts": [
@@ -43,11 +42,7 @@
 	],
 	"background": {
 		"scripts": [
-			"background/back_functions.js",
-			"background/back_messages.js",
-			"background/back_events.js",
-			"background/back_dbis-we.js",
-			"background/back_main.js"
+			"background/background.js"
 		]
 	},
 	"commands": {
@@ -61,13 +56,7 @@
 			"suggested_key": {
 				"default": "Alt+A"
 			},
-			"description": "Start and stop shard capture"
-		},
-		"capture": {
-			"suggested_key": {
-				"default": "Alt+Q"
-			},
-			"description": "Start and stop shard capture"
+			"description": "Toggle extension."
 		}
 	}
 }
