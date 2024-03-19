@@ -566,15 +566,21 @@ class GlobalEventHandler {
 						document.getElementById('mainContentTitle').focus();
 						break;
 					case 'h':
+						document.getElementById('hideShardcontentCheckbox').focus();
+						break;
+					case 'u':
 						document.getElementById('mainContentReview').focus();
 						break;
-
-
-					case 'u':
-						document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
-						document.getElementById('sourceToolbar_filePanel').click();
-						document.getElementById('filePanelContainer').focus();
+					case 'j':
+						document.getElementById('toolbar_completeReview').focus();
 						break;
+
+
+					// case 'u':
+					// 	document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
+					// 	document.getElementById('sourceToolbar_filePanel').click();
+					// 	document.getElementById('filePanelContainer').focus();
+					// 	break;
 					case 'i':
 						// document.getElementById('sourceToolbar_shardPanel').click();
 						document.getElementById('sourceToolbar_shardPanel').classList.remove('selected');
@@ -593,25 +599,25 @@ class GlobalEventHandler {
 
 					case '[':
 
-						elem = document.getElementById('sourceToolbar_parentList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceParentContainer'));
 						break;
 					case ']':
-						elem = document.getElementById('sourceToolbar_fileList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceFileContainer'));
 						break;
 					case '\'':
-						elem = document.getElementById('sourceToolbar_reviewList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceReviewContainer'));
 						break;
 					case '\\':
-						elem = document.getElementById('sourceToolbar_connectedList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceConnectedContainer'));
@@ -654,9 +660,9 @@ class GlobalEventHandler {
 
 
 
-					case 'u':
-						document.getElementById('sourceToolbar_filePanel').click();
-						break;
+					// case 'u':
+					// 	document.getElementById('sourceToolbar_filePanel').click();
+					// 	break;
 					case 'i':
 						document.getElementById('sourceToolbar_shardPanel').click();
 						break;
@@ -665,18 +671,22 @@ class GlobalEventHandler {
 						break;
 
 
-					case '[':
-						document.getElementById('sourceToolbar_parentList').click();
+					case '=':
+						document.getElementById('sourceToolbar_sidePanel').click();
 						break;
-					case ']':
-						document.getElementById('sourceToolbar_fileList').click();
-						break;
-					case '\'':
-						document.getElementById('sourceToolbar_reviewList').click();
-						break;
-					case '\\':
-						document.getElementById('sourceToolbar_connectedList').click();
-						break;
+
+					// case '[':
+					// 	document.getElementById('sourceToolbar_parentList').click();
+					// 	break;
+					// case ']':
+					// 	document.getElementById('sourceToolbar_fileList').click();
+					// 	break;
+					// case '\'':
+					// 	document.getElementById('sourceToolbar_reviewList').click();
+					// 	break;
+					// case '\\':
+					// 	document.getElementById('sourceToolbar_connectedList').click();
+					// 	break;
 
 					default:
 						console.log('not triggered')

@@ -46,3 +46,8 @@
 	margin: 3px;
 	/* background-color: rgb(113, 186, 162); */
 }
+
+#toolbar_completeReview,
+#hideShardcontentCheckbox {
+	margin-left: -25px;
+}

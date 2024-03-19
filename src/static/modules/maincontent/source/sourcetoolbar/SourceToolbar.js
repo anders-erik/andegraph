@@ -37,7 +37,20 @@ export class SourceToolbar {
 
 	hideShardcontentCheckboxChange(event) {
 		// console.log('CHCH')
-		localStorage.setItem('hideShardcontentCheckbox', document.getElementById('hideShardcontentCheckbox').checked ? '1' : '0');
+		let isChecked = document.getElementById('hideShardcontentCheckbox').checked;
+
+		localStorage.setItem('hideShardcontentCheckbox', isChecked ? '1' : '0');
+
+		// toggle content card overlay immediately
+		let shardList = document.getElementById('shardList');
+		for (const contentCardOverlay of shardList.querySelectorAll('.contentCardOverlay')) {
+			if (isChecked) {
+				contentCardOverlay.classList.add('hidden');
+			}
+			else {
+				contentCardOverlay.classList.remove('hidden');
+			}
+		}
 	}
 
 
@@ -116,25 +129,22 @@ export class SourceToolbar {
 	-
 </div>
 
+<input id="hideShardcontentCheckbox" type="checkbox" ></input>
+
 <div id="mainContentReview" tabindex=0>
 	-
 </div>
 
-<input id="hideShardcontentCheckbox" type="checkbox" ></input>
+<button id="toolbar_completeReview" class="button selected">Complete</button>
 
 <div id="sourceToolbar_mainPanelsMenu">
-	<div id="sourceToolbar_filePanel" class="button">sourcefile</div>
 	<div id="sourceToolbar_shardPanel" class="button selected">shardlist</div>
 	<div id="sourceToolbar_reviewPanel" class="button">reviewlist</div>
 </div>
 
 	
-<div id="sourceToolbar_sidepanelMenu">
-	<div id="sourceToolbar_parentList" class="button">parents</div>
-	<div id="sourceToolbar_fileList" class="button">files</div>
-	<div id="sourceToolbar_reviewList" class="button">review</div>
-	<div id="sourceToolbar_connectedList" class="button">connected</div>
-</div>
+<div id="sourceToolbar_sidePanel" class="button">Connections</div>
+
 	`;
 
 }

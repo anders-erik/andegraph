@@ -22,3 +22,18 @@
 - main content toolbar got two updates: firstly, it is now fixed to the right viewport border, enabling ok behavior down to viewport widths of ~1400px. In addition it got a dark themed makeover, making it slightly easier on the eye. 
 
 - fixed broken toast notification when new edges are created. Also added a couple of QOL improvements, such as only create toast element on first log-import and text centering. 
+
+
+## v0.2.2
+
+2024-03-19
+- Toolbar:
+	- added a 'complete' button for simple review-completion
+	- removed file-panel button
+	- grouped the right panel buttons (previously four of them) into one connection-button/panel.
+	- toggling the shardcard overlay checkbox will immediately apply to cards loaded into DOM. 
+- Shortcuts
+	- t + '=' : toggle the right panel
+	- focus: y, h, u, j (the four main toolbar elements)
+- titleMenu: will always update the content object, not just when pressing 'escape'
+
