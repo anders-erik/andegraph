@@ -40,3 +40,14 @@
 	- remove review object from 'reviews due menu' when clicking 'complete' in toolbar
 	- enabled the addition of undirected review objects ('v' + r). Default review-date is the next day.
 - Left panel visual upgrade
+
+2024-03-20
+- Enabled deletions of content-objects!
+	- ctrl + alt + shift + 'd' (when focus is on an contentObject-element)
+	- it also immediately removes the focused element.
+- enable loading of any object into main (for now they are treated as 'source')
+- hide review-menu when loading new review
+- enabled loading of content (g + t/w) into new tab 
+- improved keyboard navigation of toolbar object
+- changes shardcard colors, and enabled playing media with spacebar. 
+- improved toolbar text for clarity

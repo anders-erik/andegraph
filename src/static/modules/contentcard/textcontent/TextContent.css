@@ -10,6 +10,8 @@
 
 	border-radius: 5px;
 
+	font-size: small;
+
 	/* caret-shape: block; */
 
 	/* background-color: rgba(129, 81, 19, 0.372); */
@@ -30,7 +32,7 @@
 }
 
 .textContent.editing {
-	background-color: var(--dark-bg-2);
+	background-color: var(--dark-bg-4);
 	caret-shape: bar;
 }
 

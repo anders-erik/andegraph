@@ -8,6 +8,7 @@
 	align-items: center;
 
 	color: var(--light-text-1);
+	font-size: small;
 
 	margin: 3px;
 	/* background-color: antiquewhite; */
@@ -21,6 +22,7 @@
 	background-color: var(--dark-bg-2);
 }
 
+
 #sourceToolbar *.button {
 	user-select: none;
 	cursor: pointer;
@@ -28,6 +30,7 @@
 	padding: 3px;
 	border: solid var(--light-border-2) 1px;
 	border-radius: 3px;
+
 
 	background-color: var(--dark-bg-4);
 }
@@ -47,7 +50,25 @@
 	/* background-color: rgb(113, 186, 162); */
 }
 
+#toolbar_completeReview {
+	background-color: var(--dark-bg-5);
+	color: var(--light-text-1);
+	border: solid white 1px;
+	border-radius: 5px;
+	padding: 2px 5px 2px 5px;
+}
+
 #toolbar_completeReview,
+#hideShardcontentLabel {
+	margin-left: -45px;
+	padding: 5px;
+}
+
 #hideShardcontentCheckbox {
-	margin-left: -25px;
+	margin-left: -55px;
+}
+
+#sourceToolbar_shardPanel,
+#sourceToolbar_reviewPanel {
+	margin-left: -45px;
 }

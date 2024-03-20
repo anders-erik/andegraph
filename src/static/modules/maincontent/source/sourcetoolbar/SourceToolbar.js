@@ -7,6 +7,8 @@ export class SourceToolbar {
 
 	sourceLabel;
 
+	contentTable;
+
 	mainContentTitle;
 	mainContentReview;
 
@@ -21,6 +23,8 @@ export class SourceToolbar {
 		this.element.innerHTML = this.sourceToolbarInnerHtml;
 
 		// this.element.addEventListener('keydown', this.keydownToolbar);
+
+		this.contentTable = this.element.querySelector('#toolbar_contentTable');
 
 
 		this.hideShardcontentCheckbox = this.element.querySelector('#hideShardcontentCheckbox');
@@ -57,6 +61,8 @@ export class SourceToolbar {
 	load(contentObject) {
 		this.toolbarContainer.innerHTML = ``;
 		this.toolbarContainer.append(this.element);
+
+		this.contentTable.textContent = contentObject.Table;
 
 		this.mainContentReview = document.getElementById('mainContentReview');
 		this.mainContentReview.innerHTML = `-`;
@@ -123,26 +129,23 @@ export class SourceToolbar {
 
 	sourceToolbarInnerHtml = `
 
-<label>Source</label>
+<label id="toolbar_contentTable">-</label>
 
 <div id="mainContentTitle" tabindex=0>
 	-
 </div>
-
+<div id="sourceToolbar_shardPanel" class="button selected">Shard List</div>
+<label id="hideShardcontentLabel" for="hideShardcontentCheckbox">Show</label>
 <input id="hideShardcontentCheckbox" type="checkbox" ></input>
+
 
 <div id="mainContentReview" tabindex=0>
 	-
 </div>
+<button id="toolbar_completeReview" class=" ">Complete</button>
+<div id="sourceToolbar_reviewPanel" class="button">Review List</div>
 
-<button id="toolbar_completeReview" class="button selected">Complete</button>
 
-<div id="sourceToolbar_mainPanelsMenu">
-	<div id="sourceToolbar_shardPanel" class="button selected">shardlist</div>
-	<div id="sourceToolbar_reviewPanel" class="button">reviewlist</div>
-</div>
-
-	
 <div id="sourceToolbar_sidePanel" class="button">Connections</div>
 
 	`;

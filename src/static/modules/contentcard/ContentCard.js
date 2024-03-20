@@ -218,7 +218,11 @@ export class ContentCard {
 				// console.log('')
 				if (event.key === ' ') {
 					document.activeElement.click();
-					event.preventDefault();
+					if (document.activeElement.tagName == 'A') {
+						console.log('tag')
+						event.preventDefault();
+					}
+					// event.preventDefault();
 
 				}
 				break;

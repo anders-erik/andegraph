@@ -132,6 +132,18 @@ class GlobalEventHandler {
 		// console.log('targetingLoadedProject? : ', targetingLoadedProject)
 
 
+		// DELETE CONTENT OBJECT
+		if (targetingContentObject && event.ctrlKey && event.altKey && event.shiftKey && event.key === 'D') {
+			// Makes sure no lingering files are accumulated
+			if (contentObject.Table === 'File' && contentObject.Title !== '') {
+				console.log('remove file-content beofre deleteing contnet object');
+				return;
+			}
+
+			await dbis.Content_DropFullOnUuid(event.target.contentObject.Uuid);
+			event.target.remove();
+			return;
+		}
 
 
 		// console.log('KEY: ', event.key)
@@ -455,15 +467,27 @@ class GlobalEventHandler {
 						this.app.mainOverlay.mainMenu.homeBtn.click();
 						break;
 
-					case 'c':
-					case 't': // NEW TAB
 					case 'w': // NEW WINDOW 
+					case 't': // NEW TAB
+						if (contentObject !== undefined) {
+
+							// window.open(`/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`, '_blank');
+							window.open(`/source/${contentObject.Uuid}/`, '_blank'); // all objects will for now be loaded as 'source'
+
+
+						}
+						else {
+							console.log(`No contentObject detected. Can't go. `)
+						}
+						break;
+					case 'c': // GO CONTENT
 						// console.log("GO :", event.target)
 						// let contentObject = event.target.contentObject;
 						// console.log('typeof contentObject: ', contentObject)
 						if (contentObject !== undefined) {
 
-							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+							// history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/source/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
 
 							this.app.mainContent.loadFromUrl();
 
@@ -513,8 +537,14 @@ class GlobalEventHandler {
 							document.getElementById('mainContentReview').dataset.uuid = contentObject.Uuid;
 							document.getElementById('mainContentReview').update();
 
+							// Show review panel
 							document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
 							document.getElementById('sourceToolbar_reviewPanel').click();
+
+							// CLOSE REVIEW MENU
+							document.getElementById('mainMenuReview').classList.add('selected');
+							document.getElementById('mainMenuReview').click();
+
 
 						}
 						break;
@@ -573,14 +603,30 @@ class GlobalEventHandler {
 					case 'y':
 						document.getElementById('mainContentTitle').focus();
 						break;
-					case 'h':
+					case 'u':
 						document.getElementById('hideShardcontentCheckbox').focus();
 						break;
-					case 'u':
+					case 'h':
+						// document.getElementById('sourceToolbar_shardPanel').click();
+						document.getElementById('sourceToolbar_shardPanel').classList.remove('selected');
+						document.getElementById('sourceToolbar_shardPanel').click();
+						this.focusFirstDescendant(document.getElementById('shardlistContainer'));//document.getElementById('shardlistContainer').focus();
+						break;
+
+
+
+					case 'o':
+						document.getElementById('toolbar_completeReview').focus();
+						break;
+					case 'i':
 						document.getElementById('mainContentReview').focus();
 						break;
-					case 'j':
-						document.getElementById('toolbar_completeReview').focus();
+					case 'k':
+						document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
+						document.getElementById('sourceToolbar_reviewPanel').click();
+						this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
+						// document.getElementById('reviewlistContainer').focus();
+						// this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
 						break;
 
 
@@ -589,19 +635,7 @@ class GlobalEventHandler {
 					// 	document.getElementById('sourceToolbar_filePanel').click();
 					// 	document.getElementById('filePanelContainer').focus();
 					// 	break;
-					case 'i':
-						// document.getElementById('sourceToolbar_shardPanel').click();
-						document.getElementById('sourceToolbar_shardPanel').classList.remove('selected');
-						document.getElementById('sourceToolbar_shardPanel').click();
-						this.focusFirstDescendant(document.getElementById('shardlistContainer'));//document.getElementById('shardlistContainer').focus();
-						break;
-					case 'o':
-						document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
-						document.getElementById('sourceToolbar_reviewPanel').click();
-						this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
-						// document.getElementById('reviewlistContainer').focus();
-						// this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
-						break;
+
 
 
 
@@ -671,10 +705,13 @@ class GlobalEventHandler {
 					// case 'u':
 					// 	document.getElementById('sourceToolbar_filePanel').click();
 					// 	break;
-					case 'i':
+					case 'y':
+					case 'h':
 						document.getElementById('sourceToolbar_shardPanel').click();
 						break;
-					case 'o':
+
+					case 'i':
+					case 'k':
 						document.getElementById('sourceToolbar_reviewPanel').click();
 						break;
 
