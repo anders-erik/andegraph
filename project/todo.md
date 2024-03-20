@@ -5,8 +5,10 @@
 - when loading new url-uuid, then update all dom content object elements with same uuid
 - when pasting text to editable content cards, that content is not sent to db unless user enter and exit contentEditable mode!
 - update project automatically when new child is added
-- toggle shardlist overlays on toolbar toggle
 
+
+<br>
+<br>
 
 # Done
 

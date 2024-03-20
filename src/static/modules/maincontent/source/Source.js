@@ -121,6 +121,8 @@ export class Source {
 			case 'toolbar_completeReview':
 				// console.log('clickclick')
 				let currentReviewElement = document.getElementById('mainContentReview');
+
+				// only do if review is not completed
 				if (currentReviewElement.contentObject && (currentReviewElement.contentObject.ReviewCompleted == '0')) {
 
 					let newContentObject = currentReviewElement.contentObject;
@@ -141,6 +143,11 @@ export class Source {
 						element.contentObject = newContentObject;
 						element.update();
 					}
+
+					// remove from review list menu
+					let reviewsDueMenu = document.getElementById('review');
+					let reviewElementDueWithSameUuid = reviewsDueMenu.querySelector(`[data-uuid='${newContentObject.Uuid}']`);
+					reviewElementDueWithSameUuid.remove();
 				}
 				break;
 

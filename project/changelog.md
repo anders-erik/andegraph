@@ -36,4 +36,7 @@
 	- t + '=' : toggle the right panel
 	- focus: y, h, u, j (the four main toolbar elements)
 - titleMenu: will always update the content object, not just when pressing 'escape'
-
+- Review:
+	- remove review object from 'reviews due menu' when clicking 'complete' in toolbar
+	- enabled the addition of undirected review objects ('v' + r). Default review-date is the next day.
+- Left panel visual upgrade

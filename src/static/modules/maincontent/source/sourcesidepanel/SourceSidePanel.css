@@ -5,8 +5,10 @@
 	width: 100%;
 
 	display: grid;
-	grid-template-rows: 19% 19% 29% 29%;
+	grid-template-rows: 20% 20% 30% 30%;
 	grid-template-columns: 100%;
+
+
 	/* gap: 10px; */
 
 	/* display: flex;
@@ -16,6 +18,7 @@
 
 	/* margin: 3px; */
 	/* background-color: rgba(165, 109, 35, 0.372); */
+
 }
 
 #sourceSidePanel *.hidden {
@@ -27,6 +30,8 @@
 	height: 19%; */
 	grid-row: 1;
 	grid-column: 1;
+
+	/* margin: 5px; */
 }
 
 #sourceFileContainer {
@@ -34,37 +39,80 @@
 	height: 19%; */
 	grid-column: 1;
 	grid-row: 2;
+
+	/* margin: 5px; */
 }
 
 #sourceReviewContainer {
 	/* width: 96%;
 	height: 29%; */
 	grid-row: 3;
+
+	/* margin: 5px; */
 }
 
 #sourceConnectedContainer {
 	/* width: 96%;
 	height: 29%; */
 	grid-row: 4;
+
+	/* margin: 5px; */
+}
+
+#sourceSidePanel>div>div:first-child {
+	padding-top: 5px;
+	text-align: center;
 }
 
 #sourceSidePanel>div {
-	width: 96%;
-	margin-top: 5px;
+	/* width: 96%; */
+	/* margin-top: 5px; */
+	margin: 4px 2px 4px 2px;
+
 	overflow-y: scroll;
 	scrollbar-width: none;
 
-	background-color: rgb(72, 94, 87);
+	border-radius: 5px;
+	border: solid var(--light-border-2) 1px;
+
+	color: var(--light-text-2);
+	background-color: var(--dark-bg-2);
 }
 
 #sourceSidePanel div table {
 	width: 100%;
-	background-color: rgba(40, 88, 73, 0.492);
+	border-collapse: collapse;
+	/* background-color: rgba(40, 88, 73, 0.492); */
 }
 
-#sourceSidePanel div table tbody tr {
-	border: solid rgba(0, 0, 0, 0.46) 2px;
+#sourceSidePanel div table thead tr {
+	/* background-color: var(--dark-bg-4); */
+	border-bottom: solid var(--light-border-2) 1px;
+	box-shadow: inset 0 -1px 0 0 var(--light-border-1);
 }
+
+#sourceSidePanel div table thead tr th {
+	padding: 5px 0 10px 0;
+}
+
+#sourceSidePanel div table tbody tr:hover {
+	/* border: solid var(--light-border-2) 2px; */
+
+}
+
+#sourceSidePanel div table tbody tr td {
+	/* box-shadow: 0 0 0 1px gray; */
+	/* background-color: var(--dark-bg-4); */
+	padding: 2px;
+	padding-top: 4px;
+
+	text-align: center;
+}
+
+/* #sourceSidePanel div table tbody tr {
+	background-color: var(--dark-bg-4);
+	margin: 2px;
+} */
 
 #sourceSidePanel div table tbody tr td:first-child {
 	width: 100px;
@@ -75,10 +123,12 @@
 
 
 #sourceReviewContainer table tbody tr td.reviewDate {
-	width: 100%;
+	text-align: center;
+	width: 200px;
+	/* width: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: center; */
 
 }
 

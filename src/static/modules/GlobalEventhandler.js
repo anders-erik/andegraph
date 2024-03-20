@@ -398,6 +398,9 @@ class GlobalEventHandler {
 					case 'f':
 						tableString_v = 'File'
 						break;
+					case 'r':
+						tableString_v = 'Review'
+						break;
 					case 's':
 						tableString_v = 'Source'
 						break;
@@ -406,7 +409,7 @@ class GlobalEventHandler {
 						break;
 
 					default:
-						console.log('no valid child table. Returning.');
+						console.log('no valid table selected. Returning.');
 						return;
 						break;
 				}
@@ -421,7 +424,12 @@ class GlobalEventHandler {
 				);
 
 				if (event.key === 's') {
-					dbis.Review_InsertScheduleOnUuid(newContentEdge_v.content.Uuid, '')
+					await dbis.Review_InsertScheduleOnUuid(newContentEdge_v.content.Uuid, '')
+				}
+				if (event.key === 'r') {
+					newContentEdge_v.content.NodeToReviewUuid = contentObject.Uuid;
+					newContentEdge_v.content.ReviewDate = (new Date(Date.now() + 86_400_400).toISOString().substring(0, 10));
+					await dbis.Content_UpdateWithContentObject(newContentEdge_v.content);
 				}
 
 				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
@@ -1139,7 +1147,7 @@ class GlobalEventHandler {
 	}
 
 
-	click(event) {
+	async click(event) {
 		// this.app.getLeftPanelId()
 		// console.log('click: ', event.target);
 		// console.log('activeElement on click', document.activeElement);
@@ -1170,8 +1178,14 @@ class GlobalEventHandler {
 				// this.app.mainOverlay.search.settings.reviewCheckbox.click();
 				break;
 			case 'mainMenuReview':
+				// if (event.target.classList.contains('selected')) {
+				// 	await this.app.mainOverlay.review.fetch();
+				// }
+
 				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
+
 				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+
 				// setting changed does NOT trigger the 'change' event! Therefore set checked to opposite of desired before synthetic click.
 				// this.app.mainOverlay.search.settings.reviewCheckbox.checked = false;
 				// this.app.mainOverlay.search.settings.reviewCheckbox.click();
