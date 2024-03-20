@@ -16,7 +16,9 @@
 	/* user-select: none; */
 
 	/* background-color: rgb(154, 40, 156); */
-	border: solid black 1px;
+	background-color: var(--dark-bg-2);
+	border: solid var(--light-border-2) 1px;
+	border-radius: 2px;
 }
 
 

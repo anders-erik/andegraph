@@ -10,6 +10,8 @@
 
 	border-radius: 5px;
 
+	font-size: small;
+
 	/* margin: 0px; */
 	/* padding: 0px; */
 
@@ -52,7 +54,7 @@
 
 .codeContent.editing {
 	/* background-color: rgba(105, 156, 62, 0.622) */
-	background-color: var(--dark-bg-2);
+	background-color: var(--dark-bg-4);
 	caret-shape: bar;
 }
 

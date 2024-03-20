@@ -132,6 +132,18 @@ class GlobalEventHandler {
 		// console.log('targetingLoadedProject? : ', targetingLoadedProject)
 
 
+		// DELETE CONTENT OBJECT
+		if (targetingContentObject && event.ctrlKey && event.altKey && event.shiftKey && event.key === 'D') {
+			// Makes sure no lingering files are accumulated
+			if (contentObject.Table === 'File' && contentObject.Title !== '') {
+				console.log('remove file-content beofre deleteing contnet object');
+				return;
+			}
+
+			await dbis.Content_DropFullOnUuid(event.target.contentObject.Uuid);
+			event.target.remove();
+			return;
+		}
 
 
 		// console.log('KEY: ', event.key)
@@ -398,6 +410,9 @@ class GlobalEventHandler {
 					case 'f':
 						tableString_v = 'File'
 						break;
+					case 'r':
+						tableString_v = 'Review'
+						break;
 					case 's':
 						tableString_v = 'Source'
 						break;
@@ -406,7 +421,7 @@ class GlobalEventHandler {
 						break;
 
 					default:
-						console.log('no valid child table. Returning.');
+						console.log('no valid table selected. Returning.');
 						return;
 						break;
 				}
@@ -421,7 +436,12 @@ class GlobalEventHandler {
 				);
 
 				if (event.key === 's') {
-					dbis.Review_InsertScheduleOnUuid(newContentEdge_v.content.Uuid, '')
+					await dbis.Review_InsertScheduleOnUuid(newContentEdge_v.content.Uuid, '')
+				}
+				if (event.key === 'r') {
+					newContentEdge_v.content.NodeToReviewUuid = contentObject.Uuid;
+					newContentEdge_v.content.ReviewDate = (new Date(Date.now() + 86_400_400).toISOString().substring(0, 10));
+					await dbis.Content_UpdateWithContentObject(newContentEdge_v.content);
 				}
 
 				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
@@ -447,15 +467,27 @@ class GlobalEventHandler {
 						this.app.mainOverlay.mainMenu.homeBtn.click();
 						break;
 
-					case 'c':
-					case 't': // NEW TAB
 					case 'w': // NEW WINDOW 
+					case 't': // NEW TAB
+						if (contentObject !== undefined) {
+
+							// window.open(`/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`, '_blank');
+							window.open(`/source/${contentObject.Uuid}/`, '_blank'); // all objects will for now be loaded as 'source'
+
+
+						}
+						else {
+							console.log(`No contentObject detected. Can't go. `)
+						}
+						break;
+					case 'c': // GO CONTENT
 						// console.log("GO :", event.target)
 						// let contentObject = event.target.contentObject;
 						// console.log('typeof contentObject: ', contentObject)
 						if (contentObject !== undefined) {
 
-							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+							// history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/source/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
 
 							this.app.mainContent.loadFromUrl();
 
@@ -505,8 +537,14 @@ class GlobalEventHandler {
 							document.getElementById('mainContentReview').dataset.uuid = contentObject.Uuid;
 							document.getElementById('mainContentReview').update();
 
+							// Show review panel
 							document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
 							document.getElementById('sourceToolbar_reviewPanel').click();
+
+							// CLOSE REVIEW MENU
+							document.getElementById('mainMenuReview').classList.add('selected');
+							document.getElementById('mainMenuReview').click();
+
 
 						}
 						break;
@@ -565,23 +603,25 @@ class GlobalEventHandler {
 					case 'y':
 						document.getElementById('mainContentTitle').focus();
 						break;
-					case 'h':
-						document.getElementById('mainContentReview').focus();
-						break;
-
-
 					case 'u':
-						document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
-						document.getElementById('sourceToolbar_filePanel').click();
-						document.getElementById('filePanelContainer').focus();
+						document.getElementById('hideShardcontentCheckbox').focus();
 						break;
-					case 'i':
+					case 'h':
 						// document.getElementById('sourceToolbar_shardPanel').click();
 						document.getElementById('sourceToolbar_shardPanel').classList.remove('selected');
 						document.getElementById('sourceToolbar_shardPanel').click();
 						this.focusFirstDescendant(document.getElementById('shardlistContainer'));//document.getElementById('shardlistContainer').focus();
 						break;
+
+
+
 					case 'o':
+						document.getElementById('toolbar_completeReview').focus();
+						break;
+					case 'i':
+						document.getElementById('mainContentReview').focus();
+						break;
+					case 'k':
 						document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
 						document.getElementById('sourceToolbar_reviewPanel').click();
 						this.focusFirstDescendant(document.getElementById('reviewlistContainer'));
@@ -590,28 +630,36 @@ class GlobalEventHandler {
 						break;
 
 
+					// case 'u':
+					// 	document.getElementById('sourceToolbar_filePanel').classList.remove('selected');
+					// 	document.getElementById('sourceToolbar_filePanel').click();
+					// 	document.getElementById('filePanelContainer').focus();
+					// 	break;
+
+
+
 
 					case '[':
 
-						elem = document.getElementById('sourceToolbar_parentList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceParentContainer'));
 						break;
 					case ']':
-						elem = document.getElementById('sourceToolbar_fileList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceFileContainer'));
 						break;
 					case '\'':
-						elem = document.getElementById('sourceToolbar_reviewList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceReviewContainer'));
 						break;
 					case '\\':
-						elem = document.getElementById('sourceToolbar_connectedList');
+						elem = document.getElementById('sourceToolbar_sidePanel');
 						elem.classList.remove('selected');
 						elem.click();
 						this.focusFirstDescendant(document.getElementById('sourceConnectedContainer'));
@@ -654,29 +702,36 @@ class GlobalEventHandler {
 
 
 
-					case 'u':
-						document.getElementById('sourceToolbar_filePanel').click();
-						break;
-					case 'i':
+					// case 'u':
+					// 	document.getElementById('sourceToolbar_filePanel').click();
+					// 	break;
+					case 'y':
+					case 'h':
 						document.getElementById('sourceToolbar_shardPanel').click();
 						break;
-					case 'o':
+
+					case 'i':
+					case 'k':
 						document.getElementById('sourceToolbar_reviewPanel').click();
 						break;
 
 
-					case '[':
-						document.getElementById('sourceToolbar_parentList').click();
+					case '=':
+						document.getElementById('sourceToolbar_sidePanel').click();
 						break;
-					case ']':
-						document.getElementById('sourceToolbar_fileList').click();
-						break;
-					case '\'':
-						document.getElementById('sourceToolbar_reviewList').click();
-						break;
-					case '\\':
-						document.getElementById('sourceToolbar_connectedList').click();
-						break;
+
+					// case '[':
+					// 	document.getElementById('sourceToolbar_parentList').click();
+					// 	break;
+					// case ']':
+					// 	document.getElementById('sourceToolbar_fileList').click();
+					// 	break;
+					// case '\'':
+					// 	document.getElementById('sourceToolbar_reviewList').click();
+					// 	break;
+					// case '\\':
+					// 	document.getElementById('sourceToolbar_connectedList').click();
+					// 	break;
 
 					default:
 						console.log('not triggered')
@@ -1129,7 +1184,7 @@ class GlobalEventHandler {
 	}
 
 
-	click(event) {
+	async click(event) {
 		// this.app.getLeftPanelId()
 		// console.log('click: ', event.target);
 		// console.log('activeElement on click', document.activeElement);
@@ -1160,8 +1215,14 @@ class GlobalEventHandler {
 				// this.app.mainOverlay.search.settings.reviewCheckbox.click();
 				break;
 			case 'mainMenuReview':
+				// if (event.target.classList.contains('selected')) {
+				// 	await this.app.mainOverlay.review.fetch();
+				// }
+
 				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);
+
 				this.app.mainOverlay.toggleContainersFromSelectedMainMenuButtons();
+
 				// setting changed does NOT trigger the 'change' event! Therefore set checked to opposite of desired before synthetic click.
 				// this.app.mainOverlay.search.settings.reviewCheckbox.checked = false;
 				// this.app.mainOverlay.search.settings.reviewCheckbox.click();
