@@ -51,3 +51,5 @@
 - improved keyboard navigation of toolbar object
 - changes shardcard colors, and enabled playing media with spacebar. 
 - improved toolbar text for clarity
+
+- add .gitattributes to prevent github displaying repo as 'PLSQL'-project. 
