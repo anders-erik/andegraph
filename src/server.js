@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 
 app.use('/', express.static(__dirname + '/static'));
+app.use('/scroll*', express.static(__dirname + '/static'));
 app.use('/source/*', express.static(__dirname + '/static'));
 app.use('/development*', express.static(__dirname + '/static'));
 

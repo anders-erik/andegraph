@@ -1197,7 +1197,11 @@ class GlobalEventHandler {
 
 		switch (event.target.id) {
 			case 'mainMenuHome':
-				console.log('HOME SWEET HOME')
+				// console.log('HOME SWEET HOME')
+				history.pushState(null, `Sources Home`, `/`); // all objects will for now be loaded as 'source'
+
+				this.app.mainContent.loadFromUrl();
+
 				break;
 			case 'mainMenuState':
 				this.app.mainOverlay.mainMenu.toggleBtnOnId(event.target.id);

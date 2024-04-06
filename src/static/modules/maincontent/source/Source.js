@@ -6,6 +6,7 @@ import { SourceToolbar } from "./sourcetoolbar/SourceToolbar.js";
 
 export class Source {
 	mainContentContainer;
+
 	mainContentContentContainer
 	mainContentToolbar;
 	mainContentSidepanel;
@@ -24,23 +25,44 @@ export class Source {
 	otherConnectedContentEdge;
 
 
-	constructor(mainContentContainer, mainContentContentContainer, mainContentToolbar, mainContentSidepanel) {
+	constructor(mainContentContainer) {
 
 		this.mainContentContainer = mainContentContainer;
-		this.mainContentContentContainer = mainContentContentContainer;
-		this.mainContentToolbar = mainContentToolbar;
-		this.mainContentSidepanel = mainContentSidepanel;
 
-		this.toolbar = new SourceToolbar(this.mainContentToolbar);
+		// this.mainContentContentContainer = mainContentContentContainer;
+		// this.mainContentToolbar = mainContentToolbar;
+		// this.mainContentSidepanel = mainContentSidepanel;
+
+
+		this.mainContentContentContainer = document.createElement('div');
+		this.mainContentContentContainer.id = 'mainContentContentContainer';
+		this.mainContentContentContainer.textContent = ''
+		this.mainContentContainer.append(this.mainContentContentContainer);
+
+		this.mainContentToolbar = document.createElement('div');
+		this.mainContentToolbar.id = 'mainToolbarContainer';
+		this.mainContentToolbar.tabIndex = 0;
+		this.mainContentContainer.append(this.mainContentToolbar);
+
+		this.mainContentSidepanel = document.createElement('div');
+		this.mainContentSidepanel.id = 'mainSidepanelContainer';
+		this.mainContentContainer.append(this.mainContentSidepanel);
+
+	}
+
+	async load(contentObject) {
+
+		console.log('1')
 		this.sourceContent = new SourceContent(this.mainContentContentContainer);
+		console.log('2')
+		this.toolbar = new SourceToolbar(this.mainContentToolbar);
+		console.log('3')
 		this.sidePanel = new SourceSidePanel(this.mainContentSidepanel);
 
 		this.toolbar.element.addEventListener('click', this.clickMainSourceContent.bind(this));
 		this.sourceContent.element.addEventListener('click', this.clickMainSourceContent.bind(this));
 
-	}
 
-	async load(contentObject) {
 
 		this.parentContentEdge = await dbis.ContentEdge_SelectParentOfUuid(contentObject.Uuid);
 		this.parentContentEdge.sort((a, b) => {
@@ -82,6 +104,7 @@ export class Source {
 			if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
 			return 0;
 		})
+
 
 		this.toolbar.load(contentObject);
 		this.sourceContent.load(this.childrenContentEdge);

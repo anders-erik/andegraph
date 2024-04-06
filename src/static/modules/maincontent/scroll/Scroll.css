@@ -1,0 +1,28 @@
+#homeContainer {
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	height: 100%;
+	width: 100%;
+
+	/* border: solid green 10px; */
+}
+
+#homeContent {
+
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: 30% 30% 30%;
+
+	height: 50%;
+	width: 50%;
+
+	background-color: antiquewhite;
+}
+
+#homeContent>a,
+p {
+	border: solid black 2px;
+}

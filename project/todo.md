@@ -7,6 +7,33 @@
 - update project automatically when new child is added
 
 
+database:
+- enable events? - or should that be stared in a more structured, pesistent pformat?
+- enable 'people'
+- A 'memorize' table with a list of sources/shards to be memorized by heart
+
+main app
+- Doom scroll review Type! 
+	- Regular
+	- Memorize
+	- Scroll
+- enable a scroll-functionality and quick create and complete a review of type 'scroll'
+
+- 
+
+- turn off forced review-children-list on go-review
+- provide a veriety of review schedules
+- Clicking on 'complete' during review does not remove the review from review menu
+- Shortcut for completing current review, and then immediately loading the next review
+
+webext.
+- search children
+- load first source matching current Url (find already existing source, and handle accidental page exit)
+- prevent default letter input (especially probelematic on youtube)
+- Enable Title-editing of source children
+- enable connecting to more than one project
+
+
 <br>
 <br>
 
