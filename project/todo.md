@@ -2,6 +2,16 @@
 
 # Todo
 
+## v0.3
+
+- Review types
+- 
+
+## v0.2.3
+
+- Source categorization
+
+## general
 - when loading new url-uuid, then update all dom content object elements with same uuid
 - when pasting text to editable content cards, that content is not sent to db unless user enter and exit contentEditable mode!
 - update project automatically when new child is added
@@ -9,7 +19,10 @@
 
 database:
 - enable events? - or should that be stared in a more structured, pesistent pformat?
+	- It should be in a different location, but parts of events should be imported here as a 'source'
 - enable 'people'
+	- thus events should probably ust be a type of source!
+		- most things should just be a type of source.
 - A 'memorize' table with a list of sources/shards to be memorized by heart
 
 main app

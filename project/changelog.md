@@ -3,7 +3,9 @@
 
 ## v0.2.3
 
-
+2024-04-06
+- creeate 'home' and 'scroll' pages
+- 
 
 
 ## v0.2.2
