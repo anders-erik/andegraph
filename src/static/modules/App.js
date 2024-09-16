@@ -45,10 +45,10 @@ class App {
 
 		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
 
-		this.mainContent = new MainContent(this.appElement);
+		// this.mainContent = new MainContent(this.appElement);
 
 
-		this.mainContent.loadFromUrl();
+		// this.mainContent.loadFromUrl();
 		// let urlState = this.getUrlState();
 		// let urlState = new URL(window.location.href)
 		// console.table(urlState)
@@ -66,6 +66,40 @@ class App {
 		// this.mainContent.loadSourceFromUuid(372);
 		// this.mainContent.loadSourceFromUuid(106979190784);
 
+
+
+		// this.mainOverlay = new MainOverlay(this.appElement);
+		// // this.leftPanel = new LeftPanel(this.appElement);
+
+		// this.contextOverlay = new ContextOverlay();
+		// this.appElement.append(this.contextOverlay.overlayElement);
+
+		// // leftPanel.LeftPanelDevTests();
+
+		// // leftPanelTestFunction();
+
+		// this.appElement.focus();
+
+		// this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
+
+		// this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
+		// // this.appElement.addEventListener('click', this.appClick.bind(this));
+		// // this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		// // this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
+		// window.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
+		// window.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
+		// // this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
+		// this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
+		// window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
+	}
+
+	
+	async reloadApp(){
+
+		this.appElement.innerHTML = "";
+
+		this.mainContent = new MainContent(this.appElement);
+		await this.mainContent.loadFromUrl();
 
 
 		this.mainOverlay = new MainOverlay(this.appElement);
@@ -95,7 +129,6 @@ class App {
 
 
 
-
 	appFocusIn(event) {
 		// console.log('FOCUS CHANGE')
 
@@ -112,7 +145,7 @@ class App {
 
 
 
-		console.log('new focused element', event.target)
+		// console.log('new focused element', event.target)
 		if (event.target == document.body) {
 			console.log('Body is currently in focus.')
 		}

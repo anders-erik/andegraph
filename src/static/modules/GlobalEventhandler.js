@@ -35,6 +35,7 @@ class GlobalEventHandler {
 		'adjacentContext',
 	];
 
+
 	constructor(app, appElement) {
 		this.app = app;
 		this.appElement = appElement;
@@ -104,7 +105,7 @@ class GlobalEventHandler {
 
 
 
-	async keydown(event) {
+	async keydown(event) {	
 		// console.log(event.keyCode)
 
 		let contentObject = event.target.contentObject;
@@ -490,6 +491,7 @@ class GlobalEventHandler {
 							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/source/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
 
 							this.app.mainContent.loadFromUrl();
+							// this.app.reloadApp();
 
 							// console.log('GOGOGOGOGOGOGOGO')
 							// switch (contentObject.Table) {
@@ -518,6 +520,7 @@ class GlobalEventHandler {
 							history.pushState(null, `${objectToReview.Title.toLowerCase()}`, `/${objectToReview.Table.toLowerCase()}/${objectToReview.Uuid}/`);
 
 							await this.app.mainContent.loadFromUrl();
+							// await this.app.reloadApp();
 
 
 							let reviewChildren = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
@@ -1201,6 +1204,7 @@ class GlobalEventHandler {
 				history.pushState(null, `Sources Home`, `/`); // all objects will for now be loaded as 'source'
 
 				this.app.mainContent.loadFromUrl();
+				// this.app.reloadApp();
 
 				break;
 			case 'mainMenuState':

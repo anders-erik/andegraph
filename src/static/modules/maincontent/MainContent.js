@@ -35,7 +35,9 @@ export class MainContent {
 		// this.loadSourceFromUuid(372);
 	}
 
+	// Make sure that we FULLY RELOAD app, not just parts of it
 	async loadFromUrl() {
+		this.element.innerHTML = "";
 		let urlState = new URL(window.location.href)
 		// console.table(urlState)
 		let pathArray = urlState.pathname.split('/');

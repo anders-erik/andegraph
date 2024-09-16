@@ -14,6 +14,8 @@ if (isDev) {
 else {
 	console.log('NOT DEV')
 	app = new App('root');
+
+	app.reloadApp();
 }
 
 
