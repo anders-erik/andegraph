@@ -4,8 +4,13 @@
 
 ## v0.3
 
-- Review types
-- 
+### 2024-09-17
+- set up static file delivery using ngnx in docker
+- new static html: /project-review
+	- load simple project info
+	- all children (sources, etc.)
+	- click for context menu
+
 
 ## v0.2.3
 
