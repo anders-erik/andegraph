@@ -1,0 +1,41 @@
+.textContent {
+
+	height: 100%;
+
+	padding-left: 10px;
+	padding-right: 20px;
+
+	margin: 0px;
+	padding: 0px;
+
+	border-radius: 5px;
+
+	font-size: small;
+
+	/* caret-shape: block; */
+
+	/* background-color: rgba(129, 81, 19, 0.372); */
+	/* border: solid black 1px; */
+}
+
+.textContent p:first-child {
+	padding-top: 20px;
+}
+
+.textContent p:last-child {
+	padding-bottom: 20px;
+}
+
+.textContent p {
+	margin: 0px;
+	padding: 10px;
+}
+
+.textContent.editing {
+	background-color: var(--dark-bg-4);
+	caret-shape: bar;
+}
+
+/* .textContent:focus {
+	background-color: rgba(105, 156, 62, 0.622)
+} */

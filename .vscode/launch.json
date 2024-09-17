@@ -12,13 +12,13 @@
             "reAttach": true,
             "reloadOnChange": {
                 "watch": [
-                    "${workspaceFolder}/src/static/projects/index.html"
+                    "${workspaceFolder}/frontend/**"
                 ],
                 "ignore": [
                     "${workspaceFolder}/node_modules/**"
                 ]
             },
-            "file": "${workspaceFolder}/src/static/projects/index.html"
+            "file": "${workspaceFolder}/frontend/project/index.html"
         },
         {
             "name": "Launch localhost",

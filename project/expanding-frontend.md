@@ -11,6 +11,6 @@ npm install next@latest react@latest react-dom@latest
 ## MY INSTALL
 
 ```
-npm install --save-dev react react-dom
+npm install --save-dev next react react-dom
 ```
 
