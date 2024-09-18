@@ -2,11 +2,18 @@
 
 # Todo
 
-## v0.3
+## v0.3.0
+
+### 2024-09-18
+- seperate backend code
+- stabilize api (prevent craches!)
+- api tests
+- self sign webextension
+
 
 ### 2024-09-17
-- set up static file delivery using ngnx in docker
-- new static html: /project-review
+- |o| set up static file delivery using ngnx in docker
+- |o| new static html: /project-review
 	- load simple project info
 	- all children (sources, etc.)
 	- click for context menu

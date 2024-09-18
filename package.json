@@ -4,7 +4,8 @@
   "main": "./src/index.js",
   "scripts": {
     "backend-up": "docker compose up -d",
-    "dev": "nodemon -L src/server.js -w src/",
+    "backend-down": "docker compose down",
+    "dev": "nodemon -L backend/server.js -w backend/",
     "backup": "./data/utils/backup.sh"
   },
   "dependencies": {

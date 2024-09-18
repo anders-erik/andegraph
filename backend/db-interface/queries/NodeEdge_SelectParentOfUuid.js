@@ -1,10 +1,10 @@
 const { getDb } = require('../../db/Db-v0.2.js');
-const { dbNodeEdgesToObjects } = require('../utils/dbNodeEdgeToObject');
+const { dbNodeEdgesToObjects } = require('../utils/dbNodeEdgeToObject.js');
 let db = getDb();
 
 
 
-async function NodeEdge_SelectReviewOfUuid(Uuid) {
+async function NodeEdge_SelectParentOfUuid(Uuid) {
 	return new Promise((acc, rej) => {
 
 		// Insert table name here bacause query builder does not accept variables for table names
@@ -21,13 +21,11 @@ async function NodeEdge_SelectReviewOfUuid(Uuid) {
 				"Edge"."Path" AS  edge_Path
 			FROM "Node"
 			INNER JOIN "Edge"
-			ON "Node"."Uuid" = "Edge"."Node2Uuid"
+			ON "Node"."Uuid" = "Edge"."Node1Uuid"
 			WHERE
-				"Edge"."Directed" = 0
+				"Edge"."Directed" = 1
 			AND
-				"Edge"."Node1Uuid" = ?
-			AND 
-				"Node"."Table" = 'Review'
+				"Edge"."Node2Uuid" = ?
                     
         ;`;
 
@@ -45,6 +43,7 @@ async function NodeEdge_SelectReviewOfUuid(Uuid) {
 }
 
 module.exports = {
-	NodeEdge_SelectReviewOfUuid,
+	NodeEdge_SelectParentOfUuid,
 }
+
 
