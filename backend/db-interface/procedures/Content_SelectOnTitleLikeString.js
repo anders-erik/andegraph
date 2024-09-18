@@ -16,18 +16,25 @@ async function Content_SelectOnTitleLikeString(searchString, tableLimit, tableAr
         tableArray = contentTables;
     }
 
+    
+    // QUERY & CONCAT ALL TABLE RESULTS
     let allTableRows = [];
-
-    // QUERY
-    for (const tableName of tableArray) {
-        let tableRows = await SearchTable(searchString, tableLimit, tableName);
-        // console.log(tableRows)
-        allTableRows = allTableRows.concat(tableRows);
+    try {
+        for (const tableName of tableArray) {
+            let tableRows = await SearchTable(searchString, tableLimit, tableName);
+            // console.log(tableRows)
+            allTableRows = allTableRows.concat(tableRows);
+        }
+    } catch (error) {
+        console.log("Search query failed in file ", __filename);
+        // console.log("Search parameters: \n", "searchString:", searchString, "\n", orderColumn, desc);
+        throw error;
     }
 
 
+
     // APPLY SORT
-    console.log(orderColumn, desc)
+    // console.log(orderColumn, desc)
     if (desc == 0) {
         console.log('CHECK')
         allTableRows = sortAsc(allTableRows, orderColumn)
@@ -36,11 +43,12 @@ async function Content_SelectOnTitleLikeString(searchString, tableLimit, tableAr
         allTableRows = sortDesc(allTableRows, orderColumn)
     }
 
-
+    
     return allTableRows;
 
 }
 
+// UNIT TEST
 function sortAsc(allRows, col) {
     allRows.sort((a, b) => {
         if (a[col] < b[col]) return -1;
@@ -50,7 +58,7 @@ function sortAsc(allRows, col) {
 
     return allRows;
 }
-
+// UINT TEST
 function sortDesc(allRows, col) {
     allRows.sort((a, b) => {
         if (a[col] > b[col]) return -1;

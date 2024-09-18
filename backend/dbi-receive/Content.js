@@ -18,71 +18,86 @@ module.exports = async (req, res) => {
 
 	let returnArray = [];
 
+	let returnStatus = 200;
+
+	try {
 
 
-	switch (functionstring) {
+		switch (functionstring) {
+
+
+			// OO
+			case 'Content-InsertOnTable':
+				returnArray = await dbi.procedures.Content_InsertOnTable(queryObject.Table);
+				break;
+			// OO
+			case 'Content-SelectOnUuid':
+				returnArray = (await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid))[0];
+				break;
+
+			// OO
+			case 'Content-UpdateWithContentObject':
+				// console.log(functionstring, 'selected. ', body, ' as body.');
+				returnArray = await dbi.procedures.Content_UpdateWithContentObject(body);
+				// return the updated array
+				returnArray = (await dbi.procedures.Content_SelectOnUuid(body.Uuid))[0];
+
+				break;
+			
+			// OO
+			case 'Content-DropFullOnUuid':
+				await dbi.procedures.Content_DropFullOnUuid(queryObject.Uuid);
+				returnArray = [];
+				break;
 
 
 
-		case 'Content-InsertOnTable':
-			console.log(functionstring, 'selected. ', queryObject.Table, ' as table string.');
-			returnArray = await dbi.procedures.Content_InsertOnTable(queryObject.Table);
-			break;
+			// OO
+			case 'Content-SelectOnTitleLikeString':
+				returnArray = await dbi.procedures.Content_SelectOnTitleLikeString(queryObject.searchString, queryObject.tableLimit, queryObject.includeTable, queryObject.orderColumn, queryObject.desc);
+				break;
 
-		case 'Content-SelectOnUuid':
-			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
-			returnArray = (await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid))[0];
-			// console.log('JSON.stringify(returnArray)', JSON.stringify(returnArray))
-			if (returnArray === undefined) {
-				console.log('No content found on Uuid.');
-				res.status(404).send({});
+			// OO
+			case 'Review-InsertScheduleOnUuid':
+				await dbi.procedures.Review_InsertScheduleOnUuid(queryObject.Uuid, queryObject.scheduleType);
+				break;
+			// OO
+			case 'Review-SelectCurrentReview':
+				returnArray = await dbi.queries.Review_SelectCurrentReview();
+				break;
+
+
+
+			default:
+				returnStatus = 400;
+				console.log('API ERROR:', functionstring, ' Could not find matching function string! ');
+				res.status(returnStatus).send({});
 				return;
-			}
-			break;
+				break;
+		}
 
-		case 'Content-UpdateWithContentObject':
-			console.log(functionstring, 'selected. ', body, ' as body.');
-			returnArray = await dbi.procedures.Content_UpdateWithContentObject(body);
-			returnArray = (await dbi.procedures.Content_SelectOnUuid(body.Uuid))[0];
-			break;
-
-		case 'Content-DropFullOnUuid':
-			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
-			await dbi.procedures.Content_DropFullOnUuid(queryObject.Uuid);
-			returnArray = [];
-			break;
-
-
-
-
-		case 'Content-SelectOnTitleLikeString':
-			console.log(functionstring, 'selected. ', queryObject.searchString, ' as query value.');
-			returnArray = await dbi.procedures.Content_SelectOnTitleLikeString(queryObject.searchString, queryObject.tableLimit, queryObject.includeTable, queryObject.orderColumn, queryObject.desc);
-			// res.set('Access-Control-Allow-Origin', `*`);
-			break;
-
-		case 'Review-InsertScheduleOnUuid':
-			console.log(functionstring, 'selected. ', body, ' as body.');
-			await dbi.procedures.Review_InsertScheduleOnUuid(queryObject.Uuid, queryObject.scheduleType);
-			break;
-
-		case 'Review-SelectCurrentReview':
-			console.log(functionstring, 'selected. ');
-			returnArray = await dbi.queries.Review_SelectCurrentReview();
-			// res.set('Access-Control-Allow-Origin', `*`);
-			break;
-
-
-
-		default:
-			res.status(400).send({});
-			return;
-			break;
+		
+	} catch (error) {
+		// Currently we simply set 
+		returnStatus = 400;
 	}
 
 
+	if(returnStatus == 400){
+		console.log('400: ', functionstring, ' QueryObject:  ',queryObject, body, ' as body.');
+		console.log("^^^^^^^^^^^^^^^^^^^^^^^^");
+	}
+	else if(returnStatus == 200){
+		var datetime = new Date();
+		
+		// Try to get uuid to be logged. Sometimes that is not provided (search, current review, etc.)
+		if(queryObject.Uuid == undefined)
+			console.log(200, ',' + functionstring, ',' + returnArray.Uuid, ',', datetime)
+		else
+			console.log(200, ',' + functionstring, ',' + queryObject.Uuid, ',', datetime)
+	}
 
 	res.set('Access-Control-Allow-Origin', `*`);
-	res.status(200).send(returnArray);
-
+	res.status(returnStatus).send(returnArray);
+	
 };

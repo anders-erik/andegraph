@@ -27,6 +27,7 @@ module.exports = async (req, res) => {
 			break;
 
 		case 'ContentEdge-SelectChildOfUuid':
+			console.log("______________")
 			console.log(functionstring, 'selected. ', queryObject.Uuid, ' as query value.');
 			returnArray = await dbi.procedures.ContentEdge_SelectChildOfUuid(queryObject.Uuid);
 			break;

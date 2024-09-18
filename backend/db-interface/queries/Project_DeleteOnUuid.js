@@ -21,6 +21,7 @@ async function Project_DeleteOnUuid(Uuid) {
         db.all(queryString,
             [Uuid],
             (err, rows) => {
+                
                 if (err) return rej(err);
 
                 acc(1);

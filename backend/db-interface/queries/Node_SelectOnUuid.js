@@ -22,7 +22,7 @@ async function Node_SelectOnUuid(nodeUuid) {
             (err, rows) => {
                 if (err) return rej(err);
 
-                console.log('NNNNNNNNNNNNNNN', rows)
+                // console.log('NNNNNNNNNNNNNNN', rows)
                 acc(rows);
 
             });

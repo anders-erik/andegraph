@@ -1,0 +1,24 @@
+meta {
+  name: Content_SelectOnTitleLikeString
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/api/v02/content/Content-SelectOnTitleLikeString?searchString={{content-object-env.Title}}&tableLimit=50&includeTable=Project&orderColumn=Uuid&desc=1
+  body: none
+  auth: none
+}
+
+params:query {
+  searchString: {{content-object-env.Title}}
+  tableLimit: 50
+  includeTable: Project
+  orderColumn: Uuid
+  desc: 1
+}
+
+script:post-response {
+  // bru.setVar('content-object', res.body[0]);
+  // bru.setEnvVar('content-object-env', res.body[0]);
+}

@@ -62,37 +62,44 @@ async function Review_InsertScheduleOnUuid(toBeReviewedUuid, scheduleType) {
 
         */
         let reviewOrderIndex = 0;
-        for (let reviewDateString of allReviewDateStrings) {
-            let newReviewObject = models.getEmptyObject('Review')
 
-            newReviewObject.ReviewDate = reviewDateString;
-            newReviewObject.NodeToReviewUuid = toBeReviewedUuid;
+        try {
+            
+            for (let reviewDateString of allReviewDateStrings) {
+                let newReviewObject = models.getEmptyObject('Review')
 
-            // console.log(newReviewObject)
+                newReviewObject.ReviewDate = reviewDateString;
+                newReviewObject.NodeToReviewUuid = toBeReviewedUuid;
 
-            await queries.Review_Insert(newReviewObject);
-            await queries.Node_Insert(newReviewObject);
+                // console.log(newReviewObject)
 
-            let newEdge = models.getEmptyObject('Edge');
+                await queries.Review_Insert(newReviewObject);
+                await queries.Node_Insert(newReviewObject);
 
-            newEdge.Node1Uuid = toBeReviewedUuid;
-            newEdge.Node2Uuid = newReviewObject.Uuid;
-            newEdge.Directed = 0;
-            newEdge.Order = reviewOrderIndex;
+                let newEdge = models.getEmptyObject('Edge');
 
-            await queries.Edge_Insert(newEdge);
+                newEdge.Node1Uuid = toBeReviewedUuid;
+                newEdge.Node2Uuid = newReviewObject.Uuid;
+                newEdge.Directed = 0;
+                newEdge.Order = reviewOrderIndex;
 
-            // console.log(newEdge)
-            reviewOrderIndex++;
+                await queries.Edge_Insert(newEdge);
+
+                // console.log(newEdge)
+                reviewOrderIndex++;
+            }
+
+            // console.log('allReviewDateStrings.length', allReviewDateStrings.length)
+
+
+            acc(1);
+
+
+        } catch (error) {
+            console.log("Failed to insert review schedule. In file ", __filename);
+            rej();
         }
-
-        // console.log('allReviewDateStrings.length', allReviewDateStrings.length)
-
-
-
-
-
-        acc(1);
+        
 
     });
 }

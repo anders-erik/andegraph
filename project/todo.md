@@ -4,11 +4,14 @@
 
 ## v0.3.0
 
-### 2024-09-18
-- seperate backend code
+### 2024-09-18/19
+- |o| seperate backend code
 - stabilize api (prevent craches!)
-- api tests
-- self sign webextension
+- api tests (bruno)
+- webextension
+	- separate from other source code
+	- tests?
+	- self sign
 
 
 ### 2024-09-17

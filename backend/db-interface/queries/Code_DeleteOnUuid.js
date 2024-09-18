@@ -21,6 +21,7 @@ async function Code_DeleteOnUuid(codeUuid) {
         db.all(queryString,
             [codeUuid],
             (err, rows) => {
+                
                 if (err) return rej(err);
 
                 acc(1);

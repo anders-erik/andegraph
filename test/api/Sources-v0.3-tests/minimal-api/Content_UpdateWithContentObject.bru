@@ -1,0 +1,22 @@
+meta {
+  name: Content_UpdateWithContentObject
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:3000/api/v02/content/Content-UpdateWithContentObject
+  body: json
+  auth: none
+}
+
+script:pre-request {
+  // bru.getVar('content-object').Title = "new title";
+  bru.getEnvVar('content-object-env').Title = "new Title";
+  req.setBody(bru.getEnvVar("content-object-env"));
+  // req.setBody(bru.getVar('content-object'));
+}
+
+script:post-response {
+  bru.setVar('content-object', res.body);
+}

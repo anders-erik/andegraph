@@ -26,7 +26,11 @@ async function Review_SelectCurrentReview() {
 
         db.all(queryString,
             (err, rows) => {
-                if (err) return rej(err);
+                
+                if (err){
+                    console.log("Error review selection query. FILE: ", __filename);
+                    return rej(err);
+                }    
 
                 acc(rows);
             });

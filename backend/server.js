@@ -6,14 +6,25 @@ const port = 3000;
 app.use(express.json());
 
 // https://stackoverflow.com/questions/10434001/static-files-with-express-js
-app.use(express.static(__dirname + '/static'));
+// console.log(__dirname +'/static', __dirname);
+app.use(express.static('/app/src/static'));
 
-app.use('/', express.static(__dirname + '/static'));
-app.use('/scroll*', express.static(__dirname + '/static'));
-app.use('/source/*', express.static(__dirname + '/static'));
-app.use('/development*', express.static(__dirname + '/static'));
+app.use('/', express.static('/app/src/static'));
+app.use('/scroll*', express.static('/app/src/static'));
+app.use('/source/*', express.static('/app/src/static'));
+app.use('/development*', express.static('/app/src/static'));
 
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
+app.use((req, res, next) => {
+    // console.log('This is a middleware layer!', req.url);    // Log req.url
+    // console.log(req);
+    next();
+});
 
 
 // VERSION 0.2
