@@ -14,8 +14,6 @@ const contentedge = require('./ContentEdge.js')
 // FILE
 const file = require('./File');
 
-
-
 function initDbir(app, express) {
 	console.log('init dbir')
 
@@ -34,7 +32,7 @@ function initDbir(app, express) {
 
 
 	
-	// CONTENT 
+	// CONTENT
 	app.all('/api/v02/content/:functionstring', content);
 	
 	// EDGE

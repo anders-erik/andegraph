@@ -7,7 +7,7 @@
 ### 2024-09-18/19
 - |o| seperate backend code
 - stabilize api (prevent craches!)
-- api tests (bruno)
+- |o| api tests (bruno)
 - webextension
 	- separate from other source code
 	- tests?
@@ -17,6 +17,8 @@
 	- stats
 - api contentedge:
 	- i return 200 when the uuid doesn't exist
+- new api tester
+	- mars - electron
 
 
 ### 2024-09-17

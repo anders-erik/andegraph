@@ -26,42 +26,39 @@ module.exports = async (req, res) => {
 		switch (functionstring) {
 
 
-			// OO
+			
 			case 'Content-InsertOnTable':
 				returnArray = await dbi.procedures.Content_InsertOnTable(queryObject.Table);
 				break;
-			// OO
+			
 			case 'Content-SelectOnUuid':
 				returnArray = (await dbi.procedures.Content_SelectOnUuid(queryObject.Uuid))[0];
 				break;
 
-			// OO
+			
 			case 'Content-UpdateWithContentObject':
-				// console.log(functionstring, 'selected. ', body, ' as body.');
 				returnArray = await dbi.procedures.Content_UpdateWithContentObject(body);
 				// return the updated array
 				returnArray = (await dbi.procedures.Content_SelectOnUuid(body.Uuid))[0];
 
 				break;
 			
-			// OO
+			
 			case 'Content-DropFullOnUuid':
 				await dbi.procedures.Content_DropFullOnUuid(queryObject.Uuid);
 				returnArray = [];
 				break;
 
 
-
-			// OO
 			case 'Content-SelectOnTitleLikeString':
 				returnArray = await dbi.procedures.Content_SelectOnTitleLikeString(queryObject.searchString, queryObject.tableLimit, queryObject.includeTable, queryObject.orderColumn, queryObject.desc);
 				break;
 
-			// OO
+			
 			case 'Review-InsertScheduleOnUuid':
 				await dbi.procedures.Review_InsertScheduleOnUuid(queryObject.Uuid, queryObject.scheduleType);
 				break;
-			// OO
+			
 			case 'Review-SelectCurrentReview':
 				returnArray = await dbi.queries.Review_SelectCurrentReview();
 				break;
@@ -91,7 +88,9 @@ module.exports = async (req, res) => {
 		var datetime = new Date();
 		
 		// Try to get uuid to be logged. Sometimes that is not provided (search, current review, etc.)
-		if(queryObject.Uuid == undefined)
+		if (queryObject.Uuid == undefined && returnArray.Uuid == undefined)
+			console.log(200, ',' + functionstring, ',' + returnArray[0].Uuid, ',', datetime)
+		else if (queryObject.Uuid == undefined)
 			console.log(200, ',' + functionstring, ',' + returnArray.Uuid, ',', datetime)
 		else
 			console.log(200, ',' + functionstring, ',' + queryObject.Uuid, ',', datetime)

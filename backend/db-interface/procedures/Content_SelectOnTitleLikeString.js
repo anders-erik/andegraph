@@ -36,7 +36,7 @@ async function Content_SelectOnTitleLikeString(searchString, tableLimit, tableAr
     // APPLY SORT
     // console.log(orderColumn, desc)
     if (desc == 0) {
-        console.log('CHECK')
+        // console.log('CHECK')
         allTableRows = sortAsc(allTableRows, orderColumn)
     }
     else {

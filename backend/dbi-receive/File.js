@@ -2,9 +2,12 @@
 const fs = require('fs');
 const cp = require('child_process');
 
-let dbi = require('../db-interface/DbInterface');
 
-let fileDir = `/data/live/files-v0.2.3/`;
+let dbi = require('../db-interface/DbInterface');
+const { log } = require('console');
+const { query } = require('express');
+
+let fileDir = `/data/live/files-v0.3.0/`;
 
 if (!fs.existsSync(fileDir)) {
 	cp.execSync(`mkdir ${fileDir}`);
@@ -14,68 +17,75 @@ if (!fs.existsSync(fileDir)) {
 module.exports = async (req, res) => {
 	res.set('Access-Control-Allow-Origin', `*`);
 
+
+
 	// console.log('body: ', req.body)
 
+	let methodString = 'file-' + req.method;
+	// console.log("functionstring = ", req.params)
+	
 	let fileUuid = req.params.fileUuid;
 	let fileQuery = req.query;
 	let fileObject = (await dbi.queries.File_SelectOnUuid(fileUuid))[0];
 
+
+	// UUID EXISTS ?
+	// make sure a file object has been created previously
 	if (fileObject === undefined) {
+		let dateObj = new Date(Date.now());
+		console.log('File object does not exist. Create a File content-node first.');
+		console.log(400, ',' + methodString, ',' + fileUuid, ',', dateObj.toISOString())
 		res.status(400).send(['File object does not exist. Create a File content-node first. ']);
 		return;
 	}
 
-	let filePath = fileDir + `${fileObject.Uuid}`;
+	
+
+
+
 
 	// console.log(req.method);
 
 
-	switch (req.method) {
+	try {
 
-		case 'GET':
+		// FILE PATH CHECK
+		// Using /test/api/mars-source-files-v0.3/api-logic-diagram.png
+		let filePath = fileDir + `${fileObject.Uuid}`;
+		let fileExists = fs.existsSync(filePath);
+
+		// Only allow post if no file exists
+		if (fileExists && req.method ==  "POST"){
+			console.log("_________________");
+			console.log("File already exists. PUT if you want to replace. [IN FILE: " + __filename + "]");
+			throw new Error("File already exists. PUT if you want to replace")
+		}
+		// Make sure we don't run if we try to change a non-existing file
+		if (!fileExists && (req.method == "PUT" || req.method == "GET" || req.method == "DELETE")) {
+			console.log("_________________");
+			console.log("File doesn't exist. Can't PUT, GET, or DELETE. [IN FILE: " + __filename + "]");
+			throw new Error("File already exists. PUT if you want to replace")
+		}
+
+		
+		let newFileObject;
+
+		switch (req.method) {
+
+			case 'GET':
+				
+				res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
+				res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);
+				break;
 
 
-			// console.log(fileObject)
-			// console.log(`/data/live/files-v0.2/${fileObject.Uuid}`)
-			// console.log(`${fileObject.Title}.${fileObject.Extension}`)
 
-			// THIS WORKS, BUT I WANT THE BREAKING ERROR FOR NOW!
-			// if (!fs.existsSync(filePath)) {
+			case 'POST':
 
-			// 	console.log('FILE DOES NOT EXISTS')
-			// 	res.status(400).send(['File doesn`t exist. POST a new file first!']);
-			// 	return;
-
-			// }
-			console.log('downloading ', filePath)
-
-
-			res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
-			res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);
-			break;
-
-
-		case 'POST':
-
-			if (fs.existsSync(filePath)) {
-
-				console.log('EXISTS')
-				res.status(400).send(['File already exists. PUT if you want to replace']);
-				return;
-
-			}
-			else {
-				// console.log('DOES NOT EXIST')
-				// Buffer.from(new Uint8Array(req.body))
-
-				// console.log(req.headers)
-				// console.log('TEST: ', filePath, req.body);
 				fs.writeFileSync(filePath, req.body);
 
-
-
 				// console.log(fileQuery);
-				let newFileObject = { ...fileObject }
+				newFileObject = { ...fileObject }
 				newFileObject.Type = fileQuery.Type;
 				newFileObject.Title = fileQuery.Title;
 				newFileObject.Extension = fileQuery.Extension;
@@ -83,51 +93,29 @@ module.exports = async (req, res) => {
 				newFileObject.SizeBytes = req.body.length; // buffer object
 				// console.log(newFileObject)
 
-				console.log('File put:')
-				console.table([fileObject, newFileObject])
 
 				await dbi.queries.File_Update(newFileObject);
 				await dbi.queries.Node_Update(newFileObject);
+
 				// await dbi.queries.File_Update(fileObject);
 
 
 				// fs.linkSync(filePath, filePath + '-' + newFileObject.Title + '.' + newFileObject.Extension )
 				cp.execSync(`ln -s ${newFileObject.Uuid} "${filePath}-${newFileObject.Title}.${newFileObject.Extension}"`);
 
-				// fs.writeFileSync(filePath + '.' + newFileObject.Extension,  Buffer.from(new Uint8Array(req.body)));
-
-
-				// console.log('new file')
-				// console.log(fileObject)
-				// console.log('body: ', req.body)
-				// console.log(req.headers)
-				res.status(200).send([]);
-
-			}
-
-			break;
+				break;
 
 
 
 
-		case 'PUT':
+			case 'PUT':
 
-			if (!fs.existsSync(filePath)) {
-
-				console.log('DOES NOT EXISTS')
-				res.status(400).send(['File does not exists. POST if you want to create']);
-				return;
-
-			}
-			else {
-				// console.log('DOES NOT EXIST')
 				// Buffer.from(new Uint8Array(req.body))
 
 				fs.writeFileSync(filePath, req.body);
 
-
 				// console.log(fileQuery);
-				let newFileObject = { ...fileObject }
+				newFileObject = { ...fileObject }
 				newFileObject.Type = fileQuery.Type;
 				newFileObject.Title = fileQuery.Title;
 				newFileObject.Extension = fileQuery.Extension;
@@ -135,9 +123,7 @@ module.exports = async (req, res) => {
 				newFileObject.SizeBytes = req.body.length; // buffer object
 				// console.log(req.body.length)
 
-
-				console.log('File put:')
-				console.table([fileObject, newFileObject])
+				// console.table([fileObject, newFileObject])
 
 				await dbi.queries.File_Update(newFileObject);
 				await dbi.queries.Node_Update(newFileObject);
@@ -156,30 +142,13 @@ module.exports = async (req, res) => {
 				cp.execSync(`ln -s ${newFileObject.Uuid} ${filePath}-${newFileObject.Title}.${newFileObject.Extension}`);
 				// fs.writeFileSync(filePath + '.' + newFileObject.Extension,  Buffer.from(new Uint8Array(req.body)));
 
-
-				// console.log('new file')
-				// console.log(fileObject)
-				// console.log('body: ', req.body)
-				// console.log(req.headers)
-				res.status(200).send([]);
-
-			}
-
-			break;
+				break;
 
 
 
-		case 'DELETE':
 
-			if (!fs.existsSync(filePath)) {
+			case 'DELETE':
 
-				console.log('DOES NOT EXISTS')
-				res.status(400).send([`File does not exists. Can't delete. `]);
-				return;
-
-			}
-			else {
-				// console.log('DOES NOT EXIST')
 				// Buffer.from(new Uint8Array(req.body))
 
 				fs.unlinkSync(filePath);
@@ -187,7 +156,7 @@ module.exports = async (req, res) => {
 
 
 				// update object
-				let newFileObject = { ...fileObject }
+				newFileObject = { ...fileObject }
 				newFileObject.Type = '';
 				newFileObject.Title = '';
 				newFileObject.Extension = '';
@@ -200,22 +169,27 @@ module.exports = async (req, res) => {
 				// Probably not a big deal since I've moved to ContentEdge almost exclusively, but still be mindful of this! 
 				await dbi.queries.Node_Update(newFileObject);
 
-
-				console.log('FILE DELETED')
-				res.status(200).send([]);
-
-			}
-
-			break;
+				break;
 
 
+			default:
+				break;
+		}
 
-		default:
-			break;
+
+	} catch (error) {
+		let date = new Date(Date.now());
+		console.log("400,", methodString + ",", fileUuid + ",", date.toISOString());
+		console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		res.status(400).send([]);
+		return;
 	}
 
 
-	// res.status(200).send([]);
+	let datetime = new Date(Date.now());
+	console.log(200 + ',', methodString + ',', fileUuid + ',', datetime.toISOString());
+	if(query.method != "GET")
+		res.status(200).send([]);
 
 };
 

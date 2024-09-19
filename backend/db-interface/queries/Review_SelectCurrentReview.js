@@ -10,7 +10,7 @@ async function Review_SelectCurrentReview() {
         // let todayIso = '"' + (new Date(Date.now())).toISOString().substring(0, 10) + '"';
         let todayIso = (new Date(Date.now())).toISOString().substring(0, 10);
 
-        console.log(todayIso)
+        // console.log(todayIso)
 
         let queryString = `
         
