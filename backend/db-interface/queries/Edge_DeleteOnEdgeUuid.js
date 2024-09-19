@@ -20,7 +20,10 @@ async function Edge_DeleteOnEdgeUuid(edgeUuid) {
         db.all(queryString,
             [edgeUuid],
             (err, rows) => {
-                if (err) return rej(err);
+                if (err){
+                    console.log("Error when deleting edge. In file : ", __filename);
+                    return rej(err);
+                }
 
                 acc(1);
 

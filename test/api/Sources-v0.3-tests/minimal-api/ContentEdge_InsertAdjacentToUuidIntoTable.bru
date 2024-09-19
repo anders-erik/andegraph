@@ -1,0 +1,24 @@
+meta {
+  name: ContentEdge_InsertAdjacentToUuidIntoTable
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3000/api/v02/contentedge/ContentEdge-InsertAdjacentToUuidIntoTable?Uuid={{content-object-env.Uuid}}&Directed=1&Table=Source&Type&Order=11&Path=/anderserik
+  body: none
+  auth: none
+}
+
+params:query {
+  Uuid: {{content-object-env.Uuid}}
+  Directed: 1
+  Table: Source
+  Type: 
+  Order: 11
+  Path: /anderserik
+}
+
+script:post-response {
+  bru.setEnvVar("contentedge-object-1", res.body);
+}

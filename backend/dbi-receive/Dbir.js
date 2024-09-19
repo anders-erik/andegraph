@@ -27,7 +27,7 @@ function initDbir(app, express) {
 		// res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		// res.set('Access-Control-Allow-Methods', 'PUT');
 		res.set('Access-Control-Allow-Methods', '*');
-		// res.set('Access-Control-Allow-Headers', 'content-type');
+		// res.set('Access-Control-Allow-Headers', 'content-tyzpe');
 		res.set('Access-Control-Allow-Headers', '*');
 		res.status(200).send("");
 	});

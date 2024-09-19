@@ -8,7 +8,16 @@ async function Content_SelectOnUuid(Uuid) {
 
         let returnObject;
 
-        let nodeObject = (await queries.Node_SelectOnUuid(Uuid))[0];
+        let nodeObject;
+
+        try {
+            nodeObject = (await queries.Node_SelectOnUuid(Uuid))[0];
+            
+        } catch (error) {
+            console.log(`No matching Uuid [${Uuid}] in file : `, __filename);
+            rej(1);
+            return 1;
+        }
 
 
         // If there are no Uuid matches, the first array entry of the above query doesn't exist
@@ -17,9 +26,9 @@ async function Content_SelectOnUuid(Uuid) {
 
             // rej("NO MATCHING NODE OBJECTS")
             // acc({});
-            console.log(`No matching Uuid [${Uuid}] in file : `, __filename);
-            rej({});
-            return;
+            // console.log(`No matching Uuid [${Uuid}] in file : `, __filename);
+            // rej({});
+            // return 1;
         }
 
 

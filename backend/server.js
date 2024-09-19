@@ -20,8 +20,9 @@ app.use('/development*', express.static('/app/src/static'));
 //     next();
 // });
 
+// Middleware test (functional!)
 app.use((req, res, next) => {
-    // console.log('This is a middleware layer!', req.url);    // Log req.url
+    // console.log('This is a middleware layer!', req.url);
     // console.log(req);
     next();
 });

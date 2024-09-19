@@ -22,7 +22,10 @@ async function Edge_DeleteOnNodeUuids(Uuid1, Uuid2) {
         db.all(queryString,
             [Uuid1, Uuid2, Uuid1, Uuid2],
             (err, rows) => {
-                if (err) return rej(err);
+                if (err){
+                    console.log("Error when deleting edge in node uuids. In file : ", __filename);
+                    return rej(err);
+                } 
 
                 acc(1);
 

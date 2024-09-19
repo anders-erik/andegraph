@@ -1,0 +1,15 @@
+meta {
+  name: ContentEdge_SelectChildOfUuid
+  type: http
+  seq: 14
+}
+
+get {
+  url: http://localhost:3000/api/v02/contentedge/ContentEdge-SelectChildOfUuid?Uuid={{content-object-env.Uuid}}
+  body: none
+  auth: none
+}
+
+params:query {
+  Uuid: {{content-object-env.Uuid}}
+}

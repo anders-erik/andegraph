@@ -12,6 +12,11 @@
 	- separate from other source code
 	- tests?
 	- self sign
+- new edpoints
+	- status
+	- stats
+- api contentedge:
+	- i return 200 when the uuid doesn't exist
 
 
 ### 2024-09-17

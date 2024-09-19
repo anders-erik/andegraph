@@ -1,0 +1,15 @@
+meta {
+  name: Content_DropFullOnUuid-2
+  type: http
+  seq: 21
+}
+
+delete {
+  url: http://localhost:3000/api/v02/content/Content-DropFullOnUuid?Uuid={{contentedge-object-2.content.Uuid}}
+  body: none
+  auth: none
+}
+
+params:query {
+  Uuid: {{contentedge-object-2.content.Uuid}}
+}

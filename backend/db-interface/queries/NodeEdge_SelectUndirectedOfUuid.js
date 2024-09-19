@@ -11,7 +11,7 @@ async function NodeEdge_SelectUndirectedOfUuid(Uuid) {
 		let queryString = `
 
 					
-			SELECT 
+			SELECT
 				"Node".*, 
 				"Edge"."Uuid" AS edge_Uuid, 
 				"Edge"."Node1Uuid" AS  edge_Node1Uuid,
