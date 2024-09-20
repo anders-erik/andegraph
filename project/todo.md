@@ -4,21 +4,33 @@
 
 ## v0.3.0
 
-### 2024-09-18/19
+### 2024-09-21/22
+- webextension
+	- foldable webextension sections (projects/source/clipboard/etc.)
+	
+
+### 2024-09-18/19/20
 - |o| seperate backend code
-- stabilize api (prevent craches!)
+- |o| stabilize api (prevent craches!)
 - |o| api tests (bruno)
 - webextension
-	- separate from other source code
+	- |o| separate from other source code
 	- tests?
 	- self sign
-- new edpoints
+- new endpoints
 	- status
 	- stats
 - api contentedge:
 	- i return 200 when the uuid doesn't exist
 - new api tester
 	- mars - electron
+- frontend:
+	- Context menu when clicking on content/edge-object
+	- pdf reader that allows webextension
+		- iframe?
+		- render to canvas using pdf.js
+
+
 
 
 ### 2024-09-17

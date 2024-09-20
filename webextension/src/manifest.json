@@ -2,10 +2,10 @@
 	"description": "Provides full context andegraph graph-interaction. Primary purpose is sourcing and sharding. ",
 	"manifest_version": 2,
 	"name": "Andegraph",
-	"version": "1.0",
-	"homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/beastify",
+	"version": "0.3.0",
+	"homepage_url": "https://github.com/anders-erik/sources",
 	"icons": {
-		"48": "icons/beasts-48.png"
+		"48": "icons/andegraph-48.png"
 	},
 	"permissions": [
 		"<all_urls>",
@@ -15,19 +15,20 @@
 		"clipboardWrite"
 	],
 	"browser_action": {
-		"default_icon": "icons/beasts-32.png",
+		"default_icon": "icons/andegraph-32.png",
 		"theme_icons": [
 			{
-				"light": "icons/beasts-32-light.png",
-				"dark": "icons/beasts-32.png",
+				"light": "icons/andegraph-32-light.png",
+				"dark": "icons/andegraph-32.png",
 				"size": 32
 			}
 		],
 		"default_title": "sources",
-		"default_popup": "popup/choose_beast.html"
+		"default_popup": "popup/popup.html"
 	},
 	"web_accessible_resources": [
-		"content_scripts/*"
+		"content_scripts/*",
+		"popup/*"
 	],
 	"content_scripts": [
 		{

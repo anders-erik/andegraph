@@ -14,6 +14,10 @@ params:query {
   Table: Project
 }
 
+assert {
+  res.body.Table: eq "Project"
+}
+
 script:post-response {
   bru.setEnvVar('content-object-env', res.body);
 }

@@ -18,7 +18,6 @@ module.exports = async (req, res) => {
 	res.set('Access-Control-Allow-Origin', `*`);
 
 
-
 	// console.log('body: ', req.body)
 
 	let methodString = 'file-' + req.method;
@@ -29,25 +28,18 @@ module.exports = async (req, res) => {
 	let fileObject = (await dbi.queries.File_SelectOnUuid(fileUuid))[0];
 
 
-	// UUID EXISTS ?
-	// make sure a file object has been created previously
-	if (fileObject === undefined) {
-		let dateObj = new Date(Date.now());
-		console.log('File object does not exist. Create a File content-node first.');
-		console.log(400, ',' + methodString, ',' + fileUuid, ',', dateObj.toISOString())
-		res.status(400).send(['File object does not exist. Create a File content-node first. ']);
-		return;
-	}
-
-	
-
-
-
-
-	// console.log(req.method);
-
 
 	try {
+
+
+		// UUID EXISTS ?
+		// make sure a file object has been created previously
+		if (fileObject === undefined) {
+			// let dateObj = new Date(Date.now());
+			console.log("_________________");
+			console.log('File object does not exist. Create a File content-node first.');
+			throw new Error("File object does not exist. Create a File content-node first.")
+		}
 
 		// FILE PATH CHECK
 		// Using /test/api/mars-source-files-v0.3/api-logic-diagram.png
@@ -68,6 +60,7 @@ module.exports = async (req, res) => {
 		}
 
 		
+		
 		let newFileObject;
 
 		switch (req.method) {
@@ -76,6 +69,8 @@ module.exports = async (req, res) => {
 				
 				res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
 				res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);
+				// return is needed or the default 200-response is run!
+				return;
 				break;
 
 

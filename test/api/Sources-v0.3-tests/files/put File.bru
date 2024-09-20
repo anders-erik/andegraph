@@ -5,9 +5,16 @@ meta {
 }
 
 put {
-  url: http://localhost:3000/api/v02/file/438391980032
+  url: http://localhost:3000/api/v02/file/438391980032?Type=image&Title=puppies3&Extension=png&IAmAuthor=1
   body: multipartForm
   auth: none
+}
+
+params:query {
+  Type: image
+  Title: puppies3
+  Extension: png
+  IAmAuthor: 1
 }
 
 body:multipart-form {

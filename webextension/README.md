@@ -9,7 +9,7 @@ Extracting shards from sources in firefox.
 
 ### web-ext
 
-$ web-ext run --firefox="C:\Program Files\Firefox Nightly\firefox.exe" --source-dir ./src/
+$ web-ext run --firefox="/home/anders/software/firefox-dev/firefox" --source-dir ./webextension/src/
 
 Watches the source directory and will reload the extension on updates.
 

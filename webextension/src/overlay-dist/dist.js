@@ -315,7 +315,7 @@ styleSheet.innerText = `
 
 .ae-element {
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-	color: rgb(23, 19, 19);
+	color: rgb(0, 0, 0);
 	font-weight: 400;
 	font-size: x-small;
 
@@ -1748,7 +1748,31 @@ async function keydownActiveExtension(keyEvent) {
 
 // const apiBaseUrl = 'http://localhost:3000';
 // const basePath = '/api/v02'
-const apiUrl = 'http://localhost:3000/api/v02';
+let apiUrl = 'http://localhost:3000/api/v02';
+
+
+browser.runtime.onMessage.addListener((request) => {
+	// console.log("Message from the background script:");
+
+	if (request.name === "setApiBase") {
+
+		apiUrl = request.apiBaseString;
+		return Promise.resolve({ response: "Api updated in content script. [dbi-send.js]", newApiString: apiUrl });
+
+	}
+
+
+	if (request.name === "getApiBase") {
+
+		// apiUrl = request.apiBaseString;
+		return Promise.resolve({ apiString: apiUrl });
+
+	}
+	
+
+	// console.log(request.greeting);
+	
+});
 
 
 
@@ -3176,6 +3200,7 @@ let overlayRightPanel;
 let projectContainer;
 let sourceContainer;
 let clipboardContainer;
+
 
 
 

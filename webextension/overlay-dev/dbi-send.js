@@ -2,7 +2,31 @@
 
 // const apiBaseUrl = 'http://localhost:3000';
 // const basePath = '/api/v02'
-const apiUrl = 'http://localhost:3000/api/v02';
+let apiUrl = 'http://localhost:3000/api/v02';
+
+
+browser.runtime.onMessage.addListener((request) => {
+	// console.log("Message from the background script:");
+
+	if (request.name === "setApiBase") {
+
+		apiUrl = request.apiBaseString;
+		return Promise.resolve({ response: "Api updated in content script. [dbi-send.js]", newApiString: apiUrl });
+
+	}
+
+
+	if (request.name === "getApiBase") {
+
+		// apiUrl = request.apiBaseString;
+		return Promise.resolve({ apiString: apiUrl });
+
+	}
+	
+
+	// console.log(request.greeting);
+	
+});
 
 
 

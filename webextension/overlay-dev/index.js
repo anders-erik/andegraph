@@ -11,6 +11,7 @@ let clipboardContainer;
 
 
 
+
 let extensionStateFront = {
 
 	active: false,
