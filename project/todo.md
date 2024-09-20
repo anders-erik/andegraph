@@ -7,7 +7,20 @@
 ### 2024-09-21/22
 - webextension
 	- foldable webextension sections (projects/source/clipboard/etc.)
-	
+- frontend:
+	- Context menu when clicking on content/edge-object
+		- SHOULD PUT ALL CURRENT MENUS INTO ONE ACCORDION MENU (+ new)
+		- open, open in new tab, copy properties, etc.
+		- I need a system to detect first ancestor that has a contentObject attached to itself
+			- make sure that all contenobject elements are listening to click events add then first content=element that detects and 'empty' event writes it's contentobject?
+				- Does the event object persist for that to work?
+		- |o| im yet to streamline a way of systematically detect content object interaction ! !
+	- pdf reader that allows webextension
+		- iframe?
+		- render to canvas using pdf.js
+	- CALLBACK TRACE FOR 4XX api calls!
+
+
 
 ### 2024-09-18/19/20
 - |o| seperate backend code
@@ -26,6 +39,7 @@
 	- mars - electron
 - frontend:
 	- Context menu when clicking on content/edge-object
+		- I need a system to 
 	- pdf reader that allows webextension
 		- iframe?
 		- render to canvas using pdf.js

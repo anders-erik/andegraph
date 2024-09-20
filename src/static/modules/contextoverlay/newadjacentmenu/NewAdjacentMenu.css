@@ -55,13 +55,13 @@
 }
 
 
-#connectMenu_contentType {}
+/* #connectMenu_contentType {}
 
 #connectMenu_node {}
 
 #connectMenu_directed {}
 
-#connectMenu_path {}
+#connectMenu_path {} */
 
 #newAdjacentMenu_button {
 	width: 50%;

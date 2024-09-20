@@ -123,8 +123,30 @@ class App {
 		window.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
 		window.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
 		// this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
+		
+		// Didn't work as intended...
+		// window.addEventListener("contentClick", this.contentClick, true)
+
 		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
 		window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
+
+
+	}
+
+
+	contentClick(event){
+		console.log("CONTENT CARD CLICK DETECTED IN APP@")
+
+		// IF CURRENT FOCUED ELEMENT IS CONTENT --> TRIGGER MENU!
+		console.log("id of focued element: ", document.activeElement.id);
+
+		// HAS CONTETNT OBJECT?
+		if (document.activeElement.hasOwnProperty("contentObject"))
+			console.log("CONTENT OBJECT CLICKED DURING FOCUS")
+
+		// console.log("id of clicked content card element: ", event.id);
+		// console.log("event.ctrlKey in contentClick ? ", event.ctrlKey)	
+
 	}
 
 

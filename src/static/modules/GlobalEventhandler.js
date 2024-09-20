@@ -1198,6 +1198,37 @@ class GlobalEventHandler {
 		// 	event: event.target
 		// };
 
+		// console.log("event.ctrlKey in global click ? ", event.ctrlKey)
+
+		
+		// IF CLICKED INSIDE A CONTENT OBJECT - GRAB IT
+		let contentObject = this.getContentObject(event.target);
+		if(contentObject != null){
+			console.log("CLICKED CONTENT OBJECT !")
+			console.log("contentObject.id = ", contentObject.id)
+		}
+		else{
+			// console.log("NOT CONTENT OBJECT")
+		}
+
+		// if (this.isContentObject(event.target)){
+		// 	console.log("CLICKED CONTENT OBJECT ! ! ! !")
+
+		// }
+		// this.isDescentantOfContentObject(event);
+		
+		// console.log('click : event.target.id = ', event.target.id)
+
+
+		
+		// if (event.target.hasOwnProperty('contentCard'))
+		// 	console.log('CONTENT CARD CLICKED')
+
+		// if (event.target.hasOwnProperty('contentObject'))
+		// 	console.log('event.target.contentObject.Uuid = ', event.target.contentObject.Uuid)
+		// if(event.target.contentObject.Uuid)
+
+
 		switch (event.target.id) {
 			case 'mainMenuHome':
 				// console.log('HOME SWEET HOME')
@@ -1249,6 +1280,66 @@ class GlobalEventHandler {
 	createConnectMenu() {
 
 	}
+
+
+	
+	/**
+	 * Returns then object or the first of its anscestors that is a content-object.
+	 * returns 'null' if there is no match.
+	 * @param {Element} elem 
+	 */
+	getContentObject(elem){
+		
+		// If element is content object!
+		if (elem.hasOwnProperty("contentObject")) {
+			return elem;
+		}
+
+		// Returns the ascestor, or null if there is no match
+		return this.getDescendantContentObject(elem);
+
+	}
+
+	
+
+	getParentElement(element) {
+		return element.parentElement;
+	}
+
+	getDescendantContentObject(_element) {
+		// console.log('click : event.target.tagName = ', _element.tagName);
+
+		let maxDepth = 100;
+		let elem = _element;
+
+		// while(1){
+		// Prevent infinite loops at faulty logic...
+		for (let i = 0; i < maxDepth; i++) {
+			let parent = this.getParentElement(elem);
+
+			if (parent.hasOwnProperty("contentObject")) {
+				// console.log("HAS CONTENT OBJECT ANSCETOR");
+				return parent;
+			}
+
+			// console.log(`anscestor depth ${i}:`)
+			// console.log(parent.tagName)
+
+			// None found after reaching document root
+			if (parent.tagName === "HTML") {
+				// console.log("NO CONTENT OBJECT ANSCETOR FOUND");
+				return null;
+			}
+
+
+			elem = parent;
+		}
+
+		// If not found after maxDepth...
+		return null;
+
+	}
+
 
 
 	focusFirstFocusableAncestor(eventTarget) {
