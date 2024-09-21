@@ -4,9 +4,11 @@
     display: block;
     position: absolute;
 
+    border-radius: 5px;
+
     width: 200px;
     height: 300px;
-    background-color: rgb(12, 20, 20);
+    background-color: rgb(171, 213, 213);
 
     pointer-events: all;
 }
@@ -17,5 +19,16 @@
 
 #trueContextMenu_inner {
     height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;    
+}
+
+#trueContextMenu_inner * {
+    /* background-color: none; */
+
     width: 100%;
 }

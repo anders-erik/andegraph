@@ -1,4 +1,13 @@
 
+// import { domUpdater } from "../../domupdater/DomUpdater.js";
+
+
+
+/* 
+    CONTEXT MENU GLOBALS
+*/
+
+
 
 export class TrueContextMenu {
 
@@ -7,7 +16,7 @@ export class TrueContextMenu {
     element;
     inner_element;
 
-
+    
 
     constructor (parentElement){
 
@@ -46,27 +55,24 @@ export class TrueContextMenu {
     };
 
     populate(TypeString){
+        // domUpdater.sayHello();
 
         this.basePopulate();
         
-        // console.log("ASDASKHDASKHGGDS 1")
+        if (TypeString === "ContentObject")
+            this.contentObjectPopulate();
     }
 
-    basePopulate(){
-        // console.log("ASDASKHDASKHGGDS 2")
-        // this.inner_element = this.element.firstElementChild;
-        // console.log("this.inner_element.id = ", this.inner_element.tagName)
-        // console.log("this.element.childElementCount =", this.element.childElementCount)
-        // this.element.innerHTML = 'AAAAAAA'
-        // this.inner_element.innerHTML = `<button>BUTBUT</button>`; 
-        this.inner_element.innerHTML = `<button type="button" class="btn">Base class</button>`;
+    basePopulate(){ 
         this.inner_element.innerHTML = `
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                </ol>
-            </nav>
+        <button type="button" class="btn btn-dark">Dummy</button>
+        `;
+    }
+
+    contentObjectPopulate() {
+        this.inner_element.innerHTML += `
+        <button type="button" class="btn btn-dark">Load Content</button>
+        <button type="button" class="btn btn-dark">Add Child</button>
         `;
     }
 

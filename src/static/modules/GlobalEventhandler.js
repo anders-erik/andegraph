@@ -1216,6 +1216,8 @@ class GlobalEventHandler {
 	async contextMenuEvent(event){
 
 		// Forces browser to require shift for context menu
+		if (event.shiftKey) // necessary for Chrome
+			return;
 		event.preventDefault();
 
 
@@ -1225,15 +1227,30 @@ class GlobalEventHandler {
 		/* 
 			DISPLAY LOGIC - CONTEXT MENU
 		*/
+		// If menu is hidden, show it
 		if (trueContextMenu.classList.contains("hide")){
-			// If menu is hidden, show it
 			trueContextMenu.style.left = event.pageX + "px";
 			trueContextMenu.style.top = event.pageY + "px";
 			trueContextMenu.classList.remove("hide");
+
+			/*
+				CONTEXT MENU POPULATING
+			*/
+			let clickedContentObjectElement = this.getContentObject(event.target)
+			if (clickedContentObjectElement != null){
+				trueContextMenu.clickedContentObject = clickedContentObjectElement.contentObject
+				trueContextMenu.clickedEdgeObject = clickedContentObjectElement.edgeObject;
+				trueContextMenu.populate("ContentObject");
+			}
+			else{
+				trueContextMenu.populate("Base");
+				trueContextMenu.clickedContentObject = null;
+			}
+
 			// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
 		}
+		// if we right click inside context menu, do nothing
 		else if (this.clickedInsideTrueContextMenu(event.target)){
-			// if we right click inside context menu, do nothing
 
 			// If I want a right click to trigger 'a regular click'
 			// https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
@@ -1247,8 +1264,8 @@ class GlobalEventHandler {
 
 			return;
 		}
+		// If right clicking outside when shown, hide it
 		else {
-			// If right clicking outside when it is showing, hide it
 			// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
 			trueContextMenu.classList.add("hide");
 			return;
@@ -1261,21 +1278,21 @@ class GlobalEventHandler {
 
 		// trueContextMenu.printHello();
 
-		if (this.getContentObject(event.target) != null)
-			trueContextMenu.populate("ContentObject");
-		else
-			trueContextMenu.populate("Base");
+		// if (this.getContentObject(event.target) != null)
+		// 	trueContextMenu.populate("ContentObject");
+		// else
+		// 	trueContextMenu.populate("Base");
 
 
-		// if (!trueContextMenu.classList.contains("hide")){
+		// // if (!trueContextMenu.classList.contains("hide")){
 
-		// }
+		// // }
 
-		// CONTENT OBJECT CONTEXT MENU
-		let contentObject = this.getContentObject(event.target);
-		if (contentObject != null) {
+		// // CONTENT OBJECT CONTEXT MENU
+		// let contentObject = this.getContentObject(event.target);
+		// if (contentObject != null) {
 			
-		}
+		// }
 
 
 		
@@ -1330,6 +1347,19 @@ class GlobalEventHandler {
 	}
 
 
+	/**
+	 * 	After a confirmed click inside context menu, this method will handle implmenting behavior.
+	 * 
+	 * @param {*} clickEvent 
+	 */
+	async handleContextMenuClick(clickEvent){
+		console.log("HANDLING CONTEXT CLICK!")
+
+
+		
+	}
+
+
 	async click(event) {
 		// this.app.getLeftPanelId()
 		// console.log('click: ', event.target);
@@ -1343,9 +1373,8 @@ class GlobalEventHandler {
 
 		// console.log("CLICKKLICK")
 
+
 		// CLOSE TRUE CONTEXT MENU
-		// let clickedInContextMenu = this.clickedInsideTrueContextMenu(event.target)
-		// console.log("CLicked inside true context menu? = ", clickedInContextMenu)
 		if ( ! this.clickedInsideTrueContextMenu(event.target) ){
 			let trueContextMenu = document.getElementById("trueContextMenu");
 
@@ -1353,9 +1382,13 @@ class GlobalEventHandler {
 
 			// prevent other page action when 'closing' context menu
 			// DOESN"T WORK BECAUSE 'CLICK' IS TRIGGERED ON 'MOUSE UP', THUS FAILING TO STOP 'MOUSE DOWN' EVENTS!
-			event.preventDefault();
-			event.stopPropagation();
-			return;
+			// event.preventDefault();
+			// event.stopPropagation();
+			// return;
+		}
+		else {
+			// CLICKED INSIDE TRUE CONTEXT MENU
+			this.handleContextMenuClick();
 		}
 
 		// console.log("event.ctrlKey in global click ? ", event.ctrlKey)

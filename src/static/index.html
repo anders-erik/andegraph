@@ -9,14 +9,26 @@
   <link rel="stylesheet" href="/styles/styles.css" />
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
 
-  <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap -->
-  <script type="importmap">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap
+    <script type="importmap">
       {
         "imports": {
           "Dbis": "./modules/dbi-send/dbi-send.js"
         }
       }
-    </script>
+    </script> -->
+  
+
+  <script type="importmap">
+    {
+      "imports": {
+        "imim": "../../modules/importmap-tester.js",
+        "contextoverlay": "../../modules/contextoverlay"
+      }
+    }
+  </script>
+    
+
 
   <title>SOURCES</title>
 </head>
