@@ -116,7 +116,11 @@ class App {
 
 		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
 
-		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
+		
+		this.appElement.addEventListener('contextmenu', this.globalEventHandler.contextMenuEvent.bind(this.globalEventHandler));
+
+		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler), true);
+		
 		// this.appElement.addEventListener('click', this.appClick.bind(this));
 		// this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
 		// this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))

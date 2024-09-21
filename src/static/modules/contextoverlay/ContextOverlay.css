@@ -4,6 +4,8 @@
 @import './connectmenu/ConnectMenu.css';
 @import './newadjacentmenu/NewAdjacentMenu.css';
 
+@import './truecontextmenu/TrueContextMenu.css';
+
 #contextOverlay {
 	position: fixed;
 	top: 0px;

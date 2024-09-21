@@ -6,6 +6,9 @@ import { EdgeMenu } from "./edgemenu/EdgeMenu.js";
 import { NewAdjacentMenu } from "./newadjacentmenu/NewAdjacentMenu.js";
 import { TitleMenu } from "./titlemenu/TitleMenu.js";
 
+import { TrueContextMenu } from "./truecontextmenu/TrueContextMenu.js";
+
+
 class ContextOverlay {
 
 	overlayElement;
@@ -20,6 +23,7 @@ class ContextOverlay {
 	newAdjacentMenu;
 	contentObjectElement;
 
+	TrueContextMenu;
 
 	propertiesMenu;
 	propertiesMenuActive = false;
@@ -42,6 +46,9 @@ class ContextOverlay {
 		this.edgeMenu = new EdgeMenu(this.contextMenu);
 		this.connectMenu = new ConnectMenu(this.contextMenu);
 		this.newAdjacentMenu = new NewAdjacentMenu(this.contextMenu);
+
+
+		this.TrueContextMenu = new TrueContextMenu(this.overlayElement);
 
 	}
 

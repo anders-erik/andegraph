@@ -1187,6 +1187,149 @@ class GlobalEventHandler {
 	}
 
 
+	// NEW, *TRUE* CONTEXT MENU
+	clickedInsideTrueContextMenu(eventTarget) {
+		let element = eventTarget;
+		let parent = null;
+
+		if (element.id === "trueContextMenu")
+			return true;
+
+		// look through direct line of anscestors
+		let maxDepth = 100;
+		for (let i = 0; i < maxDepth; i++) {
+			parent = element.parentElement;
+
+			if (parent.id === "trueContextMenu")
+				return true;
+
+			if (parent.tagName === "HTML")
+				return false;
+
+			element = parent;
+		}
+
+		return false;
+	}
+
+
+	async contextMenuEvent(event){
+
+		// Forces browser to require shift for context menu
+		event.preventDefault();
+
+
+		let trueContextMenu = document.getElementById("trueContextMenu");
+
+
+		/* 
+			DISPLAY LOGIC - CONTEXT MENU
+		*/
+		if (trueContextMenu.classList.contains("hide")){
+			// If menu is hidden, show it
+			trueContextMenu.style.left = event.pageX + "px";
+			trueContextMenu.style.top = event.pageY + "px";
+			trueContextMenu.classList.remove("hide");
+			// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
+		}
+		else if (this.clickedInsideTrueContextMenu(event.target)){
+			// if we right click inside context menu, do nothing
+
+			// If I want a right click to trigger 'a regular click'
+			// https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
+			// let evt = new MouseEvent("click", {
+			// 	view: window,
+			// 	target: event.target,
+			// 	bubbles: true,
+			// 	cancelable: true,
+			// });
+			// event.target.dispatchEvent(evt);
+
+			return;
+		}
+		else {
+			// If right clicking outside when it is showing, hide it
+			// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
+			trueContextMenu.classList.add("hide");
+			return;
+		}
+
+
+		/* 
+			CONTEXT POPULATING WHEN SHOWN
+		*/
+
+		// trueContextMenu.printHello();
+
+		if (this.getContentObject(event.target) != null)
+			trueContextMenu.populate("ContentObject");
+		else
+			trueContextMenu.populate("Base");
+
+
+		// if (!trueContextMenu.classList.contains("hide")){
+
+		// }
+
+		// CONTENT OBJECT CONTEXT MENU
+		let contentObject = this.getContentObject(event.target);
+		if (contentObject != null) {
+			
+		}
+
+
+		
+		// if (this.clickedInsideTrueContextMenu(event.target)){
+		// 	// if we right click inside context menu, do nothing
+
+		// 	// If I want a right click to trigger 'a regular click'
+		// 	// https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
+		// 	// let evt = new MouseEvent("click", {
+		// 	// 	view: window,
+		// 	// 	target: event.target,
+		// 	// 	bubbles: true,
+		// 	// 	cancelable: true,
+		// 	// });
+		// 	// event.target.dispatchEvent(evt);
+
+		// 	return;
+		// }
+		// else if ( ! trueContextMenu.classList.contains("hide") ){
+		// 	// clicked outside menu, but displaying menu
+		// 	trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
+		// }
+		// else{
+		// 	// 
+		// 	console.log("OUTSIDE WHEN HIDDEN - RIGHT CLICK")
+		// 	// trueContextMenu.style.left = event.pageX + "px";
+		// 	// trueContextMenu.style.top = event.pageY + "px";
+		// 	// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
+		// }
+
+
+		// IF CLICKED INSIDE A CONTENT OBJECT - GRAB IT
+		// let contentObject = this.getContentObject(event.target);
+		// if (contentObject != null) {
+		// 	// console.log("CLICKED CONTENT OBJECT !")
+		// 	// console.log("contentObject.id = ", contentObject.id)
+			
+		// 	// console.log("CONTENT OBJECT CONTEXT MENU")
+
+		// 	// let trueContextMenu = event.target;
+
+			
+
+		// 	// console.log("pageX = ", event.pageX)
+		// 	// trueContextMenu.style.left = event.pageX + "px";
+		// 	// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
+		// }
+
+		// event.stopPropagation();
+
+		
+	}
+
+
 	async click(event) {
 		// this.app.getLeftPanelId()
 		// console.log('click: ', event.target);
@@ -1198,14 +1341,33 @@ class GlobalEventHandler {
 		// 	event: event.target
 		// };
 
+		// console.log("CLICKKLICK")
+
+		// CLOSE TRUE CONTEXT MENU
+		// let clickedInContextMenu = this.clickedInsideTrueContextMenu(event.target)
+		// console.log("CLicked inside true context menu? = ", clickedInContextMenu)
+		if ( ! this.clickedInsideTrueContextMenu(event.target) ){
+			let trueContextMenu = document.getElementById("trueContextMenu");
+
+			trueContextMenu.classList.contains("hide") ? true : trueContextMenu.classList.add("hide");
+
+			// prevent other page action when 'closing' context menu
+			// DOESN"T WORK BECAUSE 'CLICK' IS TRIGGERED ON 'MOUSE UP', THUS FAILING TO STOP 'MOUSE DOWN' EVENTS!
+			event.preventDefault();
+			event.stopPropagation();
+			return;
+		}
+
 		// console.log("event.ctrlKey in global click ? ", event.ctrlKey)
 
+		// console.log("event.button.value = ", event.button.value)
 		
 		// IF CLICKED INSIDE A CONTENT OBJECT - GRAB IT
 		let contentObject = this.getContentObject(event.target);
 		if(contentObject != null){
-			console.log("CLICKED CONTENT OBJECT !")
-			console.log("contentObject.id = ", contentObject.id)
+			// console.log("CLICKED CONTENT OBJECT !")
+			// console.log("contentObject.id = ", contentObject.id)
+			
 		}
 		else{
 			// console.log("NOT CONTENT OBJECT")

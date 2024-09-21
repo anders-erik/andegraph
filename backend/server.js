@@ -1,4 +1,6 @@
 
+const path = require("path")
+
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -13,6 +15,16 @@ app.use('/', express.static('/app/src/static'));
 app.use('/scroll*', express.static('/app/src/static'));
 app.use('/source/*', express.static('/app/src/static'));
 app.use('/development*', express.static('/app/src/static'));
+
+
+/* 
+    BOOTSTRAP
+*/
+// https://stackoverflow.com/questions/65229238/using-bootstrap-with-npm-and-node-js
+let bootstrapPath = path.join(__dirname, "../node_modules/bootstrap/dist/");
+// console.log("__dirname = ", __dirname);
+console.log("bootstrapPath = ", bootstrapPath)
+app.use('/bootstrap/', express.static(bootstrapPath))
 
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");

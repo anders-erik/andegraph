@@ -1,0 +1,21 @@
+
+#trueContextMenu {
+
+    display: block;
+    position: absolute;
+
+    width: 200px;
+    height: 300px;
+    background-color: rgb(12, 20, 20);
+
+    pointer-events: all;
+}
+
+#trueContextMenu.hide {
+    display: none;
+}
+
+#trueContextMenu_inner {
+    height: 100%;
+    width: 100%;
+}

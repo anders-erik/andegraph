@@ -8,13 +8,16 @@
 - webextension
 	- foldable webextension sections (projects/source/clipboard/etc.)
 - frontend:
+	- If i build js/css modules into on big 'andegraph'-module, then I can simply include that in the index.html and always get full access??
+		- I need to export all js-code properly I think
+			- MAYBE A BUNDLER LIKE WEBPACK??
 	- Context menu when clicking on content/edge-object
+		- |o| im yet to streamline a way of systematically detect content object interaction ! !
 		- SHOULD PUT ALL CURRENT MENUS INTO ONE ACCORDION MENU (+ new)
 		- open, open in new tab, copy properties, etc.
 		- I need a system to detect first ancestor that has a contentObject attached to itself
 			- make sure that all contenobject elements are listening to click events add then first content=element that detects and 'empty' event writes it's contentobject?
 				- Does the event object persist for that to work?
-		- |o| im yet to streamline a way of systematically detect content object interaction ! !
 	- pdf reader that allows webextension
 		- iframe?
 		- render to canvas using pdf.js
