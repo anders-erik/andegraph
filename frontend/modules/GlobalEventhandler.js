@@ -1,6 +1,7 @@
 import { dbis } from "./dbi-send/dbi-send.js";
 import { determineClipboardContentType } from "./filehandling/DetermineClipboardContents.js";
 
+import * as mc from "./maincontent/MainContent.js";
 
 
 
@@ -487,8 +488,19 @@ class GlobalEventHandler {
 						// console.log('typeof contentObject: ', contentObject)
 						if (contentObject !== undefined) {
 
-							// history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
-							history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/source/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
+							console.log("contentObject.Table = ", contentObject.Table)
+							
+							if(contentObject.Table === "Source"){
+								// history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+								history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/source/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
+
+							}
+							if (contentObject.Table === "Review") {
+								// history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`);
+								history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/review/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
+
+							}
+
 
 							this.app.mainContent.loadFromUrl();
 							// this.app.reloadApp();
@@ -1188,8 +1200,8 @@ class GlobalEventHandler {
 
 
 	// NEW, *TRUE* CONTEXT MENU
-	clickedInsideTrueContextMenu(eventTarget) {
-		let element = eventTarget;
+	clickedInsideTrueContextMenu(ctxMenuEventTarget) {
+		let element = ctxMenuEventTarget;
 		let parent = null;
 
 		if (element.id === "trueContextMenu")
@@ -1213,12 +1225,12 @@ class GlobalEventHandler {
 	}
 
 
-	async contextMenuEvent(event){
+	async contextMenuEvent(ctxMenuEvent){
 
 		// Forces browser to require shift for context menu
-		if (event.shiftKey) // necessary for Chrome
+		if (ctxMenuEvent.shiftKey) // necessary for Chrome
 			return;
-		event.preventDefault();
+		ctxMenuEvent.preventDefault();
 
 
 		let trueContextMenu = document.getElementById("trueContextMenu");
@@ -1229,14 +1241,14 @@ class GlobalEventHandler {
 		*/
 		// If menu is hidden, show it
 		if (trueContextMenu.classList.contains("hide")){
-			trueContextMenu.style.left = event.pageX + "px";
-			trueContextMenu.style.top = event.pageY + "px";
+			trueContextMenu.style.left = ctxMenuEvent.pageX + "px";
+			trueContextMenu.style.top = ctxMenuEvent.pageY + "px";
 			trueContextMenu.classList.remove("hide");
 
 			/*
 				CONTEXT MENU POPULATING
 			*/
-			let clickedContentObjectElement = this.getContentObject(event.target)
+			let clickedContentObjectElement = this.getContentObject(ctxMenuEvent.target)
 			if (clickedContentObjectElement != null){
 				trueContextMenu.clickedContentObject = clickedContentObjectElement.contentObject
 				trueContextMenu.clickedEdgeObject = clickedContentObjectElement.edgeObject;
@@ -1250,7 +1262,7 @@ class GlobalEventHandler {
 			// trueContextMenu.classList.contains("hide") ? trueContextMenu.classList.remove("hide") : trueContextMenu.classList.add("hide");
 		}
 		// if we right click inside context menu, do nothing
-		else if (this.clickedInsideTrueContextMenu(event.target)){
+		else if (this.clickedInsideTrueContextMenu(ctxMenuEvent.target)){
 
 			// If I want a right click to trigger 'a regular click'
 			// https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
@@ -1353,10 +1365,21 @@ class GlobalEventHandler {
 	 * @param {*} clickEvent 
 	 */
 	async handleContextMenuClick(clickEvent){
-		console.log("HANDLING CONTEXT CLICK!")
+		// console.log("HANDLING CONTEXT CLICK!")
 
+		if(clickEvent.target.id == "context-1"){
+			mc.clearMainContent();
+		}
+		else if (clickEvent.target.id == "context-2")
+			mc.loadHome();
+		else if (clickEvent.target.id == "context-3")
+			mc.loadScroll();
+		else if (clickEvent.target.id == "context-4")
+			mc.loadPdf(439389356032);
 
-		
+		else if (clickEvent.target.id == "context-source")
+			mc.loadSource(document.getElementById("trueContextMenu").clickedContentObject.Uuid);
+
 	}
 
 
@@ -1388,7 +1411,7 @@ class GlobalEventHandler {
 		}
 		else {
 			// CLICKED INSIDE TRUE CONTEXT MENU
-			this.handleContextMenuClick();
+			this.handleContextMenuClick(event);
 		}
 
 		// console.log("event.ctrlKey in global click ? ", event.ctrlKey)

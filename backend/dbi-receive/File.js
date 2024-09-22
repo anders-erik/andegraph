@@ -67,9 +67,15 @@ module.exports = async (req, res) => {
 
 			case 'GET':
 				
-				res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
+				// res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
+				if (fileObject.Extension == "pdf")
+					res.set('Content-Type', `application/${fileObject.Extension}`);
+				else
+					res.set('Content-Type', `${fileObject.Type}/${fileObject.Extension}`);
 				res.download(filePath, `${fileObject.Title}.${fileObject.Extension}`);
+
 				// return is needed or the default 200-response is run!
+				
 				return;
 				break;
 

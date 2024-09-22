@@ -65,13 +65,17 @@ export class TrueContextMenu {
 
     basePopulate(){ 
         this.inner_element.innerHTML = `
-        <button type="button" class="btn btn-dark">Dummy</button>
+        <button id="context-1" type="button" class="btn btn-dark">Empty Main Content</button>
+        <button id="context-2" type="button" class="btn btn-dark">Load Home</button>
+        <button id="context-3" type="button" class="btn btn-dark">Load Scroll</button>
+        <button id="context-4" type="button" class="btn btn-dark">Load PDF</button>
+        <hr id="context-menu-hr">
         `;
     }
 
     contentObjectPopulate() {
         this.inner_element.innerHTML += `
-        <button type="button" class="btn btn-dark">Load Content</button>
+        <button id="context-source" type="button" class="btn btn-dark">Load Source</button>
         <button type="button" class="btn btn-dark">Add Child</button>
         `;
     }

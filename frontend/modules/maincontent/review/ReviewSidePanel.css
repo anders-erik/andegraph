@@ -1,0 +1,143 @@
+#reviewSidePanel {
+
+	min-height: 600px;
+	height: 100%;
+	width: 100%;
+
+	display: grid;
+	grid-template-rows: 20% 20% 30% 30%;
+	grid-template-columns: 100%;
+
+
+	/* gap: 10px; */
+
+	/* display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center; */
+
+	/* margin: 3px; */
+	/* background-color: rgba(165, 109, 35, 0.372); */
+
+}
+
+#reviewSidePanel *.hidden {
+	display: none;
+}
+
+#reviewParentContainer {
+	/* width: 96%;
+	height: 19%; */
+	grid-row: 1;
+	grid-column: 1;
+
+	/* margin: 5px; */
+}
+
+#reviewFileContainer {
+	/* width: 96%;
+	height: 19%; */
+	grid-column: 1;
+	grid-row: 2;
+
+	/* margin: 5px; */
+}
+
+#reviewReviewContainer {
+	/* width: 96%;
+	height: 29%; */
+	grid-row: 3;
+
+	/* margin: 5px; */
+}
+
+#reviewConnectedContainer {
+	/* width: 96%;
+	height: 29%; */
+	grid-row: 4;
+
+	/* margin: 5px; */
+}
+
+#reviewSidePanel>div>div:first-child {
+	padding-top: 5px;
+	text-align: center;
+}
+
+#reviewSidePanel>div {
+	/* width: 96%; */
+	/* margin-top: 5px; */
+	margin: 4px 2px 4px 2px;
+
+	overflow-y: scroll;
+	scrollbar-width: none;
+
+	border-radius: 5px;
+	border: solid var(--light-border-2) 1px;
+
+	color: var(--light-text-2);
+	background-color: var(--dark-bg-2);
+}
+
+#reviewSidePanel div table {
+	width: 100%;
+	border-collapse: collapse;
+	/* background-color: rgba(40, 88, 73, 0.492); */
+}
+
+#reviewSidePanel div table thead tr {
+	/* background-color: var(--dark-bg-4); */
+	border-bottom: solid var(--light-border-2) 1px;
+	box-shadow: inset 0 -1px 0 0 var(--light-border-1);
+}
+
+#reviewSidePanel div table thead tr th {
+	padding: 5px 0 10px 0;
+}
+
+/* 
+#reviewSidePanel div table tbody tr:hover {
+	border: solid var(--light-border-2) 2px;
+
+} */
+
+
+#reviewSidePanel div table tbody tr td {
+	/* box-shadow: 0 0 0 1px gray; */
+	/* background-color: var(--dark-bg-4); */
+	padding: 2px;
+	padding-top: 4px;
+
+	text-align: center;
+}
+
+/* #reviewSidePanel div table tbody tr {
+	background-color: var(--dark-bg-4);
+	margin: 2px;
+} */
+
+#reviewSidePanel div table tbody tr td:first-child {
+	width: 100px;
+	max-width: 100px;
+	border-right: solid rgba(0, 0, 0, 0.46) 2px;
+}
+
+
+
+#reviewReviewContainer table tbody tr td.reviewDate {
+	text-align: center;
+	width: 200px;
+	/* width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center; */
+
+}
+
+#reviewReviewContainer table tbody tr td.reviewDate {
+	background-color: rgba(113, 8, 11, 0.537);
+}
+
+#reviewReviewContainer table tbody tr td.completed {
+	background-color: rgba(51, 151, 51, 0.591);
+}

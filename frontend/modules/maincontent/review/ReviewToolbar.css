@@ -1,0 +1,74 @@
+#reviewToolbar {
+	height: calc(100% - 10px);
+	width: calc(100% - 10px);
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+
+	color: var(--light-text-1);
+	font-size: small;
+
+	margin: 3px;
+	/* background-color: antiquewhite; */
+}
+
+#reviewToolbar * {
+	display: flex;
+	flex-direction: row;
+
+
+	background-color: var(--dark-bg-2);
+}
+
+
+#reviewToolbar *.button {
+	user-select: none;
+	cursor: pointer;
+
+	padding: 3px;
+	border: solid var(--light-border-2) 1px;
+	border-radius: 3px;
+
+
+	background-color: var(--dark-bg-4);
+}
+
+#reviewToolbar *.selected {
+	color: var(--dark-text-1);
+	background-color: var(--light-1);
+}
+
+/* #sourceToolbarTitle {
+	width: 400px;
+
+} */
+
+#reviewToolbar * * {
+	margin: 3px;
+	/* background-color: rgb(113, 186, 162); */
+}
+
+#toolbar_completeReview_review {
+	background-color: var(--dark-bg-5);
+	color: var(--light-text-1);
+	border: solid white 1px;
+	border-radius: 5px;
+	padding: 2px 5px 2px 5px;
+}
+
+#toolbar_completeReview_review,
+#hideShardcontentLabel_review {
+	margin-left: -45px;
+	padding: 5px;
+}
+
+#hideShardcontentCheckbox_review {
+	margin-left: -55px;
+}
+
+#reviewToolbar_shardPanel_review,
+#reviewToolbar_reviewPanel_review {
+	margin-left: -45px;
+}

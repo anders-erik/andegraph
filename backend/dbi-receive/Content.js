@@ -88,10 +88,10 @@ module.exports = async (req, res) => {
 		var datetime = new Date();
 		
 		// Try to get uuid to be logged. Sometimes that is not provided (search, current review, etc.)
-		if (queryObject.Uuid == undefined && returnArray.Uuid == undefined)
-			console.log(200, ',' + functionstring, ',' + returnArray[0].Uuid, ',', datetime)
-		else if (queryObject.Uuid == undefined)
-			console.log(200, ',' + functionstring, ',' + returnArray.Uuid, ',', datetime)
+		if (queryObject.Uuid == undefined)
+
+			if (returnArray.Uuid == undefined)
+				console.log(200 + ',' + functionstring + ',' + " no uuid" + ',', datetime)
 		else
 			console.log(200, ',' + functionstring, ',' + queryObject.Uuid, ',', datetime)
 	}

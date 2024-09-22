@@ -7,7 +7,7 @@
     content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0" />
 
   <link rel="stylesheet" href="/styles/styles.css" />
-  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+  <!-- <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" /> -->
 
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap
     <script type="importmap">
@@ -23,7 +23,11 @@
     {
       "imports": {
         "imim": "/modules/importmap-tester.js",
-        "contextoverlay": "/modules/contextoverlay"
+        "dbis": "/modules/dbi-send/dbi-send.js",
+        "contextoverlay": "/modules/contextoverlay",
+        "maincontent": "/modules/maincontent",
+        "pdfreader": "/modules/maincontent/pdfreader/PdfReader.js",
+        "review": "/modules/maincontent/review/Review.js"
       }
     }
   </script>
@@ -54,7 +58,7 @@
 
   <!-- SCRIPTS -->
   <script type="module" src="/main.js" defer></script>
-  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <!-- <script src="/bootstrap/js/bootstrap.min.js"></script> -->
 </body>
 
 </html>

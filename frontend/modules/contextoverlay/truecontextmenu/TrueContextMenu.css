@@ -4,6 +4,10 @@
     display: block;
     position: absolute;
 
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scrollbar-color: red rgb(0, 0, 0);
+
     border-radius: 5px;
 
     width: 200px;
@@ -31,4 +35,9 @@
     /* background-color: none; */
 
     width: 100%;
+}
+
+#context-menu-hr {
+    margin: 3px;
+    border-top: 3px solid #6279f0;
 }

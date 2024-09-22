@@ -66,6 +66,10 @@ export class FileContent {
 					case 'video':
 						this.loadVideo(fileSrc);
 						break;
+					
+					case 'pdf':
+						this.loadPdf(fileSrc, uuid);
+						break;
 
 					default:
 						this.loadOther(fileSrc);
@@ -111,6 +115,25 @@ export class FileContent {
 		this.fileElement.setAttribute("preload", "auto"); // this enabled they playback to work as expected!
 
 		this.fileElement.src = fileSrc;
+		this.element.append(this.fileElement)
+	}
+
+	loadPdf(fileSrc, _uuid) {
+		this.fileElement = document.createElement('div');
+		this.fileElement.classList.add('fileElement', 'other');
+
+		this.fileElement.innerHTML = `
+			<p>FILE</p>
+			<div>
+				<p>DOWNLOAD</p>
+				<a href="${fileSrc}" download="${this.contentObject.Title}">${this.contentObject.Title + '.' + this.contentObject.Extension} </a>
+			</div>
+			<div>
+				<p>OPEN</p>
+				<a href="/pdf/${_uuid}" target="_blank">${this.contentObject.Title + '.' + this.contentObject.Extension} </a>
+			</div>
+			
+		`;
 		this.element.append(this.fileElement)
 	}
 

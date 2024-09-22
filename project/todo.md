@@ -4,7 +4,26 @@
 
 ## v0.3.0
 
-### 2024-09-21/22
+### 2024-09-22
+- |o| enable reading pdf's in frontend
+	- |o| /pdf/<uuid> path ?
+	- |x| test iframe
+	- |x| otherwise include pdf.js in project
+- Webextension
+	- enable title editing
+		- automatically move focus to title edit when creating shard
+	- collapsable sections
+- Dynamically loading page on url change
+- review-path for loading a review from the url
+	- |o| make sure review loads on url
+	- |o| implement as a non-class version
+	- if uuid does not correspond to a review, go where?
+		- try parent object
+		- else a connected object
+		- else home
+
+
+### 2024-09-21
 - webextension
 	- foldable webextension sections (projects/source/clipboard/etc.)
 - frontend:

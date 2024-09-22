@@ -1,0 +1,13 @@
+// https://stackoverflow.com/questions/73346967/can-i-configure-something-in-vscode-to-get-javascript-intellisense-for-a-js-file
+// https://code.visualstudio.com/docs/languages/jsconfig
+
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "frontend/*.js"
+            ]
+        }
+    }
+}

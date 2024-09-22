@@ -1,5 +1,8 @@
 @import './source/Source.css';
+@import './review/Review.css';
 @import './home/Home.css';
+
+@import "./pdfreader/PdfReader.css";
 
 
 #mainContentContainer {
