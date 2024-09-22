@@ -5,23 +5,25 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+const frontendPath = "/app/frontend";
+
 app.use(express.json());
 
 // https://stackoverflow.com/questions/10434001/static-files-with-express-js
 // console.log(__dirname +'/static', __dirname);
-app.use(express.static('/app/src/static'));
+app.use(express.static(frontendPath));
 
-app.use('/', express.static('/app/src/static'));
-app.use('/scroll*', express.static('/app/src/static'));
-app.use('/source/*', express.static('/app/src/static'));
-app.use('/development*', express.static('/app/src/static'));
+app.use('/', express.static(frontendPath));
+app.use('/scroll*', express.static(frontendPath));
+app.use('/source/*', express.static(frontendPath));
+app.use('/development*', express.static(frontendPath));
 
 
 /* 
     BOOTSTRAP
 */
 // https://stackoverflow.com/questions/65229238/using-bootstrap-with-npm-and-node-js
-let bootstrapPath = path.join(__dirname, "../node_modules/bootstrap/dist/");
+let bootstrapPath = "/app/node_modules/bootstrap/dist/";
 // console.log("__dirname = ", __dirname);
 console.log("bootstrapPath = ", bootstrapPath)
 app.use('/bootstrap/', express.static(bootstrapPath))

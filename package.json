@@ -5,6 +5,7 @@
   "scripts": {
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
+    "backend-log": "./scripts/backend-log.sh",
     "dev": "nodemon -L backend/server.js -w backend/",
     "backup": "./data/utils/backup.sh"
   },

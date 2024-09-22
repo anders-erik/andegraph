@@ -7,10 +7,6 @@ import { SourceContent } from "./sourcecontent/SourceContent.js";
 import { TextContent } from "./textcontent/TextContent.js";
 
 
-// const contentClickEvent = new Event("contentClick");
-// const contentClickEvent = new PointerEvent("contentClick");
-
-
 export class ContentCard {
 
 	element;
@@ -70,16 +66,6 @@ export class ContentCard {
 
 		this.overlayElement.textContent = this.element.contentObject.Title;
 
-
-		// this.element.addEventListener("click", event => {
-		// 	event.contentCard = true;
-		// });
-
-		// this.element.addEventListener("contentClick", (event) => {
-		// 	if(event.ctrlKey == true)
-		// 		console.log("CTLCTLCTLTL")
-		// 	// console.log("ASDASDASDASD")
-		// })
 
 		this.insertContentCardContent();
 
@@ -274,17 +260,6 @@ export class ContentCard {
 	}
 
 	click(event) {
-		
-		// tell the app that a content card has been clicked
-		
-		// if(event.ctrlKey == true)
-		// 	contentClickEvent.ctrlKey = true;
-		// const contentClickEvent = new PointerEvent("contentClick");
-		
-		// this.element.dispatchEvent(contentClickEvent);
-		
-		// console.log('Content card clicked: ', this.element.id);
-		// console.log("Event target class #[0] = ", event.target.classList[0]);
 
 		// DOUBLE CLICK
 		if (!this.listeningDoubleClick) {

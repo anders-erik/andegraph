@@ -7,19 +7,21 @@
 	/* for abosulte position of overlay to apply */
 	position: relative;
 
-	width: 700px;
+	width: 600px;
 	max-width: 700px;
 
-	color: var(--light-text-1);
-	background-color: var(--dark-bg-1);
+	color: white;
+	background-color: darkslategray;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
+	margin-top: 10px;
+
 	letter-spacing: 0.5px;
 
-	border: solid var(--dark-border-2);
+	border: solid black;
 	border-radius: 7px;
 	/* overflow: hidden; */
 
