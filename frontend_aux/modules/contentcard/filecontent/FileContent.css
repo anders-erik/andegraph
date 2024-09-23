@@ -1,0 +1,76 @@
+.fileContent {
+	/* height: 100%; */
+	/* width: 100%; */
+	max-width: 700px;
+
+	margin: 10px;
+	padding: 10px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* caret-shape: block; */
+
+	/* REMOVED THIS TO ENABLE *SELECTION ON ELEMENT* => ENABLE PASTING ! ! */
+	/* user-select: none; */
+
+	/* background-color: rgb(154, 40, 156); */
+	background-color: var(--dark-bg-2);
+	border: solid var(--light-border-2) 1px;
+	border-radius: 2px;
+}
+
+
+
+
+.fileElement {
+	/* user-select: none; */
+	max-width: 100%;
+}
+
+.fileElement.noFile,
+.fileElement.other {
+
+	/* padding: 30px; */
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.fileElement.other div {
+	max-width: 700px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+
+	/* padding: 0 25px 0 25px;
+	margin: 0 25px 0 25px; */
+}
+
+.fileElement.other p {
+	margin: 5px;
+	padding: 5px;
+	padding-left: 50px;
+	width: 150px;
+}
+
+.fileElement.other a {
+	width: 500px;
+
+	align-content: center;
+
+	overflow: hidden;
+
+	margin: 5px;
+	padding: 5px;
+	margin-right: 50px;
+
+	border-radius: 5px;
+	border: solid black 1px;
+}

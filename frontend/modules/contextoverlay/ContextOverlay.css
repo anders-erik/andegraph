@@ -1,0 +1,72 @@
+@import './contentmenu/ContentMenu.css';
+@import './titlemenu/TitleMenu.css';
+@import './edgemenu/EdgeMenu.css';
+@import './connectmenu/ConnectMenu.css';
+@import './newadjacentmenu/NewAdjacentMenu.css';
+
+@import './truecontextmenu/TrueContextMenu.css';
+
+#contextOverlay {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+
+	height: 100%;
+	width: 100%;
+
+	background-color: none;
+
+	/* box-shadow: inset 0 0 0 5px orange; */
+
+	pointer-events: none;
+}
+
+#contextMenu {
+	position: absolute;
+
+	overflow-y: scroll;
+	overflow-x: hidden;
+	overflow-wrap: break-word;
+	scrollbar-width: thin;
+
+
+
+	top: 400px;
+	left: 400px;
+
+	padding: 3px;
+	border: solid black 1px;
+
+	background-color: rgb(185, 184, 182);
+
+	pointer-events: all;
+}
+
+#contextMenu.title {
+	height: 50px;
+	width: 300px;
+}
+
+#contextMenu.content {
+	height: 270px;
+	width: 300px;
+}
+
+#contextMenu.edge {
+	height: 270px;
+	width: 300px;
+}
+
+#contextMenu.connect {
+	height: 270px;
+	width: 300px;
+}
+
+#contextMenu.contentCard {
+	/* height: 50px; */
+	width: 750px;
+}
+
+#contextMenu.hide {
+	display: none;
+}

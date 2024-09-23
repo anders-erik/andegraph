@@ -1,0 +1,47 @@
+
+body {
+    margin: 0px;
+    padding: 0px;
+    height: 100vb;
+    width: 100vw;
+}
+
+
+#root {
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#contextOverlay {
+    position: fixed;
+    height: 100vb;
+    width: 100vw;
+    background-color: none;
+    pointer-events: none;
+
+}
+#contextMenu {
+    position: fixed;
+    pointer-events: all;
+
+    height: 100px;
+    width: 100px;
+    /* left: 100px; */
+    background-color: rgb(251, 14, 53);
+}
+
+#contentPanel {
+    width: 90%;
+    height: 100%;
+    background-color: aqua;
+}
+
+#projectsTableBody_tr {
+    background-color: beige;
+}

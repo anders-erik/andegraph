@@ -1,9 +1,14 @@
 {
   "name": "sources",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "main": "./src/index.js",
   "scripts": {
-    "dev": "nodemon -L src/server.js -w src/",
+    "backend-up": "docker compose up -d",
+    "backend-down": "docker compose down",
+    "backend-log": "./scripts/backend-log.sh",
+    "webext-attach": "./webextension/scripts/dev.sh",
+    "webext-watch-build": "node ./webextension/build.js",
+    "dev": "nodemon -L backend/server.js -w backend/",
     "backup": "./data/utils/backup.sh"
   },
   "dependencies": {
@@ -11,6 +16,8 @@
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {
+    "axios": "^1.7.7",
+    "bootstrap": "^5.3.3",
     "nodemon": "^2.0.20"
   }
 }

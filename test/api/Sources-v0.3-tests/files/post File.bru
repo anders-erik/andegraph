@@ -1,0 +1,15 @@
+meta {
+  name: post File
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/v02/file/438391980032
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  file: @file(/home/anders/Pictures/Screenshots/pso_ep10.png)
+}

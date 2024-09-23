@@ -1,0 +1,23 @@
+meta {
+  name: Edge_InsertUuidUuid
+  type: http
+  seq: 15
+}
+
+post {
+  url: http://localhost:3000/api/v02/edge/Edge-InsertUuidUuid?Node1Uuid={{contentedge-object-1.content.Uuid}}&Node2Uuid={{contentedge-object-2.content.Uuid}}&Directed=1&Order=1&Path=/apis/jsfetch
+  body: none
+  auth: none
+}
+
+params:query {
+  Node1Uuid: {{contentedge-object-1.content.Uuid}}
+  Node2Uuid: {{contentedge-object-2.content.Uuid}}
+  Directed: 1
+  Order: 1
+  Path: /apis/jsfetch
+}
+
+script:post-response {
+  bru.setEnvVar("edge-object-1", res.body);
+}

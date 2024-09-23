@@ -1,0 +1,21 @@
+// https://stackoverflow.com/questions/73346967/can-i-configure-something-in-vscode-to-get-javascript-intellisense-for-a-js-file
+// https://code.visualstudio.com/docs/languages/jsconfig
+
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "frontend/*.js",
+            ],
+            "imim": ["./frontend/modules/importmap-tester.js",],
+            "experiments": ["./frontend/modules/experiments/Experiments.js",],
+            "importmap-tester": ["./frontend/modules/experiments/importmap-test-module.js"],
+            "dbis": ["./frontend/modules/dbi-send/dbi-send.js",],
+            "contextoverlay": ["./frontend/modules/contextoverlay",],
+            "maincontent": ["./frontend/modules/maincontent",],
+            "pdfreader": ["./frontend/modules/maincontent/pdfreader/PdfReader.js",],
+            "review": ["./frontend/modules/maincontent/review/Review.js"],
+        }
+    }
+}

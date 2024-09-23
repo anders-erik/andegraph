@@ -1,0 +1,43 @@
+
+#trueContextMenu {
+
+    display: block;
+    position: absolute;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scrollbar-color: red rgb(0, 0, 0);
+
+    border-radius: 5px;
+
+    width: 200px;
+    height: 300px;
+    background-color: rgb(171, 213, 213);
+
+    pointer-events: all;
+}
+
+#trueContextMenu.hide {
+    display: none;
+}
+
+#trueContextMenu_inner {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;    
+}
+
+#trueContextMenu_inner * {
+    /* background-color: none; */
+
+    width: 100%;
+}
+
+#context-menu-hr {
+    margin: 3px;
+    border-top: 3px solid #6279f0;
+}

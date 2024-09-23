@@ -1,4 +1,14 @@
 services:
+  nginx:
+    image: nginx:latest
+    container_name: sources_nginx
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/:/usr/share/nginx/html
+    depends_on:
+      - app
   app:
     image: node:18-alpine
     command: sh -c "npm install && npm run dev"
@@ -6,5 +16,5 @@ services:
       - 0.0.0.0:3000:3000
     working_dir: /app
     volumes:
-      - ./:/app
+      - .:/app
       - ./data/live:/data/live

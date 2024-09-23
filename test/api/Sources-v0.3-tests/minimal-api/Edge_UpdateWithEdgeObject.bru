@@ -1,0 +1,23 @@
+meta {
+  name: Edge_UpdateWithEdgeObject
+  type: http
+  seq: 16
+}
+
+put {
+  url: http://localhost:3000/api/v02/edge/Edge-UpdateWithEdgeObject
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Uuid": "{{edge-object-1.Uuid}}",
+    "Node1Uuid": "{{contentedge-object-1.content.Uuid}}",
+    "Node2Uuid": "{{contentedge-object-2.content.Uuid}}",
+    "Directed": "1",
+    "Type": "13",
+    "Order": 12,
+    "Path": "/13"
+  }
+}

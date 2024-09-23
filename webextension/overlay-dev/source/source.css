@@ -1,0 +1,283 @@
+#ae-sourceOuter {
+	height: 100%;
+	width: 100%;
+}
+
+
+#ae-sourceInner {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+}
+
+#aa-sourceTitle {
+	width: 90%;
+	height: 30px;
+	min-height: 30px;
+
+
+	margin: 3px;
+	border-radius: 5px;
+
+	border: solid rgba(67, 53, 53, 0.599) 1px;
+	background-color: rgb(51, 116, 229);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	letter-spacing: 1px;
+	text-align: center;
+	font-weight: 600;
+
+}
+
+#ae-sourceButtonContainer {
+	width: 100%;
+	height: 30px;
+
+	margin: 5px 0px 5px 0px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+#ae-sourceSearchButton {
+	/* background-color: rgba(26, 133, 180, 0.568); */
+	width: 35%;
+	height: 20px;
+}
+
+#ae-sourcePropertiesButton {
+	/* background-color: rgba(26, 133, 180, 0.568); */
+	width: 35%;
+	height: 20px;
+}
+
+#ae-sourceNewButton {
+	background-color: darkblue;
+	color: aliceblue;
+	width: 20px;
+}
+
+.ae-sourceButton {
+	margin: 3px;
+	padding: 3px;
+	border-radius: 5px;
+	background-color: rgb(89, 148, 206);
+
+}
+
+.ae-sourceButton.ae-sourceButtonOn {
+	background-color: rgb(26, 114, 192);
+	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.638);
+}
+
+.ae-sourceButton:hover {
+	cursor: pointer;
+}
+
+.ae-sourceButton.selected {}
+
+
+
+#ae-sourceTableContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	flex-grow: 1;
+	box-shadow: inset 0 0 0 2px rgb(0, 0, 0);
+	overflow-y: scroll;
+
+}
+
+
+
+
+
+
+/* SEARCH TABLE */
+
+
+#ae-sourceSearchInput {
+
+	width: 90%;
+	height: 1.5rem;
+	min-height: 1.5rem;
+
+	pointer-events: all;
+
+	margin: 5px;
+	padding: 3px;
+	border-radius: 5px;
+
+	background-color: rgb(180, 189, 198);
+
+	/* display: none; */
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
+}
+
+
+#ae-sourceChildTable {
+	width: 100%;
+	/* display: none; */
+	/* display: inline; */
+	/* flex-direction: column;
+	justify-content: start; */
+	border-collapse: collapse;
+	background-color: rgb(61, 178, 228);
+	margin: 5px 5px 5px 5px;
+}
+
+#ae-sourceChildTable thead {
+	/* background-color: rgb(85, 123, 177); */
+}
+
+#ae-sourceChildTable thead th {
+	padding: 3px;
+	background-color: rgb(85, 123, 177);
+	box-shadow: inset 0 0 0 1px rgb(0, 0, 0);
+}
+
+
+#ae-sourceChildTable tbody {
+	background-color: rgb(109, 58, 58);
+	/* padding: 30px; */
+}
+
+
+#ae-sourceChildTable tbody tr {
+	font-size: 0.9rem;
+
+	/* border: solid black 1px;
+	background-color: rgb(106, 168, 80);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.408); */
+
+}
+
+#ae-sourceChildTable tbody tr>.ae-sourceChildTable-Table {
+	width: 60px;
+	max-width: 60px;
+
+}
+
+#ae-sourceChildTable tbody tr>.ae-sourceChildTable-Type {
+	width: 40px;
+	max-width: 40px;
+
+}
+
+#ae-sourceChildTable tbody tr>.ae-sourceChildTable-Title {}
+
+/* #searchTable tbody tr :active {
+	border: solid black 3px;
+} */
+
+#ae-sourceChildTable tbody tr :hover {
+	cursor: pointer;
+}
+
+#ae-sourceChildTable tbody th {
+	/* border: solid black 1px; */
+	padding: 3px;
+	background-color: rgb(83, 133, 203);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.408);
+
+	width: 100px;
+
+}
+
+#ae-sourceChildTable tbody td {
+	/* border: solid black 1px; */
+	padding: 3px;
+	background-color: rgb(129, 151, 183);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.408);
+
+}
+
+
+
+
+
+
+
+
+
+/* PROPERTIES TABLE */
+
+
+
+#ae-sourcePropertiesTable {
+	/* display: none; */
+	/* display: block; */
+
+	border-collapse: collapse;
+	width: 100%;
+	background-color: rgb(61, 178, 228);
+
+	margin: 5px 0px 5px 0px;
+	/* 
+	display: flex;
+	flex-direction: column;
+	justify-content: start; */
+}
+
+#ae-sourcePropertiesTable thead {
+	/* background-color: rgb(85, 123, 177); */
+}
+
+#ae-sourcePropertiesTable thead th {
+	padding: 3px;
+	background-color: rgb(85, 123, 177);
+	box-shadow: inset 0 0 0 1px rgb(0, 0, 0);
+}
+
+/* #ae-sourcePropertiesTable-thead {
+
+	background-color: rgb(109, 58, 58);
+} */
+
+#ae-sourcePropertiesTable tbody {
+	background-color: rgb(109, 58, 58);
+	/* padding: 30px; */
+}
+
+#ae-sourcePropertiesTable tbody tr {
+	font-size: 0.9rem;
+
+	/* border: solid black 1px;
+	background-color: rgb(106, 168, 80);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.408); */
+
+}
+
+#ae-sourcePropertiesTable tbody th {
+	/* border: solid black 1px; */
+	padding: 3px;
+	background-color: rgb(83, 133, 203);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.408);
+
+	width: 100px;
+
+}
+
+#ae-sourcePropertiesTable tbody td {
+	/* border: solid black 1px; */
+	padding: 3px;
+	background-color: rgb(129, 151, 183);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.408);
+
+}
+
+#ae-sourcePropertiesTable tbody td.ae-editablesourceProperty {
+	background-color: rgb(140, 166, 205);
+	box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.408);
+}
