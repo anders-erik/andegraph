@@ -19,7 +19,7 @@ app.use('/content/*', express.static(frontendPath));
 // Reserved for only the correct type
 app.use('/source/*', express.static(frontendPath));
 app.use('/review/*', express.static(frontendPath));
-app.use('/pdf/*', express.static(frontendPath));
+app.use('/file/*', express.static(frontendPath));
 
 app.use('/scroll*', express.static(frontendPath));
 

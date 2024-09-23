@@ -148,6 +148,76 @@ function sourceToggleClicked(event) {
 
 */
 
+// function copySourceChildTableFromDom() {
+// 	// console.log('populate with children dones', childObjects)
+
+// 	// console.log('childObjects', childObjects)
+
+// 	let childContentEdgeObjects = extensionStateFront.current_sourceChildContentEdges;
+
+
+// 	let tbody = document.getElementById('ae-sourceChildTable-tbody');
+
+	
+
+// 	// let rows = tbody.children();
+// 	let rowCount = 0;
+// 	for (let sourceRow of Array.from(tbody.children)) {
+		
+// 		// console.log(sourceRow)
+// 		let kids = sourceRow.children;
+
+// 		// console.log(sourceRow.aaa)
+// 		// console.log();
+// 		// console.log(sourceRow.dataset.uuid);
+// 		// console.log(kids[0].textContent, kids[1].textContent, kids[2].textContent)
+
+// 		for (let _childContentEdgeObject of childContentEdgeObjects){
+// 			if (sourceRow.dataset.uuid == _childContentEdgeObject.content.Uuid){
+// 				// console.log("MATCH ", sourceRow.dataset.uuid)
+// 				_childContentEdgeObject.content.Title = kids[2].textContent;
+// 			}
+// 		}
+		
+// 	}
+
+// 	return;
+
+
+// 	tbody.innerHTML = '';
+
+// 	for (let childContentEdgeObject of childContentEdgeObjects) {
+// 		let tableRowHtml = `
+                
+//                 <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Table}</th>
+// 				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Type}</td>
+//                 <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childContentEdgeObject.content.Uuid}" contenteditable="true">${childContentEdgeObject.content.Title}</td>
+
+//             `;
+// 		let tr = document.createElement('tr');
+// 		tr.id = 'ae-sourceSearchNode-' + childContentEdgeObject.content.Uuid;
+// 		tr.nodeObject = childContentEdgeObject;
+// 		// tr.dataset.Node = 1;
+// 		// tr.dataset.Uuid = childObject.Uuid;
+// 		tr.setAttribute('data-Node', '1');
+// 		tr.setAttribute('data-Uuid', childContentEdgeObject.content.Uuid);
+// 		tr.tabIndex = 0;
+// 		tr.innerHTML = tableRowHtml;
+// 		// tr.addEventListener('click', clickSourceChildRow);
+// 		tr.addEventListener('click', (event) => { console.log(event.target.parentNode.nodeObject) });
+// 		tr.addEventListener("focusout", (event) => {
+
+// 			putCurrentSourceObject();
+// 		});
+// 		// tr.contentEditable = 'True';
+
+// 		tbody.append(tr);
+// 		// console.log(tr)
+// 	}
+// 	// console.table(childObjects)
+
+// }
+
 
 
 function populateSourceChildTableFromState() {
@@ -166,20 +236,43 @@ function populateSourceChildTableFromState() {
                 
                 <th class="ae-element ae-sourceChildTable-Table" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Table}</th>
 				<td class="ae-element ae-sourceChildTable-Type" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Type}</td>
-                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Title}</td>
+                <td class="ae-element ae-sourceChildTable-Title" data-Uuid="${childContentEdgeObject.content.Uuid}" contenteditable="true">${childContentEdgeObject.content.Title}</td>
 
             `;
 		let tr = document.createElement('tr');
 		tr.id = 'ae-sourceSearchNode-' + childContentEdgeObject.content.Uuid;
 		tr.nodeObject = childContentEdgeObject;
+		// tr.aaa = "asd";
+		tr.setAttribute('data-fuck', 'f*ck');
 		// tr.dataset.Node = 1;
 		// tr.dataset.Uuid = childObject.Uuid;
 		tr.setAttribute('data-Node', '1');
 		tr.setAttribute('data-Uuid', childContentEdgeObject.content.Uuid);
 		tr.tabIndex = 0;
-		tr.innerHTML = tableRowHtml;
+		tr.innerHTML = tableRowHtml; 
 		// tr.addEventListener('click', clickSourceChildRow);
 		tr.addEventListener('click', (event) => { console.log(event.target.parentNode.nodeObject) });
+		// Targets only the last (i.e. Title) column
+		tr.lastElementChild.addEventListener("focusout", async (event) => {
+			
+			let uuid = event.target.parentElement.nodeObject.content.Uuid;
+			let contentObject = event.target.parentElement.nodeObject.content;
+			contentObject.Title = event.target.textContent;
+			// console.log("CCCCCCCCCC", contentObject)
+			let putContentObject = await dbis.Content_UpdateWithContentObject(contentObject);
+
+			let fetchedContentObject = await dbis.Content_SelectOnUuid(uuid);
+			
+			await fetchCurrentSourceChildrenThenWriteToStates();
+			populateSourceChildTableFromState();
+
+			// console.log("DDDDDDDDDD", fetchedContentObject)
+			// copySourceChildTableFromDom();
+			
+			// putCurrentSourceObject();
+			// fetchCurrentSourceChildrenThenWriteToStates();
+			// populateSourceChildTableFromState();
+		});
 		// tr.contentEditable = 'True';
 
 		tbody.append(tr);

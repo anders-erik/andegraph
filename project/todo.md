@@ -18,19 +18,23 @@ REVELATION: BROWSERS MAKE SURE ALL MODULES RESOLIVING TO THE SAME URL WILL BE A 
 	- Make sure I can route /content.Table/uuid
 		- for files I route /content.Table/content.type/uuid ?
 	- implmemnt g+g shortcut : go to default for specific object table/type
-		- 
-
-- Webextension
-	- enable title editing
-		- automatically move focus to title edit when creating shard
-	- collapsable sections
+- Enable nginx server
+	- proxy api calls
+	- HTTPS
+- |o| Webextension
+	- |o| enable title editing
+		- |o| automatically move focus to title edit when creating shard
+	- |o| collapsable sections
+	- |o| made the title-labels the same size on different websites (the padding was not always applied!)
+	- |o| small QOL
 - deploy v0.3.0
 	- I need to get comfortable with deployment
 	- also start to actually start using the app
 - START USING
 	- I NEED TO START USING FOR FEEDBACK ON NEXT STEPS TO TAKE !
 	- maybe also do some cleaning up of the 'real data'
-
+- Keyboard shortcuts
+	- I need to be able to easily find the current shortcuts!
 
 
 ### 2024-09-22

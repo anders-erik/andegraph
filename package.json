@@ -6,6 +6,8 @@
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
     "backend-log": "./scripts/backend-log.sh",
+    "webext-attach": "./webextension/scripts/dev.sh",
+    "webext-watch-build": "node ./webextension/build.js",
     "dev": "nodemon -L backend/server.js -w backend/",
     "backup": "./data/utils/backup.sh"
   },

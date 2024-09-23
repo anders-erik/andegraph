@@ -181,7 +181,7 @@ async function pasteEvent(event) {
 
 		let postFileQueryParameters = {
 			Type: fileCategoryObject.fileType,
-			Title: fileCategoryObject.baseFileName,
+			Title: "",
 			Extension: fileCategoryObject.fileExtension,
 			IAmAuthor: 0,
 		}
@@ -452,6 +452,10 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file, que
 		await fetchCurrentSourceChildrenThenWriteToStates();
 
 		populateSourceChildTableFromState();
+
+		// Focus last row title for easy editing!
+		let _tbody = document.getElementById('ae-sourceChildTable-tbody');
+		_tbody.lastElementChild.lastElementChild.focus();
 
 	}
 	else {

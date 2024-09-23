@@ -1,5 +1,5 @@
 
-
+let projectTitle;
 let projectSearchButton;
 let projectChildrenButton;
 let projectPropertiesButton;
@@ -21,6 +21,10 @@ function initProject() {
 
 	// console.log('project init')
 
+
+	projectTitle = document.getElementById("aa-projectTitle");
+	// Hide project
+	projectTitle.addEventListener('click', toggleProjectSearchVisibility);
 
 
 	projectSearchButton = document.getElementById('ae-projectSearchButton');
@@ -58,13 +62,34 @@ function initProject() {
 
 
 
-
-
 /* 
 
 	DOM EVENTS
 
 */
+
+/**
+ *  Toggles the project visibility and expands the size of the source container.
+ * 
+ * */ 
+function toggleProjectSearchVisibility(){
+	// console.log("TOGGLING PROJECT SEARCH. ", this.id);
+	let projectsContainer = document.getElementById("ae-projectContainer");
+	let sourceContainer = document.getElementById("ae-sourceContainer");
+
+
+	if (projectsContainer.classList.contains("collapsed")){
+		projectsContainer.classList.remove("collapsed");
+		sourceContainer.classList.remove("expanded");
+	}
+	else{
+		projectsContainer.classList.add("collapsed");
+		sourceContainer.classList.add("expanded");
+	}
+		
+	// projectsContainer.style.height = 50px;
+}
+
 
 
 async function newProjectButtonClicked() {
@@ -162,6 +187,7 @@ async function projectSearchRowClicked(event) {
 
 	writeProjectFromStateToDom();
 
+	
 
 
 	/* 
@@ -174,7 +200,8 @@ async function projectSearchRowClicked(event) {
 
 	writeProjectChildrenFromStateToDom();
 
-
+	// focus the child-menu
+	document.getElementById("ae-projectChildrenButton").click();
 
 
 	//writeStateFromFront();

@@ -31,7 +31,7 @@
 	color: rgb(0, 0, 0);
 	font-weight: 400;
 	font-size: x-small;
-
+	
 }
 
 
@@ -115,12 +115,19 @@
 	background-color: rgb(109, 129, 146);
 }
 
-#ae-sourceContainer {
-	height: 35%;
-}
 
 #ae-projectContainer {
 	height: 35%;
+}
+#ae-projectContainer.collapsed {
+	height: 38px;
+}
+
+#ae-sourceContainer {
+	height: 35%;
+}
+#ae-sourceContainer.expanded {
+	height: calc(35% + (35% - 38px));
 }
 
 #ae-clipboardContainer {

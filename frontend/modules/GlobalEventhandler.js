@@ -482,6 +482,26 @@ class GlobalEventHandler {
 							console.log(`No contentObject detected. Can't go. `)
 						}
 						break;
+
+					case 'g': // default loading
+						if (contentObject !== undefined) {
+
+							if(contentObject.Table === "File"){
+								history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Type.toLowerCase()}/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
+							}
+							else{
+								
+								history.pushState(null, `${contentObject.Title.toLowerCase()}`, `/${contentObject.Table.toLowerCase()}/${contentObject.Uuid}/`); // all objects will for now be loaded as 'source'
+							}
+							
+							maincontent.loadFromUrl();
+						
+						}
+						else {
+							console.log(`No contentObject detected. Can't go. `)
+						}
+						break;
+
 					case 'c': // GO CONTENT
 						// console.log("GO :", event.target)
 						// let contentObject = event.target.contentObject;
@@ -540,7 +560,7 @@ class GlobalEventHandler {
 
 							// await this.app.mainContent.loadFromUrl();
 							maincontent.loadFromUrl();
-							
+
 							// await this.app.reloadApp();
 
 

@@ -19,7 +19,8 @@ async function loadFromUrl(){
 	let pathArray = urlState.pathname.split('/');
 	pathArray.pop();
 	pathArray.shift();
-	console.log(pathArray)
+	// console.log(pathArray)
+
 	
 	if (pathArray.length === 0) {
 		loadHome()
@@ -30,8 +31,13 @@ async function loadFromUrl(){
 	else if (pathArray[0] === 'source') {
 		loadSource(pathArray[1]);
 	}
-	else if (pathArray[0] === 'pdf') {
-		loadPdf(pathArray[1]);
+	else if (pathArray[0] === 'file') {
+
+		if (pathArray[1] === "pdf")
+			loadPdf(pathArray[2]);
+		else
+			console.error("THIS FILE TYPE IS NOT YET IMPLEMENTED FOR MAIN ONOTENT LOADING")
+
 	}
 	else if (pathArray[0] === 'review') {
 		loadReview(pathArray[1]);
