@@ -5,6 +5,7 @@ import { MainOverlay } from './mainoverlay/MainOverlay.js';
 import { GlobalEventHandler } from './GlobalEventhandler.js';
 import { ContextOverlay } from './contextoverlay/ContextOverlay.js';
 
+import * as maincontent from "./maincontent/MainContent.js"
 
 
 
@@ -39,6 +40,7 @@ class App {
 		this.rootElement.append(this.appElement);
 
 
+		
 		// this.createFocusOverlayElement();
 
 
@@ -99,7 +101,8 @@ class App {
 		this.appElement.innerHTML = "";
 
 		this.mainContent = new MainContent(this.appElement);
-		await this.mainContent.loadFromUrl();
+		// await this.mainContent.loadFromUrl();
+		maincontent.loadFromUrl();
 
 
 		this.mainOverlay = new MainOverlay(this.appElement);
@@ -134,7 +137,13 @@ class App {
 		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
 		window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
 
+		// window.addEventListener("hashchange", (event) => {
+		// 	console.log("URL CHANGESD!")
+		// });
 
+		addEventListener("popstate", (event) => { 
+			maincontent.loadFromUrl();
+		});
 	}
 
 

@@ -51,7 +51,7 @@ export class Source {
 	}
 
 	async load(contentObject) {
-
+		console.log("^_^_^_^^_^_^_", contentObject)
 		console.log('1')
 		this.sourceContent = new SourceContent(this.mainContentContentContainer);
 		console.log('2')

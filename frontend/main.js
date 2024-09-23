@@ -1,9 +1,10 @@
-// import { importmap_tester_func } from 'test_';
-// import { importmap_tester_func } from './modules/importmap-tester.js';
-import { importmap_tester_func } from "imim";
-// import { importmap_tester_func } from './modules/importmap-tester.js';
+
+// import * as experiments from "experiments";
+// experiments.importSingletonTests();
 
 import { App } from './modules/App.js';
+
+
 
 let isDev = window.location.pathname.match(/development/);
 let app;
@@ -22,4 +23,4 @@ else {
 	app.reloadApp();
 }
 
-
+// const observer = new MutationObserver(callback);

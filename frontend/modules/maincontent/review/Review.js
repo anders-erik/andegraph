@@ -1,7 +1,9 @@
-import { dbis } from "../../dbi-send/dbi-send.js";
+// import { dbis } from "../../dbi-send/dbi-send.js";
+import { dbis } from "dbis";
 import * as reviewtoolbar from "./ReviewToolbar.js"
 import * as reviewsidepanel from "./ReviewSidePanel.js"
 import * as reviewcontent from "./ReviewContent.js"
+
 
 
 async function createReview(uuid){
@@ -13,17 +15,29 @@ async function createReview(uuid){
 
     // populateReviewContainers(uuid);
 
+    let reviewObject = await dbis.Content_SelectOnUuid(uuid);
+
+    let objectToReview = await dbis.Content_SelectOnUuid(reviewObject.NodeToReviewUuid);
+    // console.log("^_^_^_^_^ : ", objectToReview)
+
     // TODO:
     // TOOLBAR
     reviewtoolbar.populateReviewToolbar();
-    reviewtoolbar.loadReviewToolbarWithObject(uuid);
+    reviewtoolbar.loadReviewToolbarWithObject(objectToReview, reviewObject);
     // SIDE PANEL
     reviewsidepanel.populateReviewSidePanel();
-    reviewsidepanel.populateSidePanelTables(uuid);
+    reviewsidepanel.populateSidePanelTables(objectToReview.Uuid);
 
     // CONTENT
     reviewcontent.populateReviewContent();
-    reviewcontent.fillShardList(uuid);
+    // Fill the panels with the children content-cards
+    reviewcontent.fillShardList(objectToReview.Uuid);
+    reviewcontent.fillReviewList(reviewObject.Uuid);
+
+    // let _toolbar = document.getElementById("reviewToolbar");
+    // _toolbar.addEventListener()
+
+    displayPanelsFromLocalStorage();
 }
 
 
@@ -47,86 +61,107 @@ function initReviewContainers(_mainContent){
 }
 
 
+function displayPanelsFromLocalStorage() {
+    // console.log('sourceToolbar_filePanel', sourceToolbar_filePanel)
+    // console.log('sourceToolbar_shardPanel', sourceToolbar_shardPanel)
+
+
+    // let sourceToolbar_filePanel = localStorage.getItem('sourceToolbar_filePanel');
+    // if (sourceToolbar_filePanel == '1') {
+    // 	document.getElementById('sourceToolbar_filePanel').classList.add('selected')
+    // 	this.sourceContent.filePanelContainer.classList.remove('hidden');
+    // }
+    // else {
+    // 	document.getElementById('sourceToolbar_filePanel').classList.remove('selected')
+    // 	this.sourceContent.filePanelContainer.classList.add('hidden');
+    // }
+
+    let sourceToolbar_shardPanel = localStorage.getItem('reviewToolbar_shardPanel');
+    let _shardlistContainer = document.getElementById("shardlistContainer_review");
+    if (sourceToolbar_shardPanel == '1') {
+        document.getElementById('reviewToolbar_shardPanel').classList.add('selected')
+        _shardlistContainer.classList.remove('hidden');
+    }
+    else {
+        document.getElementById('reviewToolbar_shardPanel').classList.remove('selected')
+        _shardlistContainer.classList.add('hidden');
+    }
+
+
+    let sourceToolbar_reviewPanel = localStorage.getItem('reviewToolbar_reviewPanel_review');
+    let _reviewlistContainer = document.getElementById("reviewlistContainer_review");
+    if (sourceToolbar_reviewPanel == '1') {
+        document.getElementById('reviewToolbar_reviewPanel_review').classList.add('selected')
+        _reviewlistContainer.classList.remove('hidden');
+    }
+    else {
+        document.getElementById('reviewToolbar_reviewPanel_review').classList.remove('selected')
+        _reviewlistContainer.classList.add('hidden');
+    }
 
 
 
-async function populateReviewContainers(_uuid){
-    let contentObject = dbis.Content_SelectOnUuid(_uuid);
 
-
-    
-    // console.log('1')
-    // this.sourceContent = new SourceContent(this.mainContentContentContainer);
-
-    
-    // console.log('2')
-    // this.toolbar = new SourceToolbar(this.mainContentToolbar);
-    
-
-    // console.log('3')
-    // this.sidePanel = new SourceSidePanel(this.mainContentSidepanel);
-
-    // this.toolbar.element.addEventListener('click', this.clickMainSourceContent.bind(this));
-    // this.sourceContent.element.addEventListener('click', this.clickMainSourceContent.bind(this));
+    let sourceToolbar_sidePanel = localStorage.getItem('reviewToolbar_sidePanel_review');
+    let _reviewSidePanelContainer = document.getElementById("reviewSidepanelContainer");
+    if (sourceToolbar_sidePanel == '1') {
+        document.getElementById('reviewToolbar_sidePanel_review').classList.add('selected')
+        _reviewSidePanelContainer.classList.remove('hidden');
+    }
+    else {
+        document.getElementById('reviewToolbar_sidePanel_review').classList.remove('selected')
+        _reviewSidePanelContainer.classList.add('hidden');
+    }
 
 
 
-    // this.parentContentEdge = await dbis.ContentEdge_SelectParentOfUuid(contentObject.Uuid);
-    // this.parentContentEdge.sort((a, b) => {
-    //     if (a.content.Title.toLowerCase() < b.content.Title.toLowerCase()) { return -1; }
-    //     if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
-    //     return 0;
-    // })
-
-    // this.undirectedContentEdge = await dbis.ContentEdge_SelectUndirectedOfUuid(contentObject.Uuid);
-
-    // this.childrenContentEdge = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
-    // this.childrenContentEdge.sort((a, b) => {
-    //     // sort by edge age
-    //     let aUuid = a.edge.Uuid;
-    //     let bUuid = b.edge.Uuid;
-    //     if (parseInt(aUuid) < parseInt(bUuid)) { return -1; }
-    //     if (parseInt(aUuid) > parseInt(bUuid)) { return 1; }
-    //     return 0;
-    // })
+    // let sourceToolbar_parentList = localStorage.getItem('sourceToolbar_parentList');
+    // if (sourceToolbar_parentList == '1') {
+    // 	document.getElementById('sourceToolbar_parentList').classList.add('selected')
+    // 	this.sidePanel.parentContainer.classList.remove('hidden');
+    // }
+    // else {
+    // 	document.getElementById('sourceToolbar_parentList').classList.remove('selected')
+    // 	this.sidePanel.parentContainer.classList.add('hidden');
+    // }
 
 
-    // this.filesContentEdge = this.undirectedContentEdge.filter(contentEdge => contentEdge.content.Table === 'File');
-    // this.filesContentEdge.sort((a, b) => {
-    //     if (a.content.Title.toLowerCase() < b.content.Title.toLowerCase()) { return -1; }
-    //     if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
-    //     return 0;
-    // })
-
-    // this.reviewContentEdge = this.undirectedContentEdge.filter(contentEdge => contentEdge.content.Table === 'Review');
-    // this.reviewContentEdge.sort((a, b) => {
-    //     if (a.content.ReviewDate < b.content.ReviewDate) { return -1; }
-    //     if (a.content.ReviewDate > b.content.ReviewDate) { return 1; }
-    //     return 0;
-    // })
-
-    // this.otherConnectedContentEdge = this.undirectedContentEdge.filter(contentEdge => !(contentEdge.content.Table === 'Review' || contentEdge.content.Table === 'File'));
-    // this.otherConnectedContentEdge.sort((a, b) => {
-    //     if (a.content.Title.toLowerCase() < b.content.Title.toLowerCase()) { return -1; }
-    //     if (a.content.Title.toLowerCase() > b.content.Title.toLowerCase()) { return 1; }
-    //     return 0;
-    // })
+    // let sourceToolbar_fileList = localStorage.getItem('sourceToolbar_fileList');
+    // if (sourceToolbar_fileList == '1') {
+    // 	document.getElementById('sourceToolbar_fileList').classList.add('selected')
+    // 	this.sidePanel.fileContainer.classList.remove('hidden');
+    // }
+    // else {
+    // 	document.getElementById('sourceToolbar_fileList').classList.remove('selected')
+    // 	this.sidePanel.fileContainer.classList.add('hidden');
+    // }
 
 
-    // this.toolbar.load(contentObject);
-    // this.sourceContent.load(this.childrenContentEdge);
-    // this.sidePanel.load();
+    // let sourceToolbar_reviewList = localStorage.getItem('sourceToolbar_reviewList');
+    // if (sourceToolbar_reviewList == '1') {
+    // 	document.getElementById('sourceToolbar_reviewList').classList.add('selected')
+    // 	this.sidePanel.reviewContainer.classList.remove('hidden');
+    // }
+    // else {
+    // 	document.getElementById('sourceToolbar_reviewList').classList.remove('selected')
+    // 	this.sidePanel.reviewContainer.classList.add('hidden');
+    // }
 
-    // this.sidePanel.loadParents(this.parentContentEdge);
-    // this.sidePanel.loadFiles(this.filesContentEdge);
-    // this.sidePanel.loadReviews(this.reviewContentEdge);
-    // this.sidePanel.loadConnected(this.otherConnectedContentEdge);
-    // // this.sidePanel.loadConnected(this.undirectedContentEdge);
 
-    // this.displayPanelsFromLocalStorage();
+
+    // let sourceToolbar_connectedList = localStorage.getItem('sourceToolbar_connectedList');
+    // if (sourceToolbar_connectedList == '1') {
+    // 	document.getElementById('sourceToolbar_connectedList').classList.add('selected')
+    // 	this.sidePanel.connectedContainer.classList.remove('hidden');
+    // }
+    // else {
+    // 	document.getElementById('sourceToolbar_connectedList').classList.remove('selected')
+    // 	this.sidePanel.connectedContainer.classList.add('hidden');
+    // }
 
 
 }
+
 
 
 

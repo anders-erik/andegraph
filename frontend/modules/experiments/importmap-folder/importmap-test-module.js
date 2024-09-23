@@ -1,7 +1,5 @@
 
-console.log("IMPORTMAP WORKS!!!!");
-
-
+console.log("Importmap works!");
 
 let x;
 

@@ -12,7 +12,7 @@ import * as review from "review";
 */
 
 async function loadFromUrl(){
-	console.log('LOADING FROM URL STAND ALONG FUNCTION!');
+	console.log('LOADING FROM URL STAND ALONE FUNCTION!');
 
 	let urlState = new URL(window.location.href)
 	// console.table(urlState)
@@ -177,6 +177,8 @@ export class MainContent {
 
 	// Make sure that we FULLY RELOAD app, not just parts of it
 	async loadFromUrl() {
+		loadFromUrl();
+		return;
 		this.element.innerHTML = "";
 		let urlState = new URL(window.location.href)
 		// console.table(urlState)

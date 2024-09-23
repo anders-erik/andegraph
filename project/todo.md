@@ -4,6 +4,35 @@
 
 ## v0.3.0
 
+### 2024-09-23
+
+REVELATION: BROWSERS MAKE SURE ALL MODULES RESOLIVING TO THE SAME URL WILL BE A SINGLETON! IMPORTMAPS HELP!
+
+- |o| URL
+	- |o| detect and reload on url change
+- refactor app (can't right now because app is too tightly integrated into class+element hierarchy)
+	- globalEventListerner module
+- Review
+	- |o| reach same functionality as with old class structure
+- rounting/object access
+	- Make sure I can route /content.Table/uuid
+		- for files I route /content.Table/content.type/uuid ?
+	- implmemnt g+g shortcut : go to default for specific object table/type
+		- 
+
+- Webextension
+	- enable title editing
+		- automatically move focus to title edit when creating shard
+	- collapsable sections
+- deploy v0.3.0
+	- I need to get comfortable with deployment
+	- also start to actually start using the app
+- START USING
+	- I NEED TO START USING FOR FEEDBACK ON NEXT STEPS TO TAKE !
+	- maybe also do some cleaning up of the 'real data'
+
+
+
 ### 2024-09-22
 - |o| enable reading pdf's in frontend
 	- |o| /pdf/<uuid> path ?

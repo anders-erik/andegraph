@@ -1,4 +1,4 @@
-import * as shardlist from "./ShardList.js"
+import * as shardlist from "./CardList.js"
 
 async function populateReviewContent(){
 
@@ -16,7 +16,10 @@ async function populateReviewContent(){
 
     // let shardlistContainer = element.querySelector('#shardlistContainer_review');
 
-    shardlist.populateReviewShardList();
+    shardlist.populateReviewLists();
+
+
+    // SHOW / HIDE FROM STORE KEY-VALUES
     
 
     // this.filePanelContainer = this.element.querySelector('#filePanelContainer');
@@ -31,11 +34,15 @@ async function populateReviewContent(){
 async function fillShardList(uuid){
     shardlist.loadShardCards(uuid);
 }
+async function fillReviewList(uuid) {
+    shardlist.loadReviewCards(uuid);
+}
 
 
 export {
     populateReviewContent,
     fillShardList,
+    fillReviewList,
 }
 
 

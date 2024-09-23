@@ -1,7 +1,7 @@
 import { dbis } from "./dbi-send/dbi-send.js";
 import { determineClipboardContentType } from "./filehandling/DetermineClipboardContents.js";
 
-import * as mc from "./maincontent/MainContent.js";
+import * as maincontent from "./maincontent/MainContent.js";
 
 
 
@@ -502,7 +502,8 @@ class GlobalEventHandler {
 							}
 
 
-							this.app.mainContent.loadFromUrl();
+							// this.app.mainContent.loadFromUrl();
+							maincontent.loadFromUrl();
 							// this.app.reloadApp();
 
 							// console.log('GOGOGOGOGOGOGOGO')
@@ -526,45 +527,57 @@ class GlobalEventHandler {
 						// console.log(event.target)
 
 						if (contentObject && contentObject.Table === 'Review') {
+
+							let reviewObject = contentObject;
+							
+							// only for correct title - 2024-09-23
+							let objectToReview = await dbis.Content_SelectOnUuid(reviewObject.NodeToReviewUuid);
+
+							history.pushState(null, `Review : ${objectToReview.Title.toLowerCase()}`, `/${reviewObject.Table.toLowerCase()}/${reviewObject.Uuid}/`);
+
 							// console.log('LOAD CONTENT TO REVIEW INTO MAIN')
-							let objectToReview = await dbis.Content_SelectOnUuid(contentObject.NodeToReviewUuid);
 
-							history.pushState(null, `${objectToReview.Title.toLowerCase()}`, `/${objectToReview.Table.toLowerCase()}/${objectToReview.Uuid}/`);
 
-							await this.app.mainContent.loadFromUrl();
+							// await this.app.mainContent.loadFromUrl();
+							maincontent.loadFromUrl();
+							
 							// await this.app.reloadApp();
 
 
-							let reviewChildren = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
-							reviewChildren.sort((a, b) => {
-								// sort by edge age
-								let aUuid = a.edge.Uuid;
-								let bUuid = b.edge.Uuid;
-								if (parseInt(aUuid) < parseInt(bUuid)) { return -1; }
-								if (parseInt(aUuid) > parseInt(bUuid)) { return 1; }
-								return 0;
-							})
+							// let reviewChildren = await dbis.ContentEdge_SelectChildOfUuid(contentObject.Uuid);
+							// reviewChildren.sort((a, b) => {
+							// 	// sort by edge age
+							// 	let aUuid = a.edge.Uuid;
+							// 	let bUuid = b.edge.Uuid;
+							// 	if (parseInt(aUuid) < parseInt(bUuid)) { return -1; }
+							// 	if (parseInt(aUuid) > parseInt(bUuid)) { return 1; }
+							// 	return 0;
+							// })
 
-							this.app.mainContent.source.sourceContent.reviewList.load(reviewChildren);
+							// this.app.mainContent.source.sourceContent.reviewList.load(reviewChildren);
 
-							// SET REVIEW IN TOOLBAR
-							document.getElementById('mainContentReview').contentObject = contentObject;
-							document.getElementById('mainContentReview').dataset.uuid = contentObject.Uuid;
-							document.getElementById('mainContentReview').update();
+							// // SET REVIEW IN TOOLBAR
+							// document.getElementById('mainContentReview').contentObject = contentObject;
+							// document.getElementById('mainContentReview').dataset.uuid = contentObject.Uuid;
+							// document.getElementById('mainContentReview').update();
 
-							// Show review panel
-							document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
-							document.getElementById('sourceToolbar_reviewPanel').click();
+							// // Show review panel
+							// document.getElementById('sourceToolbar_reviewPanel').classList.remove('selected');
+							// document.getElementById('sourceToolbar_reviewPanel').click();
 
-							// CLOSE REVIEW MENU
-							document.getElementById('mainMenuReview').classList.add('selected');
-							document.getElementById('mainMenuReview').click();
+							// // CLOSE REVIEW MENU
+							// document.getElementById('mainMenuReview').classList.add('selected');
+							// document.getElementById('mainMenuReview').click();
 
 
+						}
+						else{
+							console.warn("Can't load a non-review object as review.")
 						}
 						break;
 
 					default:
+						console.log("Ran an unused shortcut =  g + " + event.key)
 						break;
 				}
 				// Make sure the mode timeout is not reseting toggled modes pressed in quick succession
@@ -1368,17 +1381,17 @@ class GlobalEventHandler {
 		// console.log("HANDLING CONTEXT CLICK!")
 
 		if(clickEvent.target.id == "context-1"){
-			mc.clearMainContent();
+			maincontent.clearMainContent();
 		}
 		else if (clickEvent.target.id == "context-2")
-			mc.loadHome();
+			maincontent.loadHome();
 		else if (clickEvent.target.id == "context-3")
-			mc.loadScroll();
+			maincontent.loadScroll();
 		else if (clickEvent.target.id == "context-4")
-			mc.loadPdf(439389356032);
+			maincontent.loadPdf(439389356032);
 
 		else if (clickEvent.target.id == "context-source")
-			mc.loadSource(document.getElementById("trueContextMenu").clickedContentObject.Uuid);
+			maincontent.loadSource(document.getElementById("trueContextMenu").clickedContentObject.Uuid);
 
 	}
 
@@ -1452,7 +1465,8 @@ class GlobalEventHandler {
 				// console.log('HOME SWEET HOME')
 				history.pushState(null, `Sources Home`, `/`); // all objects will for now be loaded as 'source'
 
-				this.app.mainContent.loadFromUrl();
+				// this.app.mainContent.loadFromUrl();
+				maincontent.loadFromUrl();
 				// this.app.reloadApp();
 
 				break;

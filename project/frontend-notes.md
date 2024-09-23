@@ -13,3 +13,5 @@
     - maybe the comments WILL be commected to both!!    
         - YES!
 
+# history
+- popstate-event that loads the main content from url
