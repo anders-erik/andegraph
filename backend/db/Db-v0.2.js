@@ -3,8 +3,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const dbLocationLegacy = process.env.GRAPH_DB_LOCATION;
-const dbLocation = '/data/live/graph-v0.2.3.db';
-const dbLocationTemp = '/data/live/graph-v0.2-temp.db';
+const dbLocation = '/data/live/graph-v0.3.0.db';
+const dbLocationTemp = '/data/live/graph-v0.3-temp.db';
 let db = {};
 // let r = 0;
 
