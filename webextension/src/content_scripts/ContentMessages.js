@@ -14,6 +14,7 @@ browser.runtime.onMessage.addListener((message) => {
 
 			extensionStateFront.active = true;
 
+			main();
 		}
 		else {
 

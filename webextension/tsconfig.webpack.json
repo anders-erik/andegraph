@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "outDir": "./src/overlay-dist/",
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es5",
+        "jsx": "react",
+        "allowJs": false,
+        "moduleResolution": "node",
+        "types": ["firefox-webext-browser"]
+    }
+}

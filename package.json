@@ -6,8 +6,10 @@
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
     "backend-log": "./scripts/backend-log.sh",
-    "webext-attach": "./webextension/scripts/dev.sh",
-    "webext-watch-build": "node ./webextension/build.js",
+    "ext-attach": "./webextension/scripts/dev.sh",
+    "ext-build-custom-watch": "node ./webextension/build.js",
+    "ext-build-wp-tsc": "npx webpack --config webextension/webpack.config.js",
+    "ext-build-wp-tsc-watch": "npx webpack --watch --config webextension/webpack.config.js",
     "dev": "nodemon -L backend/server.js -w backend/",
     "backup": "./data/utils/backup.sh"
   },
@@ -16,8 +18,13 @@
     "sqlite3": "^5.1.2"
   },
   "devDependencies": {
+    "@types/firefox-webext-browser": "^120.0.4",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.2",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   }
 }

@@ -37,7 +37,8 @@
 			],
 			"js": [
 				"content_scripts/ContentMessages.js",
-				"overlay-dist/dist.js"
+				"overlay-dist/dist.js",
+				"overlay-dist/wp-build.js"
 			]
 		}
 	],
