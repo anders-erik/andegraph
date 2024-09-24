@@ -1,42 +1,37 @@
 import type { Tfetcher } from "./fetcher";
 
-// import { fetchHtml} from "./fetcher";
-import * as fetcher from "./fetcher";
+
 import * as overlay from "./overlay";
-
-// console.log("fetchHtml-type?", typeof fetchHtml)
-
 
 let extensionStateFront ={
     active: false,
 };
-// extensionStateFront.active = true;
 
-let elem = document.getElementById("d");
 
+// Set up modules and fetch data
+(function init() {
+    overlay.initOverlay();
+})();
+
+
+// Display the extension-container
 browser.runtime.onMessage.addListener((message) => {
-    console.log('evevev')
-    
-    // fetcher.fetchHtml("overlay.html")
-    // .then(html => console.log(html));
+    console.log("ToggleExitension Message recieved!")
 
-
-    if (extensionStateFront.active)
-        stop();
-    else
-        start();
-
+    if (message.name === 'toggleExtension') {
+        if (extensionStateFront.active)
+            stop();
+        else
+            start();
+    }
 
 });
 
 
-
-function init() {
-    overlay.initOverlay();
-}
-init();
-
-function start() {
+/**
+ *  Show injected container
+ */
+function start() : void {
     console.log("START");
     
     extensionStateFront.active = true;
@@ -46,7 +41,12 @@ function start() {
     overlay.showOverlay();
 }
 
-function stop() {
+
+/**
+ *  
+ *  Hide injected container
+ */
+function stop() : void {
     console.log("STOP");
     extensionStateFront.active = false;
     overlay.hideOverlay();

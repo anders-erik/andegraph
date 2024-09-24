@@ -26,6 +26,21 @@
 - webextension is targeting the correct server...
 - |o| important keyboard shortcut panel
 
+### 2024-09-24
+- webextension refactoring
+	- my own data types for typescript!
+	- project menu
+		- new project
+		- reload
+		- sort
+		- favorites
+- decide on two test sources!
+	- will be used for testing webextension and review
+	- maybe also for test-data for database/api testing!
+- database scripts
+	- extract 3 good parameters giving a sense of integrity/size/structure
+	- add one new column in one content table for practice
+
 
 ### 2024-09-23
 - |o| Clickable basic Keyboard shortcut popup

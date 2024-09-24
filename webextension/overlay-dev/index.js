@@ -1,7 +1,7 @@
 
 // ELEMENTS
 
-let overlayContainer;
+let projectContainer;
 let overlayElement;
 let overlayRightPanel;
 let projectContainer;
