@@ -3,7 +3,7 @@ import { MainContent } from './maincontent/MainContent.js';
 import { MainOverlay } from './mainoverlay/MainOverlay.js';
 // import { LeftPanel } from './leftpanel/LeftPanel.js';
 import { GlobalEventHandler } from './GlobalEventhandler.js';
-import { ContextOverlay } from './contextoverlay/ContextOverlay.js';
+import { ContextOverlay, staticContextOverlay } from './contextoverlay/ContextOverlay.js';
 
 import * as maincontent from "./maincontent/MainContent.js"
 
@@ -110,6 +110,8 @@ class App {
 
 		this.contextOverlay = new ContextOverlay();
 		this.appElement.append(this.contextOverlay.overlayElement);
+		staticContextOverlay.initKeymap();
+
 
 		// leftPanel.LeftPanelDevTests();
 

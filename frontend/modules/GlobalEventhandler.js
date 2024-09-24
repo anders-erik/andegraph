@@ -613,6 +613,7 @@ class GlobalEventHandler {
 			/*
 				FFFFFFF
 			*/
+			// TODO : HANDLE THESE FOCUS SHORTCUTS AS MAIN CONTENT AGNOSTIC
 			case 'f':
 
 				switch (event.key) {

@@ -8,6 +8,11 @@ import { TitleMenu } from "./titlemenu/TitleMenu.js";
 
 import { TrueContextMenu } from "./truecontextmenu/TrueContextMenu.js";
 
+import * as keymap from "./keymap/keymap.js";
+
+let staticContextOverlay  = {};
+staticContextOverlay.initKeymap = keymap.initKeymap;
+
 
 class ContextOverlay {
 
@@ -234,4 +239,5 @@ class ContextOverlay {
 
 export {
 	ContextOverlay,
+	staticContextOverlay,
 }

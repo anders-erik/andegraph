@@ -26,7 +26,6 @@ app.use('/scroll*', express.static(frontendPath));
 app.use('/development*', express.static(frontendPath));
 
 
-
 /* 
     BOOTSTRAP
 */

@@ -6,6 +6,8 @@
 
 @import './truecontextmenu/TrueContextMenu.css';
 
+@import "./keymap/keymap.css";
+
 #contextOverlay {
 	position: fixed;
 	top: 0px;

@@ -1,6 +1,50 @@
 
-
 # Todo
+
+## v0.4.0
+### GOALS:
+- data overview dashboard
+- reviewable on ipad
+- solution to lack of project types
+- all tables/types have functional app pages
+- download source / content
+- shortcuts
+	- nicely show all shotcuts 
+	- make the common ones accessible!
+- automated 
+	- api with one command (mars)
+	- deployment
+	- database example
+
+
+<br>
+<br>
+
+## v0.3.1
+### GOALS
+- webextension is targeting the correct server...
+- important keyboard shortcut panel
+
+
+### 2024-09-23
+- |o| Clickable basic Keyboard shortcut popup
+	- |o| Most shortcuts included
+- refactor app
+	- separate the global event listener
+- REFACTOR WEBEXTENSION!
+	- try out some bundler or expand build system!
+- decide on two test sources!
+	- will be used for testing webextension and review
+	- maybe also for test-data for database/api testing!
+- database scripts
+	- extract 3 good parameters giving a sense of integrity/size/structure
+	- add one new column in one content table for practice
+
+
+
+<br>
+
+
 
 ## v0.3.0
 
