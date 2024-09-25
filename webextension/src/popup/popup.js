@@ -71,7 +71,6 @@ async function popup_init(){
 async function getCurrentApiBase(){
   return new Promise((resolve, reject) => {
 
- 
 
     browser.tabs.query({ active: true, currentWindow: true })
       .then((tabs) => {

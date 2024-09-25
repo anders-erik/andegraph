@@ -1,17 +1,20 @@
 import * as fetcher from "./fetcher";
+import {age_dbis} from "./dbi-send";
 
 let sidePanel : Element;
 
 let projectContainer : Element;
 let projectCss: HTMLElement;
 
+let projectObjects: any;
+let projectTable: any;
 
 
 
 function initProjects(_sidePanel : Element) : void{
-    sidePanel = _sidePanel;
-
     console.log('OVERLAY TS INIT');
+
+    sidePanel = _sidePanel;
 
     projectContainer = document.createElement('div');
     projectContainer.id = "age_projectContainer";
@@ -20,7 +23,6 @@ function initProjects(_sidePanel : Element) : void{
         .then(html => {
             // console.log("HTML : ", html)
             projectContainer.innerHTML = html;
-            
         }) 
   
     projectCss = document.createElement("style");
@@ -34,6 +36,23 @@ function initProjects(_sidePanel : Element) : void{
     
     sidePanel.append(projectContainer);
 
+    fetchProjects()
+        .then((contentObjectArray) => {
+            console.log(contentObjectArray)
+        })
+    
+}
+
+function fetchProjects() : Promise<any>{
+    return age_dbis.Content_SelectOnTitleLikeString("", "50", "", "", "")
+        .then((contentObjectArray: any) => {
+            // console.log(contentObjectArray);
+            projectObjects = contentObjectArray;
+            return Promise.resolve(contentObjectArray);
+        })
+        .catch((error : Error) => {
+            return Promise.reject();
+        })
 }
 
 function appendCss() : void{

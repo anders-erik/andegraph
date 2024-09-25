@@ -26,7 +26,8 @@
 - webextension is targeting the correct server...
 - |o| important keyboard shortcut panel
 
-### 2024-09-24
+
+### 2024-09-25
 - webextension refactoring
 	- my own data types for typescript!
 	- project menu
@@ -42,7 +43,7 @@
 	- add one new column in one content table for practice
 
 
-### 2024-09-23
+### 2024-09-24
 - |o| Clickable basic Keyboard shortcut popup
 	- |o| Most shortcuts included
 - REFACTOR WEBEXTENSION!

@@ -1,4 +1,9 @@
 
+import { test } from "./dbi-send"
+test();
+
+
+
 const htmlFolder = 'html/';
 const cssFolder = 'css/';
 
@@ -14,7 +19,7 @@ export function fetchHtml(filename : string) : Promise<string> {
         return fetch(url)
             .then(response => response.text())
             .then(text => text)
-            .catch(error => "Error in 'fetchHtml'. File:  fetcher.ts")
+            .catch(error => "Error in 'fetchHtml'. File:  fetcher.ts ")
 }
 
 
