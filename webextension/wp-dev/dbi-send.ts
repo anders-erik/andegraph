@@ -31,6 +31,88 @@ browser.runtime.onMessage.addListener((request) : Promise<any> => {
 
 class age_dbis {
 
+	/* 
+		CONTENT
+	*/
+
+	static async Content_InsertOnTable(TableName : string) {
+		const url = age_apiUrl + `/content/Content-InsertOnTable?Table=${TableName}`;
+		const options = {
+			method: 'POST'
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	static async Content_SelectOnUuid(Uuid : string | number) {
+		let url = age_apiUrl + `/content/Content-SelectOnUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	static async Content_UpdateWithContentObject(contentObject : any) {
+		let url = age_apiUrl + `/content/Content-UpdateWithContentObject`;
+		const options = {
+			method: 'PUT',
+			headers: { "Content-Type": "application/json", },
+			body: JSON.stringify(contentObject),
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	static async Content_DropFullOnUuid(Uuid : string | number) {
+		let url = age_apiUrl + `/content/Content-DropFullOnUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'DELETE',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
 	static async Content_SelectOnTitleLikeString(searchString: string, tableLimit: string, includeTable: string, orderColumn: string, desc: string) : Promise<any> {
 		let url = age_apiUrl + `/content/Content-SelectOnTitleLikeString?searchString=${searchString}&tableLimit=${tableLimit}&includeTable=${includeTable}&orderColumn=${orderColumn}&desc=${desc}`;
 		const options = {
@@ -41,7 +123,73 @@ class age_dbis {
 		try {
 			let response = await fetch(url, options);
 			if (!response.ok) {
-				console.warn("Fetch returned " + response.status + " from " + age_apiUrl);
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			// console.log(response.status, url)
+			console.error(error);
+		}
+	}
+	static async Review_InsertScheduleOnUuid(Uuid : string | number, scheduleType : string| number) {
+		const url = age_apiUrl + `/content/Review-InsertScheduleOnUuid?Uuid=${Uuid}&scheduleType=${scheduleType}`;
+		const options = {
+			method: 'POST'
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	static async Review_SelectCurrentReview() {
+		let url = age_apiUrl + `/content/Review-SelectCurrentReview`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
+				return [];
+			}
+			const data = await response.json();
+			console.log(response.status, url)
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+
+
+
+
+	/* 
+			CONTENT EDGE
+	*/
+	static async ContentEdge_SelectChildOfUuid(Uuid : string | number) {
+		let url = age_apiUrl + `/contentedge/ContentEdge-SelectChildOfUuid?Uuid=${Uuid}`;
+		const options = {
+			method: 'GET',
+		};
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				console.warn("Fetch returned " + response.status + " from " + url);
 				return [];
 			}
 			const data = await response.json();

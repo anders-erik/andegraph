@@ -1,9 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
-  // mode: 'development',
-  // devtool: 'inline-source-map',
+  mode: 'development',
+  devtool: 'inline-source-map',
+  
+  // mode: 'production',
   // entry: path.resolve(__dirname, 'wp-dev/main.js'),
   entry: path.resolve(__dirname, 'wp-dev/index.ts'),
   

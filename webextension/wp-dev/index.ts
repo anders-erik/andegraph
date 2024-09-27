@@ -10,7 +10,10 @@ let extensionStateFront ={
 
 // Set up modules and fetch data
 (function init() {
-    overlay.initOverlay();
+    overlay.initOverlay();  
+
+    // let settingItem = browser.storage.local.set({ test: "VALUE" });
+
 })();
 
 

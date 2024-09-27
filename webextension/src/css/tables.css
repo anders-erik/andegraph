@@ -1,0 +1,49 @@
+
+/* https: //jsfiddle.net/zinoui/dB93J */
+
+.age_table {
+    /* background-color: yellowgreen; */
+    /* border: solid gray 1px;    */
+    width: 96%;
+
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+
+}
+
+/* .age_table:hover {
+    background-color: #336B6B;
+} */
+
+
+
+.age_table thead th {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 6px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.age_table tbody td {
+    border: solid 1px #DDEEEE;
+    /* color: #333; */
+    color: white;
+    background-color: black;
+    padding: 4px;
+
+    /* overflow-y: scroll; */
+    /* text-shadow: 1px 1px 1px #fff; */
+}
+
+
+/* PROJECT CHILDREN TABLE */
+
+/* Prevented me from detecting clicks even if parent is listening */
+/* #age_projectChildrenTable td {
+    pointer-events: none;
+} */
+

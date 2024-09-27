@@ -26,8 +26,21 @@
 - webextension is targeting the correct server...
 - |o| important keyboard shortcut panel
 
+### Week 39 (ISO)
+- Webextension refactoring
+	- Project Container
+		- Implement the more options menu items
+		- niceties
+			- prevent select of certain element text
+			- move automatically to search box
+			- table styling
+			- project container height
+				- collapse when selecting a source?
+				- toggle?
+	- Source Container
+	- Clipboard Container
 
-### 2024-09-25
+### 2024-09-25/26 (ISO week 39)
 - webextension refactoring
 	- my own data types for typescript!
 	- project menu

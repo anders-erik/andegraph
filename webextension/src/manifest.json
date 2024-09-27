@@ -12,7 +12,8 @@
 		"activeTab",
 		"tabs",
 		"clipboardRead",
-		"clipboardWrite"
+		"clipboardWrite",
+		"storage"
 	],
 	"browser_action": {
 		"default_icon": "icons/andegraph-32.png",
