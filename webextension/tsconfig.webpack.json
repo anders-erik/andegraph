@@ -8,6 +8,10 @@
         "allowJs": false,
         "moduleResolution": "node",
         "sourceMap": true,
-        "types": ["firefox-webext-browser"]
+        "types": ["firefox-webext-browser"],
+        "lib": [
+            "es2017",
+            "dom"
+        ]
     }
 }

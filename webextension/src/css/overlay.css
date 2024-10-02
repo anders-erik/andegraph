@@ -129,8 +129,12 @@
     /* height: auto; */
     margin-right: 8px;
     width: 320px;
+    height: 100%;
     overflow-x: hidden;
-    box-shadow: 0 0 0 2px rgb(0, 0, 0);
+    box-shadow: 0 0 0 2px rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 4px;
+    
 
     pointer-events: all;
 
@@ -152,9 +156,10 @@
 
 
 #age_projectContainer {
-    /* height: 35%; */
-    /* max-height: 160px; */
+    height: 40%;
+    /* height: 400px; */
     overflow-y: hidden;
+    box-shadow: 0 0 0 1px rgb(255, 254, 251);
 }
 
 #age_projectContainer.collapsed {
@@ -163,6 +168,7 @@
 
 #age_sourceContainer {
     height: 35%;
+    box-shadow: 0 0 0 1px rgb(255, 254, 251);
 }
 
 #age_sourceContainer.expanded {
@@ -171,4 +177,5 @@
 
 #age_clipboardContainer {
     height: 26%;
+    box-shadow: 0 0 0 1px rgb(255, 254, 251);
 }

@@ -6,37 +6,58 @@
     /* border: solid gray 1px;    */
     width: 96%;
 
-    border: solid 1px #DDEEEE;
+    margin-top: 6px;
+
+    overflow-y: scroll; 
+
+    color: rgb(255, 240, 240);
+
+    /* border: solid 1px #DDEEEE; */
     border-collapse: collapse;
     border-spacing: 0;
     font: normal 13px Arial, sans-serif;
 
 }
 
-/* .age_table:hover {
-    background-color: #336B6B;
-} */
 
+/* All data cells  */
+.age_table thead tr th,
+.age_table tbody tr td {
+    background-color: #040b38;
+    text-align: center;
+}
+
+/* First column of all tables */
+.age_table thead tr th:first-child,
+.age_table tbody tr td:first-child {
+    width: 35%;
+}
 
 
 .age_table thead th {
-    background-color: #DDEFEF;
-    border: solid 1px #DDEEEE;
-    color: #336B6B;
+    /* background-color: #272b2b; */
+    /* border: solid 1px #DDEEEE; */
+    /* color: #a7b3b3; */
     padding: 6px;
     text-align: left;
-    text-shadow: 1px 1px 1px #fff;
 }
 
-.age_table tbody td {
-    border: solid 1px #DDEEEE;
-    /* color: #333; */
-    color: white;
-    background-color: black;
-    padding: 4px;
 
-    /* overflow-y: scroll; */
-    /* text-shadow: 1px 1px 1px #fff; */
+.age_table tbody tr:last-child {
+    border-bottom: solid 1px #dcf7f7fd;
+}
+
+
+.age_table tbody td {
+    border-top: solid 1px #dcf7f7fd;
+    /* color: white; */
+    padding: 6px 4px 6px 4px;
+}
+
+
+.age_table td[contenteditable="true"] {
+    background-color: rgb(3, 9, 48);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.709);
 }
 
 

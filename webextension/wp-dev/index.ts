@@ -19,13 +19,21 @@ let extensionStateFront ={
 
 // Display the extension-container
 browser.runtime.onMessage.addListener((message) => {
-    console.log("ToggleExitension Message recieved!")
-
+    
     if (message.name === 'toggleExtension') {
-        if (extensionStateFront.active)
-            stop();
-        else
-            start();
+        console.log("Toggle Exitension Message recieved!")
+
+        if (extensionStateFront.active){
+            extensionStateFront.active = false;
+            overlay.hideOverlay();
+
+            
+        }
+        else{
+            extensionStateFront.active = true;
+            overlay.showOverlay();
+
+        }
     }
 
 });

@@ -1,5 +1,7 @@
 import * as fetcher from "./fetcher";
 import * as projects from "./projects/projects";
+import * as source from "./source/source";
+import * as clipboard from "./clipboard";
 
 import { HTMLProjectChildRow } from "./projects/project_dom";
 
@@ -22,7 +24,12 @@ function initOverlay() : void{
     overlayContainer = document.createElement('div');
     overlayContainer.id = "age_overlayContainer"; 
     overlayContainer.addEventListener("click", extensionClickHandler);
-    overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {console.log('load source event!', event.detail.contentObject)}); 
+    overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {
+        // console.log('load source event!', event.detail.contentObject);
+        source.loadWithContentObject(event.detail.contentObject);
+    });
+    overlayContainer.addEventListener("newsource", (event: CustomEvent) => {});
+    overlayContainer.addEventListener("newproject", (event: CustomEvent) => {});
 
 
     fetcher.fetchHtml("overlay.html")
@@ -33,8 +40,10 @@ function initOverlay() : void{
             // contextOverlay.addEventListener("click", hideContextMenus);
             sidePanel = overlayContainer.querySelector("#age_overlayRightPanel");
 
-            // Pass the context menu!
-            projects.initProjects(sidePanel, contextOverlay.querySelector("#age_moreProjectOptionsContextMenu"));
+            
+            projects.initProjects(sidePanel, contextOverlay.querySelector("#age_moreProjectOptionsContextMenu")); // Pass the context menu!
+            source.initSourceContainer(sidePanel, contextOverlay.querySelector("#age_moreSourceOptionsContextMenu")); // Pass the context menu!
+            clipboard.initClipboard(sidePanel);
         })
 
     overlayCss = document.createElement("style");
@@ -78,6 +87,8 @@ function showOverlay() : void{
     document.head.append(overlayCss);
     document.head.append(tableCss);
     projects.appendCss();
+    source.appendCss();
+    clipboard.appendCss();
     // fetcher.fetchHtml("overlay.html")
     //     .then(html => overlayContainer.innerHtml = html)
 }
@@ -90,6 +101,8 @@ function hideOverlay() : void {
     tableCss.remove();
 
     projects.removeCss();
+    source.removeCss();
+    clipboard.removeCss();
 }
 
 

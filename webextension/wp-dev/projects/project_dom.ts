@@ -21,7 +21,7 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
     let projectObject = projectContentObject;
 
     propertiesTable.contentObject = projectContentObject;
-    propertiesTable.addEventListener("focusout", projectPropertyFocusOut)
+    // propertiesTable.addEventListener("focusout", projectPropertyFocusOut)
 
     // extensionStateFront.current_projectUuid = projectObject.Uuid;
 
@@ -39,8 +39,8 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
             tbody.innerHTML += `
 		
 			<tr>
-				<th id=age_projPropTable-${key}-key class="age_element" >${key}</th>
-				<td id=age_projPropTable-${key}-value class="age_editableProjectProperty age_element" contenteditable="true" >${projectObject[key]}</td>
+				<td id=age_projPropTable-${key}-key class="age_element" >${key}</td>
+				<td id=age_projPropTable-${key}-value class="age_element" contenteditable="true" >${projectObject[key]}</td>
 			</tr>
 		
 		`;
@@ -50,7 +50,7 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
             tbody.innerHTML += `
 		
 			<tr>
-				<th id=age_projPropTable-${key}-key class="age_element" >${key}</th>
+				<td id=age_projPropTable-${key}-key class="age_element" >${key}</td>
 				<td id=age_projPropTable-${key}-value class="age_element">${projectObject[key]}</td>
 			</tr>
 		
@@ -60,7 +60,7 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
     }
 
     // console.log(document.querySelectorAll('#age_projectPropertiesTable tbody tr'))
-    let editableProjectPropertyTds: NodeListOf<Element> = tbody.querySelectorAll('.age_editableProjectProperty');
+    // let editableProjectPropertyTds: NodeListOf<Element> = tbody.querySelectorAll('.age_editableProjectProperty');
     // console.log(editableProjectPropertyTd)
 
     // Array.from(editableProjectPropertyTds).forEach((editablePropertyElement) => {
@@ -77,83 +77,6 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
 
 }
 
-function projectPropertyFocusOut(event: FocusEvent) : void{
-    console.log('FOCUS OUT PROJECT PROPERTY');
-    // console.log("event.target = ", event.target);
-    // console.log("this = ", this);
-
-    let dataElement = event.target as HTMLElement;
-    let projectTable: HTMLTableContentObject = this;
-
-    // console.log('', event.target.)
-    switch (dataElement.id) {
-        // TYPE
-        case "age_projPropTable-Type-value":
-            projectTable.contentObject.Type = dataElement.textContent;
-            break;
-        // TITLE
-        case "age_projPropTable-Title-value":
-            projectTable.contentObject.Title = dataElement.textContent;
-            break;
-        // GOAL
-        case "age_projPropTable-Goal-value":
-            projectTable.contentObject.Goal = dataElement.textContent;
-            break;
-    
-        default:
-            break;
-    }
-
-    age_dbis.Content_UpdateWithContentObject(projectTable.contentObject)
-    .then(updatedContentObject => {
-        // console.log("updatedContentObject = ", updatedContentObject);
-
-        // let updatedString = JSON.stringify(updatedContentObject);
-        // let tableObjectString = JSON.stringify(projectTable.contentObject);
-
-        // console.log(updatedString);
-        // console.log(tableObjectString);
-        
-        // let equality = JSON.stringify(updatedContentObject) == JSON.stringify(projectTable.contentObject);
-
-        // console.log("Equal ? : ", equality)
-
-        // for(let i = 0; i < updatedString.length; i++){
-        //     if(updatedString[i] !== tableObjectString[i])
-        //         console.log(updatedString[i] + " !== " + tableObjectString[i])
-        // }
-        
-        // console.log(JSON.stringify(updatedContentObject).length)
-        // console.log(JSON.stringify(projectTable.contentObject).length);
-        switch (dataElement.id) {
-            // TYPE
-            case "age_projPropTable-Type-value":
-                console.assert(updatedContentObject.Type == projectTable.contentObject.Type, "'PUT' content Object Type does not match the project table .contentObject.Type !");
-                break;
-            // TITLE
-            case "age_projPropTable-Title-value":
-                console.assert(updatedContentObject.Type == projectTable.contentObject.Type, "'PUT' content Object Title does not match the project table .contentObject.Title !");
-                break;
-            // GOAL
-            case "age_projPropTable-Goal-value":
-                console.assert(updatedContentObject.Type == projectTable.contentObject.Type, "'PUT' content Object Goal does not match the project table .contentObject.Goal !");
-                break;
-
-            default:
-                break;
-        }
-        
-        
-    })
-    // let projectContentObject = document.getElementById("age_projectPropertiesTable") as HTMLTableContentObject;
-
-    console.log("projectContentObject.contentObject = ", projectTable.contentObject);
-
-    
-    // let eventTarget = event.target as HTMLElement;
-    // console.log('eventTarget.textContent = ', eventTarget.textContent);
-    
-}
 
 
 export function populateChildrenTable(table : HTMLTableElement, projectChildContentEdges : any){
@@ -199,7 +122,7 @@ export function populateChildrenTable(table : HTMLTableElement, projectChildCont
 
         newProjectChildRow.innerHTML += `
 		
-				<th id=age_projchildTable-Table-${contentEdge.content.Uuid} class="age_element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Table}</th>
+				<td id=age_projchildTable-Table-${contentEdge.content.Uuid} class="age_element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Table}</td>
 				<td id=age_projchildTable-Title-${contentEdge.content.Uuid} class="age_element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Title}</td>
 			
 		`;

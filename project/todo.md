@@ -26,6 +26,15 @@
 - webextension is targeting the correct server...
 - |o| important keyboard shortcut panel
 
+### Week 40 (ISO)
+- v0.3.1
+- webextension refactoring
+	- get a functiong viable webextension
+		- refactored, but same functionality
+		- the api location can be changed and persists
+- database scripts
+- a working review-page
+
 ### Week 39 (ISO)
 - Webextension refactoring
 	- Project Container

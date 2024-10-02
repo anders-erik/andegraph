@@ -3,6 +3,9 @@ import * as dom from "./project_dom";
 import { HTMLProjectTableRow, HTMLTableContentObject } from "./project_dom";
 import {age_dbis} from "../dbi-send";
 
+
+let currentProjectObject : any;
+
 let sidePanel : Element;
 
 let projectMoreOptionsContextMenu : HTMLDivElement;
@@ -47,6 +50,7 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
     projectContainer = document.createElement('div');
     projectContainer.id = "age_projectContainer";
     projectContainer.addEventListener("click", projectClick);
+    projectContainer.addEventListener("focusout", projectPropertyFocusOut);
 
     fetcher.fetchHtml("projects.html")
         .then(html => {
@@ -67,6 +71,13 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
             );
             let backgroundString = `url(${moreOptionsBackgroundUrl})`;
             projectMoreOptionsButton.style.backgroundImage = backgroundString;
+
+            // Search icon
+            let searchBackgroundUrl = browser.runtime.getURL(
+                "resources/search-icon.png"
+            );
+            let searchBackgroundString = `url(${searchBackgroundUrl})`;
+            projectSearchElement.style.backgroundImage = searchBackgroundString;
 
         }) 
   
@@ -93,14 +104,80 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
 
 }
 
+
+
+function projectPropertyFocusOut(event: FocusEvent): void {
+    console.log('FOCUS OUT PROJECT PROPERTY');
+    // console.log("event.target = ", event.target);
+    // console.log("this = ", this);
+
+    let dataElement = event.target as HTMLElement;
+    // let projectTable: HTMLTableContentObject = this;
+    
+
+    // console.log('', event.target.)
+    switch (dataElement.id) {
+        // TYPE
+        case "age_projPropTable-Type-value":
+            projectPropertiesTable.contentObject.Type = dataElement.textContent;
+            break;
+        // TITLE
+        case "age_projPropTable-Title-value":
+            projectPropertiesTable.contentObject.Title = dataElement.textContent;
+            break;
+        // GOAL
+        case "age_projPropTable-Goal-value":
+            projectPropertiesTable.contentObject.Goal = dataElement.textContent;
+            break;
+
+        default:
+            break;
+    }
+
+    age_dbis.Content_UpdateWithContentObject(projectPropertiesTable.contentObject)
+        .then(updatedContentObject => {
+            switch (dataElement.id) {
+                // TYPE
+                case "age_projPropTable-Type-value":
+                    console.assert(updatedContentObject.Type == projectPropertiesTable.contentObject.Type, "'PUT' content Object Type does not match the project table .contentObject.Type !");
+                    break;
+                // TITLE
+                case "age_projPropTable-Title-value":
+                    console.assert(updatedContentObject.Title == projectPropertiesTable.contentObject.Title, "'PUT' content Object Title does not match the project table .contentObject.Title !");
+                    break;
+                // GOAL
+                case "age_projPropTable-Goal-value":
+                    console.assert(updatedContentObject.Goal == projectPropertiesTable.contentObject.Goal, "'PUT' content Object Goal does not match the project table .contentObject.Goal !");
+                    break;
+
+                default:
+                    break;
+            }
+
+
+        })
+    // let projectContentObject = document.getElementById("age_projectPropertiesTable") as HTMLTableContentObject;
+
+    console.log("projectContentObject.contentObject = ", projectPropertiesTable.contentObject);
+
+
+    // let eventTarget = event.target as HTMLElement;
+    // console.log('eventTarget.textContent = ', eventTarget.textContent);
+
+}
+
 function clickedProjectContextMenu(event: MouseEvent){
     let eventTarget = event.target as HTMLElement;
     switch (eventTarget.id) {
-        case "btn1":
-            console.log(eventTarget.id)
+        case "newProjectBtn":
+            // console.log(eventTarget.id)
+            age_dbis.Content_InsertOnTable("Project").then((newProjectObject) => { 
+                loadProjectWithContentObject(newProjectObject);
+                performSearch();
+            }) // perform regular search
             break;
-        case "btn2":
-            console.log(eventTarget.id)
+        case "newSourceBtn":
+            insertNewSourceToActiveProject();
             break;
         case "btn3":
             console.log(eventTarget.id)
@@ -117,6 +194,27 @@ function clickedProjectContextMenu(event: MouseEvent){
     }
     
 }
+
+/**
+ * Add new child-source, fires off the loadsource CutomEvent, and then reloads the project child table.
+ */
+async function insertNewSourceToActiveProject(){
+    let contentEdgeObject: any = await age_dbis.ContentEdge_InsertAdjacentToUuidIntoTable(currentProjectObject.Uuid, 1, 'Source', '', '', '/')
+
+    let loadsourceEvent = new CustomEvent("loadsource", {
+        bubbles: true,
+        detail: { contentObject: contentEdgeObject.content },
+
+    });
+    projectContainer.dispatchEvent(loadsourceEvent);
+       
+    age_dbis.ContentEdge_SelectChildOfUuid(currentProjectObject.Uuid)
+        .then((contentEdges) => {
+            dom.populateChildrenTable(projectChildrenTable, contentEdges);
+        })
+    
+}
+
 
 function hideProjectContextMenu(event: MouseEvent) {
     let eventTarget = event.target as HTMLElement;
@@ -135,7 +233,7 @@ function hideProjectContextMenu(event: MouseEvent) {
 
 
 /**
- *  Main event handler in the project container.
+ *  Main click handler in the project container.
  * 
  * @param event 
  */
@@ -150,18 +248,7 @@ function projectClick(event: Event){
     if (clickTarget.classList.contains("age_projectRowSearchData")){
         // grab parent because we clicked on data-element
         let tableRowTarget = clickTarget.parentElement as HTMLProjectTableRow;
-        // set title
-        document.getElementById('age_projectTitle').textContent = tableRowTarget.nodeObject.Title;
-
-        
-        dom.populatePropertiesTable(projectPropertiesTable, tableRowTarget.nodeObject);
-        // populate properties table 
-        fetchProjectChildren(clickTarget.dataset.uuid)
-            .then((contentEdgeObjects) => { dom.populateChildrenTable(projectChildrenTable, projectContentEdgeChildren)}
-        );
-
-        // move focus to the children-tab
-        document.getElementById("age_projectChildrenButton").click()
+        loadProjectWithContentObject(tableRowTarget.nodeObject)
     }
 // SEARCH/CHILDREN/PROPERTIES BUTTON
     else if (
@@ -187,6 +274,27 @@ function projectClick(event: Event){
     else{
         // console.log('Ignored Project Click.');
     }
+}
+
+/**
+ *  loads an existing project. Usually from clicking on a project during search OR creating a new project object.
+ */
+function loadProjectWithContentObject(_contentObject : any){
+    // Set module variable
+    currentProjectObject = _contentObject;
+
+    // set title
+    document.getElementById('age_projectTitle').textContent = _contentObject.Title;
+
+
+    dom.populatePropertiesTable(projectPropertiesTable, _contentObject);
+    // populate properties table 
+    fetchProjectChildren(_contentObject.Uuid)
+        .then((contentEdgeObjects) => { dom.populateChildrenTable(projectChildrenTable, projectContentEdgeChildren) }
+        );
+
+    // move focus to the children-tab
+    document.getElementById("age_projectChildrenButton").click()
 }
 
 function toggleMoreOptions(){
@@ -228,27 +336,18 @@ function searchProjectOut() {
     
     let searchStringLength = projectSearchElement.textContent.length;
     if(searchStringLength === 0){
-        // console.log('EMPTY SEARCH STRING');
         searchStringExists = false;
         projectSearchElement.innerHTML = '<div>Q  :  Search . . .<br></div>';
     }
     else{
         searchStringExists = true;
     }
-    // extensionStateFront.projectSearchActive = false;
-    //writeStateFromFront();
-    // focusProjectSearch = false;
-    // console.log('focusout search ')
-    // projectSearchInput.removeEventListener('keypress', keyPressDuringSearch)
     projectSearchElement.removeEventListener('keydown', keyDownDuringSearch)
 }
 
 
 // Perform search with slight delay to make sure new input is written to contentEditanle input
 async function keyDownDuringSearch(event : KeyboardEvent) {
-    // keyEvent.preventDefault();
-    // console.log('keyDownDuringSearch()');
-    // console.log('event.key = ', event.key);
     
     // User just deleted the last character so we reset the default contenteditable elment structure
     // if we con't do this the user will inadvertiedly remove the containing <div>, breaking the typing-behaviour!
@@ -258,28 +357,28 @@ async function keyDownDuringSearch(event : KeyboardEvent) {
         event.preventDefault();
     }
     
-    
     // This does not prevent a request on each keystroke
     // BUT it enables reading the change of each keystroke. When this method is called the textContent of the serach box has not been updated!!
     setTimeout(async () => {
-        
-        // console.log("projectSearchElement.textContent = ", projectSearchElement.textContent);
 
-        fetchProjectSearch(projectSearchElement.textContent)
-            .then((contentObjectArray) => {
-                // console.log(contentObjectArray)
-                dom.populateProjectSearchTable(projectSearchTable, projectSearchObjects);
-            })
-
-        // age_dbis.Content_SelectOnTitleLikeString();
-
-        // await fetchProjectSearchThenWriteToStates();
-
-        // populateProjectSearchTableFromState();
+        performSearch();
 
     }, 100);
 
+}
 
+function performSearch(){
+    let searchString : string = "";
+    if(searchStringExists)
+        searchString = projectSearchElement.textContent;
+    else
+        searchString = "";
+
+    fetchProjectSearch(searchString)
+        .then((contentObjectArray) => {
+            // console.log(contentObjectArray)
+            dom.populateProjectSearchTable(projectSearchTable, contentObjectArray);
+        })
 }
 
 
@@ -323,24 +422,24 @@ function showProjectTable(buttonId : string){
     
 }
 
-function projectTitleClicked(tableRow: HTMLElement): void {
-    console.log("Project title clicked: ", tableRow)
-}
-function projectSearchButtonClicked(tableRow: HTMLElement) : void {
-    console.log("Project search clicked: ", tableRow)
-}
-function projectChildrenButtonClicked(tableRow: HTMLElement): void {
-    console.log("Project children clicked: ", tableRow)
-}
-function projectPropertiesButtonClicked(tableRow: HTMLElement): void {
-    console.log("Project properties clicked: ", tableRow)
-}
-function projectMoreOptionsButtonClicked(tableRow: HTMLElement): void {
-    console.log("Project options clicked: ", tableRow)
-}
-function projectSearchRowClicked(tableRow: HTMLProjectTableRow): void {
-    console.log("Table row clicked: ", tableRow)
-}
+// function projectTitleClicked(tableRow: HTMLElement): void {
+//     console.log("Project title clicked: ", tableRow)
+// }
+// function projectSearchButtonClicked(tableRow: HTMLElement) : void {
+//     console.log("Project search clicked: ", tableRow)
+// }
+// function projectChildrenButtonClicked(tableRow: HTMLElement): void {
+//     console.log("Project children clicked: ", tableRow)
+// }
+// function projectPropertiesButtonClicked(tableRow: HTMLElement): void {
+//     console.log("Project properties clicked: ", tableRow)
+// }
+// function projectMoreOptionsButtonClicked(tableRow: HTMLElement): void {
+//     console.log("Project options clicked: ", tableRow)
+// }
+// function projectSearchRowClicked(tableRow: HTMLProjectTableRow): void {
+//     console.log("Table row clicked: ", tableRow)
+// }
 
 
 function fetchProjectSearch(searchString : string) : Promise<any>{

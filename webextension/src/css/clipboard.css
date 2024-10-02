@@ -1,0 +1,74 @@
+#age_clipboardInner {
+	width: 100%;
+	height: 100%;
+
+	box-shadow: inset 0 0 0 2px black;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+}
+
+#age_clipboardInner.age_activeClipboard {
+	box-shadow: inset 0 0 100px 5px rgb(255, 0, 0);
+}
+
+#age_clipboardTitleContainer {
+	height: 30px;
+	/* width: 90%; */
+	max-width: 300px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0px;
+
+	margin: 5px 5px 5px 5px;
+	padding: 2px;
+
+	border-bottom: solid rgba(0, 0, 0, 0.358) 2px;
+}
+
+#age_clipboardTitle {
+	/* background-color: aliceblue; */
+
+
+}
+
+#age_clipboardCodeCheckbox {
+	box-shadow: inset 0 0 0 2px black;
+}
+
+#age_clipboardCodeCheckbox:hover {
+	cursor: pointer;
+}
+
+
+#age_clipboardTextTypeInput {
+	background-color: rgb(204, 215, 225);
+	color: rgb(13, 2, 2);
+	border-radius: 3px;
+	width: 70px;
+	padding: 5px 10px 5px 10px;
+	/* margin: 3px; */
+
+	border: none;
+	box-shadow: inset 0 0 0 1px black;
+}
+
+
+
+#age_clipboardConcatContent {
+	background-color: rgb(131, 170, 204);
+
+	white-space: pre-wrap;
+
+	margin: 10px;
+	padding: 10px;
+
+	border-radius: 5px;
+
+	flex-grow: 1;
+
+}
