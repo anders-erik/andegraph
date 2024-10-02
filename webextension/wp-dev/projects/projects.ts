@@ -4,9 +4,10 @@ import { HTMLProjectTableRow, HTMLTableContentObject } from "./project_dom";
 import {age_dbis} from "../dbi-send";
 
 
-let currentProjectObject : any;
+let currentProjectObject : any = null;
 
 let sidePanel : Element;
+let sidePanelIsRight : boolean = true;
 
 let projectMoreOptionsContextMenu : HTMLDivElement;
 
@@ -26,6 +27,8 @@ let projectContentEdgeChildren : any;
 let projectChildrenTable : HTMLTableElement;
 
 let projectPropertiesTable: HTMLTableContentObject;
+
+let projectTitleElement : HTMLElement;
 
 
 // interface HTMLTableRowElement {
@@ -49,6 +52,7 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
 
     projectContainer = document.createElement('div');
     projectContainer.id = "age_projectContainer";
+    projectContainer.classList.add("age_panelContainer");
     projectContainer.addEventListener("click", projectClick);
     projectContainer.addEventListener("focusout", projectPropertyFocusOut);
 
@@ -56,6 +60,7 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
         .then(html => {
             // console.log("HTML : ", html)
             projectContainer.innerHTML = html;
+            projectTitleElement = projectContainer.querySelector("#age_projectTitle");
             projectSearchTable = projectContainer.querySelector("table");
             projectChildrenTable = projectContainer.querySelector("#age_projectChildrenTable");
             projectPropertiesTable = projectContainer.querySelector("#age_projectPropertiesTable");
@@ -79,6 +84,11 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
             let searchBackgroundString = `url(${searchBackgroundUrl})`;
             projectSearchElement.style.backgroundImage = searchBackgroundString;
 
+            fetchProjectSearch("") // perform search only after guaranteed load
+                .then((contentObjectArray) => {
+                    console.log(contentObjectArray)
+                    dom.populateProjectSearchTable(projectSearchTable, projectSearchObjects);
+                })
         }) 
   
     projectCss = document.createElement("style");
@@ -95,15 +105,56 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
     sidePanel.append(projectContainer);
 
 
-    fetchProjectSearch("")
-        .then((contentObjectArray) => {
-            console.log(contentObjectArray)
-            dom.populateProjectSearchTable(projectSearchTable, projectSearchObjects);
-        })
     
-
+    
+    
 }
 
+
+
+
+/**
+ * Add new project object and
+ */
+async function createNewProject() {
+    let newProjectObject = await age_dbis.Content_InsertOnTable("Project")
+    currentProjectObject = newProjectObject;
+    // await loadProjectWithContentObject(newProjectObject);
+    reloadCurrentProject();
+}
+
+/**
+ *   Reload using the already set values.
+*/
+export async function reloadCurrentProject() {
+    await reloadChildrenTable();
+    await reloadPropertiesTable();
+    await refreshProjectTitleElement();
+    performSearch();
+}
+
+
+function loadProjectWithUuid(Uuid : string | number){
+    age_dbis.Content_SelectOnUuid(Uuid)
+        .then((contentObject) => {
+            loadProjectWithContentObject(contentObject);
+        })
+}
+
+async function reloadChildrenTable(){
+    let contentEdges = await age_dbis.ContentEdge_SelectChildOfUuid(currentProjectObject.Uuid)
+    dom.populateChildrenTable(projectChildrenTable, contentEdges);
+}
+async function reloadPropertiesTable() {
+    
+    age_dbis.Content_SelectOnUuid(currentProjectObject.Uuid)
+        .then((contentObject) => {
+            dom.populatePropertiesTable(projectPropertiesTable, contentObject);
+        })   
+}
+function refreshProjectTitleElement(){
+    projectTitleElement.textContent = currentProjectObject.Title;
+}
 
 
 function projectPropertyFocusOut(event: FocusEvent): void {
@@ -158,56 +209,91 @@ function projectPropertyFocusOut(event: FocusEvent): void {
         })
     // let projectContentObject = document.getElementById("age_projectPropertiesTable") as HTMLTableContentObject;
 
-    console.log("projectContentObject.contentObject = ", projectPropertiesTable.contentObject);
+    // console.log("projectContentObject.contentObject = ", projectPropertiesTable.contentObject);
+    currentProjectObject = projectPropertiesTable.contentObject;
+
+    refreshProjectTitleElement();
 
 
-    // let eventTarget = event.target as HTMLElement;
-    // console.log('eventTarget.textContent = ', eventTarget.textContent);
-
+    // Update Titles in the search
+    let elementWithSameUuid = document.querySelectorAll(`[data-uuid='${currentProjectObject.Uuid}']`);
+    elementWithSameUuid.forEach((_element) => {
+        if (_element.classList.contains("age_element") && _element.classList.contains("age_projectRowSearchData"))
+            _element.textContent = dataElement.textContent;
+    })
 }
 
-function clickedProjectContextMenu(event: MouseEvent){
+async function clickedProjectContextMenu(event: MouseEvent){
     let eventTarget = event.target as HTMLElement;
     switch (eventTarget.id) {
         case "newProjectBtn":
-            // console.log(eventTarget.id)
-            age_dbis.Content_InsertOnTable("Project").then((newProjectObject) => { 
-                loadProjectWithContentObject(newProjectObject);
-                performSearch();
-            }) // perform regular search
+            await createNewProject();
+            showProjectProperties();
             break;
         case "newSourceBtn":
             insertNewSourceToActiveProject();
             break;
-        case "btn3":
-            console.log(eventTarget.id)
+        case "refreshExtension":
+            console.warn("'refreshExtension' NOT FULLY IMPLEMENTED ! ONLY PROJECT IS REFRESHED");
+            reloadCurrentProject();
             break;
-        case "btn4":
-            console.log(eventTarget.id)
+        case "printCurrentProject":
+            console.log(currentProjectObject);
+            console.log(JSON.stringify(currentProjectObject));
             break;
-        case "btn5":
-            console.log(eventTarget.id)
+        case "moveExtension":
+            toggleExtensionLocation();
             break;
 
         default:
             break;
     }
-    
 }
+
+export function toggleExtensionLocation(){
+    // Shift between left and right
+    if (sidePanelIsRight) {
+        document.getElementById("age_overlayContainer").style.justifyContent = "start";
+        sidePanelIsRight = false;
+    }
+    else {
+        document.getElementById("age_overlayContainer").style.justifyContent = "end";
+        sidePanelIsRight = true;
+    }
+}
+    
+// }
+// <button id="refreshExtension" > Refresh from server </button>
+//     < button id = "printCurrentProject" > Copy Project Properties </button>
+//         < button id = "moveExtension" > Move Extension </button>
+
 
 /**
  * Add new child-source, fires off the loadsource CutomEvent, and then reloads the project child table.
  */
-async function insertNewSourceToActiveProject(){
+export async function insertNewSourceToActiveProject(){
+
+    if (currentProjectObject === undefined || currentProjectObject === null){
+        console.warn("No current Project. Can't add new source.");
+        return;
+    }
+
     let contentEdgeObject: any = await age_dbis.ContentEdge_InsertAdjacentToUuidIntoTable(currentProjectObject.Uuid, 1, 'Source', '', '', '/')
 
-    let loadsourceEvent = new CustomEvent("loadsource", {
-        bubbles: true,
-        detail: { contentObject: contentEdgeObject.content },
+    // make sure we set a default url!
+    let _newSourceObject = contentEdgeObject.content;
+    _newSourceObject.Url = window.location.href;
+    _newSourceObject.Title = document.title;
+    _newSourceObject = await age_dbis.Content_UpdateWithContentObject(_newSourceObject);
 
+    // SEND NEW SOURCE MESSAGE
+    let newsourceEvent = new CustomEvent("newsource", {
+        bubbles: true,
+        detail: { contentObject: _newSourceObject },
     });
-    projectContainer.dispatchEvent(loadsourceEvent);
-       
+    projectContainer.dispatchEvent(newsourceEvent);
+    
+    // update project children table
     age_dbis.ContentEdge_SelectChildOfUuid(currentProjectObject.Uuid)
         .then((contentEdges) => {
             dom.populateChildrenTable(projectChildrenTable, contentEdges);
@@ -224,9 +310,9 @@ function hideProjectContextMenu(event: MouseEvent) {
     // console.log('isContextElement = ', isContextElement);
 
     if (!isContextElement) {
-        // console.log("CLICKED CONTEXT MENU!@")
         let optionsContextMenu = document.getElementById("age_moreProjectOptionsContextMenu");
-        optionsContextMenu.classList.add("age_displayNone")
+        if (optionsContextMenu !== null)
+            optionsContextMenu.classList.add("age_displayNone")
     }
 }
 
@@ -248,7 +334,8 @@ function projectClick(event: Event){
     if (clickTarget.classList.contains("age_projectRowSearchData")){
         // grab parent because we clicked on data-element
         let tableRowTarget = clickTarget.parentElement as HTMLProjectTableRow;
-        loadProjectWithContentObject(tableRowTarget.nodeObject)
+        loadProjectWithContentObject(tableRowTarget.nodeObject);
+        showProjectChildren();
     }
 // SEARCH/CHILDREN/PROPERTIES BUTTON
     else if (
@@ -266,9 +353,12 @@ function projectClick(event: Event){
     }
 // TITLE
     else if (clickTarget.id == "age_projectTitle") {
-        // projectTitleClicked(event.target as HTMLElement);
+        // TOGGLE Project/source container expansions/collapse
         let projectContainerElement : HTMLElement = document.getElementById("age_projectContainer");
         projectContainerElement.classList.contains("collapsed") ? projectContainerElement.classList.remove("collapsed") : projectContainerElement.classList.add("collapsed");
+        let sourceContainerElement: HTMLElement = document.getElementById("age_sourceContainer");
+        sourceContainerElement.classList.contains("collapsed") ? sourceContainerElement.classList.remove("collapsed") : sourceContainerElement.classList.add("collapsed");
+
     }
 
     else{
@@ -291,23 +381,39 @@ function loadProjectWithContentObject(_contentObject : any){
     // populate properties table 
     fetchProjectChildren(_contentObject.Uuid)
         .then((contentEdgeObjects) => { dom.populateChildrenTable(projectChildrenTable, projectContentEdgeChildren) }
-        );
+    );
+    
+    // showProjectChildren();
+}
 
+function showProjectChildren(){
     // move focus to the children-tab
     document.getElementById("age_projectChildrenButton").click()
+}
+function showProjectProperties() {
+    // move focus to the children-tab
+    document.getElementById("age_projectPropertiesButton").click()
 }
 
 function toggleMoreOptions(){
     // console.log("TOGGLE MORE OPTIONS")
     let buttonBoundingRect = projectMoreOptionsButton.getBoundingClientRect();
     let btnLeft = buttonBoundingRect.left;
+    let btnRight = buttonBoundingRect.right;
     let btnBottom = buttonBoundingRect.bottom;
-    
-    let moreOptionsContextMenu = document.getElementById("age_moreProjectOptionsContextMenu");
-    moreOptionsContextMenu.style.left = btnLeft + "px";
-    moreOptionsContextMenu.style.top = btnBottom + 5 + "px";
+    let btnX = buttonBoundingRect.x;
 
-    moreOptionsContextMenu.classList.contains("age_displayNone") ? moreOptionsContextMenu.classList.remove("age_displayNone") : moreOptionsContextMenu.classList.add("age_displayNone");
+
+    projectMoreOptionsContextMenu.style.top = btnBottom + 5 + "px";
+    if(sidePanelIsRight){
+        
+        projectMoreOptionsContextMenu.style.left = btnLeft - 170  + "px";
+    }
+    else{
+        projectMoreOptionsContextMenu.style.left = btnLeft + "px";
+    }
+
+    projectMoreOptionsContextMenu.classList.contains("age_displayNone") ? projectMoreOptionsContextMenu.classList.remove("age_displayNone") : projectMoreOptionsContextMenu.classList.add("age_displayNone");
 }
 
 
@@ -324,6 +430,7 @@ function searchProjectIn() {
         projectSearchElement.innerHTML = '<div><br></div>'; // default content on 'contenteditable' elements 
         // setInterval(() => { searchInput.innerHTML += '<br>' }, 50);
     }
+    searchStringExists = true;
     // console.log('focus search ')
     // projectSearchInput.addEventListener('keypress', keyPressDuringSearch)
     projectSearchElement.addEventListener('keydown', keyDownDuringSearch)
@@ -374,6 +481,7 @@ function performSearch(){
     else
         searchString = "";
 
+    // console.log("Searching with searchstrign = ", searchString)
     fetchProjectSearch(searchString)
         .then((contentObjectArray) => {
             // console.log(contentObjectArray)

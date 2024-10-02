@@ -23,12 +23,15 @@ function initOverlay() : void{
 
     overlayContainer = document.createElement('div');
     overlayContainer.id = "age_overlayContainer"; 
+    overlayContainer.setAttribute("spellcheck","false");
     overlayContainer.addEventListener("click", extensionClickHandler);
     overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {
-        // console.log('load source event!', event.detail.contentObject);
         source.loadWithContentObject(event.detail.contentObject);
     });
-    overlayContainer.addEventListener("newsource", (event: CustomEvent) => {});
+    overlayContainer.addEventListener("newsource", (event: CustomEvent) => {
+        source.loadWithContentObject(event.detail.contentObject);
+        source.showSourceProperties(); // Make sure we go to the properties tab when crating a new source!
+    });
     overlayContainer.addEventListener("newproject", (event: CustomEvent) => {});
 
 

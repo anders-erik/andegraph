@@ -12,20 +12,62 @@
 
     color: rgb(255, 240, 240);
 
+    box-shadow: 0px 0px 0px 1px rgb(27, 27, 27);
+
     /* border: solid 1px #DDEEEE; */
     border-collapse: collapse;
     border-spacing: 0;
     font: normal 13px Arial, sans-serif;
 
+    cursor: default;
 }
 
+.age_table td:focus {
+    outline: solid white 1px;
+}
+
+/* [contenteditable] {
+    outline: none;
+} */
+
+.age_table tbody {
+    /* box-shadow: inset 0 0 0 1px white; */
+}
+
+.age_table tbody tr {
+    /* margin-top: 10px; */
+}
 
 /* All data cells  */
 .age_table thead tr th,
 .age_table tbody tr td {
-    background-color: #040b38;
+    /* background-color: #010311; */
     text-align: center;
+    margin: 10px;
 }
+
+/* Color table header rows */
+.age_table thead tr th {
+    background-color: #000000;
+}
+
+
+/* COLUMN COLORING */
+.age_table tbody tr td:nth-child(odd) {
+   background-color: #02021100;
+}
+.age_table tbody tr td:nth-child(even) {
+    background-color: #02021a00;
+}
+/* ROW COLORING */
+.age_table tbody tr:nth-child(odd) {
+    background-color: #010014;
+}
+
+.age_table tbody tr:nth-child(even) {
+    background-color: #000001;
+}
+
 
 /* First column of all tables */
 .age_table thead tr th:first-child,
@@ -38,27 +80,65 @@
     /* background-color: #272b2b; */
     /* border: solid 1px #DDEEEE; */
     /* color: #a7b3b3; */
-    padding: 6px;
+    border-bottom: solid rgb(36, 36, 36) 1px;
+    padding: 10px;
+    margin-bottom: 100px;
     text-align: left;
 }
 
 
 .age_table tbody tr:last-child {
-    border-bottom: solid 1px #dcf7f7fd;
+    /* border-bottom: solid 1px #dcf7f7fd; */
+   
 }
 
 
 .age_table tbody td {
-    border-top: solid 1px #dcf7f7fd;
-    /* color: white; */
+    /* border-top: solid 1px #dcf7f7fd; */
+    border-left: solid 1px #0b0b0bfd;
+    border-right: solid 1px #0b0b0bfd;
+    /* color: white; */ 
     padding: 6px 4px 6px 4px;
+    /* pointer-events: none; */
+    
 }
 
 
 .age_table td[contenteditable="true"] {
     background-color: rgb(3, 9, 48);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.709);
+    /* box-shadow: inset 0 0 0 1px rgba(16, 16, 16, 0.709); */
+    /* background: repeating-linear-gradient(-45deg, #00000061 0px, #0000006d 5px, #33333363 6px, #3333335f 11px, #00000065 12px); */
+    background: repeating-linear-gradient(to left top, rgba(98, 98, 98, 0.082), rgba(33, 33, 33, 0.082) 20px);
+    cursor: text;
 }
+
+
+/* 
+
+    SPECIFIC TABLES
+
+*/
+
+/* When targeting the folowing rows, I want to indicate "clickable" */
+.age_projectSearchRow td,
+.age_projchildTableRow td {
+    cursor: pointer;
+}
+
+
+
+/* SOURCE CHILD TABLE WIDTHS */
+/* FIRST COLUMN */
+#age_sourceChildTable thead tr th:first-child,
+#age_sourceChildTable tbody tr td:first-child {
+    width: 20%; max-width: 20%; min-width: 20%;
+}
+/* SECOND COLUMN */
+#age_sourceChildTable thead tr th:nth-child(2),
+#age_sourceChildTable tbody tr td:nth-child(2) {
+    width: 20%; max-width: 20%; min-width: 20%;
+}
+
 
 
 /* PROJECT CHILDREN TABLE */

@@ -8,6 +8,9 @@ let sidePanel: Element;
 
 let sourceTitleElement : HTMLElement;
 
+let sourceChildrenButton : HTMLElement;
+let sourcePropertiesButton : HTMLElement;
+
 let sourceContainer: Element;
 let sourceCss: HTMLElement;
 
@@ -30,7 +33,7 @@ export function initSourceContainer(_sidePanel: Element, _sourceMoreOptionsConte
 
     sourceContainer = document.createElement('div');
     sourceContainer.id = "age_sourceContainer";
-    sourceContainer.classList.add("age_panelContainer");
+    sourceContainer.classList.add("age_panelContainer", "collapsed");
     sourceContainer.addEventListener("click", clickedSourceContainer);
     // sourceContainer.addEventListener("focusout", sourcePropertyFocusedOut);
     sourceContainer.addEventListener("focusout", sourceFocusOut);
@@ -43,6 +46,9 @@ export function initSourceContainer(_sidePanel: Element, _sourceMoreOptionsConte
             sourceTitleElement = sourceContainer.querySelector("#age_sourceTitle");
             sourceChildrenTable = sourceContainer.querySelector("#age_sourceChildTable");
             sourcePropertiesTable = sourceContainer.querySelector("#age_sourcePropertiesTable");
+
+            sourceChildrenButton = sourceContainer.querySelector("#age_sourceSearchButton");
+            sourcePropertiesButton = sourceContainer.querySelector("#age_sourcePropertiesButton");
         })
 
     sourceCss = document.createElement("style");
@@ -159,8 +165,16 @@ function sourcePropertyFocusedOut(focusoutElement: HTMLElement){
         })
     // let projectContentObject = document.getElementById("age_projectPropertiesTable") as HTMLTableContentObject;
 
-    // console.log("sourceContentObject.contentObject = ", sourcePropertiesTable.contentObject);
+    currentSourceObject = sourcePropertiesTable.contentObject;
 
+    // Update Titles in the dom
+    let elementWithSameUuid = document.querySelectorAll(`[data-uuid='${currentSourceObject.Uuid}']`);
+    elementWithSameUuid.forEach((_element) => {
+        if(_element.classList.contains("age_element") && _element.id.includes("Title"))
+            _element.textContent = focusoutElement.textContent;
+        // console.log('elementWithSameUuid = ', _element);
+    })
+    
 }
 
 function clickedSourceContainer(event : MouseEvent){
@@ -181,6 +195,13 @@ function clickedSourceContainer(event : MouseEvent){
             break;
     }
 
+}
+
+export function showSourceChildren() {
+    sourceChildrenButton.click();
+}
+export function showSourceProperties(){
+    sourcePropertiesButton.click();
 }
 
 function toggleSourceTables(buttonID : string){

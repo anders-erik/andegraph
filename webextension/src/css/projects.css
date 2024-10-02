@@ -45,6 +45,8 @@
 #age_projectButtonContainer {
 	width: 100%;
 	height: 30px;
+	min-height: 30px;
+		max-height: 30px;
 
 	margin: 5px 0px 5px 0px;
 	/* margin: 0px; */
@@ -80,12 +82,16 @@
 	/* margin: 3px; */
 	/* padding: 3px; */
 	/* border-radius: 5px; */
-	background-color: rgb(0, 19, 38);
+	background-color: rgb(0, 14, 29);
 
 	transition: background-color 0.5s ease;
 
 }
+.age_projectButton.age_projectButtonOn {
+	background-color: rgb(0, 29, 57);
+	box-shadow: inset 0 0 0 2px rgba(240, 240, 240, 0.465);
 
+}
 
 #age_projectMoreOptions {
 	/* background-color: rgba(1, 84, 24, 0.738); */
@@ -113,11 +119,6 @@
 
 
 
-.age_projectButton.age_projectButtonOn {
-	background-color: rgb(1, 32, 63);
-	box-shadow: inset 0 0 0 2px rgba(240, 240, 240, 0.465);
-
-}
 
 
 .age_projectButton:hover {

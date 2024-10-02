@@ -1,5 +1,6 @@
 import * as fetcher from "./fetcher";
 import * as source from "./source/source";
+import * as project from "./projects/projects";
 import { age_dbis } from "./dbi-send";
 
 let sidePanel: Element;
@@ -47,7 +48,7 @@ export function initClipboard(_sidePanel: Element) {
 
 	clipboardContainer = document.createElement('div');
 	clipboardContainer.id = "age_clipboardContainer";
-	clipboardContainer.classList.add("age_panelContainer");
+	clipboardContainer.classList.add("age_panelContainer", "collapsed");
 
 
 
@@ -432,14 +433,19 @@ function determineBaseFileName(selectedFile: File) {
 async function postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(textType : string, TextContent : string) {
 
 	let sourceObject: any = source.getCurrentSourceObject();
+	if(sourceObject == undefined){
+		console.warn("Unable to post new text object. No selected sourceObject.")
+		return;
+	}
+	
 	// let sourceUuid = sourceObject.Uuid;
 	// let sourceUuid = source.getCurrentSourceUuid();
 
 	// let sourceObject: any = source.currentSourceObject;
 	let sourceUuid = sourceObject.Uuid;
 
-	console.log('postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren()');
-	console.log('sourceUuid = ', sourceUuid);
+	// console.log('postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren()');
+	// console.log('sourceUuid = ', sourceUuid);
 	
 	
 
@@ -477,6 +483,11 @@ async function postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(Typ
 	let sourceObject: any = source.getCurrentSourceObject();
 	let sourceUuid = sourceObject.Uuid;
 
+	if (sourceObject == undefined) {
+		console.warn("Unable to post new code object. No selected sourceObject.")
+		return;
+	}
+
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (sourceUuid !== undefined) {
 
@@ -504,7 +515,12 @@ async function postNewFileToCurrentSourceAndFullReloadOfSourceChildren(file : Fi
 	let sourceObject: any = source.getCurrentSourceObject();
 	let sourceUuid = sourceObject.Uuid;
 
-	console.log(sourceUuid)
+	if (sourceObject == undefined) {
+		console.warn("Unable to post new file. No selected sourceObject.")
+		return;
+	}
+
+	// console.log(sourceUuid)
 
 	// Content_InsertChildUuidTable(Uuid, childTable)
 	if (sourceUuid !== undefined) {
@@ -553,6 +569,7 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 
 	if (keyEvent.key === 'Escape') {
 		stopClipboardTextConcatenation();
+		document.getElementById("age_clipboardContainer").classList.add("collapsed");
 	}
 
 
@@ -563,6 +580,18 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 			case 'p':
 				// console.log('Alt + p')
 				console.log("textConcatenationContent = ", textConcatenationContent);
+				break;
+
+			case 'r': // new source
+				project.reloadCurrentProject();
+				break;
+
+			case 'n': // new source
+				project.insertNewSourceToActiveProject();
+				break;
+
+			case 'm': // new source
+				project.toggleExtensionLocation();
 				break;
 
 			case 'x':
@@ -580,7 +609,7 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 			case '[':
 				// console.log('Alt + [')
 				startClipboardTextConcatenation();
-
+				document.getElementById("age_clipboardContainer").classList.remove("collapsed");
 				break;
 
 			case 'Enter':
@@ -593,8 +622,12 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 				addSpaceCharacterToCaptureConcatenationContents();
 				break;
 
-			case ']':
+			case ']': 
 				// console.log('Alt + ]')
+				
+				stopClipboardTextConcatenation();
+				document.getElementById("age_clipboardContainer").classList.add("collapsed"); 
+
 				if (clipboardCodeCheckbox.checked) {
 					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, textConcatenationContent)
 				}
@@ -602,7 +635,7 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 					await postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, textConcatenationContent);
 				}
 
-				stopClipboardTextConcatenation();
+				
 				break;
 
 			default:

@@ -20,9 +20,9 @@
 
 
 	margin: 3px;
-	border-radius: 5px;
+	border-radius: 2px;
 
-	border: solid rgba(67, 53, 53, 0.599) 1px;
+	/* border: solid rgba(67, 53, 53, 0.599) 1px; */
 	background-color: rgba(7, 24, 39, 0.27);
 
 	display: flex;

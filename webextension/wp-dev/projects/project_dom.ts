@@ -167,7 +167,7 @@ export function populateProjectSearchTable(projectSearchTable : any, projectObje
         tr.nodeObject = childObject;
         // tr.dataset.Node = 1;
         // tr.dataset.Uuid = childObject.Uuid;
-        tr.setAttribute('data-Node', '1');
+        // tr.setAttribute('data-Node', '1');
         tr.setAttribute('data-Uuid', childObject.Uuid);
         // tr.tabIndex = 0;
         tr.innerHTML = tableRowHtml;
