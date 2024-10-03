@@ -1,4 +1,4 @@
-const { getDb } = require('../../db/Db-v0.2.js');
+const { getDb } = require('../../db/Db.js');
 const { dbNodeEdgesToObjects } = require('../utils/dbNodeEdgeToObject.js');
 let db = getDb();
 

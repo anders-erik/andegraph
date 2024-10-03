@@ -220,8 +220,9 @@ function projectPropertyFocusOut(event: FocusEvent): void {
     // Update Titles in the search
     let elementWithSameUuid = document.querySelectorAll(`[data-uuid='${currentProjectObject.Uuid}']`);
     elementWithSameUuid.forEach((_element) => {
-        if (_element.classList.contains("age_element") && _element.classList.contains("age_projectRowSearchData"))
-            _element.textContent = dataElement.textContent;
+        if (_element.classList.contains("age_element") && _element.classList.contains("age_projectSearchRow")){
+            // _element.children[1].textContent = dataElement.textContent; // update the second search column; edit: doesn't work...
+        }
     })
 }
 
@@ -287,6 +288,9 @@ export async function insertNewSourceToActiveProject(){
     _newSourceObject.Url = window.location.href;
     _newSourceObject.Title = document.title;
     _newSourceObject = await age_dbis.Content_UpdateWithContentObject(_newSourceObject);
+
+    // Insert new Schedule
+    await age_dbis.Review_InsertScheduleOnUuid(_newSourceObject.Uuid, "");
 
     // SEND NEW SOURCE MESSAGE
     let newsourceEvent = new CustomEvent("newsource", {

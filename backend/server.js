@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 
 
 // VERSION 0.2
-const { db, initDB, dbTeardown } = require('./db/Db-v0.2.js');
+const { db, initDB, dbTeardown } = require('./db/Db.js');
 let dbir;
 
 

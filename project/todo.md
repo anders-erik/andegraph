@@ -24,6 +24,11 @@
 <br>
 <br>
 
+## v0.3.2
+### GOALS
+- database table containing simple snapshots of db prameters (tables, table rows, etc.)
+
+
 ## v0.3.1
 ### GOALS
 - |o| webextension	
@@ -36,7 +41,7 @@
 	- maybe also for test-data for database/api testing!
 	- should include multiple types of shard types (text, code, image, video, audio, etc.)
 - database scripts
-	- extract 3 good parameters giving a sense of integrity/size/structure
+	- |o| extract 3 good parameters giving a sense of integrity/size/structure
 	- add one new column in one content table for practice
 
 ### Week 40 (ISO)

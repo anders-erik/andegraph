@@ -7,7 +7,7 @@ let dbi = require('../db-interface/DbInterface');
 const { log } = require('console');
 const { query } = require('express');
 
-let fileDir = `/data/live/files-v0.3.0/`;
+let fileDir = `/data/live/files/`;
 
 if (!fs.existsSync(fileDir)) {
 	cp.execSync(`mkdir ${fileDir}`);

@@ -25,6 +25,8 @@ function initOverlay() : void{
     overlayContainer.id = "age_overlayContainer"; 
     overlayContainer.setAttribute("spellcheck","false");
     overlayContainer.addEventListener("click", extensionClickHandler);
+    overlayContainer.addEventListener("focusin", overlayFocusin);
+
     overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {
         source.loadWithContentObject(event.detail.contentObject);
     });
@@ -66,6 +68,14 @@ function initOverlay() : void{
 }
 
 
+// make sure that empty element are populated with default editable elements
+function overlayFocusin(event: FocusEvent): void {
+    let eventTarget = event.target as HTMLElement;
+
+    if (eventTarget.isContentEditable && eventTarget.textContent == "") {
+        // eventTarget.innerHTML = "<div></div><br>"; // not working.. Maybe if I have text not centered in elmeent..
+    }
+}
 
 function extensionClickHandler(event : MouseEvent){
 
