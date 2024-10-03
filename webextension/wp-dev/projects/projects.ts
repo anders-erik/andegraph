@@ -182,6 +182,8 @@ function projectPropertyFocusOut(event: FocusEvent): void {
             break;
 
         default:
+            // Return! Else elements will be updated with garbage value when e.g. exiting search input
+            return;
             break;
     }
 
@@ -493,7 +495,7 @@ function performSearch(){
 function showProjectTable(buttonId : string){
     // age_projectButtonOn
 
-    // Search box
+    // Search box 
     let searchBox = document.getElementById("age_projectSearchInput");
     searchBox.classList.add("age_displayNone");
 

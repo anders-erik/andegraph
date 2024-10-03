@@ -1,12 +1,39 @@
 
 
-let age_apiUrl = 'http://localhost:3000/api/v02';
+// let age_apiUrl = 'http://localhost:3000/api/v02';
+let age_apiUrl = "";
 
-export function test() : void {
 
-	console.log("Loaded dbi-send.ts")
+// export function test() : void {
+
+// 	console.log("Loaded dbi-send.ts")
 	
+// }
+
+// ALWAYS START OUT BY GRABBING THE API BASE URL
+(()=>{
+	
+	setApiUrl().then(() => {
+		console.log('Loaded dbi-send.ts');
+	});
+	
+})();
+
+/**
+ * 	Grabs the base url string from the local webextension storage. 
+ */
+export async function setApiUrl(){
+	browser.storage.local.get("apiBaseString").then((object) => {
+		age_apiUrl = object.apiBaseString;
+		console.log("Loaded API BASE STRING")
+		console.log("object.apiBaseString = ", object.apiBaseString);
+	}, onLocalStorageError);
 }
+function onLocalStorageError(error: Error) {
+	console.error(error);
+}
+
+
 
 browser.runtime.onMessage.addListener((request) : Promise<any> => {
 	console.log("Message recieved in dbi-send.ts!");

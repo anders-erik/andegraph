@@ -2,10 +2,10 @@
 	"description": "Provides full context andegraph graph-interaction. Primary purpose is sourcing and sharding. ",
 	"manifest_version": 2,
 	"name": "Andegraph",
-	"version": "0.3.0",
-	"homepage_url": "https://github.com/anders-erik/sources",
+	"version": "0.3.1",
+	"homepage_url": "https://github.com/anders-erik/andegraph",
 	"icons": {
-		"48": "icons/andegraph-48.png"
+		"48": "icons/andegraph-network-48.png"
 	},
 	"permissions": [
 		"<all_urls>",
@@ -16,15 +16,15 @@
 		"storage"
 	],
 	"browser_action": {
-		"default_icon": "icons/andegraph-32.png",
+		"default_icon": "icons/andegraph-network-32.png",
 		"theme_icons": [
 			{
-				"light": "icons/andegraph-32-light.png",
-				"dark": "icons/andegraph-32.png",
+				"light": "icons/andegraph-network-32-light.png",
+				"dark": "icons/andegraph-32-dark.png",
 				"size": 32
 			}
 		],
-		"default_title": "sources",
+		"default_title": "Andegraph",
 		"default_popup": "popup/popup.html"
 	},
 	"web_accessible_resources": [
@@ -37,9 +37,7 @@
 				"<all_urls>"
 			],
 			"js": [
-				"content_scripts/ContentMessages.js",
-				"overlay-dist/dist.js",
-				"overlay-dist/wp-build.js"
+				"content_scripts/overlay-webpack.js"
 			]
 		}
 	],
@@ -49,12 +47,6 @@
 		]
 	},
 	"commands": {
-		"activate_extension": {
-			"suggested_key": {
-				"default": "Alt+M"
-			},
-			"description": "Activate Your Extension"
-		},
 		"active": {
 			"suggested_key": {
 				"default": "Alt+A"

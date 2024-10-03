@@ -1,3 +1,4 @@
+// OLD WEBEXTENSION!
 
 // LISTEN FOR MESSAGES
 browser.runtime.onMessage.addListener((message) => {

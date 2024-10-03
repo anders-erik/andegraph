@@ -16,6 +16,9 @@
 	- api with one command (mars)
 	- deployment
 	- database example
+- webextension 
+	- needs to dynamically find current sources and their project from url
+	- esc/enter when finished writing a contenteditable
 
 
 <br>
@@ -23,17 +26,21 @@
 
 ## v0.3.1
 ### GOALS
-- webextension is targeting the correct server...
+- |o| webextension is targeting the correct server...
 - |o| important keyboard shortcut panel
 
 ### Week 40 (ISO)
 - v0.3.1
-- webextension refactoring
-	- get a functiong viable webextension
-		- refactored, but same functionality
-		- the api location can be changed and persists
+- |o| webextension refactoring
+	- |o| get a functiong viable webextension
+		- |o| refactored, but same functionality
+		- |o| the api location can be changed and persists
 - database scripts
 - a working review-page
+
+#### 2024-10-03
+- persist changes of api-url
+- 
 
 ### Week 39 (ISO)
 - Webextension refactoring

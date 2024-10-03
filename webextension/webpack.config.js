@@ -28,9 +28,9 @@ module.exports = {
   },
 
   output: {
-    filename: 'wp-build.js',
+    filename: 'overlay-webpack.js',
     // path: path.resolve(__dirname, 'wp-build/'),
-    path: path.resolve(__dirname, 'src/overlay-dist'),
+    path: path.resolve(__dirname, 'src/content_scripts'),
   },
 
 };

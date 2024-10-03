@@ -577,12 +577,11 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 	if (keyEvent.altKey) {
 
 		switch (keyEvent.key) {
-			case 'p':
-				// console.log('Alt + p')
+			case 'p': // prints the current rpojject object
 				console.log("textConcatenationContent = ", textConcatenationContent);
 				break;
 
-			case 'r': // new source
+			case 'r': // refresh project data
 				project.reloadCurrentProject();
 				break;
 
@@ -590,8 +589,12 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 				project.insertNewSourceToActiveProject();
 				break;
 
-			case 'm': // new source
+			case 'm': // move
 				project.toggleExtensionLocation();
+				break;
+
+			case '/': // go to search
+				document.getElementById("age_projectSearchInput").focus();
 				break;
 
 			case 'x':
@@ -611,7 +614,7 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 				startClipboardTextConcatenation();
 				document.getElementById("age_clipboardContainer").classList.remove("collapsed");
 				break;
-
+ 
 			case 'Enter':
 				// console.log('Alt + Enter')
 				addNewLineToCaptureConcatenationContents()
@@ -619,14 +622,11 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 
 			case '-':
 				// console.log('Alt + Enter')
-				addSpaceCharacterToCaptureConcatenationContents();
+				addSpaceCharacterToCaptureConcatenationContents(); 
 				break;
 
 			case ']': 
 				// console.log('Alt + ]')
-				
-				stopClipboardTextConcatenation();
-				document.getElementById("age_clipboardContainer").classList.add("collapsed"); 
 
 				if (clipboardCodeCheckbox.checked) {
 					await postNewCodeObjectToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, textConcatenationContent)
@@ -635,6 +635,8 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 					await postNewTextNodeToCurrentSourceAndFullReloadOfSourceChildren(clipboardTextTypeInput.value, textConcatenationContent);
 				}
 
+				document.getElementById("age_clipboardContainer").classList.add("collapsed"); 
+				stopClipboardTextConcatenation();
 				
 				break;
 

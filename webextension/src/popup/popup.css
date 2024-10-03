@@ -2,6 +2,16 @@ html, body {
   width: 300px;
   height: 220px;
   overflow-y: hidden;
+  background-color: #d2d2d2;
+}
+
+#popup-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  gap: 5px;
 }
 
 .hidden {
@@ -14,12 +24,18 @@ input {
 label {
   font-size: small;
 }
+#api-base-label {
+  width: 90%;
+  padding: 5px;
+  background-color: #bebdbd;
+}
 
 button {
-  border: none;
-  width: 100%;
-  margin: 3% auto;
-  padding: 4px;
+  border: solid rgb(120, 120, 120) 1px;
+  border-radius: 5px;
+  width: 90%;
+  padding: 6px;
+  margin: 4px;
   text-align: center;
   font-size: 1em;
   cursor: pointer;
@@ -27,13 +43,6 @@ button {
 }
 
 button:hover {
-  background-color: #CFF2F2;
-}
-
-button[type="reset"] {
-  background-color: #FBFBC9;
-}
-
-button[type="reset"]:hover {
-  background-color: #EAEA9D;
+  /* background-color: #88e2e2; */
+  box-shadow: 0 0 0 1px black;
 }
