@@ -6,6 +6,7 @@
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
     "backend-log": "./scripts/backend-log.sh",
+    "zip-webextension": "./scripts/zip-webextension.sh",
     "ext-attach": "./webextension/scripts/dev.sh",
     "ext-build-custom-watch": "node ./webextension/build.js",
     "ext-build-wp-tsc": "npx webpack --config webextension/webpack.config.js",

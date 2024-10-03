@@ -26,8 +26,18 @@
 
 ## v0.3.1
 ### GOALS
-- |o| webextension is targeting the correct server...
+- |o| webextension	
+	- |o| refactored using webpack and ts
+	- |o| is targeting the correct server...
 - |o| important keyboard shortcut panel
+- decide on two test sources!
+	- USE SOMETHING I WANT TO LEARN!
+	- will be used for testing webextension and review
+	- maybe also for test-data for database/api testing!
+	- should include multiple types of shard types (text, code, image, video, audio, etc.)
+- database scripts
+	- extract 3 good parameters giving a sense of integrity/size/structure
+	- add one new column in one content table for practice
 
 ### Week 40 (ISO)
 - v0.3.1

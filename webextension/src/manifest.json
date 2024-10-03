@@ -16,11 +16,11 @@
 		"storage"
 	],
 	"browser_action": {
-		"default_icon": "icons/andegraph-network-32.png",
+		"default_icon": "icons/andegraph-network-32-light.png",
 		"theme_icons": [
 			{
 				"light": "icons/andegraph-network-32-light.png",
-				"dark": "icons/andegraph-32-dark.png",
+				"dark": "icons/andegraph-network-32-dark.png",
 				"size": 32
 			}
 		],
