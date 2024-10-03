@@ -1,0 +1,7 @@
+
+# Bugs:
+
+## v0.3.1
+- when chainging the project title, the extension-wide update function will change non-title fields!
+- when entering an EMPTY content editable field, the cursor is moved to the top-right. I probably need to insert <div><br></div>
+- 

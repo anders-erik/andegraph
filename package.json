@@ -7,12 +7,13 @@
     "backend-down": "docker compose down",
     "backend-log": "./scripts/backend-log.sh",
     "zip-webextension": "./scripts/zip-webextension.sh",
+    "ext-build-wp-tsc": "npx webpack --config webextension/webpack.config.js",
     "ext-attach": "./webextension/scripts/dev.sh",
     "ext-build-custom-watch": "node ./webextension/build.js",
-    "ext-build-wp-tsc": "npx webpack --config webextension/webpack.config.js",
     "ext-build-wp-tsc-watch": "npx webpack --watch --config webextension/webpack.config.js",
     "dev": "nodemon -L backend/server.js -w backend/",
-    "backup": "./data/utils/backup.sh"
+    "data-analyze": "./data/scripts/live-db-info.sh",
+    "data-backup": "./data/scripts/backup.sh"
   },
   "dependencies": {
     "express": "^4.18.2",
