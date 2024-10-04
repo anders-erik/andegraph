@@ -9,20 +9,20 @@ const frontendPath = "/app/frontend";
 
 app.use(express.json());
 
-// https://stackoverflow.com/questions/10434001/static-files-with-express-js
-// console.log(__dirname +'/static', __dirname);
+
+
+/* 
+    Used for unencrypted dev. For proper static delivery use the provided nginx-server.
+    Only called during new index.html fetches. Once app is loaded, updates are done using api-data only.
+*/
 app.use(express.static(frontendPath));
-
 app.use('/', express.static(frontendPath));
-
 app.use('/content/*', express.static(frontendPath));
 // Reserved for only the correct type
 app.use('/source/*', express.static(frontendPath));
 app.use('/review/*', express.static(frontendPath));
 app.use('/file/*', express.static(frontendPath));
-
 app.use('/scroll*', express.static(frontendPath));
-
 app.use('/development*', express.static(frontendPath));
 
 
@@ -49,13 +49,11 @@ app.use((req, res, next) => {
 });
 
 
-// VERSION 0.2
+/* 
+    Use and init database
+*/
 const { db, initDB, dbTeardown } = require('./db/Db.js');
 let dbir;
-
-
-
-// await initDB();
 
 initDB().then((x) => {
     console.log('Connection to db was successful')
@@ -73,7 +71,9 @@ initDB().then((x) => {
 
 
 
-
+/* 
+    Run db-tests after init
+*/
 async function dbTest() {
 
 
@@ -92,7 +92,7 @@ async function dbTest() {
     //console.table(await queries.Node_SelectChildOfUuid(372));
 
 
-
+ 
     // await tests.runCodeCrud();
     // await tests.runEdgeCrud();
     // await tests.runEquationCrud();

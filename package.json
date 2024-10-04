@@ -5,7 +5,9 @@
   "scripts": {
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
+    "backend-reload": "docker compose down && docker compose up -d",
     "backend-log": "./scripts/backend-log.sh",
+    "nginx-gen-certs": "./nginx/gen-certs.sh",
     "zip-webextension": "./scripts/zip-webextension.sh",
     "ext-build-wp-tsc": "npx webpack --config webextension/webpack.config.js",
     "ext-attach": "./webextension/scripts/dev.sh",

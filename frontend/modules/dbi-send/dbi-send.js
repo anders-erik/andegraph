@@ -2,7 +2,9 @@
 
 // const apiBaseUrl = 'http://localhost:3000';
 // const basePath = '/api/v02'
-const apiUrl = 'http://localhost:3000/api/v02';
+
+// const apiUrl = 'http://localhost:3000/api/v02';
+const apiUrl = '/api/v02';
 
 
 

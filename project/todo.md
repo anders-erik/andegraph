@@ -5,6 +5,7 @@
 ### GOALS:
 - data overview dashboard
 - reviewable on ipad
+	- https using proxy nginx
 - solution to lack of project types
 - all tables/types have functional app pages
 - download source / content
@@ -17,7 +18,7 @@
 	- deployment
 	- database example
 - webextension 
-	- needs to dynamically find current sources and their project from url
+	- needs to dynamically find current sources and their project from currently visited url
 	- esc/enter when finished writing a contenteditable
 
 
@@ -27,19 +28,51 @@
 ## v0.3.2
 ### GOALS
 - database table containing simple snapshots of db prameters (tables, table rows, etc.)
+- decide on three test sources!
+	- USE SOMETHING I WANT TO LEARN!
+	- will be used for testing webextension and review
+		- good way of getting comfortable with extension and changes
+	- maybe also for test-data for database/api testing!
+		- good automatically test api
+			- I should have a few persistent pre-made db/files in the source code for this purpose
+	- should include multiple types of shard types (text, code, image, video, audio, etc.)
+- add new meta-table in db
+	- each column is name of the other tables in the db (Project, Code, etc.)
+		- each row is number of rows in the respective table
+		- auto generate a new mata-row every day
+- Identify two improvements to the review page, and implement
+	- What those are can only be decided after a few days of testing
+	1. need active toggle to display card content!
+	2. new context menu that can be toggled to show undirected shards/objects for review item - comments, thoughts, etc. 
+- save source as one unit, ideally as flashcards?
+	- pdf?
+	- html?
+	- markdown?
+	- open office format?
+	- anki?
+- add drawing functionality
+- project types (1, 2, 3, 4, etc.)
+- add symlink directory structure
+	- projects are directories
+		- 1 are top level, type 2 is contained within a level 1, etc.
+	- sources are directories in a project
+
+### 2024-10-04
+- |o| get apache reverse proxy working
+	- |o| replace the nginx
+	- |o| generate SSL certificate
+- add better-sqlite3 and refactor database tests
 
 
-## v0.3.1
+
+<br><br><br>
+
+## v0.3.1 - DEPLOYED ON 2024-10-03
 ### GOALS
 - |o| webextension	
 	- |o| refactored using webpack and ts
 	- |o| is targeting the correct server...
 - |o| important keyboard shortcut panel
-- decide on two test sources!
-	- USE SOMETHING I WANT TO LEARN!
-	- will be used for testing webextension and review
-	- maybe also for test-data for database/api testing!
-	- should include multiple types of shard types (text, code, image, video, audio, etc.)
 - database scripts
 	- |o| extract 3 good parameters giving a sense of integrity/size/structure
 	- add one new column in one content table for practice

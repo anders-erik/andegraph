@@ -7,3 +7,4 @@ node_modules
 /data/backups/db/*
 /data/backups/sql/*
 
+nginx/certs/
