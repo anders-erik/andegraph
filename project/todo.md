@@ -20,6 +20,20 @@
 - webextension 
 	- needs to dynamically find current sources and their project from currently visited url
 	- esc/enter when finished writing a contenteditable
+	- Be able to delete sources/projects
+	- make sure shortcuts are language-agnostic
+	- automatically add source-type on new sources
+		- e.g. youtube, pdf, svt, reddit, etc.
+	- I need to be able to capture audio and video to clipboard on supported platforms!
+	- need to be able to write text to back of card!
+- Bulk move sources to other project!
+- Provide the user with shortcuts from media capture on all platforms
+	- Starting with only Ubuntu 22.04
+	- capture dircetly to clipboard!
+	- Media types:
+		- Screenshot
+		- screen video
+		- audio : select from available audio sources
 
 
 <br>
@@ -57,6 +71,8 @@
 		- 1 are top level, type 2 is contained within a level 1, etc.
 	- sources are directories in a project
 
+### 2024-10-05
+- add better-sqlite3 and begin refactor of dbi
 ### 2024-10-04
 - |o| get apache reverse proxy working
 	- |o| replace the nginx

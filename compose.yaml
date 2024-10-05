@@ -16,13 +16,15 @@ services:
       - "app"
     depends_on:
       - app
-      
+
   app:
     image: node:18-alpine
     command: sh -c "npm install && npm run dev"
     ports:
       - 0.0.0.0:3000:3000
     working_dir: /app
+    environment:
+      - NODE_ENV=production
     networks:
       - app_network
     volumes:
