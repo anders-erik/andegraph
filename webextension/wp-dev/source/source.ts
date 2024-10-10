@@ -14,7 +14,7 @@ let sourcePropertiesButton : HTMLElement;
 let sourceContainer: Element;
 let sourceCss: HTMLElement;
 
-let sourceChildrenTable: HTMLTableElement;
+let sourceChildrenTable: HTMLTableElement; 
 let projectContentEdgeChildren: any;
 
 let sourcePropertiesTable: HTMLTableContentObject;

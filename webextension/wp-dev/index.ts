@@ -8,9 +8,14 @@ let extensionStateFront ={
 
 // Set up modules and fetch data, but does not render anything
 (function init() {
+    // DEV DEV
+    // Make sure any existing overlays are removed
+    if (document.getElementById("age_overlayContainer") !== null)
+        window.location.reload(); 
+    
     overlay.initOverlay();  
 })();
-
+ 
 
 
 /* 

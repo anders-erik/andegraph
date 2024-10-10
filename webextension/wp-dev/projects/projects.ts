@@ -238,7 +238,11 @@ async function clickedProjectContextMenu(event: MouseEvent){
             break;
         case "refreshExtension":
             console.warn("'refreshExtension' NOT FULLY IMPLEMENTED ! ONLY PROJECT IS REFRESHED");
-            reloadCurrentProject();
+            // reloadCurrentProject();
+            let newsourceEvent = new CustomEvent("refreshextension", {
+                bubbles: true,
+            });
+            projectContainer.dispatchEvent(newsourceEvent);
             break;
         case "printCurrentProject":
             console.log(currentProjectObject);
@@ -272,7 +276,7 @@ export function toggleExtensionLocation(){
 
 
 /**
- * Add new child-source, fires off the loadsource CutomEvent, and then reloads the project child table.
+ * Add new child-source, fires off the loadsource CustomEvent, and then reloads the project child table.
  */
 export async function insertNewSourceToActiveProject(){
 

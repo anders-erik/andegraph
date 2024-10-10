@@ -3,6 +3,8 @@
   "version": "0.2.3",
   "main": "./src/index.js",
   "scripts": {
+    "dev": "nodemon -L backend/server.js -w backend/",
+    "prod": "node backend/server.js",
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
     "backend-reload": "docker compose down && docker compose up -d",
@@ -13,7 +15,6 @@
     "ext-attach": "./webextension/scripts/dev.sh",
     "ext-build-custom-watch": "node ./webextension/build.js",
     "ext-build-wp-tsc-watch": "npx webpack --watch --config webextension/webpack.config.js",
-    "dev": "nodemon -L backend/server.js -w backend/",
     "data-analyze": "./data/scripts/live-db-info.sh",
     "data-backup": "./data/scripts/backup.sh"
   },

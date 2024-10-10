@@ -53,6 +53,7 @@ app.use((req, res, next) => {
     Use and init database
 */
 const { db, initDB, dbTeardown } = require('./db/Db.js');
+const { log } = require("console");
 let dbir;
 
 initDB().then((x) => {

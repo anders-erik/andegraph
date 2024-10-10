@@ -41,6 +41,7 @@
 
 ## v0.3.2
 ### GOALS
+- resolve multiple webextension problems
 - database table containing simple snapshots of db prameters (tables, table rows, etc.)
 - decide on three test sources!
 	- USE SOMETHING I WANT TO LEARN!
@@ -68,7 +69,7 @@
 - project types (1, 2, 3, 4, etc.)
 - add symlink directory structure
 	- projects are directories
-		- 1 are top level, type 2 is contained within a level 1, etc.
+		- 1 are top level, type 2 is contained within a level 1, etc. 
 	- sources are directories in a project
 
 ### 2024-10-05

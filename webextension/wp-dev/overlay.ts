@@ -19,13 +19,27 @@ let sidePanel: Element;
 
 
 function initOverlay() : void{
-    console.log('OVERLAY TS INIT');
+    console.log('OVERLAY TS INIT'); 
 
     overlayContainer = document.createElement('div');
     overlayContainer.id = "age_overlayContainer"; 
     overlayContainer.setAttribute("spellcheck","false");
+
     overlayContainer.addEventListener("click", extensionClickHandler);
     overlayContainer.addEventListener("focusin", overlayFocusin);
+
+    // Prevents keystrokes on certain websites from registring when writing in the overlay - tested on youtube shorts - space not working on regular youtube
+    // Maybe a bit too much to have listening at all times! BUT I simply need this to work for now..
+    overlayContainer.addEventListener("keydown", contentEditableStopPropagation, false);
+    overlayContainer.addEventListener("keyup", contentEditableStopPropagation, false);
+    overlayContainer.addEventListener("keypress", contentEditableStopPropagation, false);
+    function contentEditableStopPropagation(keyevent: KeyboardEvent) {
+        let activeElement = document.activeElement as HTMLElement;
+        if (activeElement.isContentEditable) {
+            keyevent.stopPropagation();
+        }
+    }
+    
 
     overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {
         source.loadWithContentObject(event.detail.contentObject);
@@ -34,7 +48,12 @@ function initOverlay() : void{
         source.loadWithContentObject(event.detail.contentObject);
         source.showSourceProperties(); // Make sure we go to the properties tab when crating a new source!
     });
+
     overlayContainer.addEventListener("newproject", (event: CustomEvent) => {});
+    overlayContainer.addEventListener("refreshextension", (event: CustomEvent) => {
+        console.log("Refresh extension");
+        projects.reloadCurrentProject();
+    });
 
 
     fetcher.fetchHtml("overlay.html")

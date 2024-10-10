@@ -9,9 +9,10 @@
 - search input is loosing padding on some webistes [youtube, developer.mozilla.org, svt, ]
 - completely breaks on example.org
     - example.org has a non-full-screen document+body!
-- prevent default/proagation when seraching
-    - e.g. youtube is being muted when pressing 'm', paused (and not entering the extension!!) with space, etc.
-- using Swedish keyboard breaks many shortcuts
-    - make shortcuts using keycodes, not chars!
-- Pasting text to contenteditable creates a new source-child! Yikes !!
+- |o| prevent default/propagation when searching
+    - |o| e.g. youtube is being muted when pressing 'm', paused (and not entering the extension!!) with space, etc.
+- |o| using Swedish keyboard breaks many shortcuts
+    - |o| make shortcuts using keycodes, not chars!
+- |o| Pasting text to contenteditable creates a new source-child! Yikes !!
+- search text overflow
 

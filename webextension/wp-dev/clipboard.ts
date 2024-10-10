@@ -173,7 +173,11 @@ async function pasteEvent(event : ClipboardEvent) {
 	// console.log(event.clipboardData.files[0])
 
 
-	
+	let activeElement = document.activeElement as HTMLElement;
+	if (activeElement.isContentEditable) {
+		// console.log("ContentEditable. No new shard!")
+		return;
+	}
 
 
 	let clipboardContentType = determineClipboardContentType(event.clipboardData);
@@ -573,31 +577,39 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 	}
 
 
-
+	// document.addEventListener("keydown", (event) => { console.log(event.code) }) 
 	if (keyEvent.altKey) {
 
-		switch (keyEvent.key) {
-			case 'p': // prints the current rpojject object
-				console.log("textConcatenationContent = ", textConcatenationContent);
+		// Switched to .code to enable extension on swedish keyboard
+		switch (keyEvent.code) {
+			case "KeyP": // 'p' = prints the current project object
+				// NOT WORKING YET! UNABLE TO GET THE TYPING CORRECT
+
+				// console.log("textConcatenationContent = ", textConcatenationContent);
+				// let projectObject = document.getElementById("age_projectPropertiesTable");
+				// console.log('projectObject = ', projectObject);
+
+				
 				break;
 
-			case 'r': // refresh project data
+			case "KeyR": // 'r' = refresh project data
 				project.reloadCurrentProject();
 				break;
 
-			case 'n': // new source
+			case "KeyN": // 'n' = new source
 				project.insertNewSourceToActiveProject();
 				break;
 
-			case 'm': // move
+			case "KeyM": // 'm' = move
 				project.toggleExtensionLocation();
 				break;
 
-			case '/': // go to search
+			case "Slash": // '/' = go to search
+				document.getElementById("age_projectSearchButton").click()
 				document.getElementById("age_projectSearchInput").focus();
 				break;
 
-			case 'x':
+			case "KeyX": // 'x' = toggle text/code
 				// console.log('Alt + x')
 				let checked = clipboardCodeCheckbox.checked;
 				if (checked) {
@@ -609,23 +621,23 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 				toggleSelectCode();
 				break;
 
-			case '[':
+			case "BracketLeft": // '[' = start text capturing
 				// console.log('Alt + [')
 				startClipboardTextConcatenation();
 				document.getElementById("age_clipboardContainer").classList.remove("collapsed");
 				break;
  
-			case 'Enter':
+			case "Enter": // 'Enter' = add new line
 				// console.log('Alt + Enter')
 				addNewLineToCaptureConcatenationContents()
 				break;
 
-			case '-':
+			case "Minus": // '-' = add new space
 				// console.log('Alt + Enter')
 				addSpaceCharacterToCaptureConcatenationContents(); 
 				break;
 
-			case ']': 
+			case "BracketRight": // ']' = stop conactenating and send to backend
 				// console.log('Alt + ]')
 
 				if (clipboardCodeCheckbox.checked) {

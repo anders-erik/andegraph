@@ -2,7 +2,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: sources_nginx
+    container_name: ag_nginx
     ports:
       - "8080:8080"
       - "4443:4443"
@@ -19,12 +19,13 @@ services:
 
   app:
     image: node:18-alpine
+    container_name: ag_node
     command: sh -c "npm install && npm run dev"
     ports:
       - 0.0.0.0:3000:3000
     working_dir: /app
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=
     networks:
       - app_network
     volumes:

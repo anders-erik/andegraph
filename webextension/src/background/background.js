@@ -13,20 +13,18 @@ console.clear()
 
 
 // DEV : MAKE SURE THAT THE EXTENSION IS TURNED ON ON REALOD!
-// browser.tabs.query({ active: true, currentWindow: true })
-// 	.then((_tabs) => {
+browser.tabs.query({ active: true, currentWindow: true })
+	.then((_tabs) => {
 
-// 		let _activeTabId = _tabs[0].id;
+		let _activeTabId = _tabs[0].id;
  
-// 		console.log('Toggle current tab!  id:', _activeTabId);
+		console.log('Toggle current tab!  id:', _activeTabId);
 		
-// 		// Make sure the message is recieved to toggle the extension!
-// 		// 200ms ~ 50/50
-// 		// 300ms ~ 100/0
-// 		setTimeout(() => {
-// 			sendToggleExtensionMessageToTabId(_activeTabId)
-// 		}, 400);
-// 	})
+		// Add delay to make sure the message is recieved to toggle the extension!
+		setTimeout(() => {
+			sendToggleExtensionMessageToTabId(_activeTabId)
+		}, 500);
+	})
 
 
 	
