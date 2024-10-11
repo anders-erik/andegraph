@@ -2,7 +2,7 @@ import * as fetcher from "../fetcher";
 import * as dom from "./project_dom";
 import { HTMLProjectTableRow, HTMLTableContentObject } from "./project_dom";
 import {age_dbis} from "../dbi-send";
-
+import * as util from "../util";
 
 let currentProjectObject : any = null;
 
@@ -197,6 +197,7 @@ function projectPropertyFocusOut(event: FocusEvent): void {
                 // TITLE
                 case "age_projPropTable-Title-value":
                     console.assert(updatedContentObject.Title == projectPropertiesTable.contentObject.Title, "'PUT' content Object Title does not match the project table .contentObject.Title !");
+                    util.UuidCheckAndUpdateTitles(currentProjectObject.Uuid, updatedContentObject.Title); // Update titles in currently loaded extension
                     break;
                 // GOAL
                 case "age_projPropTable-Goal-value":
@@ -216,14 +217,15 @@ function projectPropertyFocusOut(event: FocusEvent): void {
 
     refreshProjectTitleElement();
 
+    
 
     // Update Titles in the search
-    let elementWithSameUuid = document.querySelectorAll(`[data-uuid='${currentProjectObject.Uuid}']`);
-    elementWithSameUuid.forEach((_element) => {
-        if (_element.classList.contains("age_element") && _element.classList.contains("age_projectSearchRow")){
-            // _element.children[1].textContent = dataElement.textContent; // update the second search column; edit: doesn't work...
-        }
-    })
+    // let elementWithSameUuid = document.querySelectorAll(`[data-uuid='${currentProjectObject.Uuid}']`);
+    // elementWithSameUuid.forEach((_element) => {
+    //     if (_element.classList.contains("age_element") && _element.classList.contains("age_projectSearchRow")){
+    //         // _element.children[1].textContent = dataElement.textContent; // update the second search column; edit: doesn't work...
+    //     }
+    // })
 }
 
 async function clickedProjectContextMenu(event: MouseEvent){
@@ -338,10 +340,10 @@ function projectClick(event: Event){
 
     // console.log("Click detected in project container.");
     let clickTarget = event.target as HTMLElement;
-
+console.log("CLICLCLICLKCICLCICL")
     
 // SEARCH ROW
-    if (clickTarget.classList.contains("age_projectRowSearchData")){
+    if (clickTarget.classList.contains("age_projectRowSearchData") || clickTarget.classList.contains("age_projectSearchRow")){
         // grab parent because we clicked on data-element
         let tableRowTarget = clickTarget.parentElement as HTMLProjectTableRow;
         loadProjectWithContentObject(tableRowTarget.nodeObject);

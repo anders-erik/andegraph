@@ -59,6 +59,13 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
 
     }
 
+    let children = tbody.children;
+    for (let i = 0; i < children.length; i++) {
+        let child = children[i] as HTMLElement;
+        console.log('child = ', child);
+        child.tabIndex = 0;
+    }
+
     // console.log(document.querySelectorAll('#age_projectPropertiesTable tbody tr'))
     // let editableProjectPropertyTds: NodeListOf<Element> = tbody.querySelectorAll('.age_editableProjectProperty');
     // console.log(editableProjectPropertyTd)
@@ -97,6 +104,7 @@ export function populateChildrenTable(table : HTMLTableElement, projectChildCont
         let newProjectChildRow = document.createElement('tr') as HTMLProjectChildRow;
 
         newProjectChildRow.isProjectChildRow = true;
+        newProjectChildRow.tabIndex = 0;
 
         // Custom event to specifically load the source from the overlay-ts module
         newProjectChildRow.addEventListener("click", (event : Event) => {
@@ -122,8 +130,8 @@ export function populateChildrenTable(table : HTMLTableElement, projectChildCont
 
         newProjectChildRow.innerHTML += `
 		
-				<td id=age_projchildTable-Table-${contentEdge.content.Uuid} class="age_element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Table}</td>
-				<td id=age_projchildTable-Title-${contentEdge.content.Uuid} class="age_element" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Title}</td>
+				<td id=age_projchildTable-Table-${contentEdge.content.Uuid} class="age_element age_projchildTable Table" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Table}</td>
+				<td id=age_projchildTable-Title-${contentEdge.content.Uuid} class="age_element age_projchildTable Title" data-Uuid=${contentEdge.content.Uuid}>${contentEdge.content.Title}</td>
 			
 		`;
 
@@ -156,14 +164,16 @@ export function populateProjectSearchTable(projectSearchTable : any, projectObje
 
         let tableRowHtml = `
                 
-                <td data-Uuid="${childObject.Uuid}" class="age_element age_projectRowSearchData">${childObject.Table}</th>
-                <td data-Uuid="${childObject.Uuid}" class="age_element age_projectRowSearchData">${childObject.Title}</td>
+                <td data-Uuid="${childObject.Uuid}" class="age_element age_projectRowSearchData Table">${childObject.Table}</th>
+                <td data-Uuid="${childObject.Uuid}" class="age_element age_projectRowSearchData Title">${childObject.Title}</td>
 
             `;
         // let tr = document.createElement('tr');
         let tr = document.createElement('tr') as HTMLProjectTableRow;
         tr.id = 'age_projectSearchRow-' + childObject.Uuid;
         tr.classList.add('age_projectSearchRow');
+        // tr.setAttribute("tabIndex")
+        tr.tabIndex = 0;
         tr.nodeObject = childObject;
         // tr.dataset.Node = 1;
         // tr.dataset.Uuid = childObject.Uuid;

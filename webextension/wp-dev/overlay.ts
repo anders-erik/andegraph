@@ -30,15 +30,30 @@ function initOverlay() : void{
 
     // Prevents keystrokes on certain websites from registring when writing in the overlay - tested on youtube shorts - space not working on regular youtube
     // Maybe a bit too much to have listening at all times! BUT I simply need this to work for now..
-    overlayContainer.addEventListener("keydown", contentEditableStopPropagation, false);
-    overlayContainer.addEventListener("keyup", contentEditableStopPropagation, false);
-    overlayContainer.addEventListener("keypress", contentEditableStopPropagation, false);
-    function contentEditableStopPropagation(keyevent: KeyboardEvent) {
+    overlayContainer.addEventListener("keydown", contentEditableKeyDetection, false);
+    overlayContainer.addEventListener("keyup", contentEditableKeyDetection, false);
+    overlayContainer.addEventListener("keypress", contentEditableKeyDetection, false);
+    function contentEditableKeyDetection(keyevent: KeyboardEvent) {
         let activeElement = document.activeElement as HTMLElement;
+
         if (activeElement.isContentEditable) {
+            
+            // enable new line
+            if (keyevent.key === "Enter" && keyevent.shiftKey){
+
+            }
+            // prevent new line and exit field
+            else if (keyevent.key === "Enter" || keyevent.key === "Escape"){
+                keyevent.preventDefault();
+                (keyevent.target as HTMLElement).parentElement.focus();
+            }
+
             keyevent.stopPropagation();
         }
+
     }
+
+    // overlayContainer.addEventListener("focusout", )
     
 
     overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {

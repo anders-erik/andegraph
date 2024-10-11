@@ -1,7 +1,8 @@
-import * as fetcher from "../fetcher";
-import { HTMLProjectTableRow, HTMLTableContentObject } from "./source_dom";
-import { age_dbis } from "../dbi-send";
+// import * as sdom from "./source_dom";
 
+import * as fetcher from "../fetcher";
+import { age_dbis } from "../dbi-send";
+import * as util from "../util";
 
 
 let sidePanel: Element;
@@ -17,7 +18,7 @@ let sourceCss: HTMLElement;
 let sourceChildrenTable: HTMLTableElement; 
 let projectContentEdgeChildren: any;
 
-let sourcePropertiesTable: HTMLTableContentObject;
+let sourcePropertiesTable: ContentObjectHTML;
 
  
 let currentSourceObject: any;
@@ -36,7 +37,7 @@ export function initSourceContainer(_sidePanel: Element, _sourceMoreOptionsConte
     sourceContainer.classList.add("age_panelContainer", "collapsed");
     sourceContainer.addEventListener("click", clickedSourceContainer);
     // sourceContainer.addEventListener("focusout", sourcePropertyFocusedOut);
-    sourceContainer.addEventListener("focusout", sourceFocusOut);
+    sourceContainer.addEventListener("focusout", focusoutSourceContentEditable);
     
 
     fetcher.fetchHtml("source.html")
@@ -63,63 +64,37 @@ export function initSourceContainer(_sidePanel: Element, _sourceMoreOptionsConte
 
 }
 
-function sourceFocusOut(event : FocusEvent){
+/** Generic focusout-events from content-editable fields that are captured by the source container.
+ *  Redirects to specific function depending on if its a source-shard or a property value
+ */
+function focusoutSourceContentEditable(event : FocusEvent){
     let focusoutTarget = event.target as HTMLElement;
-    if (focusoutTarget.classList.contains("age_sourceChildTable-Title")){
-        sourceChildTitleFocusedOut(focusoutTarget);
+    if (focusoutTarget.classList.contains("Title")){
+        focusoutSourceChildTitle(focusoutTarget);
     }
     else if (focusoutTarget.classList.contains("age_sourcePropValue")){
-        sourcePropertyFocusedOut(focusoutTarget);
+        focusoutSourceProperty(focusoutTarget);
     }
 
-    // switch (focusoutTarget.id) {
-    //     case "ae-sourceChildTable-Title":
-    //         sourceChildTitleFocusedOut(focusoutTarget);
-    //         break;
-    //     // age_sourcePropTable
-    //     case "age_sourcePropTable-Title-value":
-    //     case "age_sourcePropTable-Type-value":
-    //     case "age_sourcePropTable-Uuid-value":
-    //     case "age_sourcePropTable-IAmSource-value":
-    //         sourcePropertyFocusedOut(focusoutTarget);
-    //         break;
-    //     default:
-    //         break;
-    // }
 }
 
-function sourceChildTitleFocusedOut(dataElement : HTMLElement) {
-    let sourceChildRow = dataElement.parentElement as HTMLProjectTableRow;
-    // console.log('FOCUS OUT SOURCE CHILD');
-    // console.log("event.target = ", event.target);
-    // console.log("this = ", this);
-
-    // console.log('dataElement.textContent = ', dataElement.textContent);
-    // console.log('sourceChildRow.nodeObject.content.Title = ', sourceChildRow.nodeObject.content.Title);
+/** Grabs the textContent of targeted element and updates the associated contentObject using API */
+function focusoutSourceChildTitle(dataElement : HTMLElement) {
+    let sourceChildRow = dataElement.parentElement as ContentObjectHTML;
     
-    sourceChildRow.nodeObject.content.Title = dataElement.textContent;
+    sourceChildRow.contentObject.content.Title = dataElement.textContent;
 
-    age_dbis.Content_UpdateWithContentObject(sourceChildRow.nodeObject.content)
+    util.UuidCheckAndUpdateTitles(sourceChildRow.contentObject.content.Uuid, dataElement.textContent); // Update titles in currently loaded extension
+
+    age_dbis.Content_UpdateWithContentObject(sourceChildRow.contentObject.content)
         .then(updatedContentObject => {
             // console.log("Updated source child-row : ", updatedContentObject)
         })
-    // // let projectContentObject = document.getElementById("age_projectPropertiesTable") as HTMLTableContentObject;
-
-    // console.log("sourceContentObject.contentObject = ", sourcePropertiesTable.contentObject);
 
 }
 
-
-function sourcePropertyFocusedOut(focusoutElement: HTMLElement){
-    // console.log('FOCUS OUT PROJECT PROPERTY');
-    // console.log("event.target = ", event.target);
-    // console.log("this = ", this);
-
-    // let dataElement = event.target as HTMLElement;
-    // console.log('dataElement.textContent = ', focusoutElement.textContent);
-    
-    // let projectTable: HTMLTableContentObject = this;
-
+/** Updates the coresponding contentObject, sends it to database, and asserts the returned content objects */
+function focusoutSourceProperty(focusoutElement: HTMLElement){
 
     // console.log('', event.target.)
     switch (focusoutElement.id) {
@@ -131,6 +106,7 @@ function sourcePropertyFocusedOut(focusoutElement: HTMLElement){
         case "age_sourcePropTable-Title-value":
             sourcePropertiesTable.contentObject.Title = focusoutElement.textContent;
             sourceTitleElement.textContent = focusoutElement.textContent;
+            util.UuidCheckAndUpdateTitles(currentSourceObject.Uuid, focusoutElement.textContent); // Update titles in currently loaded extension
             break;
         // GOAL
         case "age_sourcePropTable-Url-value":
@@ -167,33 +143,20 @@ function sourcePropertyFocusedOut(focusoutElement: HTMLElement){
 
     currentSourceObject = sourcePropertiesTable.contentObject;
 
-    // Update Titles in the dom
-    let elementWithSameUuid = document.querySelectorAll(`[data-uuid='${currentSourceObject.Uuid}']`);
-    elementWithSameUuid.forEach((_element) => {
-        if(_element.classList.contains("age_element") && _element.id.includes("Title"))
-            _element.textContent = focusoutElement.textContent;
-        // console.log('elementWithSameUuid = ', _element);
-    })
+
     
 }
 
+/** Captures the container-clicks. Current responsabilities:
+ *  1. Toggle between the two source tables.
+ */
 function clickedSourceContainer(event : MouseEvent){
     let eventTarget = event.target as HTMLElement;
 
-    switch (eventTarget.id) {
-        case "age_sourceSearchButton":
-        case "age_sourcePropertiesButton":
-            toggleSourceTables(eventTarget.id);
-            break;
-
-        case "age_sourceNewButton":
-            console.log('New source button clicked');
-            
-            break;
-    
-        default:
-            break;
+    if (eventTarget.id === "age_sourceSearchButton" || eventTarget.id === "age_sourcePropertiesButton"){
+        displaySourceTable(eventTarget.id);
     }
+
 
 }
 
@@ -204,7 +167,8 @@ export function showSourceProperties(){
     sourcePropertiesButton.click();
 }
 
-function toggleSourceTables(buttonID : string){
+/** Will load the table and update the button for the corresponding button-id provided */
+function displaySourceTable(buttonID : string){
     let childrenButton = document.getElementById("age_sourceSearchButton");
     let propertiesButton = document.getElementById("age_sourcePropertiesButton");
 
@@ -293,14 +257,17 @@ async function loadSourceChildren(_contentObject : any){
     for (let childContentEdgeObject of childContentEdgeObjects) {
         let tableRowHtml = `
                 
-                <td class="age_element age_sourceChildTable-Table" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Table}</td>
-				<td class="age_element age_sourceChildTable-Type" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Type}</td>
-                <td class="age_element age_sourceChildTable-Title" data-Uuid="${childContentEdgeObject.content.Uuid}" contenteditable="true">${childContentEdgeObject.content.Title}</td>
+                <td class="age_element age_sourceChildTable Table" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Table}</td>
+				<td class="age_element age_sourceChildTable Type" data-Uuid="${childContentEdgeObject.content.Uuid}">${childContentEdgeObject.content.Type}</td>
+                <td class="age_element age_sourceChildTable Title" data-Uuid="${childContentEdgeObject.content.Uuid}" contenteditable="true">${childContentEdgeObject.content.Title}</td>
 
             `;
-        let tr = document.createElement('tr') as HTMLProjectTableRow;
+        
+        // Been unable to turn this into a good content obejct so far. I need to extend ALL possible html-elements to make generic interface...
+        // potential solution is then HTMLTableRowElement & contentobject : any
+        let tr = document.createElement('tr') as HTMLTableRowElement; 
         tr.id = 'age_sourceSearchNode-' + childContentEdgeObject.content.Uuid;
-        tr.nodeObject = childContentEdgeObject;
+        tr.contentObject = childContentEdgeObject;
         // tr.aaa = "asd";
         tr.setAttribute('data-fuck', 'f*ck');
         // tr.dataset.Node = 1;
