@@ -1,30 +1,65 @@
 
 
 // let age_apiUrl = 'http://localhost:3000/api/v02';
+const defaultApiString = "http://localhost:3000/api/v02";
 let age_apiUrl = "";
 
 
-// export function test() : void {
-
-// 	console.log("Loaded dbi-send.ts")
-	
-// }
 
 // ALWAYS START OUT BY GRABBING THE API BASE URL
 (()=>{
 	
 	setApiUrl().then(() => {
 		console.log('Loaded dbi-send.ts');
+
+		// notifyDbisUsers();
+		apiPathLoaded = true;
 	});
 	
 })();
 
+
+
+let apiPathLoaded = false;
+const maxApiPathLoadedChecks = 100;
+/** 
+ * Notifies users of the dbis module that the api path is loaded from file and ready to for use.
+ */
+export function waitForLoadedApiPath(callbackFn : Function) : void {
+
+		let apiPathCheckCount = 0; // a counter for each caller
+
+		let interval = setInterval(() => {
+			if(apiPathCheckCount < maxApiPathLoadedChecks){
+
+				if(apiPathLoaded){
+					clearInterval(interval);
+					callbackFn();
+					// return;
+				}
+				
+				apiPathCheckCount++;
+			}
+		}, 10);
+		
+}
+
+
+
 /**
- * 	Grabs the base url string from the local webextension storage. 
+ * Try setting the api-path using the local webextension storage. 
+ * If the local value is undefined we use the default API path.
  */
 export async function setApiUrl(){
 	browser.storage.local.get("apiBaseString").then((object) => {
-		age_apiUrl = object.apiBaseString;
+
+		if(object.apiBaseString === undefined){
+			age_apiUrl = defaultApiString;
+		}
+		else{
+			age_apiUrl = object.apiBaseString;
+		}
+
 		console.log("Loaded API BASE STRING")
 		console.log("object.apiBaseString = ", object.apiBaseString);
 	}, onLocalStorageError);

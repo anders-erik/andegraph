@@ -19,6 +19,9 @@
     color: rgb(255, 255, 255);
     font-weight: 400;
     font-size: x-small;
+    box-sizing: content-box;
+    margin: 0;
+    font: 100;
 }
 
 

@@ -20,7 +20,7 @@ let clipboardCodeCheckbox : HTMLInputElement;
 let clipboardTextTypeInput : HTMLInputElement;
 
 let clipboardConcatContents : HTMLElement;
-let textConcatenationCapturing : boolean = false;
+export let textConcatenationCapturing : boolean = false;
 let textConcatenationContent : string = "";
 
 
@@ -577,6 +577,7 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 	}
 
 
+
 	// document.addEventListener("keydown", (event) => { console.log(event.code) }) 
 	if (keyEvent.altKey) {
 
@@ -703,6 +704,30 @@ async function keydownActiveExtension(keyEvent : KeyboardEvent) {
 	}
 
 
+
+
+	// Manual typing during text capturing
+	// Ignore input if alt/ctrl shortcuts are used! 
+	if(textConcatenationCapturing && !keyEvent.ctrlKey && !keyEvent.altKey){
+		console.log('KeyEvent.key = ', keyEvent.key);
+
+		if(keyEvent.key === "Backspace"){
+			textConcatenationContent = textConcatenationContent.substring(0, textConcatenationContent.length-1)
+		}
+		else if(keyEvent.key === "Enter"){
+			textConcatenationContent += "\n";
+		}
+		else if(keyEvent.key === "Shift"){
+			// We want the native capitalization, but no additional behavior!
+		}
+		else {
+			textConcatenationContent += keyEvent.key;
+		}
+
+		
+		writeTextConcatenationContentToDom()
+
+	}
 
 }
 

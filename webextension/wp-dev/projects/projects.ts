@@ -1,7 +1,7 @@
 import * as fetcher from "../fetcher";
 import * as dom from "./project_dom";
 import { HTMLProjectTableRow, HTMLTableContentObject } from "./project_dom";
-import {age_dbis} from "../dbi-send";
+import {age_dbis, waitForLoadedApiPath} from "../dbi-send";
 import * as util from "../util";
 
 let currentProjectObject : any = null;
@@ -41,13 +41,14 @@ let projectTitleElement : HTMLElement;
 
 
 function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTMLDivElement) : void{
-    console.log('OVERLAY TS INIT');
+    // console.log('OVERLAY TS INIT');
 
     sidePanel = _sidePanel;
 
     // MORE OPTIONS CONTEXT MENU
     projectMoreOptionsContextMenu = _projectMoreOptionsContextMenu;
     projectMoreOptionsContextMenu.addEventListener("click", clickedProjectContextMenu)
+    // Detects any click in the whole document!
     document.body.addEventListener("click", hideProjectContextMenu, {capture: false});
 
     projectContainer = document.createElement('div');
@@ -84,11 +85,14 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
             let searchBackgroundString = `url(${searchBackgroundUrl})`;
             projectSearchElement.style.backgroundImage = searchBackgroundString;
 
-            fetchProjectSearch("") // perform search only after guaranteed load
-                .then((contentObjectArray) => {
-                    console.log(contentObjectArray)
-                    dom.populateProjectSearchTable(projectSearchTable, projectSearchObjects);
-                })
+            // perform search only after guaranteed load of above html/css AND the api path from file.
+            // fetchProjectSearch("") 
+            //     .then((contentObjectArray) => {
+            //         console.log(contentObjectArray)
+            //         dom.populateProjectSearchTable(projectSearchTable, contentObjectArray);
+            //     })
+            // performSearch();
+            waitForLoadedApiPath(dbisLoadedCallback);
         }) 
   
     projectCss = document.createElement("style");
@@ -110,6 +114,11 @@ function initProjects(_sidePanel : Element, _projectMoreOptionsContextMenu : HTM
     
 }
 
+
+/**  */
+function dbisLoadedCallback(){
+    performSearch();
+}
 
 
 
@@ -407,6 +416,7 @@ function showProjectProperties() {
     document.getElementById("age_projectPropertiesButton").click()
 }
 
+/**  */
 function toggleMoreOptions(){
     // console.log("TOGGLE MORE OPTIONS")
     let buttonBoundingRect = projectMoreOptionsButton.getBoundingClientRect();
@@ -429,7 +439,7 @@ function toggleMoreOptions(){
 }
 
 
-
+/** Callback when entering the content-editable project search input */
 function searchProjectIn() {
     // console.log("searchProjectIn()")
     // focusProjectSearch = true;
@@ -450,6 +460,7 @@ function searchProjectIn() {
 }
 
 
+/** Callback when leaving the content-editable project search input */
 function searchProjectOut() {
     // console.log('searchProjectOut()');
     
@@ -465,7 +476,9 @@ function searchProjectOut() {
 }
 
 
-// Perform search with slight delay to make sure new input is written to contentEditanle input
+/** 
+ * Performs project search with delay to guarante that search field is updated during actual search.
+ */
 async function keyDownDuringSearch(event : KeyboardEvent) {
     
     // User just deleted the last character so we reset the default contenteditable elment structure
@@ -486,6 +499,12 @@ async function keyDownDuringSearch(event : KeyboardEvent) {
 
 }
 
+
+
+/** 
+ * Perform an API fetch using the current search string.
+ * If the 'searchStringExists'-bool is false, an empty string is used.
+ */
 function performSearch(){
     let searchString : string = "";
     if(searchStringExists)
@@ -493,15 +512,19 @@ function performSearch(){
     else
         searchString = "";
 
-    // console.log("Searching with searchstrign = ", searchString)
+    // Fetch and populate
     fetchProjectSearch(searchString)
         .then((contentObjectArray) => {
-            // console.log(contentObjectArray)
             dom.populateProjectSearchTable(projectSearchTable, contentObjectArray);
         })
 }
 
 
+
+/** 
+ *  Pass the id of one of the regular project buttons.
+ *  The panel-table of the corresponding will be displayd and the other will be hidden.
+ */
 function showProjectTable(buttonId : string){
     // age_projectButtonOn
 
@@ -542,26 +565,9 @@ function showProjectTable(buttonId : string){
     
 }
 
-// function projectTitleClicked(tableRow: HTMLElement): void {
-//     console.log("Project title clicked: ", tableRow)
-// }
-// function projectSearchButtonClicked(tableRow: HTMLElement) : void {
-//     console.log("Project search clicked: ", tableRow)
-// }
-// function projectChildrenButtonClicked(tableRow: HTMLElement): void {
-//     console.log("Project children clicked: ", tableRow)
-// }
-// function projectPropertiesButtonClicked(tableRow: HTMLElement): void {
-//     console.log("Project properties clicked: ", tableRow)
-// }
-// function projectMoreOptionsButtonClicked(tableRow: HTMLElement): void {
-//     console.log("Project options clicked: ", tableRow)
-// }
-// function projectSearchRowClicked(tableRow: HTMLProjectTableRow): void {
-//     console.log("Table row clicked: ", tableRow)
-// }
 
 
+/** Selects first 50 projects from API. Returns array of project objects. */
 function fetchProjectSearch(searchString : string) : Promise<any>{
     return age_dbis.Content_SelectOnTitleLikeString(searchString, "50", "Project", "", "")
         .then((contentObjectArray: any) => {
@@ -574,12 +580,13 @@ function fetchProjectSearch(searchString : string) : Promise<any>{
         })
 }
 
+/** Returns array of children fetched from the API. */
 function fetchProjectChildren(Uuid : string | number): Promise<any> {
     return age_dbis.ContentEdge_SelectChildOfUuid(Uuid)
         .then((contentEdgeObjectArray: any) => {
             // console.log(contentObjectArray);
             projectContentEdgeChildren = contentEdgeObjectArray;
-            console.log('projectContentEdgeChildren = ', projectContentEdgeChildren);
+            // console.log('projectContentEdgeChildren = ', projectContentEdgeChildren);
             
             return Promise.resolve(projectContentEdgeChildren);
         })
@@ -588,11 +595,12 @@ function fetchProjectChildren(Uuid : string | number): Promise<any> {
         })
 }
 
+/** Append the project style elments to the head of page */
 function appendCss() : void{
     document.head.append(projectCss);
 }
 
-
+/** Remove the project style elments to the head of page */
 function removeCss() : void {
     projectCss.remove();
 }
@@ -604,4 +612,5 @@ export {
     initProjects,
     appendCss,
     removeCss,
+    performSearch,
 }

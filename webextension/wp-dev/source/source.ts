@@ -231,6 +231,14 @@ export async function loadWithContentObject(_contentObject : any){
 
     }
 
+
+    // Set property rows to be tabbable
+    let propertyRows = tbody.children;
+    for (let i = 0; i < propertyRows.length; i++) {
+        let propertyRow = propertyRows[i] as HTMLElement;
+        propertyRow.tabIndex = 0;
+    }
+
     // // console.log(document.querySelectorAll('#age_sourcePropertiesTable tbody tr'))
     // let editableSourcePropertyTds = document.querySelectorAll('.age_editableSourceProperty');
     // // // console.log(editableSourcePropertyTd)
@@ -304,6 +312,15 @@ async function loadSourceChildren(_contentObject : any){
         tbody.append(tr);
         // console.log(tr)
     }
+
+    // Set Shard rows to be tabbable
+    let shardRows = tbody.children;
+    for (let i = 0; i < shardRows.length; i++) {
+        let shardRow = shardRows[i] as HTMLElement;
+        shardRow.tabIndex = 0;
+    }
+
+
     // console.table(childObjects)
 
 }

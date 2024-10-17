@@ -72,6 +72,15 @@
 		- 1 are top level, type 2 is contained within a level 1, etc. 
 	- sources are directories in a project
 
+### 2024-10-17
+- Webextension:
+	- Bugs resolved:
+		- Overlay layout problems in CSS [search box height, table borders, box-sizing]
+		- premature first search
+	- features
+		- type directly to text clipboard
+		- Leave content-editable on Enter/Escape
+
 ### 2024-10-05
 - add better-sqlite3 and begin refactor of dbi
 ### 2024-10-04

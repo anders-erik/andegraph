@@ -59,11 +59,12 @@ export function populatePropertiesTable(propertiesTable: HTMLTableContentObject,
 
     }
 
-    let children = tbody.children;
-    for (let i = 0; i < children.length; i++) {
-        let child = children[i] as HTMLElement;
-        console.log('child = ', child);
-        child.tabIndex = 0;
+    // Set property rows to be tabbable
+    let propertyRows = tbody.children;
+    for (let i = 0; i < propertyRows.length; i++) {
+        let propertyRow = propertyRows[i] as HTMLElement;
+        // console.log('child = ', propertyRow);
+        propertyRow.tabIndex = 0;
     }
 
     // console.log(document.querySelectorAll('#age_projectPropertiesTable tbody tr'))

@@ -8,15 +8,15 @@
     "backend-up": "docker compose up -d",
     "backend-down": "docker compose down",
     "backend-reload": "docker compose down && docker compose up -d",
-    "backend-log": "./scripts/backend-log.sh",
-    "nginx-gen-certs": "./nginx/gen-certs.sh",
-    "zip-webextension": "./scripts/zip-webextension.sh",
+    "backend-log": "bash ./scripts/backend-log.sh",
+    "nginx-gen-certs": "bash ./nginx/gen-certs.sh",
+    "zip-webextension": "bash ./scripts/zip-webextension.sh",
     "ext-build-wp-tsc": "npx webpack --config webextension/webpack.config.js",
-    "ext-attach": "./webextension/scripts/dev.sh",
+    "ext-attach": "bash ./webextension/scripts/dev.sh",
     "ext-build-custom-watch": "node ./webextension/build.js",
     "ext-build-wp-tsc-watch": "npx webpack --watch --config webextension/webpack.config.js",
-    "data-analyze": "./data/scripts/live-db-info.sh",
-    "data-backup": "./data/scripts/backup.sh"
+    "data-analyze": "bash ./data/scripts/live-db-info.sh",
+    "data-backup": "bash ./data/scripts/backup.sh"
   },
   "dependencies": {
     "express": "^4.18.2",

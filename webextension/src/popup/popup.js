@@ -1,5 +1,5 @@
 
-let apiBase = "http://localhost:3000/api/v02"
+let defaultApiBaseUrl = "http://localhost:3000/api/v02"
 let apiBaseUrl = ""
 
 
@@ -44,7 +44,12 @@ function writeApiBaseUrlToStorage(_apiBaseString) {
 
 async function popup_init(){
 
-  let apiBaseUrl = await readApiBaseUrlFromStorage();
+  apiBaseUrl = await readApiBaseUrlFromStorage();
+  
+  // If key was not found == first time loading the extension and we use the default api path
+  if(apiBaseUrl === undefined)
+    writeApiBaseUrlToStorage(defaultApiBaseUrl);
+  
 
   // Base url : Label and input
   document.getElementById("api-base-label").textContent = apiBaseUrl;

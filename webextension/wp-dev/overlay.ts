@@ -17,45 +17,31 @@ let contextOverlay: Element;
 
 let sidePanel: Element;
 
-
-function initOverlay() : void{
-    console.log('OVERLAY TS INIT'); 
+/**
+ *  Initializing the extension overlay HTML, CSS, Events, and its sub-modules.
+ * 
+ */
+async function initOverlay() : Promise<void>{
+    // console.log('OVERLAY TS INIT'); 
 
     overlayContainer = document.createElement('div');
     overlayContainer.id = "age_overlayContainer"; 
     overlayContainer.setAttribute("spellcheck","false");
 
+
+    // Extension-wide events!
     overlayContainer.addEventListener("click", extensionClickHandler);
     overlayContainer.addEventListener("focusin", overlayFocusin);
+
 
     // Prevents keystrokes on certain websites from registring when writing in the overlay - tested on youtube shorts - space not working on regular youtube
     // Maybe a bit too much to have listening at all times! BUT I simply need this to work for now..
     overlayContainer.addEventListener("keydown", contentEditableKeyDetection, false);
     overlayContainer.addEventListener("keyup", contentEditableKeyDetection, false);
     overlayContainer.addEventListener("keypress", contentEditableKeyDetection, false);
-    function contentEditableKeyDetection(keyevent: KeyboardEvent) {
-        let activeElement = document.activeElement as HTMLElement;
-
-        if (activeElement.isContentEditable) {
-            
-            // enable new line
-            if (keyevent.key === "Enter" && keyevent.shiftKey){
-
-            }
-            // prevent new line and exit field
-            else if (keyevent.key === "Enter" || keyevent.key === "Escape"){
-                keyevent.preventDefault();
-                (keyevent.target as HTMLElement).parentElement.focus();
-            }
-
-            keyevent.stopPropagation();
-        }
-
-    }
-
-    // overlayContainer.addEventListener("focusout", )
     
-
+    
+    // Custom Events for specific extension-actions
     overlayContainer.addEventListener("loadsource", (event : CustomEvent) => {
         source.loadWithContentObject(event.detail.contentObject);
     });
@@ -63,7 +49,6 @@ function initOverlay() : void{
         source.loadWithContentObject(event.detail.contentObject);
         source.showSourceProperties(); // Make sure we go to the properties tab when crating a new source!
     });
-
     overlayContainer.addEventListener("newproject", (event: CustomEvent) => {});
     overlayContainer.addEventListener("refreshextension", (event: CustomEvent) => {
         console.log("Refresh extension");
@@ -71,35 +56,63 @@ function initOverlay() : void{
     });
 
 
-    fetcher.fetchHtml("overlay.html")
-        .then(html => {
-            // console.log("HTML : ", html)
-            overlayContainer.innerHTML = html;
-            contextOverlay = overlayContainer.querySelector("#age_contextOverlay");
-            // contextOverlay.addEventListener("click", hideContextMenus);
-            sidePanel = overlayContainer.querySelector("#age_overlayRightPanel");
+    // Overlay HTML
+    let overlayHtml = await fetcher.fetchHtml("overlay.html");
+    overlayContainer.innerHTML = overlayHtml;
+    contextOverlay = overlayContainer.querySelector("#age_contextOverlay");
+    sidePanel = overlayContainer.querySelector("#age_overlayRightPanel");   
 
-            
-            projects.initProjects(sidePanel, contextOverlay.querySelector("#age_moreProjectOptionsContextMenu")); // Pass the context menu!
-            source.initSourceContainer(sidePanel, contextOverlay.querySelector("#age_moreSourceOptionsContextMenu")); // Pass the context menu!
-            clipboard.initClipboard(sidePanel);
-        })
-
+    // CSS
     overlayCss = document.createElement("style");
     overlayCss.id = "age_overlayStyle";
-    fetcher.fetchCss("overlay.css")
-    .then(css => {
-        overlayCss.innerText = css;
-    })
+    overlayCss.innerText = await fetcher.fetchCss("overlay.css");
 
     tableCss = document.createElement("style");
     tableCss.id = "age_tableStyle";
-    fetcher.fetchCss("tables.css") 
-        .then(css => {
-            tableCss.innerText = css;
-        })
+    tableCss.innerText = await fetcher.fetchCss("tables.css");
+
+    // Load Extension Modules
+    projects.initProjects(sidePanel, contextOverlay.querySelector("#age_moreProjectOptionsContextMenu")); // Pass the context menu!
+    source.initSourceContainer(sidePanel, contextOverlay.querySelector("#age_moreSourceOptionsContextMenu")); // Pass the context menu!
+    clipboard.initClipboard(sidePanel);
+
 
 }
+
+
+/**
+ * Prevents the default behavior and stops propagation of global key-events for:
+ * 1) content-editable elements
+ * 2) When capturing to the text-clipboard
+ * 
+ * Also implements the focusing of parent when pressing enter/escape.
+ * 
+ * @param keyevent 
+ */
+function contentEditableKeyDetection(keyevent: KeyboardEvent) {
+    let activeElement = document.activeElement as HTMLElement;
+
+    if (activeElement.isContentEditable) {
+        
+        // enable new line using enter+shift
+        if (keyevent.key === "Enter" && keyevent.shiftKey){
+
+        }
+        // prevent new line and exit field
+        else if (keyevent.key === "Enter" || keyevent.key === "Escape"){
+            keyevent.preventDefault();
+            (keyevent.target as HTMLElement).parentElement.focus();
+        }
+
+        keyevent.stopPropagation();
+    }
+
+    if(clipboard.textConcatenationCapturing){
+        keyevent.preventDefault();
+        keyevent.stopPropagation();
+    }
+}
+
 
 
 // make sure that empty element are populated with default editable elements

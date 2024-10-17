@@ -12,7 +12,8 @@ console.clear()
 
 
 
-// DEV : MAKE SURE THAT THE EXTENSION IS TURNED ON ON REALOD!
+// DEV
+// MAKES SURE THAT THE EXTENSION IS TURNED ON ON REALOD!
 browser.tabs.query({ active: true, currentWindow: true })
 	.then((_tabs) => {
 

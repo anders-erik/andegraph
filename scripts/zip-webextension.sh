@@ -1,6 +1,6 @@
 
 #  EDIT VERSION
-extensionVersion="v0.3.1"
+extensionVersion="v0.3.4"
 
 startDir=$(pwd)
 # echo "startDir = $startDir"
