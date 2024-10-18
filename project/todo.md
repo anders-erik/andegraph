@@ -42,13 +42,14 @@
 ## v0.3.2
 ### GOALS
 - |o| resolve multiple webextension problems
-- output field in the code table!
+- Code 'output'-column in the SQLite code table!
 - Be able to see project files!
 	- /file/-page!
 		- history
 		- add/remove file-contents
 		- use camera
 	- add file-object from context menu
+- add breadcrumb of current uuid's ancestors
 - database table containing simple snapshots of db prameters (tables, table rows, etc.)
 - decide on three test sources!
 	- USE SOMETHING I WANT TO LEARN!
@@ -80,13 +81,13 @@
 	- sources are directories in a project
 
 ### features
-- see backend version from client
+- see current backend version from client
 - write persistent error logs in the frontend
 - add frontend module bundler - cleaner network tab and faster load, especially during deployment!
-
+z
 
 ### Bugs
-- stop error message on page load with no set project
+- stop error message on page load with no set project/states
 
 
 

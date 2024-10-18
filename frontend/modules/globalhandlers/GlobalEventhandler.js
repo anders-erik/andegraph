@@ -1,7 +1,7 @@
-import { dbis } from "./dbi-send/dbi-send.js";
-import { determineClipboardContentType } from "./filehandling/DetermineClipboardContents.js";
+import { dbis } from "../dbi-send/dbi-send.js";
+// import { determineClipboardContentType } from "./filehandling/DetermineClipboardContents.js";
 
-import * as maincontent from "./maincontent/MainContent.js";
+import * as maincontent from "../maincontent/MainContent.js";
 
 
 
