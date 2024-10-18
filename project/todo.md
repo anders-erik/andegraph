@@ -82,6 +82,8 @@
 ### features
 - see backend version from client
 - write persistent error logs in the frontend
+- add frontend module bundler - cleaner network tab and faster load, especially during deployment!
+
 
 ### Bugs
 - stop error message on page load with no set project
