@@ -41,7 +41,14 @@
 
 ## v0.3.2
 ### GOALS
-- resolve multiple webextension problems
+- |o| resolve multiple webextension problems
+- output field in the code table!
+- Be able to see project files!
+	- /file/-page!
+		- history
+		- add/remove file-contents
+		- use camera
+	- add file-object from context menu
 - database table containing simple snapshots of db prameters (tables, table rows, etc.)
 - decide on three test sources!
 	- USE SOMETHING I WANT TO LEARN!
@@ -71,6 +78,15 @@
 	- projects are directories
 		- 1 are top level, type 2 is contained within a level 1, etc. 
 	- sources are directories in a project
+
+### features
+- see backend version from client
+- write persistent error logs in the frontend
+
+### Bugs
+- stop error message on page load with no set project
+
+
 
 ### 2024-10-17
 - Webextension:

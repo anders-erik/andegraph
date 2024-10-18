@@ -2,7 +2,7 @@
 	"description": "Provides full context andegraph graph-interaction. Primary purpose is sourcing and sharding. ",
 	"manifest_version": 2,
 	"name": "Andegraph",
-	"version": "0.3.1.1",
+	"version": "0.3.2",
 	"homepage_url": "https://github.com/anders-erik/andegraph",
 	"icons": {
 		"48": "icons/andegraph-network-48.png"

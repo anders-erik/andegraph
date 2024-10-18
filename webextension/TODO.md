@@ -4,11 +4,14 @@
 
 ### Features:
 - enable space/enter selection of search entry
-- clipboard with
+- clipboard 
+- implement a new 
 
 ### Bugs:
 - tabbing from the search box to the first search entry requires user to hit tab twice
 - clipboard-title on mozilla is enlarged.
+- shardlist is not being displayed if the properties-table is open when pasting a new shard 
+- Stop pasting shard if wextension is hidden!
 
 <br>
 <br>
