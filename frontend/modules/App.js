@@ -2,17 +2,22 @@
 import { MainContent } from './maincontent/MainContent.js';
 import { MainOverlay } from './mainoverlay/MainOverlay.js';
 // import { LeftPanel } from './leftpanel/LeftPanel.js';
-import { GlobalEventHandler } from './globalhandlers/GlobalEventhandler.js';
+import { GlobalEventHandler } from 'globalui/GlobalEventhandler.js';
+
 // 2024-10-19
-import * as global from './globalhandlers/GlobalEventhandler.js';
+import * as global from 'globalui/GlobalEventhandler.js';
 import { ContextOverlay, staticContextOverlay } from './contextoverlay/ContextOverlay.js';
+
+import { device } from './util/device.js';
+device.printDimenesions();
+
 
 import * as maincontent from "./maincontent/MainContent.js"
 
 
 
 // 2024-10-18
-import * as appstyling from "./globalui/styling.js"
+// import * as appstyling from "./globalui/styling.js"
 import * as appui from "./globalui/appui.js"
 
 let leftMenuElement;
@@ -64,7 +69,7 @@ class App {
 
 		/** Load all major ui elements so that all submodules can query during initialization  */
 		appui.init(this.appElement);
-		
+
 
 
 		/** INIT GLOBAL EVENT HANDLER */

@@ -7,6 +7,7 @@ let auxcontentElement;
 /** @type {HTMLElement} */
 let auxTitleElement;
 
+
 /**
  * Auxillary panel content types
  * @readonly
@@ -19,6 +20,18 @@ export const AuxType = {
 	Review: 3,
 	State: 4,
 };
+
+
+/**
+ * @enum {number} Stored variables for Auxillary Panel in local storage.
+ */
+const StorageType = {
+	AuxType: 1,
+	PanelOpen: 2,
+}
+
+
+
 
 /** @type {boolean} State of Auxillary panel.  */
 let auxcontentOpen = false;
@@ -50,6 +63,15 @@ export function init(){
 	auxcontentElement.innerHTML = auxPanelHtml;
 
 	auxTitleElement = auxcontentElement.querySelector("#aux-title");
+
+	console.log('getStoredVariable(StorageType.PanelOpen) = ', getStoredVariable(StorageType.PanelOpen));
+	
+	if(getStoredVariable(StorageType.PanelOpen) === "true"){
+		console.log('OPENEOPNEPEONEPEON');
+		
+		
+		showPanel();
+	}
 }
 
 
@@ -74,7 +96,7 @@ export function toggleAuxContent(toggleAuxType){
 
 	/** Targeting the currently loaded panel type. */
 	if(togglingLoadedType){
-		panelIsOpen ? hidePanel() : showPanel();
+		panelIsOpen ? hidePanel() : showPanel(); 
 		return;
 	}
 	// if(togglingLoadedType && panelIsOpen){
@@ -94,19 +116,23 @@ export function toggleAuxContent(toggleAuxType){
 	// Load Panel With New Type
 	switch (toggleAuxType) {
 		case AuxType.Project:
+			setStoredVariable(StorageType.AuxType, AuxType.Project);
 			auxTitleElement.textContent = "Project";
 			// toggleProject();
 			break;
 
 		case AuxType.Search:
+			setStoredVariable(StorageType.AuxType, AuxType.Search);
 			auxTitleElement.textContent = "Search";
 			break;
 
 		case AuxType.Review:
+			setStoredVariable(StorageType.AuxType, AuxType.Review);
 			auxTitleElement.textContent = "Review";
 			break;
 
 		case AuxType.State:
+			setStoredVariable(StorageType.AuxType, AuxType.State);
 			auxTitleElement.textContent = "State";
 			break;
 
@@ -189,12 +215,14 @@ export function hidePanel(){
 	auxcontentElement.classList.remove("open");
 	auxcontentElement.style.width = "0px";
 	auxcontentOpen = false;
+	setStoredVariable(StorageType.PanelOpen, false);
 }
 
 export function showPanel(){
 	auxcontentElement.classList.add("open");
-	auxcontentElement.style.width = "250px";
+	auxcontentElement.style.width = "var(--aux-width)";
 	auxcontentOpen = true;
+	setStoredVariable(StorageType.PanelOpen, true);
 }
 
 
@@ -202,4 +230,41 @@ function loadProject(){
 	console.log('TOGGLE AUX PROJECT');
 	
 
+}
+
+
+
+
+function setStoredVariable(storageType, value){
+	switch (storageType) {
+		case StorageType.AuxType:
+			localStorage.setItem("AuxPanel_AuxType", value);
+			break;
+		
+		case StorageType.PanelOpen:
+			localStorage.setItem("AuxPanel_PanelOpen", value);
+			break;
+	
+		default:
+			console.error("Trying to store unknown type.")
+			break;
+	}
+}
+
+function getStoredVariable(storageType){
+
+	switch (storageType) {
+		case StorageType.AuxType:
+			return localStorage.getItem("AuxPanel_AuxType");
+			break;
+
+		case StorageType.PanelOpen:
+			return localStorage.getItem("AuxPanel_PanelOpen");
+			break;
+	
+		default:
+			console.error("Trying to store unknown type.")
+			return null;
+			break;
+	}
 }

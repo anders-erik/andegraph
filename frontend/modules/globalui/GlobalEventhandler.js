@@ -30,7 +30,7 @@ export function globalClick(clickEvent){
 		case "left-menu-project":
 		case "left-menu-search":
 		case "left-menu-review":
-			leftMenu.buttonClick(clickEvent);
+			leftMenu.listButtonClick(clickEvent);
 			// let auxType = auxcontent.getAuxTypeFromButtonId(eventTarget.id);
 			// auxcontent.toggleAuxContent(auxType);
 			break;

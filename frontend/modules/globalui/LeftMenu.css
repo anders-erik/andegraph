@@ -1,0 +1,81 @@
+
+
+/* LEFT MENU  */
+#left-menu {
+	height: 100%;
+	width: 250px;
+	transition: width 0.3s ease;
+
+	background-color: red;
+}
+
+#left-menu-topbar {
+	height: 100px; 
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+#left-menu-pin {
+	margin: 5px;
+	background-color: chartreuse;
+	border: none;
+	height: 70px;
+	width: 70px;
+}
+#left-menu-pin.pinned {
+
+	box-shadow: inset 0 0 0 5px black;
+}
+
+#left-menu-title {
+	flex-grow: 1;
+}
+
+#left-menu-close-button {
+	height: 100%;
+	width: 100px;
+	background-color: green;
+
+}
+
+
+#left-menu-open-button {
+	width: 100px;
+	height: 100px; 
+	/* background-color: rgb(128, 0, 124); */
+	transition: background-color 0.1s;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1000;
+}
+
+.left-menu-item {
+	background-color: brown;
+	height: 30px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.left-menu-item.selected {
+	background-color: rgb(133, 31, 31);
+}
+.left-menu-item:hover {
+	background-color: blueviolet;
+	cursor: pointer;
+}
+
+
+#left-menu-mouseenter {
+	/* background-color: aliceblue; */
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 30px;
+	pointer-events: all;
+	z-index: 100;
+}
