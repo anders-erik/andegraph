@@ -4,7 +4,9 @@ import { dbis } from "../dbi-send/dbi-send.js";
 import * as maincontent from "../maincontent/MainContent.js";
 
 // import { leftMenu } from "./LeftMenu.js";
-import { getLeftMenu } from "globalui/LeftMenu.js";
+import { getLeftMenu, LeftMenu } from "globalui/LeftMenu.js";
+
+/** @type {LeftMenu} */
 let leftMenu = null;
 
 import * as auxcontent from "globalui/auxcontent.js";
@@ -30,6 +32,7 @@ export function globalClick(clickEvent){
 		case "left-menu-project":
 		case "left-menu-search":
 		case "left-menu-review":
+			
 			leftMenu.listButtonClick(clickEvent);
 			// let auxType = auxcontent.getAuxTypeFromButtonId(eventTarget.id);
 			// auxcontent.toggleAuxContent(auxType);

@@ -15,7 +15,10 @@
 	max-width: 95%;
 	transition: width 0.5s ease;
 }
-
+#aux-content-con.open {
+	width: var(--aux-width);
+	background-color: rgb(191, 75, 33);
+}
 
 #aux-panel {
 	width: 100%;

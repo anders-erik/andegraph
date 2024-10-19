@@ -3,7 +3,7 @@
 
 
 /** @type {HTMLElement} */
-let auxcontentElement;
+let auxcontentConElement;
 /** @type {HTMLElement} */
 let auxTitleElement;
 
@@ -27,7 +27,7 @@ export const AuxType = {
  */
 const StorageType = {
 	AuxType: 1,
-	PanelOpen: 2,
+	PanelIsOpen: 2,
 }
 
 
@@ -59,19 +59,28 @@ const auxPanelHtml = `
 
 
 export function init(){
-	auxcontentElement = document.getElementById("aux-content-con");
-	auxcontentElement.innerHTML = auxPanelHtml;
+	auxcontentConElement = document.getElementById("aux-content-con");
+	auxcontentConElement.innerHTML = auxPanelHtml;
 
-	auxTitleElement = auxcontentElement.querySelector("#aux-title");
+	auxTitleElement = auxcontentConElement.querySelector("#aux-title");
 
-	console.log('getStoredVariable(StorageType.PanelOpen) = ', getStoredVariable(StorageType.PanelOpen));
+	console.log('getStoredVariable(StorageType.PanelOpen) = ', getStoredVariable(StorageType.PanelIsOpen));
 	
-	if(getStoredVariable(StorageType.PanelOpen) === "true"){
-		console.log('OPENEOPNEPEONEPEON');
-		
-		
+	// let storedIsOpen = getStoredAuxIsOpen();
+	// storedIsOpen ? showPanel() : hidePanel();
+	
+	
+	let storedAuxType = getStoredAuxType();
+	loadAuxPanel(storedAuxType);
+	
+	if(getStoredVariable(StorageType.PanelIsOpen) === "true"){
 		showPanel();
 	}
+	else{
+		hidePanel();
+	}
+
+
 }
 
 
@@ -85,13 +94,16 @@ export function init(){
  * 	If the particular AuxType is already loaded, it is hidden. 
  * 	If the Aux-panel is hidden, or displaying another AuxType, the requested types is shown.
  * 
- * @param {AuxType} toggleAuxType	- Project, Search, Review, etc.
+ * @param {AuxType} newAuxType	- Project, Search, Review, etc.
  */
-export function toggleAuxContent(toggleAuxType){
+export function toggleAuxContent(newAuxType){
 
-	let togglingLoadedType = loadedAuxType === toggleAuxType;
+	let togglingLoadedType = loadedAuxType === newAuxType;
 
-	let panelIsOpen = auxcontentElement.classList.contains("open");
+	console.log('togglingLoadedType = ', togglingLoadedType);
+	
+
+	let panelIsOpen = auxcontentConElement.classList.contains("open");
 	
 
 	/** Targeting the currently loaded panel type. */
@@ -110,11 +122,29 @@ export function toggleAuxContent(toggleAuxType){
 
 
 	// Update Type
-	loadedAuxType = toggleAuxType;
+	loadedAuxType = newAuxType;
 
+	loadAuxPanel(newAuxType);
+	
+
+
+	// Always Display if not currently shown
+	if(!auxcontentOpen){
+		showPanel();
+	}
+}
+
+/**
+ * Unrelated to if the Auxillary Panel is being displayed!
+ * @param {StorageType.AuxType} auxType 
+ */
+function loadAuxPanel(auxType){
+
+	/** Critical to update this or  the show/hide comparisons will fail. */
+	loadedAuxType = auxType;
 
 	// Load Panel With New Type
-	switch (toggleAuxType) {
+	switch (auxType) {
 		case AuxType.Project:
 			setStoredVariable(StorageType.AuxType, AuxType.Project);
 			auxTitleElement.textContent = "Project";
@@ -140,14 +170,7 @@ export function toggleAuxContent(toggleAuxType){
 			break;
 	}
 
-
-	// Always Display if not currently shown
-	if(!auxcontentOpen){
-		showPanel();
-	}
 }
-
-
 
 
 
@@ -212,17 +235,17 @@ export function getAuxTypeFromButtonId(buttonId){
 
 
 export function hidePanel(){
-	auxcontentElement.classList.remove("open");
-	auxcontentElement.style.width = "0px";
+	auxcontentConElement.classList.remove("open");
+	// auxcontentConElement.style.width = "0px";
 	auxcontentOpen = false;
-	setStoredVariable(StorageType.PanelOpen, false);
+	setStoredVariable(StorageType.PanelIsOpen, false);
 }
 
 export function showPanel(){
-	auxcontentElement.classList.add("open");
-	auxcontentElement.style.width = "var(--aux-width)";
+	auxcontentConElement.classList.add("open");
+	// auxcontentConElement.style.width = "var(--aux-width)";
 	auxcontentOpen = true;
-	setStoredVariable(StorageType.PanelOpen, true);
+	setStoredVariable(StorageType.PanelIsOpen, true);
 }
 
 
@@ -233,6 +256,27 @@ function loadProject(){
 }
 
 
+/**
+ * 
+ * @returns @type {StorageType.AuxType} auxType
+ */
+export function getStoredAuxType(){
+	let auxType = getStoredVariable(StorageType.AuxType);
+	return Number(auxType);
+}
+
+/**
+ * 
+ * @returns @type {StorageType.isOpen} isOpen
+ */
+export function getStoredAuxIsOpen(){
+	let isOpen = getStoredVariable(StorageType.PanelIsOpen);
+	if (isOpen === "true")
+		return true;
+	else 
+		return false;
+}
+
 
 
 function setStoredVariable(storageType, value){
@@ -241,7 +285,7 @@ function setStoredVariable(storageType, value){
 			localStorage.setItem("AuxPanel_AuxType", value);
 			break;
 		
-		case StorageType.PanelOpen:
+		case StorageType.PanelIsOpen:
 			localStorage.setItem("AuxPanel_PanelOpen", value);
 			break;
 	
@@ -258,7 +302,7 @@ function getStoredVariable(storageType){
 			return localStorage.getItem("AuxPanel_AuxType");
 			break;
 
-		case StorageType.PanelOpen:
+		case StorageType.PanelIsOpen:
 			return localStorage.getItem("AuxPanel_PanelOpen");
 			break;
 	

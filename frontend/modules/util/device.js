@@ -37,15 +37,26 @@ class Device {
 	device;
 
 	constructor() {
-		this.setPageDimensions();
+		
+		this.updateDeviceObject();
+		
+		window.addEventListener("resize", this.onWindowResize.bind(this));
+		
+	}
 
-		// let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-		// let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+	/**
+	 * @type {Event} - windowResizeEvent
+	 */
+	onWindowResize(windowResizeEvent){
+		// console.log('RESIZE!!!!', windowResizeEvent);
+		this.updateDeviceObject();
+		console.log("Updated Device Object: ", this);
 	}
 
 
 	/** Stores the available page dimensions. */
-	setPageDimensions(){
+	updateDeviceObject(){
+
 		this.windowInnerWidth  = window.innerWidth;
 		this.windowInnerHeight = window.innerHeight;
 
@@ -57,7 +68,13 @@ class Device {
 
 		this.documentBodyClientWidth = document.body.clientWidth;
 		this.documentBodyClientHeight = document.body.clientHeight;
+
+		
+		let vw = Math.max(this.documentDocumentElementClientWidth || 0, this.windowInnerWidth || 0)
+		let vh = Math.max(this.documentDocumentElementClientHeight || 0, this.windowInnerHeight || 0)
 	}
+
+	
 
 
 	printDimenesions(){

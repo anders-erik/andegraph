@@ -84,12 +84,24 @@ export class LeftMenu {
 	constructor(leftMenuContainer) {
 		leftMenu = this;
 		
+		
 		this.leftMenuContainer = leftMenuContainer;
 		this.leftMenuContainer.innerHTML = leftMenuHtml;
+
+		
+		// this.buttonElements = [
+		// 	document.getElementById("left-menu-project"),
+		// 	document.getElementById("left-menu-search"),
+		// 	document.getElementById("left-menu-review"),
+		// 	document.getElementById("left-menu-state"),
+		// ]
+		
 
 
 		this.leftMenuElement = this.leftMenuContainer.querySelector("#left-menu");
 		console.log("this.leftMenuElement = ", this.leftMenuElement)
+
+		
 
 		/** Buttons */
 		this.leftMenuHome = this.leftMenuElement.querySelector("#left-menu-home");
@@ -97,6 +109,25 @@ export class LeftMenu {
 		this.leftMenuProject = this.leftMenuElement.querySelector("#left-menu-project");
 		this.leftMenuSearch = this.leftMenuElement.querySelector("#left-menu-search");
 		this.leftMenuReview = this.leftMenuElement.querySelector("#left-menu-review");
+		this.buttonElements = [
+			this.leftMenuHome, 
+			this.leftMenuState,
+			this.leftMenuProject,
+			this.leftMenuSearch,
+			this.leftMenuReview,
+		]
+
+		/**
+		 * On page load I need to know which button to highlight!
+		 */
+		let auxPanelIsOpen = auxcontent.getStoredAuxIsOpen();
+		if(auxPanelIsOpen){
+			let storedAuxType = auxcontent.getStoredAuxType();
+			let _storedAuxBtn = this.getButtonOnAuxType(storedAuxType);
+			this.updateButtonHighlight(_storedAuxBtn);
+		}
+		
+
 		
 		
 		/** Menu Toggles */
@@ -105,10 +136,15 @@ export class LeftMenu {
 		this.leftMenuToggleOuterElement = this.leftMenuContainer.querySelector("#left-menu-open-button");
 		this.mouseenterElement = this.leftMenuContainer.querySelector("#left-menu-mouseenter");
 
+		/** Check and Apply pinned left menu on load */
 		this.leftMenuPinElement = this.leftMenuContainer.querySelector("#left-menu-pin");
 		if (this.getStoredVariable(StorageType.Pinned) === "true"){
 			this.leftMenuPinElement.classList.add("pinned");
 			this.pinned = true;
+			this.openLeftMenu();
+		}
+		else{
+			this.closeLeftMenu();
 		}
 
 		/** Events */
@@ -121,12 +157,6 @@ export class LeftMenu {
 
 
 
-		this.buttonElements = [
-			document.getElementById("left-menu-project"),
-			document.getElementById("left-menu-search"),
-			document.getElementById("left-menu-review"),
-			document.getElementById("left-menu-state"),
-		]
 
 	}
 
@@ -253,7 +283,7 @@ export class LeftMenu {
 
 		this.leftMenuElement.style.width = "0px";
 		// leftMenuToggleOuterElement.style.display = "block";
-		this.leftMenuToggleOuterElement.style.backgroundColor = "rgba(128, 0, 124, 255)";
+		this.leftMenuToggleOuterElement.style.backgroundColor = "var(--close-menu-bg)";
 		this.leftMenuToggleOuterElement.style.pointerEvents = "all";
 
 		this.mouseenterElement.style.pointerEvents = "all";
@@ -265,7 +295,8 @@ export class LeftMenu {
 
 
 	/**
-	 * Update menu buttons on click.
+	 * Main navigation event of the Left Menu.
+	 * Detects the button clicked, itentifies the appropriate action/targets, and executes.
 	 * @param {MouseEvent} clickEvent
 	 */
 	listButtonClick(clickEvent){
@@ -287,7 +318,6 @@ export class LeftMenu {
 		let auxType = auxcontent.getAuxTypeFromButtonId(buttonElement.id);
 		auxcontent.toggleAuxContent(auxType);
 
-
 		this.updateButtonHighlight(buttonElement);
 
 		// Toggle container visibility
@@ -299,9 +329,49 @@ export class LeftMenu {
 
 	}
 
+
+	getButtonOnAuxType(auxType){
+		let buttonElement;
+
+		switch (auxType) {
+			case auxcontent.AuxType.None:
+				this.turnOffAllButtonHighlights();
+				break;
+
+			case auxcontent.AuxType.Project:
+				buttonElement = this.buttonElements.find((_butElem) => _butElem.id === "left-menu-project");
+				break;
+
+			case auxcontent.AuxType.Search:
+				buttonElement = this.buttonElements.find((_butElem) => _butElem.id === "left-menu-search");
+				break;
+
+			case auxcontent.AuxType.Review:
+				buttonElement = this.buttonElements.find((_butElem) => _butElem.id === "left-menu-review");
+				break;
+
+			case auxcontent.AuxType.State:
+				buttonElement = this.buttonElements.find((_butElem) => _butElem.id === "left-menu-state");
+				break;
+		
+			default:
+				break;
+		}
+
+		return buttonElement;
+
+	}
+
+
+
 		
 	updateButtonHighlight(buttonElement){
 		
+		if(!buttonElement){
+			console.warn("Unable to highlight button!");
+			return;
+		}
+
 		let clickedOnCurrentSelected = buttonElement.classList.contains("selected");
 
 		this.turnOffAllButtonHighlights();

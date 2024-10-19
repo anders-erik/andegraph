@@ -1,9 +1,20 @@
 
 
 /* LEFT MENU  */
+
+
+:root {
+	--close-menu-bg: rgba(128, 0, 124, 255);
+}
+
+
+#left-menu-con {
+	overflow: hidden;
+}
+
 #left-menu {
 	height: 100%;
-	width: 250px;
+	width: 0px;
 	transition: width 0.3s ease;
 
 	background-color: red;
