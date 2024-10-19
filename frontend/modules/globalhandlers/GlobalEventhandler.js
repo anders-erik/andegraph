@@ -3,6 +3,61 @@ import { dbis } from "../dbi-send/dbi-send.js";
 
 import * as maincontent from "../maincontent/MainContent.js";
 
+// import { leftMenu } from "./LeftMenu.js";
+import { getLeftMenu } from "globalui/LeftMenu.js";
+let leftMenu = null;
+
+import * as auxcontent from "globalui/auxcontent.js";
+
+
+/**
+ * Have *all* clicks with intended global side effects travel through this method for better app overview/control.
+ * 
+ * @param {MouseEvent} clickEvent 
+ */
+export function globalClick(clickEvent){
+	let eventTarget = clickEvent.target;
+
+	if(leftMenu === null){
+		leftMenu = getLeftMenu(); /* TODO : add reference to leftMenu in eventhandler-constructor! */
+	}
+
+	switch(eventTarget.id){
+		
+		/** LEFT MENU */
+		case "left-menu-home":
+		case "left-menu-state":
+		case "left-menu-project":
+		case "left-menu-search":
+		case "left-menu-review":
+			leftMenu.buttonClick(clickEvent);
+			// let auxType = auxcontent.getAuxTypeFromButtonId(eventTarget.id);
+			// auxcontent.toggleAuxContent(auxType);
+			break;
+		
+		/** AUX PANEL */
+		case "aux-close-btn":
+			auxcontent.hidePanel();
+			leftMenu.turnOffAllButtonHighlights();
+			
+			
+		default:
+			// console.log('No global click matches');
+			
+	}
+}
+
+/**
+ * Have *all* clicks with intended global side effects travel through this method for better app overview/control.
+ * 
+ * @param {MouseEvent} clickEvent 
+ */
+export function globalMouseEnter(mouseoverEvent){
+	if(mouseoverEvent.target.id === "left-menu-mouseover"){
+		console.log('ENTERED LEFT MENU');
+		
+	}
+}
 
 
 class GlobalEventHandler {
@@ -1260,11 +1315,15 @@ class GlobalEventHandler {
 
 
 	async contextMenuEvent(ctxMenuEvent){
-
-		// Forces browser to require shift for context menu
-		if (ctxMenuEvent.shiftKey) // necessary for Chrome
+		// Trigger contextmenu using ctrl key! - 2024-10-19
+		if (!ctxMenuEvent.ctrlKey) 
 			return;
 		ctxMenuEvent.preventDefault();
+
+		// Forces browser to require shift for context menu
+		// if (ctxMenuEvent.shiftKey) // necessary for Chrome
+		// 	return;
+		// ctxMenuEvent.preventDefault();
 
 
 		let trueContextMenu = document.getElementById("trueContextMenu");

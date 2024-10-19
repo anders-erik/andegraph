@@ -3,9 +3,24 @@ import { MainContent } from './maincontent/MainContent.js';
 import { MainOverlay } from './mainoverlay/MainOverlay.js';
 // import { LeftPanel } from './leftpanel/LeftPanel.js';
 import { GlobalEventHandler } from './globalhandlers/GlobalEventhandler.js';
+// 2024-10-19
+import * as global from './globalhandlers/GlobalEventhandler.js';
 import { ContextOverlay, staticContextOverlay } from './contextoverlay/ContextOverlay.js';
 
 import * as maincontent from "./maincontent/MainContent.js"
+
+
+
+// 2024-10-18
+import * as appstyling from "./globalui/styling.js"
+import * as appui from "./globalui/appui.js"
+
+let leftMenuElement;
+let leftMenuToggleElement;
+let mainContentElement;
+let contextOverlayElement;
+let mainOverlayElement;
+
 
 
 
@@ -35,81 +50,46 @@ class App {
 		this.rootElement = document.getElementById(rootElementId);
 
 		this.appElement = document.createElement('div');
-		this.appElement.id = 'app';
+		this.appElement.id = 'app-con';
 		this.appElement.tabIndex = 0;
 		this.rootElement.append(this.appElement);
 
 
 		
-		// this.createFocusOverlayElement();
-
-
-
-		// this.appElement.addEventListener('keydown', this.getLeftPanelId.bind(this));
-
-		// this.mainContent = new MainContent(this.appElement);
-
-
-		// this.mainContent.loadFromUrl();
-		// let urlState = this.getUrlState();
-		// let urlState = new URL(window.location.href)
-		// console.table(urlState)
-		// let pathArray = urlState.pathname.split('/');
-		// pathArray.pop();
-		// pathArray.shift();
-		// console.log(pathArray)
-
-		// if (pathArray[0] === 'source') {
-		// 	this.mainContent.loadSourceFromUuid(pathArray[1]);
-		// }
-
-		// DEVDEV
-		// this.mainContent.loadSourceFromUuid(330);
-		// this.mainContent.loadSourceFromUuid(372);
-		// this.mainContent.loadSourceFromUuid(106979190784);
-
-
-
-		// this.mainOverlay = new MainOverlay(this.appElement);
-		// // this.leftPanel = new LeftPanel(this.appElement);
-
-		// this.contextOverlay = new ContextOverlay();
-		// this.appElement.append(this.contextOverlay.overlayElement);
-
-		// // leftPanel.LeftPanelDevTests();
-
-		// // leftPanelTestFunction();
-
-		// this.appElement.focus();
-
-		// this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
-
-		// this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler));
-		// // this.appElement.addEventListener('click', this.appClick.bind(this));
-		// // this.appElement.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
-		// // this.appElement.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
-		// window.addEventListener('keydown', this.globalEventHandler.keydown.bind(this.globalEventHandler))
-		// window.addEventListener('keyup', this.globalEventHandler.keyup.bind(this.globalEventHandler))
-		// // this.appElement.addEventListener('keydown', this.appKeyup.bind(this))
-		// this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
-		// window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
 	}
 
 	
 	async reloadApp(){
 
-		this.appElement.innerHTML = "";
 
-		this.mainContent = new MainContent(this.appElement);
+		/** Load all major ui elements so that all submodules can query during initialization  */
+		appui.init(this.appElement);
+		
+
+
+		/** INIT GLOBAL EVENT HANDLER */
+
+
+		// keep local reference to elements for now - 2024-10-19
+		leftMenuElement = this.appElement.querySelector("#left-menu-con");
+		leftMenuToggleElement = this.appElement.querySelector("#left-menu-toggle-inner");
+		mainContentElement = this.appElement.querySelector("#main-content-con");
+		contextOverlayElement = this.appElement.querySelector("#context-overlay-con");
+		mainOverlayElement = this.appElement.querySelector("#main-overlay-con");
+		
+		// console.log(`contextOverlayElement = `, contextOverlayElement)
+
+
+		this.mainContent = new MainContent(mainContentElement);
 		// await this.mainContent.loadFromUrl();
 		maincontent.loadFromUrl();
 
 
-		this.mainOverlay = new MainOverlay(this.appElement);
+		this.mainOverlay = new MainOverlay(mainOverlayElement);
 		// this.leftPanel = new LeftPanel(this.appElement);
 
 		this.contextOverlay = new ContextOverlay();
-		this.appElement.append(this.contextOverlay.overlayElement);
+		contextOverlayElement.append(this.contextOverlay.overlayElement);
 		staticContextOverlay.initKeymap();
 
 
@@ -121,7 +101,15 @@ class App {
 
 		this.globalEventHandler = new GlobalEventHandler(this, this.appElement);
 
+
+		/** NEW EVENTS !  -- 2024-10-19  */
+		this.appElement.addEventListener('click', global.globalClick, true);
+		// this.appElement.addEventListener('mouseover', global.globalMouseEnter, true);
+
+		/**   */
 		
+
+
 		this.appElement.addEventListener('contextmenu', this.globalEventHandler.contextMenuEvent.bind(this.globalEventHandler));
 
 		this.appElement.addEventListener('click', this.globalEventHandler.click.bind(this.globalEventHandler), true);
@@ -235,7 +223,14 @@ class App {
 
 
 
-
+// const appInnerHtml = `
+// <div id="app-inner">
+// 	<div id="left-menu"></div>
+// 	<div id="main-content"></div>
+// 	<div id="context-overlay"></div>
+// 	<div id="main-overlay"></div>
+// </div>
+// `;
 
 
 

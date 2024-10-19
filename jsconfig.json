@@ -16,6 +16,7 @@
             "maincontent": ["./frontend/modules/maincontent",],
             "pdfreader": ["./frontend/modules/maincontent/pdfreader/PdfReader.js",],
             "review": ["./frontend/modules/maincontent/review/Review.js"],
+			"globalui/*": ["./frontend/modules/globalui/*"],
         }
     }
 }

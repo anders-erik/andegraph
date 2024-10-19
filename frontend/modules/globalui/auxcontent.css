@@ -1,0 +1,23 @@
+
+#aux-panel {
+	width: 100%;
+	height: 100%;
+}
+
+#aux-top-bar {
+	width: 100%;
+	height: 30px;
+	display: flex;
+	flex-direction: row;
+}
+
+#aux-title {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#aux-close-btn {
+	background-color: aqua;
+	width: 30px;
+}

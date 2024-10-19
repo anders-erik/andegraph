@@ -1,0 +1,99 @@
+@import "./auxcontent.css";
+
+
+#app {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+}
+
+
+
+/* LEFT MENU  */
+#left-menu {
+	height: 100%;
+	width: 250px;
+	transition: width 0.5s ease;
+
+	background-color: red;
+}
+#left-menu-toggle-inner {
+	width: 100%;
+	height: 100px; 
+	background-color: green;
+}
+#left-menu-toggle-outer {
+	width: 100px;
+	height: 100px; 
+	background-color: rgb(128, 0, 124);
+	transition: background-color 0.1s;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1000;
+}
+
+.left-menu-item {
+	background-color: brown;
+	height: 30px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.left-menu-item.selected {
+	background-color: rgb(133, 31, 31);
+}
+.left-menu-item:hover {
+	background-color: blueviolet;
+	cursor: pointer;
+}
+#left-menu-mouseover {
+	background-color: aliceblue;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 20px;
+}
+
+
+/* 
+	AUX
+*/
+
+#aux-content-con {
+	background-color: coral;
+	height: 100%;
+	width: 10px;
+	transition: width 0.5s ease;
+}
+
+
+/* 
+	CONTENT
+*/
+
+#main-content-con {
+	height: 100%;
+	/* width: 90%; */
+	transition: width 0.5s ease;
+}
+
+#context-overlay-con {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+
+	pointer-events: none;
+}
+
+#main-overlay-con {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+
+	pointer-events: none;
+}
