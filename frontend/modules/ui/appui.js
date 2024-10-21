@@ -1,5 +1,5 @@
 
-import * as auxcontent from "./auxcontent.js";
+import * as auxcontent from "./auxpanel.js";
 import { LeftMenu } from "./LeftMenu.js";
 
 let leftMenu;

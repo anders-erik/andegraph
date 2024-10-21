@@ -1,6 +1,6 @@
 
-import * as auxcontent from "../globalui/auxcontent.js";
-import {AuxType, toggleAuxContent} from "globalui/auxcontent.js";
+import * as auxcontent from "./auxpanel.js";
+import {AuxType, toggleAuxContent} from "ui/auxpanel.js";
 
 /**
  * @enum {number} Stored variables for Left Menu in local storage.

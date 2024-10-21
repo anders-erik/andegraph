@@ -3,11 +3,8 @@
 
 {
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": "./frontend",
         "paths": {
-            "*": [
-                "frontend/*.js",
-            ],
             "imim": ["./frontend/modules/importmap-tester.js",],
             "experiments": ["./frontend/modules/experiments/Experiments.js",],
             "importmap-tester": ["./frontend/modules/experiments/importmap-test-module.js"],
@@ -16,7 +13,12 @@
             "maincontent": ["./frontend/modules/maincontent",],
             "pdfreader": ["./frontend/modules/maincontent/pdfreader/PdfReader.js",],
             "review": ["./frontend/modules/maincontent/review/Review.js"],
-			"globalui/*": ["./frontend/modules/globalui/*"],
+			
+			"modules/*": ["./modules/*"],
+			"ui/*": ["./modules/ui/*"],
+			"components/*": ["./modules/components/*"],
+			"quickstate/*": ["./modules/quickstate/*"],
         }
-    }
+    },
+	// "include": ["./**/*.js"]
 }

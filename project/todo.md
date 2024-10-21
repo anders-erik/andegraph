@@ -41,6 +41,8 @@
 
 ## v0.3.2
 ### GOALS
+- LARGE UI refactoring
+	- THIS IS NECESSARY TO MAKE THE IMPLEMENTATIO OF ANY REAL NEW FEATURES FEASIBLE.
 - |o| resolve multiple webextension problems
 - Code 'output'-column in the SQLite code table!
 - Be able to see project files!

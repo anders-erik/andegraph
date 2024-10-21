@@ -48,7 +48,6 @@
 	height: 100%;
 	width: 100px;
 	background-color: green;
-
 }
 
 
@@ -56,7 +55,7 @@
 	width: 100px;
 	height: 100px; 
 	/* background-color: rgb(128, 0, 124); */
-	transition: background-color 0.1s;
+	transition: background-color 0.3s;
 	position: absolute;
 	top: 0px;
 	left: 0px;

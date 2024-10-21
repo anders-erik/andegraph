@@ -4,12 +4,16 @@ import { dbis } from "../dbi-send/dbi-send.js";
 import * as maincontent from "../maincontent/MainContent.js";
 
 // import { leftMenu } from "./LeftMenu.js";
-import { getLeftMenu, LeftMenu } from "globalui/LeftMenu.js";
+import { getLeftMenu, LeftMenu } from "ui/LeftMenu.js";
 
 /** @type {LeftMenu} */
 let leftMenu = null;
 
-import * as auxcontent from "globalui/auxcontent.js";
+import * as auxcontent from "ui/auxpanel.js";
+
+// import { QuickStates } from "modules/mainoverlay/state/State.js";
+import { QuickState, quickState } from "modules/components/quickstate/QuickState.js";
+
 
 
 /**
@@ -32,7 +36,7 @@ export function globalClick(clickEvent){
 		case "left-menu-project":
 		case "left-menu-search":
 		case "left-menu-review":
-			
+
 			leftMenu.listButtonClick(clickEvent);
 			// let auxType = auxcontent.getAuxTypeFromButtonId(eventTarget.id);
 			// auxcontent.toggleAuxContent(auxType);
@@ -50,17 +54,7 @@ export function globalClick(clickEvent){
 	}
 }
 
-/**
- * Have *all* clicks with intended global side effects travel through this method for better app overview/control.
- * 
- * @param {MouseEvent} clickEvent 
- */
-export function globalMouseEnter(mouseoverEvent){
-	if(mouseoverEvent.target.id === "left-menu-mouseover"){
-		console.log('ENTERED LEFT MENU');
-		
-	}
-}
+
 
 
 class GlobalEventHandler {
@@ -103,51 +97,12 @@ class GlobalEventHandler {
 	}
 
 
-
-	paste(event) {
-		// console.log('GLOBAL PASTE TO :')
-		// console.log('ACTIVE', document.activeElement)
-		// console.log('TARGET ', event.target)
-
-		// let clipboardContentType = determineClipboardContentType(event.clipboardData);
-		// let isText = clipboardContentType === 'text' ? true : false;
-		// let isFile = clipboardContentType === 'file' ? true : false;
-		// let contentCard;
-		// let contentObject;
-
-		// if (document.activeElement.classList.contains('contentCard')) {
-		// 	console.log('paste to content card')
-		// 	contentCard = document.activeElement;
-		// 	contentObject = contentCard.contentObject;
-
-		// 	switch (contentObject.Table) {
-
-		// 		case 'Text':
-		// 			console.log('PASTE ON TEXT')
-
-		// 			editing = contentCard.classList.contains('editing');
-		// 			isEmpty = contentCard.textContent === '';
-
-		// 			if (!editing && isText && isEmpty) {
-		// 				console.log('PASTE TEXT TO TEXT-CONTENTCARD')
-		// 				let clipboardText = (event.clipboardData || window.clipboardData).getData("text");
-		// 				this.content.insertTextContent(this.content.element, clipboardText);
-		// 			}
-		// 			else {
-		// 				console.log(`Can't paste to non-empty content`)
-		// 			}
-		// 			break;
-
-		// 		case 'File':
-		// 			console.log('PASTE ON FILE')
-		// 			break;
-
-		// 		default:
-		// 			break;
-		// 	}
-		// }
+	targetingKeyContentObject(){
 
 	}
+
+
+
 
 
 	keyup(event) {
@@ -438,6 +393,10 @@ class GlobalEventHandler {
 					dbis.Review_InsertScheduleOnUuid(newContentEdge.content.Uuid, '')
 				}
 
+				/** I guess the object that is part of the uuid? 
+				 * This is triggernig an error [2024-10-19]
+				 * Currently I don't see exactly why. [2024-10-19]
+				*/
 				if (targetingMainContentObject) {
 					this.app.mainContent.source.sourceContent.shardList.insertContentEdge(newContentEdge);
 				}
@@ -875,7 +834,7 @@ class GlobalEventHandler {
 				shift + alt : focus
 				shift 	 	: set state
 				alt			: add new
-				#			: connect
+				{digit}		: connect
 			
 				project		: 0
 				state 1		: 1, 4, 7
@@ -906,8 +865,10 @@ class GlobalEventHandler {
 			// key=1 , 11111111, state 1
 			case 49:
 				if (event.shiftKey) {
-					event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
-					localStorage.setItem('state1Uuid', `${event.target.contentObject.Uuid}`);
+					// event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
+					// event.target.contentObject ? QuickState.setState1WithCO(event.target.contentObject) : 0;
+					event.target.contentObject ? quickState.setState1WithCO(event.target.contentObject) : 0;
+					// localStorage.setItem('state1Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
 					console.log('new child to slot 1 object')
@@ -930,8 +891,11 @@ class GlobalEventHandler {
 			// key=2 , 222222, state 2
 			case 50:
 				if (event.shiftKey) {
-					event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
-					localStorage.setItem('state2Uuid', `${event.target.contentObject.Uuid}`);
+					// event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
+					// event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
+					event.target.contentObject ? quickState.setState2WithCO(event.target.contentObject) : 0;
+					// contentState_2
+					// localStorage.setItem('state2Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
 					console.log('new child to slot 2 object')
@@ -954,8 +918,9 @@ class GlobalEventHandler {
 			// key=3 , 33333333, state 3
 			case 51:
 				if (event.shiftKey) {
-					event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
-					localStorage.setItem('state3Uuid', `${event.target.contentObject.Uuid}`);
+					// event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
+					event.target.contentObject ? quickState.setState3WithCO(event.target.contentObject) : 0;
+					// localStorage.setItem('state3Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
 					console.log('new child to slot 3 object')

@@ -1,8 +1,35 @@
+
+
+
+
+/* 
+
+		NOTE:
+				MOVED TO 'modules/components/quickstate'
+
+*/
+
+
+
+
+
+
+
 import { dbis } from "../../dbi-send/dbi-send.js";
 
+let quickStates = null;
 
 
-export class State {
+export function getQuickState(){
+	if(quickStates === null){
+		console.error("Trying to get the satare before initilizatio!")
+		return null;
+	}
+
+	return quickStates;
+}
+
+export class QuickStates {
 
 	element;
 
@@ -11,6 +38,7 @@ export class State {
 	element_3;
 
 	constructor(parentElement) {
+		quickStates = this;
 		this.element = document.createElement('div');
 		this.element.id = 'mainOverlay_state';
 		parentElement.append(this.element);
@@ -46,6 +74,12 @@ export class State {
 
 	}
 
+
+	static setState1WithCO(contentObject){
+		console.log("SETING STATE 1")
+	}
+
+	// LEGACY - 2024-10-21
 	setState1(contentObject) {
 		this.element_1.textContent = contentObject.Title;
 		this.element_1.contentObject = contentObject;
@@ -54,7 +88,6 @@ export class State {
 			this.textContent = this.contentObject.Title;
 		}
 	}
-
 	setState2(contentObject) {
 		this.element_2.textContent = contentObject.Title;
 		this.element_2.contentObject = contentObject;
@@ -63,7 +96,6 @@ export class State {
 			this.textContent = this.contentObject.Title;
 		}
 	}
-
 	setState3(contentObject) {
 		this.element_3.textContent = contentObject.Title;
 		this.element_3.contentObject = contentObject;

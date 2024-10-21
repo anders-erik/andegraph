@@ -51,12 +51,12 @@ export class Source {
 	}
 
 	async load(contentObject) {
-		console.log("^_^_^_^^_^_^_", contentObject)
-		console.log('1')
+		// console.log("^_^_^_^^_^_^_", contentObject)
+		// console.log('1')
 		this.sourceContent = new SourceContent(this.mainContentContentContainer);
-		console.log('2')
+		// console.log('2')
 		this.toolbar = new SourceToolbar(this.mainContentToolbar);
-		console.log('3')
+		// console.log('3')
 		this.sidePanel = new SourceSidePanel(this.mainContentSidepanel);
 
 		this.toolbar.element.addEventListener('click', this.clickMainSourceContent.bind(this));

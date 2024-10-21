@@ -1,0 +1,27 @@
+#mainOverlay {
+	display: none;
+}
+
+#mainOverlay_state {
+	height: calc(100% - 3px);
+	width: calc(100% - 3px);
+
+	/* background-color: aliceblue; */
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+
+	background-color: rgb(104, 130, 151);
+}
+
+#mainOverlay_state>div {
+	height: 30%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* box-shadow: inset 0 0 0 1px black; */
+	border: solid black 1px;
+}

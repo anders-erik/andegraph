@@ -4,14 +4,26 @@
 
 ### Features:
 - enable space/enter selection of search entry
-- clipboard 
-- implement a new 
+- clipboard server
+- display shortcuts
+- basic persisting capabilities of projects/sources
+	- NOTE: VERY IMPORTANT TO DISABLE PASTING WHEN WEBEXTENSION IS HIDDEN BEFORE IMPLEMENTING THIS FEATURE!
+	- auto-search based on url
+	- pin-menu for currently much used projects
+	- set default loaded project that always loads
+- be able to toggle paste detection on and off when extension is showing
+
 
 ### Bugs:
 - tabbing from the search box to the first search entry requires user to hit tab twice
 - clipboard-title on mozilla is enlarged.
+- when closing the project container on mozilla, it cuts into the porject title
 - shardlist is not being displayed if the properties-table is open when pasting a new shard 
 - Stop pasting shard if wextension is hidden!
+- hitting space when typing during clipboard capture is scrolling page on Mozilla page
+- very slow source creation using webextension
+- when a new source is created, and then immediately changing its name, doe not actually change the source name. I have to reload and change it again.
+
 
 <br>
 <br>

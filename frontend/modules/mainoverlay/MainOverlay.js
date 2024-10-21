@@ -4,7 +4,7 @@ import { MainMenu } from "./mainmenu/MainMenu.js";
 import { Project } from "./project/Project.js";
 import { Review } from "./review/Review.js";
 import { Search } from "./search/Search.js";
-import { State } from "./state/State.js";
+import { QuickStates } from "./state/State.js";
 
 
 export class MainOverlay {
@@ -37,7 +37,7 @@ export class MainOverlay {
 		this.mainMenu = new MainMenu(this.mainMenuContainer);
 
 		this.stateContainer = this.element.querySelector('#stateContainer')
-		this.state = new State(this.stateContainer);
+		// this.state = new State(this.stateContainer); // Turned off on 2024-10-19
 
 		this.projectContainer = this.element.querySelector('#projectContainer')
 		this.project = new Project(this.projectContainer);

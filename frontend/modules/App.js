@@ -2,14 +2,14 @@
 import { MainContent } from './maincontent/MainContent.js';
 import { MainOverlay } from './mainoverlay/MainOverlay.js';
 // import { LeftPanel } from './leftpanel/LeftPanel.js';
-import { GlobalEventHandler } from 'globalui/GlobalEventhandler.js';
+import { GlobalEventHandler } from 'ui/GlobalEventhandler.js';
 
 // 2024-10-19
-import * as global from 'globalui/GlobalEventhandler.js';
+import * as global from 'ui/GlobalEventhandler.js';
 import { ContextOverlay, staticContextOverlay } from './contextoverlay/ContextOverlay.js';
 
 import { device } from './util/device.js';
-device.printDimenesions();
+// device.printDimenesions();
 
 
 import * as maincontent from "./maincontent/MainContent.js"
@@ -18,7 +18,7 @@ import * as maincontent from "./maincontent/MainContent.js"
 
 // 2024-10-18
 // import * as appstyling from "./globalui/styling.js"
-import * as appui from "./globalui/appui.js"
+import * as appui from "./ui/appui.js"
 
 let leftMenuElement;
 let leftMenuToggleElement;
@@ -130,7 +130,7 @@ class App {
 		// window.addEventListener("contentClick", this.contentClick, true)
 
 		this.appElement.addEventListener('focusin', this.appFocusIn.bind(this))
-		window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
+		// window.addEventListener('paste', this.globalEventHandler.paste.bind(this.globalEventHandler))
 
 		// window.addEventListener("hashchange", (event) => {
 		// 	console.log("URL CHANGESD!")

@@ -1,11 +1,19 @@
+// import { QuickState } from "modules/components/quickstate/QuickState.js";
+import { quickState } from "modules/components/quickstate/QuickState.js";
 
-
+// import { QuickStates, getQuickState } from "/modules/mainoverlay/state/State.js";
+// QuickStates
 
 
 /** @type {HTMLElement} */
 let auxcontentConElement;
 /** @type {HTMLElement} */
 let auxTitleElement;
+
+/** @type {HTMLElement} */
+let auxSourceConElement;
+// let quickState;
+let quickStatePanel;
 
 
 /**
@@ -50,6 +58,8 @@ const auxPanelHtml = `
 		<div id="aux-title">TITLE</div>
 		<div id="aux-close-btn">CLOSE</div>
 	</div>
+	
+	<div id="aux-source-con" class="hidden"></div>
 </div>
 `;
 
@@ -68,6 +78,14 @@ export function init(){
 	
 	// let storedIsOpen = getStoredAuxIsOpen();
 	// storedIsOpen ? showPanel() : hidePanel();
+
+	/** @type {HTMLElement} */
+	auxSourceConElement = auxcontentConElement.querySelector("#aux-source-con");
+	// quickState = getQuickState(); // doens't work because there is not bject before callling the consturctore at least once!
+	// Creates THE quickstate object
+	// quickState = new QuickState(auxSourceConElement);
+	quickStatePanel = quickState.createNewPanel(auxSourceConElement);
+	
 	
 	
 	let storedAuxType = getStoredAuxType();
@@ -148,6 +166,7 @@ function loadAuxPanel(auxType){
 		case AuxType.Project:
 			setStoredVariable(StorageType.AuxType, AuxType.Project);
 			auxTitleElement.textContent = "Project";
+			
 			// toggleProject();
 			break;
 
@@ -164,6 +183,7 @@ function loadAuxPanel(auxType){
 		case AuxType.State:
 			setStoredVariable(StorageType.AuxType, AuxType.State);
 			auxTitleElement.textContent = "State";
+			auxSourceConElement.classList.remove("hidden");
 			break;
 
 		default:
