@@ -763,7 +763,8 @@ class GlobalEventHandler {
 						this.app.mainOverlay.review.tableBody.firstElementChild.focus();
 						break;
 					case 's':
-						this.app.mainOverlay.mainMenu.stateBtn.click();
+						// this.app.mainOverlay.mainMenu.stateBtn.click();
+						document.getElementById("left-menu-state").click();
 						break;
 
 
@@ -867,7 +868,7 @@ class GlobalEventHandler {
 				if (event.shiftKey) {
 					// event.target.contentObject ? this.app.mainOverlay.state.setState1(event.target.contentObject) : 0;
 					// event.target.contentObject ? QuickState.setState1WithCO(event.target.contentObject) : 0;
-					event.target.contentObject ? quickState.setState1WithCO(event.target.contentObject) : 0;
+					event.target.contentObject ? quickState.updateQuickStateWithCO_1(event.target.contentObject) : 0;
 					// localStorage.setItem('state1Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {
@@ -893,7 +894,7 @@ class GlobalEventHandler {
 				if (event.shiftKey) {
 					// event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
 					// event.target.contentObject ? this.app.mainOverlay.state.setState2(event.target.contentObject) : 0;
-					event.target.contentObject ? quickState.setState2WithCO(event.target.contentObject) : 0;
+					event.target.contentObject ? quickState.updateQuickStateWithCO_2(event.target.contentObject) : 0;
 					// contentState_2
 					// localStorage.setItem('state2Uuid', `${event.target.contentObject.Uuid}`);
 				}
@@ -919,7 +920,7 @@ class GlobalEventHandler {
 			case 51:
 				if (event.shiftKey) {
 					// event.target.contentObject ? this.app.mainOverlay.state.setState3(event.target.contentObject) : 0;
-					event.target.contentObject ? quickState.setState3WithCO(event.target.contentObject) : 0;
+					event.target.contentObject ? quickState.updateQuickStateWithCO_3(event.target.contentObject) : 0;
 					// localStorage.setItem('state3Uuid', `${event.target.contentObject.Uuid}`);
 				}
 				else if (event.altKey) {

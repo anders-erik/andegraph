@@ -33,17 +33,24 @@ export function init(appcontainer){
 	console.log(`contextOverlayElement = `, contextOverlayElement)
 }
 
+/** 
+ * Global function that will update all app elements that depend on the particular content bject
+ * 
+ */
+export function contentObjectUpdated(contentObject){
+
+}
 
 
 
 const appuiHtml = `
-<div id="app">
+<div id="app" class="appstyle">
 
-	<div id="left-menu-con"></div>
+	<div id="left-menu-con" class=""></div>
 
 	<div id="aux-content-con"></div>
 
-	<div id="main-content-con"></div>
+	<div id="main-content-con" ></div>
 
 	<div id="context-overlay-con"></div>
 

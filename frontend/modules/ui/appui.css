@@ -17,6 +17,57 @@
 	flex-direction: row;
 }
 
+[is="quick-state"] {
+	background-color: #a200a0;
+}
+
+/* Default app element styling */
+/* div
+{
+	height: 100%;
+	width: 100%;
+
+	margin: 0px;
+	padding: 0px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	overflow: hidden;
+} */
+
+/* FROM styles.css */
+
+/* 
+#app {
+	height: 100%;
+	width: 100%;
+	
+} */
+
+*:focus {
+	box-shadow: 0 0 0 2px rgb(255, 220, 246);
+	outline: none;
+}
+
+#focusOverlayElement {
+	position: absolute;
+
+	z-index: 100000000;
+	box-shadow: inset 0 0 0 4px #a200a0;
+
+}
+
+.hidden {
+	display: none;
+}
+
+/*  */
+
+
+
 
 
 

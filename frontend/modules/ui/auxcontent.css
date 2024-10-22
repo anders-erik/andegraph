@@ -14,6 +14,7 @@
 	width: 0px;
 	max-width: 95%;
 	transition: width 0.5s ease;
+	
 }
 #aux-content-con.open {
 	width: var(--aux-width);
@@ -23,7 +24,10 @@
 #aux-panel {
 	width: 100%;
 	height: 100%;
+
+	justify-content: start;
 }
+
 
 #aux-top-bar {
 	width: 100%;

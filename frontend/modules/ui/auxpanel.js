@@ -85,6 +85,7 @@ export function init(){
 	// Creates THE quickstate object
 	// quickState = new QuickState(auxSourceConElement);
 	quickStatePanel = quickState.createNewPanel(auxSourceConElement);
+	let quickStatePanel2 = quickState.createNewPanel(auxSourceConElement);
 	
 	
 	

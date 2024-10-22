@@ -9,13 +9,21 @@
 
 
 #left-menu-con {
-	overflow: hidden;
+	transition: width 0.3s ease;
+	width: 0px;
+}
+#left-menu-con.open {
+	width: 250px;
 }
 
 #left-menu {
 	height: 100%;
 	width: 0px;
-	transition: width 0.3s ease;
+	
+
+	overflow: hidden;
+
+	justify-content: start;
 
 	background-color: red;
 }
