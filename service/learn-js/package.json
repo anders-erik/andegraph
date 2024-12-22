@@ -1,0 +1,14 @@
+{
+  "name": "learn-js",
+  "version": "1.0.0",
+  "description": "\\",
+  "main": "index.js",
+  "scripts": {
+    "openapi:generate":"openapi-generator-cli generate -i api.yaml -g nodejs-express-server -o openapi-backend",
+    "openapi:generate:client":"openapi-generator-cli generate -i api.yaml -g typescript-axios -o openapi-client",
+    "openapi:start":"cd openapi-backend && npm run prestart && npm run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
